@@ -1,4 +1,4 @@
-version: 1.0.{build}
+version: 0.0.{build}
 
 assembly_info:
   patch: true
@@ -18,3 +18,8 @@ after_test:
 artifacts: 
   # pushing all *.nupkg files in directory
   - path: '**\*.nupkg' # find all NuGet packages recursively
+
+deploy:
+  provider: NuGet
+  api_key:
+    secure: yNaPU9GGsdDdMjOB5tbQTuIIq4DFHNGUkZP1ZTDDCKQG3g7pZjxcBFZblTMeIawA
