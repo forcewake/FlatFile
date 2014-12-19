@@ -7,19 +7,16 @@ assembly_info:
   assembly_file_version: "{version}"
   assembly_informational_version: "{version}"
 
-configuration: Release
+environment:
+  BuildEnvironment: appveyor
 
-build:
-  project: src/FlatFile.sln
+build_script: assets\build.bat pack
 
-after_test:
-  - ps: .\assets\pack.ps1
-
-artifacts: 
-  # pushing all *.nupkg files in directory
-  - path: '**\*.nupkg' # find all NuGet packages recursively
+artifacts:
+  - path: 'build\**\*.nupkg'
 
 deploy:
   provider: NuGet
   api_key:
     secure: yNaPU9GGsdDdMjOB5tbQTuIIq4DFHNGUkZP1ZTDDCKQG3g7pZjxcBFZblTMeIawA
+  artifact: 'build\**\*.nupkg'
