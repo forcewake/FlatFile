@@ -154,3 +154,6 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+assets/FlatFile.Core.Compiled.nuspec
+assets/FlatFile.Delimited.Compiled.nuspec
+assets/FlatFile.FixedLength.Compiled.nuspec
