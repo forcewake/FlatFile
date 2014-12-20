@@ -10,6 +10,9 @@ assembly_info:
 environment:
   BuildEnvironment: appveyor
 
+cache:
+  - packages # preserve "packages" directory in the root of build folder
+
 build_script: assets\build.bat pack
 
 artifacts:
