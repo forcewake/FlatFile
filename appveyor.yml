@@ -15,7 +15,7 @@ build_script: assets\build.bat pack
 artifacts:
   - path: 'build\**\*.nupkg'
 
-#test: off  
+test: off  
 
 deploy:
   provider: NuGet
