@@ -125,7 +125,7 @@ namespace FlatFile.Benchmark
         }
 
 
-        [Fact]
+        [Fact(Skip = "Too long for CI")]
         public void BigDataWriteOperationShouldBeQuick()
         {
             var genarator = new FakeGenarator();
@@ -171,7 +171,7 @@ namespace FlatFile.Benchmark
                 .PrintComparison();
         }
 
-        [Fact]
+        [Fact(Skip = "Too long for CI")]
         public void BigDataWriteOperationShouldBeQuickWithReflectionMagic()
         {
             HyperTypeDescriptionProvider.Add(typeof(FixedSampleRecord));
