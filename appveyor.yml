@@ -14,9 +14,3 @@ build_script: assets\build.bat pack
 
 artifacts:
   - path: 'build\**\*.nupkg'
-
-deploy:
-  provider: NuGet
-  api_key:
-    secure: yNaPU9GGsdDdMjOB5tbQTuIIq4DFHNGUkZP1ZTDDCKQG3g7pZjxcBFZblTMeIawA
-  artifact: 'build\**\*.nupkg'
