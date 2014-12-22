@@ -1,29 +1,57 @@
-version: 0.0.{build}
+- 
+  version: 0.0.{build}
 
-assembly_info:
-  patch: true
-  file: AssemblyInfo.*
-  assembly_version: "{version}"
-  assembly_file_version: "{version}"
-  assembly_informational_version: "{version}"
+  environment:
+    BuildEnvironment: appveyor
 
-environment:
-  BuildEnvironment: appveyor
+  branches:
+    only:
+      - master
 
-cache:
-  - packages # preserve "packages" directory in the root of build folder
+  assembly_info:
+    patch: true
+    file: AssemblyInfo.*
+    assembly_version: "{version}"
+    assembly_file_version: "{version}"
+    assembly_informational_version: "{version}"
 
-build_script: assets\build.bat pack
+  test: off
 
-artifacts:
-  - path: 'build\**\*.nupkg'
+  artifacts:
+    - path: 'build\**\*.nupkg'
 
-test: off  
+  build_script: assets\build.bat pack
 
-deploy:
-  provider: NuGet
-  api_key:
-    secure: yNaPU9GGsdDdMjOB5tbQTuIIq4DFHNGUkZP1ZTDDCKQG3g7pZjxcBFZblTMeIawA
-  artifact: /.*build.*\.nupkg/
-  on:
-    branch: master
+  cache:
+    - src\packages # preserve "packages" directory in the root of build folder
+
+  deploy:
+    provider: NuGet
+    api_key:
+      secure: yNaPU9GGsdDdMjOB5tbQTuIIq4DFHNGUkZP1ZTDDCKQG3g7pZjxcBFZblTMeIawA
+    artifact: /.*build.*\.nupkg/
+    on:
+      branch: master
+
+-
+  version: 0.0.{build}
+
+  environment:
+    BuildEnvironment: appveyor
+
+  branches:
+    only:
+      - /dev.*/
+      - /feature.*/
+
+  assembly_info:
+    patch: true
+    file: AssemblyInfo.*
+    assembly_version: "{version}"
+    assembly_file_version: "{version}"
+    assembly_informational_version: "{version}"
+
+  build_script: assets\build.bat pack
+
+  cache:
+    - src\packages # preserve "packages" directory in the root of build folder

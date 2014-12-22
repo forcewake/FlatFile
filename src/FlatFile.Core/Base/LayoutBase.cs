@@ -12,17 +12,18 @@
         where TConstructor : IFieldSettingsConstructor<TFieldSettings, TConstructor> 
         where TLayout : ILayout<TTarget, TFieldSettings, TConstructor, TLayout>
     {
-        protected List<TFieldSettings> InnerFields { get; private set; }
-
+        private readonly IFieldsContainer<TFieldSettings> _fieldsContainer;
         private readonly IFieldSettingsFactory<TFieldSettings, TConstructor> _fieldSettingsFactory;
         private readonly IFieldSettingsBuilder<TFieldSettings, TConstructor> _builder;
 
-        protected LayoutBase(IFieldSettingsFactory<TFieldSettings, TConstructor> fieldSettingsFactory,
-            IFieldSettingsBuilder<TFieldSettings, TConstructor> builder)
+        protected LayoutBase(
+            IFieldSettingsFactory<TFieldSettings, TConstructor> fieldSettingsFactory, 
+            IFieldSettingsBuilder<TFieldSettings, TConstructor> builder, 
+            IFieldsContainer<TFieldSettings> fieldsContainer)
         {
             this._fieldSettingsFactory = fieldSettingsFactory;
             this._builder = builder;
-            this.InnerFields = new List<TFieldSettings>();
+            this._fieldsContainer = fieldsContainer;
         }
 
         protected virtual void ProcessProperty<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TConstructor> settings)
@@ -35,7 +36,7 @@
 
             var fieldSettings = _builder.BuildSettings(constructor);
 
-            InnerFields.Add(fieldSettings);
+            _fieldsContainer.AddOrUpdate(fieldSettings);
         }
 
         protected virtual PropertyInfo GetPropertyInfo<TProperty>(Expression<Func<TTarget, TProperty>> expression)
@@ -45,10 +46,10 @@
         }
 
         public abstract TLayout WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TConstructor> settings);
-
+        
         public IEnumerable<TFieldSettings> Fields
         {
-            get { return InnerFields; }
+            get { return _fieldsContainer.OrderedFields; }
         }
     }
 }
