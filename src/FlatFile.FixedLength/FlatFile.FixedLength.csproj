@@ -107,7 +107,6 @@
     <Compile Include="Implementation\FixedLayout.cs" />
     <Compile Include="Implementation\FixedLengthLineBuilder.cs" />
     <Compile Include="Implementation\FixedLengthLineParser.cs" />
-    <Compile Include="Implementation\FlatFileEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@ namespace FlatFile.Benchmark
     using BenchmarkIt;
     using FileHelpers;
     using FlatFile.Benchmark.Entities;
+    using FlatFile.Core.Base;
     using FlatFile.FixedLength.Implementation;
     using FluentAssertions;
     using Hyper.ComponentModel;

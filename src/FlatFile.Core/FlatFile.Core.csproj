@@ -96,6 +96,7 @@
     <Compile Include="Base\FieldsContainer.cs" />
     <Compile Include="Base\FieldSettingsBase.cs" />
     <Compile Include="Base\FieldSettingsConstructorBase.cs" />
+    <Compile Include="Base\FlatFileEngine.cs" />
     <Compile Include="Base\LayoutBase.cs" />
     <Compile Include="Base\LineBulderBase.cs" />
     <Compile Include="Base\LineParserBase.cs" />

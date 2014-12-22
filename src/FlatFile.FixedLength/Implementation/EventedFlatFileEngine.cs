@@ -2,6 +2,7 @@ namespace FlatFile.FixedLength.Implementation
 {
     using System;
     using System.IO;
+    using FlatFile.Core.Base;
     using FlatFile.Core.Events;
 
     public class EventedFlatFileEngine<T> : FlatFileEngine<T>, IEventedFixedLengthFileEngine<T> where T : class, new()

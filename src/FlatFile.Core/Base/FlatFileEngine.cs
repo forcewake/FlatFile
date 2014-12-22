@@ -1,19 +1,20 @@
-namespace FlatFile.FixedLength.Implementation
+namespace FlatFile.Core.Base
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using FlatFile.Core;
 
-    public class FlatFileEngine<T> : IDisposable, IFixedLengthFileEngine<T>
+    public class FlatFileEngine<T> : IDisposable, IFlatFileEngine<T>
         where T : class, new()
     {
-        private readonly IFixedLengthLineBuilder<T> _builder;
+        private readonly ILineBulder<T> _builder;
         private readonly Func<string, Exception, bool> _handleEntryReadError;
         private readonly Stream _innerStream;
 
-        private readonly IFixedLengthLineParser<T> _parser;
+        private readonly ILineParser<T> _parser;
 
-        public FlatFileEngine(Stream innerStream, IFixedLengthLineParser<T> parser, IFixedLengthLineBuilder<T> builder,
+        public FlatFileEngine(Stream innerStream, ILineParser<T> parser, ILineBulder<T> builder,
             Func<string, Exception, bool> handleEntryReadError = null)
         {
             _innerStream = innerStream;

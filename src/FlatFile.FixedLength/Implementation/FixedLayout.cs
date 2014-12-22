@@ -27,15 +27,11 @@ namespace FlatFile.FixedLength.Implementation
 
         public override FixedLayout<TTarget> WithMember<TProperty>(
             Expression<Func<TTarget, TProperty>> expression,
-            Action<IFixedFieldSettingsConstructor> settings)
+            Action<IFixedFieldSettingsConstructor> settings = null)
         {
             ProcessProperty(expression, settings);
 
             return this;
-        }
-
-        protected virtual void MapLayout()
-        {
         }
 
         IFixedLayout<TTarget>
