@@ -93,6 +93,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\FieldsContainer.cs" />
     <Compile Include="Base\FieldSettingsBase.cs" />
     <Compile Include="Base\FieldSettingsConstructorBase.cs" />
     <Compile Include="Base\LayoutBase.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Events\ReadEventArgs.cs" />
     <Compile Include="Events\WriteEventArgs.cs" />
     <Compile Include="Extensions\ExpressionExtensions.cs" />
+    <Compile Include="IFieldsContainer.cs" />
     <Compile Include="IFlatFileEngine.cs" />
     <Compile Include="IEventedFlatFileEngine.cs" />
     <Compile Include="IFieldSettingsBuilder.cs" />

@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
     using FlatFile.Core.Extensions;
@@ -17,7 +16,10 @@
         private readonly IFieldSettingsFactory<TFieldSettings, TConstructor> _fieldSettingsFactory;
         private readonly IFieldSettingsBuilder<TFieldSettings, TConstructor> _builder;
 
-        protected LayoutBase(IFieldSettingsFactory<TFieldSettings, TConstructor> fieldSettingsFactory, IFieldSettingsBuilder<TFieldSettings, TConstructor> builder, IFieldsContainer<TFieldSettings> fieldsContainer)
+        protected LayoutBase(
+            IFieldSettingsFactory<TFieldSettings, TConstructor> fieldSettingsFactory, 
+            IFieldSettingsBuilder<TFieldSettings, TConstructor> builder, 
+            IFieldsContainer<TFieldSettings> fieldsContainer)
         {
             this._fieldSettingsFactory = fieldSettingsFactory;
             this._builder = builder;
@@ -48,38 +50,6 @@
         public IEnumerable<TFieldSettings> Fields
         {
             get { return _fieldsContainer.OrderedFields; }
-        }
-    }
-
-    public interface IFieldsContainer<TFieldSettings> 
-         where TFieldSettings : FieldSettingsBase
-    {
-        void AddOrUpdate(TFieldSettings settings);
-
-        IOrderedEnumerable<TFieldSettings> OrderedFields { get; }
-    }
-
-    public class FieldsContainer<TFieldSettings> : IFieldsContainer<TFieldSettings>
-        where TFieldSettings : FieldSettingsBase
-    {
-        private readonly Dictionary<PropertyInfo, TFieldSettings> fields;
-        private int currentPropertyId = 0;
-
-        public FieldsContainer()
-        {
-            fields = new Dictionary<PropertyInfo, TFieldSettings>();
-        }
-
-        public void AddOrUpdate(TFieldSettings settings)
-        {
-            settings.Id = currentPropertyId++;
-
-            fields[settings.PropertyInfo] = settings;
-        }
-
-        public IOrderedEnumerable<TFieldSettings> OrderedFields
-        {
-            get { return fields.Values.OrderBy(settings => settings.Id); }
         }
     }
 }

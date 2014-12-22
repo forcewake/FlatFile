@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\Entities\TestObject.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="Core\FieldsContainerTests.cs" />
     <Compile Include="FixedLength\FixedLayout.cs" />
     <Compile Include="FixedLength\FixedLengthLineParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
