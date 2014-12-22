@@ -9,8 +9,8 @@ namespace FlatFile.Delimited.Implementation
         LayoutBase<TTarget, DelimitedFieldSettings, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TTarget>>,
         IDelimitedLayout<TTarget>
     {
-        private string _delimiter;
-        private string _quotes;
+        private string _delimiter = ",";
+        private string _quotes = string.Empty;
 
         public DelimitedLayout()
             : this(
