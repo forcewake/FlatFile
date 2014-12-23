@@ -6,9 +6,8 @@ namespace FlatFile.Delimited.Implementation
     using FlatFile.Core.Base;
 
     public class DelimitedLayout<TTarget> :
-        LayoutBase<TTarget, DelimitedFieldSettings, IDelimitedFieldSettingsConstructor, DelimitedLayout<TTarget>>,
-        IDelimitedLayout<TTarget>,
-        IDelimitedLayout<TTarget, DelimitedLayout<TTarget>>
+        LayoutBase<TTarget, DelimitedFieldSettings, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TTarget>>,
+        IDelimitedLayout<TTarget>
     {
         public DelimitedLayout()
             : this(
@@ -31,53 +30,34 @@ namespace FlatFile.Delimited.Implementation
 
         public string Quotes { get; private set; }
 
-
-        public DelimitedLayout<TTarget> WithQuote(string quote)
+        public IDelimitedLayout<TTarget> WithQuote(string quote)
         {
             Quotes = quote;
+
             return this;
         }
 
-        IDelimitedLayout<TTarget> IDelimitedLayout<TTarget, IDelimitedLayout<TTarget>>.WithDelimiter(string delimiter)
-        {
-            return WithDelimiter(delimiter);
-        }
-
-        IDelimitedLayout<TTarget> IDelimitedLayout<TTarget, IDelimitedLayout<TTarget>>.WithQuote(string quote)
-        {
-            return WithQuote(quote);
-        }
-
-        public DelimitedLayout<TTarget> WithDelimiter(string delimiter)
+        public IDelimitedLayout<TTarget> WithDelimiter(string delimiter)
         {
             Delimiter = delimiter;
+
             return this;
         }
 
-        public override DelimitedLayout<TTarget> WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression,
+        public override IDelimitedLayout<TTarget> WithMember<TProperty>(
+            Expression<Func<TTarget, TProperty>> expression,
             Action<IDelimitedFieldSettingsConstructor> settings = null)
         {
             ProcessProperty(expression, settings);
+
             return this;
         }
 
-        IDelimitedLayout<TTarget> ILayout<TTarget, DelimitedFieldSettings, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TTarget>>.WithHeader()
-        {
-            return WithHeader();
-        }
-
-        public override DelimitedLayout<TTarget> WithHeader()
+        public override IDelimitedLayout<TTarget> WithHeader()
         {
             HasHeader = true;
-            return this;
-        }
 
-        IDelimitedLayout<TTarget>
-            ILayout<TTarget, DelimitedFieldSettings, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TTarget>>.
-            WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression,
-                Action<IDelimitedFieldSettingsConstructor> settings)
-        {
-            return WithMember(expression, settings);
+            return this;
         }
     }
 }
