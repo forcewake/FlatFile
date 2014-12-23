@@ -53,10 +53,13 @@
         }
 
         public abstract TLayout WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TConstructor> settings = null);
+        public abstract TLayout WithHeader();
 
         public IEnumerable<TFieldSettings> Fields
         {
             get { return _fieldsContainer.OrderedFields; }
         }
+
+        public bool HasHeader { get; protected set; }
     }
 }

@@ -6,5 +6,8 @@ namespace FlatFile.Delimited
     public interface IDelimitedFieldSettingsConstructor :
         IFieldSettingsConstructor<DelimitedFieldSettings, IDelimitedFieldSettingsConstructor>
     {
+        string Name { get; }
+
+        IDelimitedFieldSettingsConstructor WithName(string name);
     }
 }

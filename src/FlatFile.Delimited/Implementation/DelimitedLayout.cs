@@ -6,12 +6,10 @@ namespace FlatFile.Delimited.Implementation
     using FlatFile.Core.Base;
 
     public class DelimitedLayout<TTarget> :
-        LayoutBase<TTarget, DelimitedFieldSettings, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TTarget>>,
-        IDelimitedLayout<TTarget>
+        LayoutBase<TTarget, DelimitedFieldSettings, IDelimitedFieldSettingsConstructor, DelimitedLayout<TTarget>>,
+        IDelimitedLayout<TTarget>,
+        IDelimitedLayout<TTarget, DelimitedLayout<TTarget>>
     {
-        private string _delimiter = ",";
-        private string _quotes = string.Empty;
-
         public DelimitedLayout()
             : this(
                 new DelimitedFieldSettingsFactory(), new DelimitedFieldSettingsBuilder(),
@@ -25,35 +23,61 @@ namespace FlatFile.Delimited.Implementation
             IFieldsContainer<DelimitedFieldSettings> fieldsContainer)
             : base(fieldSettingsFactory, builder, fieldsContainer)
         {
+            Quotes = string.Empty;
+            Delimiter = ",";
         }
 
-        public string Delimiter
-        {
-            get { return _delimiter; }
-        }
+        public string Delimiter { get; private set; }
 
-        public string Quotes
-        {
-            get { return _quotes; }
-        }
+        public string Quotes { get; private set; }
 
-        public IDelimitedLayout<TTarget, IDelimitedLayout<TTarget>> WithQuote(string quote)
+
+        public DelimitedLayout<TTarget> WithQuote(string quote)
         {
-            _quotes = quote;
+            Quotes = quote;
             return this;
         }
 
-        public IDelimitedLayout<TTarget, IDelimitedLayout<TTarget>> WithDelimiter(string delimiter)
+        IDelimitedLayout<TTarget> IDelimitedLayout<TTarget, IDelimitedLayout<TTarget>>.WithDelimiter(string delimiter)
         {
-            _delimiter = delimiter;
+            return WithDelimiter(delimiter);
+        }
+
+        IDelimitedLayout<TTarget> IDelimitedLayout<TTarget, IDelimitedLayout<TTarget>>.WithQuote(string quote)
+        {
+            return WithQuote(quote);
+        }
+
+        public DelimitedLayout<TTarget> WithDelimiter(string delimiter)
+        {
+            Delimiter = delimiter;
             return this;
         }
 
-        public override IDelimitedLayout<TTarget> WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression,
+        public override DelimitedLayout<TTarget> WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression,
             Action<IDelimitedFieldSettingsConstructor> settings = null)
         {
             ProcessProperty(expression, settings);
             return this;
+        }
+
+        IDelimitedLayout<TTarget> ILayout<TTarget, DelimitedFieldSettings, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TTarget>>.WithHeader()
+        {
+            return WithHeader();
+        }
+
+        public override DelimitedLayout<TTarget> WithHeader()
+        {
+            HasHeader = true;
+            return this;
+        }
+
+        IDelimitedLayout<TTarget>
+            ILayout<TTarget, DelimitedFieldSettings, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TTarget>>.
+            WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression,
+                Action<IDelimitedFieldSettingsConstructor> settings)
+        {
+            return WithMember(expression, settings);
         }
     }
 }

@@ -11,16 +11,18 @@ namespace FlatFile.Tests.Base
     using FluentAssertions;
     using Xunit;
 
-    public abstract class IntegrationTests<T, TFieldSettings, TConstructor, TLayout>
-        where TLayout : ILayout<T, TFieldSettings, TConstructor, TLayout>
+    public abstract class IntegrationTests<TFieldSettings, TConstructor, TLayout>
+        where TLayout : ILayout<TestObject, TFieldSettings, TConstructor, TLayout>
         where TFieldSettings : FieldSettingsBase
-        where TConstructor : IFieldSettingsConstructor<TFieldSettings, TConstructor>
+        where TConstructor : IFieldSettingsConstructor<TFieldSettings, TConstructor> 
     {
         protected abstract TLayout Layout { get; }
 
         protected IList<TestObject> Objects { get; set; }
 
-        protected abstract Func<Stream, IFlatFileEngine<TestObject>> Engine { get; }
+        protected abstract Func<Stream, IFlatFileEngine<TestObject, TLayout, TFieldSettings, TConstructor>> Engine
+        {
+            get; }
 
         public abstract string TestSource { get; }
 
@@ -44,7 +46,7 @@ namespace FlatFile.Tests.Base
         {
             InvokeWriteTest((engine, stream) =>
             {
-                var objectsAfterRead = engine.Read().ToList();
+                var objectsAfterRead = engine.Read(Layout, stream).ToArray();
 
                 objectsAfterRead.Should().HaveCount(Objects.Count);
 
@@ -56,7 +58,7 @@ namespace FlatFile.Tests.Base
         {
             InvokeWriteTest((engine, stream) =>
             {
-                var objectsAfterRead = engine.Read().ToList();
+                var objectsAfterRead = engine.Read(Layout, stream).ToList();
 
                 objectsAfterRead.ShouldAllBeEquivalentTo(Objects, options => options.IncludingAllDeclaredProperties());
 
@@ -68,20 +70,20 @@ namespace FlatFile.Tests.Base
         {
             InvokeReadbasedTest((engine, stream) =>
             {
-                var objectsAfterRead = engine.Read().ToList();
+                var objectsAfterRead = engine.Read(Layout, stream).ToList();
 
                 objectsAfterRead.ShouldAllBeEquivalentTo(Objects, options => options.IncludingAllDeclaredProperties());
 
             }, TestSource);
         }
 
-        protected virtual void InvokeWriteTest(Action<IFlatFileEngine<TestObject>, MemoryStream> action)
+        protected virtual void InvokeWriteTest(Action<IFlatFileEngine<TestObject, TLayout, TFieldSettings, TConstructor>, MemoryStream> action)
         {
             using (var memory = new MemoryStream())
             {
                 var engine = Engine(memory);
 
-                engine.Write(Objects);
+                engine.Write(Layout, memory, Objects);
 
                 memory.Seek(0, SeekOrigin.Begin);
 
@@ -89,7 +91,8 @@ namespace FlatFile.Tests.Base
             }
         }
 
-        protected virtual void InvokeReadbasedTest(Action<IFlatFileEngine<TestObject>, MemoryStream> action, string textSource)
+        protected virtual void InvokeReadbasedTest(Action<IFlatFileEngine<TestObject, TLayout, TFieldSettings, TConstructor>, MemoryStream> action,
+            string textSource)
         {
             using (var memory = new MemoryStream(Encoding.UTF8.GetBytes(textSource)))
             {

@@ -52,25 +52,11 @@ namespace FlatFile.Benchmark
                 {
                     var layout = new FixedSampleRecordLayout();
                     using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(FixedFileSample)))
-                    using (var flatFile = new FlatFileEngine<FixedSampleRecord>(
-                        stream,
-                        new FixedLengthLineParser<FixedSampleRecord>(layout),
-                        new FixedLengthLineBuilder<FixedSampleRecord>(layout)))
                     {
-                        var records = flatFile.Read().ToArray();
-                        records.Should().HaveCount(19);
-                    }
-                })
-                .Against.This("EventedFlatFileEngine.Read", () =>
-                {
-                    var layout = new FixedSampleRecordLayout();
-                    using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(FixedFileSample)))
-                    using (var flatFile = new EventedFlatFileEngine<FixedSampleRecord>(
-                        stream,
-                        new FixedLengthLineParser<FixedSampleRecord>(layout),
-                        new FixedLengthLineBuilder<FixedSampleRecord>(layout)))
-                    {
-                        var records = flatFile.Read().ToArray();
+                        var flatFile = new FixedLengthFileEngine<FixedSampleRecord>();
+
+                        var records = flatFile.Read(layout, stream).ToArray();
+
                         records.Should().HaveCount(19);
                     }
                 })
@@ -99,24 +85,10 @@ namespace FlatFile.Benchmark
                 {
                     var layout = new FixedSampleRecordLayout();
                     using (var stream = new MemoryStream())
-                    using (var flatFile = new FlatFileEngine<FixedSampleRecord>(
-                        stream,
-                        new FixedLengthLineParser<FixedSampleRecord>(layout),
-                        new FixedLengthLineBuilder<FixedSampleRecord>(layout)))
                     {
-                        flatFile.Write(sampleRecords);
-                    }
-                })
-                .Against.This("EventedFlatFileEngine.Write", () =>
-                {
-                    var layout = new FixedSampleRecordLayout();
-                    using (var stream = new MemoryStream())
-                    using (var flatFile = new EventedFlatFileEngine<FixedSampleRecord>(
-                        stream,
-                        new FixedLengthLineParser<FixedSampleRecord>(layout),
-                        new FixedLengthLineBuilder<FixedSampleRecord>(layout)))
-                    {
-                        flatFile.Write(sampleRecords);
+                        var flatFile = new FixedLengthFileEngine<FixedSampleRecord>();
+
+                        flatFile.Write(layout, stream, sampleRecords);
                     }
                 })
                 .WithWarmup(1000)
@@ -146,24 +118,10 @@ namespace FlatFile.Benchmark
                 {
                     var layout = new FixedSampleRecordLayout();
                     using (var stream = new MemoryStream())
-                    using (var flatFile = new FlatFileEngine<FixedSampleRecord>(
-                        stream,
-                        new FixedLengthLineParser<FixedSampleRecord>(layout),
-                        new FixedLengthLineBuilder<FixedSampleRecord>(layout)))
                     {
-                        flatFile.Write(sampleRecords);
-                    }
-                })
-                .Against.This("EventedFlatFileEngine.Write", () =>
-                {
-                    var layout = new FixedSampleRecordLayout();
-                    using (var stream = new MemoryStream())
-                    using (var flatFile = new EventedFlatFileEngine<FixedSampleRecord>(
-                        stream,
-                        new FixedLengthLineParser<FixedSampleRecord>(layout),
-                        new FixedLengthLineBuilder<FixedSampleRecord>(layout)))
-                    {
-                        flatFile.Write(sampleRecords);
+                        var flatFile = new FixedLengthFileEngine<FixedSampleRecord>();
+
+                        flatFile.Write(layout, stream, sampleRecords);
                     }
                 })
                 .WithWarmup(10)

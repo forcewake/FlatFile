@@ -3,19 +3,17 @@ namespace FlatFile.Tests.FixedLength
     using System;
     using System.IO;
     using FlatFile.Core;
-    using FlatFile.Core.Base;
     using FlatFile.FixedLength;
     using FlatFile.FixedLength.Implementation;
     using FlatFile.Tests.Base;
     using FlatFile.Tests.Base.Entities;
 
     public class FixedLengthIntegrationTests :
-        IntegrationTests<TestObject, FixedFieldSettings, IFixedFieldSettingsConstructor, IFixedLayout<TestObject>>,
-        IDisposable
+        IntegrationTests<FixedFieldSettings, IFixedFieldSettingsConstructor, IFixedLayout<TestObject>>
     {
-        private FlatFileEngine<TestObject> _flatFileEngine;
+        private FixedLengthFileEngine<TestObject> _flatFileEngine;
         private readonly IFixedLayout<TestObject> _layout;
-        private readonly Func<Stream, IFlatFileEngine<TestObject>> _engine;
+        private readonly Func<Stream, IFlatFileEngine<TestObject, IFixedLayout<TestObject>, FixedFieldSettings, IFixedFieldSettingsConstructor>> _engine;
         private const string _testSource = @"00001Description 1            00003
 00002Description 2            00003
 00003Description 3            00003
@@ -36,18 +34,10 @@ namespace FlatFile.Tests.FixedLength
 
             _engine = stream =>
             {
-                _flatFileEngine = new FlatFileEngine<TestObject>(
-                    stream, 
-                    new FixedLengthLineParser<TestObject>(Layout),
-                    new FixedLengthLineBuilder<TestObject>(Layout));
+                _flatFileEngine = new FixedLengthFileEngine<TestObject>();
 
                 return _flatFileEngine;
             };
-        }
-
-        public void Dispose()
-        {
-            _flatFileEngine.Dispose();
         }
 
         protected override IFixedLayout<TestObject> Layout
@@ -55,7 +45,7 @@ namespace FlatFile.Tests.FixedLength
             get { return _layout; }
         }
 
-        protected override Func<Stream, IFlatFileEngine<TestObject>> Engine
+        protected override Func<Stream, IFlatFileEngine<TestObject, IFixedLayout<TestObject>, FixedFieldSettings, IFixedFieldSettingsConstructor>> Engine
         {
             get { return _engine; }
         }

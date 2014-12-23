@@ -2,7 +2,9 @@ namespace FlatFile.Delimited
 {
     using FlatFile.Core;
 
-    public interface IDelimitedFileEngine<T> : IFlatFileEngine<T> where T : class, new()
+    public interface IDelimitedFileEngine<T> :
+        IFlatFileEngine<T, IDelimitedLayout<T>, DelimitedFieldSettings, IDelimitedFieldSettingsConstructor>
+        where T : class, new()
     {
     }
 }

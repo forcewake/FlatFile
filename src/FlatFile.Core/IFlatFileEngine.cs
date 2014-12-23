@@ -1,12 +1,17 @@
 ﻿namespace FlatFile.Core
 {
     using System.Collections.Generic;
+    using System.IO;
+    using FlatFile.Core.Base;
 
-    public interface IFlatFileEngine<T>
-        where T : class, new()
+    public interface IFlatFileEngine<TEntity, in TLayout, TFieldSettings, TConstructor>
+        where TEntity : class, new()
+        where TLayout : ILayout<TEntity, TFieldSettings, TConstructor, TLayout>
+        where TFieldSettings : FieldSettingsBase
+        where TConstructor : IFieldSettingsConstructor<TFieldSettings, TConstructor>
     {
-        IEnumerable<T> Read();
+        IEnumerable<TEntity> Read(TLayout layout, Stream stream);
 
-        void Write(IEnumerable<T> entries);
+        void Write(TLayout layout, Stream stream, IEnumerable<TEntity> entries);
     }
 }

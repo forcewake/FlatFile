@@ -35,6 +35,18 @@ namespace FlatFile.FixedLength.Implementation
         }
 
         IFixedLayout<TTarget>
+            ILayout<TTarget, FixedFieldSettings, IFixedFieldSettingsConstructor, IFixedLayout<TTarget>>.WithHeader()
+        {
+            return WithHeader();
+        }
+
+        public override FixedLayout<TTarget> WithHeader()
+        {
+            HasHeader = true;
+            return this;
+        }
+
+        IFixedLayout<TTarget>
             ILayout<TTarget, FixedFieldSettings, IFixedFieldSettingsConstructor, IFixedLayout<TTarget>>.WithMember
             <TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<IFixedFieldSettingsConstructor> settings)
         {

@@ -27,6 +27,20 @@
         }
 
         [Fact]
+        public void WithHeader()
+        {
+            layout.WithHeader();
+
+            layout.HasHeader.Should().BeTrue();
+        }
+
+        [Fact]
+        public void WithoutHeader()
+        {
+            layout.HasHeader.Should().BeFalse();
+        }
+
+        [Fact]
         public void FieldsCountAfterReplacementShouldNotChange()
         {
             layout.WithMember(o => o.NullableInt, set => set.AllowNull(string.Empty));

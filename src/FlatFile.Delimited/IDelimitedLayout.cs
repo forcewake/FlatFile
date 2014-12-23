@@ -10,8 +10,8 @@ namespace FlatFile.Delimited
         string Delimiter { get; }
         string Quotes { get; }
 
-        IDelimitedLayout<TTarget, TLayout> WithQuote(string quote);
-        IDelimitedLayout<TTarget, TLayout> WithDelimiter(string delimiter);
+        TLayout WithQuote(string quote);
+        TLayout WithDelimiter(string delimiter);
     }
 
     public interface IDelimitedLayout<TTarget> :

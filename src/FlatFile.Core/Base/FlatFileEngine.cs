@@ -4,44 +4,49 @@ namespace FlatFile.Core.Base
     using System.Collections.Generic;
     using System.IO;
     using FlatFile.Core;
+    using FlatFile.Core.Exceptions;
 
-    public class FlatFileEngine<T> : IDisposable, IFlatFileEngine<T>
-        where T : class, new()
+    public abstract class FlatFileEngine<TEntity, TLayout, TFieldSettings, TConstructor, TBuilder, TParser> :
+        IFlatFileEngine<TEntity, TLayout, TFieldSettings, TConstructor>
+        where TEntity : class, new()
+        where TLayout : ILayout<TEntity, TFieldSettings, TConstructor, TLayout>
+        where TFieldSettings : FieldSettingsBase
+        where TConstructor : IFieldSettingsConstructor<TFieldSettings, TConstructor>
+        where TBuilder : ILineBulder<TEntity>
+        where TParser : ILineParser<TEntity>
     {
-        private readonly ILineBulder<T> _builder;
         private readonly Func<string, Exception, bool> _handleEntryReadError;
-        private readonly Stream _innerStream;
 
-        private readonly ILineParser<T> _parser;
+        protected abstract ILineBuilderFactory<TEntity, TBuilder, TLayout, TFieldSettings, TConstructor> BuilderFactory { get; }
 
-        public FlatFileEngine(Stream innerStream, ILineParser<T> parser, ILineBulder<T> builder,
-            Func<string, Exception, bool> handleEntryReadError = null)
+        protected abstract ILineParserFactory<TEntity, TParser, TLayout, TFieldSettings, TConstructor> ParserFactory { get; }
+
+        protected FlatFileEngine(Func<string, Exception, bool> handleEntryReadError = null)
         {
-            _innerStream = innerStream;
             _handleEntryReadError = handleEntryReadError;
-            _parser = parser;
-            _builder = builder;
         }
 
-        public void Dispose()
+        public virtual IEnumerable<TEntity> Read(TLayout layout, Stream stream)
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        public IEnumerable<T> Read()
-        {
-            var reader = new StreamReader(_innerStream);
+            var reader = new StreamReader(stream);
             string line;
             int lineNumber = 0;
+
+            if (layout.HasHeader)
+            {
+                ProcessHeader(layout, reader);
+            }
+
             while ((line = reader.ReadLine()) != null)
             {
                 bool ignoreEntry = false;
-                var entry = new T();
+                TEntity entry = null;
                 try
                 {
-                    lineNumber++;
-                    entry = ParseLine(entry, line, lineNumber);
+                    if (!TryParseLine(layout, line, lineNumber++, out entry))
+                    {
+                        throw new ParseLineException("Impossible to parse line", line, lineNumber);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -57,6 +62,7 @@ namespace FlatFile.Core.Base
 
                     ignoreEntry = true;
                 }
+
                 if (!ignoreEntry)
                 {
                     yield return entry;
@@ -64,50 +70,57 @@ namespace FlatFile.Core.Base
             }
         }
 
-        public void Write(IEnumerable<T> entries)
+        protected virtual void ProcessHeader(TLayout layout, StreamReader reader)
         {
-            int lineNumber = 0;
-            TextWriter writer = new StreamWriter(_innerStream);
-            foreach (T entry in entries)
-            {
-                lineNumber++;
-                string line = BuildLine(entry, lineNumber);
-                WriteLine(writer, line, entry, lineNumber);
-            }
-            writer.Flush();
+            reader.ReadLine();
         }
 
-        protected virtual T ParseLine(T entry, string line, int lineNumber)
+        protected virtual bool TryParseLine(TLayout layout, string line, int lineNumber, out TEntity entity)
         {
-            entry = _parser.ParseLine(line, entry);
-            return entry;
+            var parser = ParserFactory.GetParser(layout);
+
+            entity = new TEntity();
+
+            parser.ParseLine(line, entity);
+
+            return true;
         }
 
-        protected virtual void WriteLine(TextWriter writer, string line, T entry, int lineNumber)
+        protected virtual void WriteEntry(TLayout layout, TextWriter writer, int lineNumber, TEntity entity)
         {
+            var builder = BuilderFactory.GetBuilder(layout);
+
+            var line = builder.BuildLine(entity);
+
             writer.WriteLine(line);
         }
 
-        protected virtual string BuildLine(T entry, int lineNumber)
+        public virtual void Write(TLayout layout, Stream stream, IEnumerable<TEntity> entries)
         {
-            string line = _builder.BuildLine(entry);
-            return line;
-        }
+            TextWriter writer = new StreamWriter(stream);
 
-        protected void Dispose(bool disposing)
-        {
-            if (disposing)
+            this.WriteHeader(layout, writer);
+
+            int lineNumber = 0;
+
+            foreach (var entry in entries)
             {
-                if (_innerStream != null)
-                {
-                    _innerStream.Dispose();
-                }
+                this.WriteEntry(layout, writer, lineNumber, entry);
+
+                lineNumber += 1;
             }
+
+            this.WriteFooter(layout, writer);
+
+            writer.Flush();
         }
 
-        ~FlatFileEngine()
+        protected virtual void WriteHeader(TLayout layout, TextWriter writer)
         {
-            Dispose(false);
+        }
+
+        protected virtual void WriteFooter(TLayout layout, TextWriter writer)
+        {
         }
     }
 }

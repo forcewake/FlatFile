@@ -4,7 +4,7 @@
     using System.Reflection;
     using FlatFile.Core.Base;
     using FlatFile.Core.Extensions;
-    using FlatFile.FixedLength.Implementation;
+    using FlatFile.FixedLength;
     using FlatFile.Tests.Base.Entities;
     using FluentAssertions;
     using Xunit;
