@@ -11,7 +11,8 @@ namespace FlatFile.Delimited.Implementation
     {
         public DelimitedLayout()
             : this(
-                new DelimitedFieldSettingsFactory(), new DelimitedFieldSettingsBuilder(),
+                new DelimitedFieldSettingsFactory(),
+                new DelimitedFieldSettingsBuilder(),
                 new FieldsContainer<DelimitedFieldSettings>())
         {
         }
