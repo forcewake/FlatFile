@@ -27,7 +27,6 @@ This command from Package Manager Console will download and install FlatFile and
 Name                                    Milliseconds        Percent                       
 FileHelperEngine.WriteStream            5175                11266.8%                      
 FlatFileEngine.Write                    45                  100%                          
-EventedFlatFileEngine.Write             63                  137.6%                        
 ```
 
 #### Simple read
@@ -35,7 +34,6 @@ EventedFlatFileEngine.Write             63                  137.6%
 Name                                    Milliseconds        Percent                       
 FileHelperEngine.ReadStream             7636                2764.4%                       
 FlatFileEngine.Read                     276                 100%                          
-EventedFlatFileEngine.Read              309                 112.1%               
 ```
 
 #### Big (100000 entities) write
@@ -43,7 +41,6 @@ EventedFlatFileEngine.Read              309                 112.1%
 Name                                    Milliseconds        Percent                       
 FileHelperEngine.WriteStream            17246               838.4%                        
 FlatFileEngine.Write                    2057                100%                          
-EventedFlatFileEngine.Write             2967                144.3%                        
 ```
 
 #### Big (100000 entities) write with reflection magic
@@ -51,13 +48,25 @@ EventedFlatFileEngine.Write             2967                144.3%
 Name                                    Milliseconds        Percent                       
 FileHelperEngine.WriteStream            17778               1052.5%                       
 FlatFileEngine.Write                    1689                100%                          
-EventedFlatFileEngine.Write             2334                138.2%     
 ```
 
 ### Usage
-
-Create layout for the entity
-
+#### Class mapping 
+##### DelimitedLayout
+```cs
+public class DelimitedSampleRecordLayout : DelimitedLayout<FixedSampleRecord>
+{
+    protected override void MapLayout()
+    {
+        this.WithDelimiter(";")
+            .WithQuote("\"")
+            .WithMember(x => x.Cuit)
+            .WithMember(x => x.Nombre)
+            .WithMember(x => x.Actividad, c => c.WithName("AnotherName"));
+    }
+}
+```
+##### FixedLayout
 ```cs
 public class FixedSampleRecordLayout : FixedLayout<FixedSampleRecord>
 {
@@ -70,16 +79,58 @@ public class FixedSampleRecordLayout : FixedLayout<FixedSampleRecord>
 }
 ```
 
-Write array to the stream
+#### Run-time mapping
+##### DelimitedLayout
+```cs
+public class LayoutFactory
+{
+    public IDelimitedLayout<TestObject> GetLayout()
+    {
+        IDelimitedLayout<TestObject> layout = new DelimitedLayout<TestObject>()
+            .WithDelimiter(";")
+            .WithQuote("\"")
+            .WithMember(o => o.Id)
+            .WithMember(o => o.Description)
+            .WithMember(o => o.NullableInt, set => set.AllowNull("=Null"));
 
+        return layout;
+    } 
+}
+```
+##### FixedLayout
+```cs
+public class LayoutFactory
+{
+    public IFixedLayout<TestObject> GetLayout()
+    {
+        IFixedLayout<TestObject> layout = new FixedLayout<TestObject>()
+            .WithMember(o => o.Id, set => set.WithLenght(5).WithLeftPadding('0'))
+            .WithMember(o => o.Description, set => set.WithLenght(25).WithRightPadding(' '))
+            .WithMember(o => o.NullableInt, set => set.WithLenght(5).AllowNull("=Null").WithLeftPadding('0'));
+
+        return layout;
+    } 
+}
+```
+#### Read from stream
+```cs
+var layout = new FixedSampleRecordLayout();
+using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(FixedFileSample)))
+{
+    var flatFile = new FixedLengthFileEngine<FixedSampleRecord>();
+
+    var records = flatFile.Read(layout, stream).ToArray();
+
+    records.Should().HaveCount(19);
+}
+```
+#### Write to stream
 ```cs
 var layout = new FixedSampleRecordLayout();
 using (var stream = new MemoryStream())
-using (var flatFile = new FlatFileEngine<FixedSampleRecord>(
-    stream,
-    new FixedLengthLineParser<FixedSampleRecord>(layout),
-    new FixedLengthLineBuilder<FixedSampleRecord>(layout)))
 {
-    flatFile.Write(sampleRecords);
+    var flatFile = new FixedLengthFileEngine<FixedSampleRecord>();
+
+    flatFile.Write(layout, stream, sampleRecords);
 }
 ```

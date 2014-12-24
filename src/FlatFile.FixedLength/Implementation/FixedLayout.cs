@@ -6,11 +6,13 @@ namespace FlatFile.FixedLength.Implementation
     using FlatFile.Core.Base;
 
     public class FixedLayout<TTarget> :
-        LayoutBase<TTarget, FixedFieldSettings, IFixedFieldSettingsConstructor, FixedLayout<TTarget>>
+        LayoutBase<TTarget, FixedFieldSettings, IFixedFieldSettingsConstructor, IFixedLayout<TTarget>>,
+        IFixedLayout<TTarget>
     {
         public FixedLayout()
             : this(
-                new FixedFieldSettingsFactory(), new FixedFieldSettingsBuilder(),
+                new FixedFieldSettingsFactory(),
+                new FixedFieldSettingsBuilder(),
                 new FieldsContainer<FixedFieldSettings>())
         {
         }
@@ -23,7 +25,7 @@ namespace FlatFile.FixedLength.Implementation
         {
         }
 
-        public override FixedLayout<TTarget> WithMember<TProperty>(
+        public override IFixedLayout<TTarget> WithMember<TProperty>(
             Expression<Func<TTarget, TProperty>> expression,
             Action<IFixedFieldSettingsConstructor> settings = null)
         {
@@ -32,7 +34,7 @@ namespace FlatFile.FixedLength.Implementation
             return this;
         }
 
-        public override FixedLayout<TTarget> WithHeader()
+        public override IFixedLayout<TTarget> WithHeader()
         {
             HasHeader = true;
 
