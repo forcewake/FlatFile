@@ -93,21 +93,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IEventedFixedLengthFileEngine.cs" />
+    <Compile Include="FixedFieldSettings.cs" />
     <Compile Include="IFixedFieldSettingsConstructor.cs" />
     <Compile Include="IFixedLayout.cs" />
     <Compile Include="IFixedLengthLineBuilder.cs" />
     <Compile Include="IFixedLengthLineParser.cs" />
     <Compile Include="IFixedLengthFileEngine.cs" />
-    <Compile Include="Implementation\EventedFlatFileEngine.cs" />
-    <Compile Include="Implementation\FixedFieldSettings.cs" />
+    <Compile Include="IFixedLengthLineParserFactory.cs" />
+    <Compile Include="IFixedLengthLineBuilderFactory.cs" />
+    <Compile Include="Implementation\FixedLengthFileEngine.cs" />
     <Compile Include="Implementation\FixedFieldSettingsBuilder.cs" />
     <Compile Include="Implementation\FixedFieldSettingsConstructor.cs" />
     <Compile Include="Implementation\FixedFieldSettingsFactory.cs" />
     <Compile Include="Implementation\FixedLayout.cs" />
     <Compile Include="Implementation\FixedLengthLineBuilder.cs" />
+    <Compile Include="Implementation\FixedLengthLineBuilderFactory.cs" />
     <Compile Include="Implementation\FixedLengthLineParser.cs" />
-    <Compile Include="Implementation\FlatFileEngine.cs" />
+    <Compile Include="Implementation\FixedLengthLineParserFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

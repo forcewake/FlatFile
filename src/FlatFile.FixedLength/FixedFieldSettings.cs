@@ -1,4 +1,4 @@
-namespace FlatFile.FixedLength.Implementation
+namespace FlatFile.FixedLength
 {
     using FlatFile.Core.Base;
 

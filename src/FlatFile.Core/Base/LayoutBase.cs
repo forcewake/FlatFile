@@ -32,7 +32,10 @@
 
             var constructor = _fieldSettingsFactory.CreateFieldSettings(propertyInfo);
 
-            settings(constructor);
+            if (settings != null)
+            {
+                settings(constructor);
+            }
 
             var fieldSettings = _builder.BuildSettings(constructor);
 
@@ -45,11 +48,18 @@
             return propertyInfo;
         }
 
-        public abstract TLayout WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TConstructor> settings);
-        
+        protected virtual void MapLayout()
+        {
+        }
+
+        public abstract TLayout WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TConstructor> settings = null);
+        public abstract TLayout WithHeader();
+
         public IEnumerable<TFieldSettings> Fields
         {
             get { return _fieldsContainer.OrderedFields; }
         }
+
+        public bool HasHeader { get; protected set; }
     }
 }

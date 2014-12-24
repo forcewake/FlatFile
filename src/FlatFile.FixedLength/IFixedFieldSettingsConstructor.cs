@@ -1,7 +1,6 @@
 namespace FlatFile.FixedLength
 {
     using FlatFile.Core;
-    using FlatFile.FixedLength.Implementation;
 
     public interface IFixedFieldSettingsConstructor :
         IFieldSettingsConstructor<FixedFieldSettings, IFixedFieldSettingsConstructor>

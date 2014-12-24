@@ -93,16 +93,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DelimitedFieldSettings.cs" />
     <Compile Include="IDelimitedFieldSettingsConstructor.cs" />
+    <Compile Include="IDelimitedFileEngine.cs" />
     <Compile Include="IDelimitedLayout.cs" />
     <Compile Include="IDelimitedLineBuilder.cs" />
+    <Compile Include="IDelimitedLineBuilderFactory.cs" />
     <Compile Include="IDelimitedLineParser.cs" />
-    <Compile Include="Implementation\DelimitedFieldSettings.cs" />
+    <Compile Include="IDelimitedLineParserFactory.cs" />
     <Compile Include="Implementation\DelimitedFieldSettingsBuilder.cs" />
     <Compile Include="Implementation\DelimitedFieldSettingsConstructor.cs" />
     <Compile Include="Implementation\DelimitedFieldSettingsFactory.cs" />
+    <Compile Include="Implementation\DelimitedFileEngine.cs" />
+    <Compile Include="Implementation\DelimitedLayout.cs" />
     <Compile Include="Implementation\DelimitedLineBuilder.cs" />
+    <Compile Include="Implementation\DelimitedLineBuilderFactory.cs" />
     <Compile Include="Implementation\DelimitedLineParser.cs" />
+    <Compile Include="Implementation\DelimitedLineParserFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

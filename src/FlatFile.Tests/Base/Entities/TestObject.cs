@@ -4,7 +4,7 @@ namespace FlatFile.Tests.Base.Entities
 
     public class TestObject : IEquatable<TestObject> {
         public int Id { get; set; }
-
+        
         public string Description { get; set; }
 
         public int? NullableInt { get; set; }

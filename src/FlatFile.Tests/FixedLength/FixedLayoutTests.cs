@@ -5,11 +5,11 @@
     using FluentAssertions;
     using Xunit;
 
-    public class FixedLayout
+    public class FixedLayoutTests
     {
         private readonly FixedLayout<TestObject> layout;
 
-        public FixedLayout()
+        public FixedLayoutTests()
         {
             layout = new FixedLayout<TestObject>()
                     .WithMember(o => o.Id, set => set.WithLenght(5).WithLeftPadding('0'))

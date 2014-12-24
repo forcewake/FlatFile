@@ -10,8 +10,12 @@ namespace FlatFile.Core
         where TConstructor : IFieldSettingsConstructor<TFieldSettings, TConstructor>
         where TLayout : ILayout<T, TFieldSettings, TConstructor, TLayout>
     {
-        TLayout WithMember<TProperty>(Expression<Func<T, TProperty>> expression, Action<TConstructor> settings);
+        TLayout WithMember<TProperty>(Expression<Func<T, TProperty>> expression, Action<TConstructor> settings = null);
+
+        TLayout WithHeader();
 
         IEnumerable<TFieldSettings> Fields { get; }
+
+        bool HasHeader { get; }
     }
 }

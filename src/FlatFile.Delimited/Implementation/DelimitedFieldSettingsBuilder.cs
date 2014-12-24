@@ -11,7 +11,8 @@ namespace FlatFile.Delimited.Implementation
             {
                 IsNullable = constructor.IsNullable,
                 NullValue = constructor.NullValue,
-                PropertyInfo = constructor.PropertyInfo
+                PropertyInfo = constructor.PropertyInfo,
+                Name = constructor.Name ?? constructor.PropertyInfo.Name
             };
         }
     }

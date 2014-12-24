@@ -1,11 +1,14 @@
 namespace FlatFile.Delimited
 {
     using FlatFile.Core;
-    using FlatFile.Delimited.Implementation;
 
-    public interface IDelimitedLayout<T> : ILayout<T, DelimitedFieldSettings, IDelimitedFieldSettingsConstructor, IDelimitedLayout<T>>
+    public interface IDelimitedLayout<TTarget> :
+        ILayout<TTarget, DelimitedFieldSettings, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TTarget>>
     {
         string Delimiter { get; }
         string Quotes { get; }
+
+        IDelimitedLayout<TTarget> WithQuote(string quote);
+        IDelimitedLayout<TTarget> WithDelimiter(string delimiter);
     }
 }

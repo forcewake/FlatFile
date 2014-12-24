@@ -6,9 +6,7 @@ namespace FlatFile.FixedLength.Implementation
     using FlatFile.Core.Base;
 
     public class FixedLayout<TTarget> :
-        LayoutBase<TTarget, FixedFieldSettings, IFixedFieldSettingsConstructor, FixedLayout<TTarget>>,
-        IFixedLayout<TTarget, FixedLayout<TTarget>>,
-        IFixedLayout<TTarget>
+        LayoutBase<TTarget, FixedFieldSettings, IFixedFieldSettingsConstructor, FixedLayout<TTarget>>
     {
         public FixedLayout()
             : this(
@@ -27,22 +25,18 @@ namespace FlatFile.FixedLength.Implementation
 
         public override FixedLayout<TTarget> WithMember<TProperty>(
             Expression<Func<TTarget, TProperty>> expression,
-            Action<IFixedFieldSettingsConstructor> settings)
+            Action<IFixedFieldSettingsConstructor> settings = null)
         {
             ProcessProperty(expression, settings);
 
             return this;
         }
 
-        protected virtual void MapLayout()
+        public override FixedLayout<TTarget> WithHeader()
         {
-        }
+            HasHeader = true;
 
-        IFixedLayout<TTarget>
-            ILayout<TTarget, FixedFieldSettings, IFixedFieldSettingsConstructor, IFixedLayout<TTarget>>.WithMember
-            <TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<IFixedFieldSettingsConstructor> settings)
-        {
-            return WithMember(expression, settings);
+            return this;
         }
     }
 }
