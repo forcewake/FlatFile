@@ -1,5 +1,6 @@
 ﻿namespace FlatFile.Tests.FixedLength
 {
+    using FlatFile.FixedLength;
     using FlatFile.FixedLength.Implementation;
     using FlatFile.Tests.Base.Entities;
     using FluentAssertions;
@@ -7,7 +8,7 @@
 
     public class FixedLayoutTests
     {
-        private readonly FixedLayout<TestObject> layout;
+        private readonly IFixedLayout<TestObject> layout;
 
         public FixedLayoutTests()
         {
