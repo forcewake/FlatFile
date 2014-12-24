@@ -50,7 +50,7 @@
         {
             _fieldsContainer.AddOrUpdate(_fieldSettings);
 
-            _fieldsContainer.OrderedFields.First().Id.Should().Be(0);
+            _fieldsContainer.OrderedFields.First().Index.Should().Be(0);
         }
 
         [Fact]
@@ -94,7 +94,7 @@
 
             foreach (var field in _fieldsContainer.OrderedFields)
             {
-                field.Id.Should().Be(id++);
+                field.Index.Should().Be(id++);
             }
         }
     }

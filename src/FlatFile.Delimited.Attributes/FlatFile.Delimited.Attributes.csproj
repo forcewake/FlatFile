@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2D38BA1D-8D0C-4DC2-A7B1-7BA330D1DDCD}</ProjectGuid>
+    <ProjectGuid>{0313AD85-3109-4E8D-999C-D016943E83D5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FlatFile.FixedLength</RootNamespace>
-    <AssemblyName>FlatFile.FixedLength</AssemblyName>
+    <RootNamespace>FlatFile.Delimited.Attributes</RootNamespace>
+    <AssemblyName>FlatFile.Delimited.Attributes</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <!-- This establishes a new variable called 'Framework'. Don't confuse this with the actual .net TargetFrameworkVersion. It is just variable we can use in our conditions. We might as well set it to the main or current target framework if it is ''.-->
@@ -30,7 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\$(Configuration)\$(Framework)\FlatFile.FixedLength.XML</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(Framework)\$(AssemblyName).XML</DocumentationFile>
   </PropertyGroup>
   <!-- Here is our debug 4.0 group keep reading to see where this is set -->
   <PropertyGroup Condition=" '$(Framework)' == 'NET40' And '$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
@@ -56,7 +56,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\$(Configuration)\$(Framework)\FlatFile.FixedLength.XML</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(Framework)\$(AssemblyName).XML</DocumentationFile>
   </PropertyGroup>
   <!-- Here is our debug 4.5 group keep reading to see where this is set -->
   <PropertyGroup Condition=" '$(Framework)' == 'NET45' And '$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
@@ -82,7 +82,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\$(Configuration)\$(Framework)\FlatFile.FixedLength.XML</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(Framework)\$(AssemblyName).XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -93,30 +93,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FixedFieldSettings.cs" />
-    <Compile Include="IFixedFieldSettingsConstructor.cs" />
-    <Compile Include="IFixedLayout.cs" />
-    <Compile Include="IFixedLengthLineBuilder.cs" />
-    <Compile Include="IFixedLengthLineParser.cs" />
-    <Compile Include="IFixedLengthFileEngine.cs" />
-    <Compile Include="IFixedLengthLineParserFactory.cs" />
-    <Compile Include="IFixedLengthLineBuilderFactory.cs" />
-    <Compile Include="Implementation\FixedLengthFileEngine.cs" />
-    <Compile Include="Implementation\FixedFieldSettingsBuilder.cs" />
-    <Compile Include="Implementation\FixedFieldSettingsConstructor.cs" />
-    <Compile Include="Implementation\FixedFieldSettingsFactory.cs" />
-    <Compile Include="Implementation\FixedLayout.cs" />
-    <Compile Include="Implementation\FixedLengthLineBuilder.cs" />
-    <Compile Include="Implementation\FixedLengthLineBuilderFactory.cs" />
-    <Compile Include="Implementation\FixedLengthLineParser.cs" />
-    <Compile Include="Implementation\FixedLengthLineParserFactory.cs" />
-    <Compile Include="Padding.cs" />
+    <Compile Include="DelimitedFieldAttribute.cs" />
+    <Compile Include="DelimitedFileAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FlatFile.Core\FlatFile.Core.csproj">
-      <Project>{1cb90052-b97a-4ad4-b9fd-20a22914d129}</Project>
-      <Name>FlatFile.Core</Name>
+    <ProjectReference Include="..\FlatFile.Core.Attributes\FlatFile.Core.Attributes.csproj">
+      <Project>{5849B415-6CC1-4615-A94F-265F5BD6F234}</Project>
+      <Name>FlatFile.Core.Attributes</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

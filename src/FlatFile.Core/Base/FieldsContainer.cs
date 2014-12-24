@@ -17,14 +17,14 @@
 
         public void AddOrUpdate(TFieldSettings settings)
         {
-            settings.Id = currentPropertyId++;
+            settings.Index = currentPropertyId++;
 
             fields[settings.PropertyInfo] = settings;
         }
 
         public IOrderedEnumerable<TFieldSettings> OrderedFields
         {
-            get { return fields.Values.OrderBy(settings => settings.Id); }
+            get { return fields.Values.OrderBy(settings => settings.Index); }
         }
     }
 }
