@@ -97,7 +97,9 @@
   <ItemGroup>
     <Compile Include="Base\FieldSettingsBaseAttribute.cs" />
     <Compile Include="Base\LayoutBaseAttribute.cs" />
+    <Compile Include="Entities\PropertyDescription.cs" />
     <Compile Include="Extensions\AttributeUtil.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
