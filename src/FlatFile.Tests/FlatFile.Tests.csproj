@@ -60,6 +60,7 @@
     <Compile Include="Delimited\DelimitedLayoutTests.cs" />
     <Compile Include="Delimited\DelimitedWithHeaderIntegrationTests.cs" />
     <Compile Include="FixedLength\FixedLayoutTests.cs" />
+    <Compile Include="FixedLength\FixedLengthAttriubteMappingIntegrationTests.cs" />
     <Compile Include="FixedLength\FixedLengthIntegrationTests.cs" />
     <Compile Include="FixedLength\FixedLengthLineParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,7 +1,5 @@
 namespace FlatFile.Tests.Delimited
 {
-    using System;
-    using System.IO;
     using FlatFile.Core;
     using FlatFile.Delimited;
     using FlatFile.Delimited.Implementation;
@@ -11,10 +9,9 @@ namespace FlatFile.Tests.Delimited
     public class DelimitedIntegrationTests :
         IntegrationTests<DelimitedFieldSettings, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TestObject>>
     {
-        private DelimitedFileEngine<TestObject> _flatFileEngine;
         private readonly IDelimitedLayout<TestObject> _layout;
 
-        private readonly Func<Stream, IFlatFileEngine<TestObject>> _engine;
+        private readonly IFlatFileEngine<TestObject> _engine;
 
         private const string _testSource = "\"1\";\"Description 1\";\"3\"\r\n" +
                                            "\"2\";\"Description 2\";\"3\"\r\n" +
@@ -36,14 +33,10 @@ namespace FlatFile.Tests.Delimited
                 .WithMember(o => o.Description)
                 .WithMember(o => o.NullableInt, set => set.AllowNull("=Null"));
 
-            _engine = stream =>
-            {
-                _flatFileEngine = new DelimitedFileEngine<TestObject>(
-                    Layout,
-                    new DelimitedLineBuilderFactory<TestObject>(), 
-                    new DelimitedLineParserFactory<TestObject>());
-                return _flatFileEngine;
-            };
+            _engine = new DelimitedFileEngine<TestObject>(
+                Layout,
+                new DelimitedLineBuilderFactory<TestObject>(),
+                new DelimitedLineParserFactory<TestObject>());
         }
 
         protected override IDelimitedLayout<TestObject> Layout
@@ -51,7 +44,7 @@ namespace FlatFile.Tests.Delimited
             get { return _layout; }
         }
 
-        protected override Func<Stream, IFlatFileEngine<TestObject>> Engine
+        protected override IFlatFileEngine<TestObject> Engine
         {
             get { return _engine; }
         }

@@ -13,7 +13,7 @@ namespace FlatFile.Tests.Base.Entities
         [DelimitedField(1)]
         public int Id { get; set; }
 
-        [FixedLengthField(2, 25, PaddingChar = '0', Padding = Padding.Right)]
+        [FixedLengthField(2, 25, PaddingChar = ' ', Padding = Padding.Right)]
         [DelimitedField(2)]
         public string Description { get; set; }
 

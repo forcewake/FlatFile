@@ -9,7 +9,7 @@ namespace FlatFile.Core.Attributes.Base
 
         public bool IsNullable
         {
-            get { return string.IsNullOrEmpty(NullValue); }
+            get { return !string.IsNullOrEmpty(NullValue); }
         }
 
         public string NullValue { get; set; }
