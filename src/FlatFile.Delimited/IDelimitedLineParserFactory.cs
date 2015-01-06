@@ -6,9 +6,8 @@ namespace FlatFile.Delimited
         ILineParserFactory<
             TEntity,
             IDelimitedLineParser<TEntity>,
-            IDelimitedLayout<TEntity>,
-            DelimitedFieldSettings,
-            IDelimitedFieldSettingsConstructor>
+            IDelimitedLayoutDescriptor,
+            DelimitedFieldSettings>
     {
     }
 }

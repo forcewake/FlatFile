@@ -108,6 +108,7 @@
     <Compile Include="IFieldSettingsBuilder.cs" />
     <Compile Include="IFieldSettingsConstructor.cs" />
     <Compile Include="IFieldSettingsFactory.cs" />
+    <Compile Include="IFlatFileEngineFactory.cs" />
     <Compile Include="ILayout.cs" />
     <Compile Include="ILayoutDescriptor.cs" />
     <Compile Include="ILineBuilderFactory.cs" />

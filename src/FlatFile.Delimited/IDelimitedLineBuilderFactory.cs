@@ -6,9 +6,8 @@ namespace FlatFile.Delimited
         ILineBuilderFactory<
             TEntity,
             IDelimitedLineBuilder<TEntity>,
-            IDelimitedLayout<TEntity>,
-            DelimitedFieldSettings,
-            IDelimitedFieldSettingsConstructor>
+            IDelimitedLayoutDescriptor,
+            DelimitedFieldSettings>
     {
     }
 }

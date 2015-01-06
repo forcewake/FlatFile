@@ -1,13 +1,15 @@
 namespace FlatFile.FixedLength.Implementation
 {
+    using FlatFile.Core;
     using FlatFile.Core.Base;
 
     public class FixedLengthLineParser<T> :
-        LineParserBase<T, IFixedLayout<T>, FixedFieldSettings>,
+        LineParserBase<T, ILayoutDescriptor<FixedFieldSettings>, FixedFieldSettings>,
         IFixedLengthLineParser<T>
         where T : new()
     {
-        public FixedLengthLineParser(IFixedLayout<T> layout) : base(layout)
+        public FixedLengthLineParser(ILayoutDescriptor<FixedFieldSettings> layout)
+            : base(layout)
         {
         }
 

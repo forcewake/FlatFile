@@ -14,12 +14,7 @@ namespace FlatFile.Tests.Delimited
         private DelimitedFileEngine<TestObject> _flatFileEngine;
         private readonly IDelimitedLayout<TestObject> _layout;
 
-        private readonly
-            Func
-                <Stream,
-                    IFlatFileEngine
-                        <TestObject, IDelimitedLayout<TestObject>, DelimitedFieldSettings,
-                            IDelimitedFieldSettingsConstructor>> _engine;
+        private readonly Func<Stream, IFlatFileEngine<TestObject>> _engine;
 
         private const string _testSource = "\"1\";\"Description 1\";\"3\"\r\n" +
                                            "\"2\";\"Description 2\";\"3\"\r\n" +
@@ -43,7 +38,10 @@ namespace FlatFile.Tests.Delimited
 
             _engine = stream =>
             {
-                _flatFileEngine = new DelimitedFileEngine<TestObject>();
+                _flatFileEngine = new DelimitedFileEngine<TestObject>(
+                    Layout,
+                    new DelimitedLineBuilderFactory<TestObject>(), 
+                    new DelimitedLineParserFactory<TestObject>());
                 return _flatFileEngine;
             };
         }
@@ -53,12 +51,7 @@ namespace FlatFile.Tests.Delimited
             get { return _layout; }
         }
 
-        protected override
-            Func
-                <Stream,
-                    IFlatFileEngine
-                        <TestObject, IDelimitedLayout<TestObject>, DelimitedFieldSettings,
-                            IDelimitedFieldSettingsConstructor>> Engine
+        protected override Func<Stream, IFlatFileEngine<TestObject>> Engine
         {
             get { return _engine; }
         }
