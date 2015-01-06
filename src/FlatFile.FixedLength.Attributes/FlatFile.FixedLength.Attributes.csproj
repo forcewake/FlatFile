@@ -96,6 +96,7 @@
     <Compile Include="FixedLengthFieldAttribute.cs" />
     <Compile Include="FixedLengthFileAttribute.cs" />
     <Compile Include="FlatFileEngineFactoryExtensions.cs" />
+    <Compile Include="Infrastructure\FixedLayoutDescriptorProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

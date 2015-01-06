@@ -100,6 +100,7 @@
     <Compile Include="Entities\PropertyDescription.cs" />
     <Compile Include="Extensions\AttributeUtil.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Infrastructure\ILayoutDescriptorProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
