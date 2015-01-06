@@ -95,12 +95,17 @@
   <ItemGroup>
     <Compile Include="FixedLengthFieldAttribute.cs" />
     <Compile Include="FixedLengthFileAttribute.cs" />
+    <Compile Include="FlatFileEngineFactoryExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FlatFile.Core.Attributes\FlatFile.Core.Attributes.csproj">
       <Project>{5849B415-6CC1-4615-A94F-265F5BD6F234}</Project>
       <Name>FlatFile.Core.Attributes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FlatFile.Core\FlatFile.Core.csproj">
+      <Project>{1CB90052-B97A-4AD4-B9FD-20A22914D129}</Project>
+      <Name>FlatFile.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\FlatFile.FixedLength\FlatFile.FixedLength.csproj">
       <Project>{2D38BA1D-8D0C-4DC2-A7B1-7BA330D1DDCD}</Project>

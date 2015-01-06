@@ -7,53 +7,50 @@ namespace FlatFile.Delimited.Implementation
     using FlatFile.Core.Base;
 
     public class DelimitedFileEngine<T> :
-        FlatFileEngine
-            <T, IDelimitedLayout<T>, DelimitedFieldSettings, IDelimitedFieldSettingsConstructor,
-                IDelimitedLineBuilder<T>, IDelimitedLineParser<T>>,
-        IDelimitedFileEngine<T> where T : class, new()
+        FlatFileEngine<T, DelimitedFieldSettings, IDelimitedLayoutDescriptor>
+        where T : class, new()
     {
-        private readonly IDelimitedLineBuilderFactory<T> builderFactory;
+        private readonly IDelimitedLineBuilderFactory<T> _builderFactory;
 
-        private readonly IDelimitedLineParserFactory<T> parserFactory;
+        private readonly IDelimitedLineParserFactory<T> _parserFactory;
 
-        public DelimitedFileEngine(Func<string, Exception, bool> handleEntryReadError = null)
-            : this(new DelimitedLineBuilderFactory<T>(), new DelimitedLineParserFactory<T>(), handleEntryReadError)
-        {
-        }
+        private readonly IDelimitedLayoutDescriptor _layoutDescriptor;
 
-        public DelimitedFileEngine(IDelimitedLineBuilderFactory<T> builderFactory,
-            IDelimitedLineParserFactory<T> parserFactory,
+        internal DelimitedFileEngine(
+            IDelimitedLayoutDescriptor layoutDescriptor,
+            IDelimitedLineBuilderFactory<T> builderFactory,
+            IDelimitedLineParserFactory<T> parserFactory, 
             Func<string, Exception, bool> handleEntryReadError = null)
             : base(handleEntryReadError)
         {
-            this.builderFactory = builderFactory;
-            this.parserFactory = parserFactory;
+            _builderFactory = builderFactory;
+            _parserFactory = parserFactory;
+            _layoutDescriptor = layoutDescriptor;
         }
 
-        protected override
-            ILineBuilderFactory
-                <T, IDelimitedLineBuilder<T>, IDelimitedLayout<T>, DelimitedFieldSettings,
-                    IDelimitedFieldSettingsConstructor> BuilderFactory
+        protected override ILineBulder<T> LineBuilder
         {
-            get { return builderFactory; }
+            get { return _builderFactory.GetBuilder(LayoutDescriptor); }
         }
 
-        protected override
-            ILineParserFactory
-                <T, IDelimitedLineParser<T>, IDelimitedLayout<T>, DelimitedFieldSettings,
-                    IDelimitedFieldSettingsConstructor> ParserFactory
+        protected override ILineParser<T> LineParser
         {
-            get { return parserFactory; }
+            get { return _parserFactory.GetParser(LayoutDescriptor); }
         }
 
-        protected override void WriteHeader(IDelimitedLayout<T> layout, TextWriter writer)
+        protected override IDelimitedLayoutDescriptor LayoutDescriptor
         {
-            if (!layout.HasHeader)
+            get { return _layoutDescriptor; }
+        }
+
+        protected override void WriteHeader(TextWriter writer)
+        {
+            if (!LayoutDescriptor.HasHeader)
             {
                 return;
             }
 
-            var fields = layout.Fields;
+            var fields = LayoutDescriptor.Fields;
 
             var stringBuilder = new StringBuilder();
 
@@ -61,7 +58,7 @@ namespace FlatFile.Delimited.Implementation
             {
                 stringBuilder
                     .Append(field.Name)
-                    .Append(layout.Delimiter);
+                    .Append(LayoutDescriptor.Delimiter);
 
             }
 

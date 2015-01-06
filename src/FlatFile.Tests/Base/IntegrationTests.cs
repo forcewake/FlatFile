@@ -20,7 +20,7 @@ namespace FlatFile.Tests.Base
 
         protected IList<TestObject> Objects { get; set; }
 
-        protected abstract Func<Stream, IFlatFileEngine<TestObject, TLayout, TFieldSettings, TConstructor>> Engine
+        protected abstract Func<Stream, IFlatFileEngine<TestObject>> Engine
         {
             get; }
 
@@ -46,7 +46,7 @@ namespace FlatFile.Tests.Base
         {
             InvokeWriteTest((engine, stream) =>
             {
-                var objectsAfterRead = engine.Read(Layout, stream).ToArray();
+                var objectsAfterRead = engine.Read(stream).ToArray();
 
                 objectsAfterRead.Should().HaveCount(Objects.Count);
 
@@ -58,7 +58,7 @@ namespace FlatFile.Tests.Base
         {
             InvokeWriteTest((engine, stream) =>
             {
-                var objectsAfterRead = engine.Read(Layout, stream).ToList();
+                var objectsAfterRead = engine.Read(stream).ToList();
 
                 objectsAfterRead.ShouldAllBeEquivalentTo(Objects, options => options.IncludingAllDeclaredProperties());
 
@@ -70,20 +70,20 @@ namespace FlatFile.Tests.Base
         {
             InvokeReadbasedTest((engine, stream) =>
             {
-                var objectsAfterRead = engine.Read(Layout, stream).ToList();
+                var objectsAfterRead = engine.Read(stream).ToList();
 
                 objectsAfterRead.ShouldAllBeEquivalentTo(Objects, options => options.IncludingAllDeclaredProperties());
 
             }, TestSource);
         }
 
-        protected virtual void InvokeWriteTest(Action<IFlatFileEngine<TestObject, TLayout, TFieldSettings, TConstructor>, MemoryStream> action)
+        protected virtual void InvokeWriteTest(Action<IFlatFileEngine<TestObject>, MemoryStream> action)
         {
             using (var memory = new MemoryStream())
             {
                 var engine = Engine(memory);
 
-                engine.Write(Layout, memory, Objects);
+                engine.Write(memory, Objects);
 
                 memory.Seek(0, SeekOrigin.Begin);
 
@@ -91,7 +91,7 @@ namespace FlatFile.Tests.Base
             }
         }
 
-        protected virtual void InvokeReadbasedTest(Action<IFlatFileEngine<TestObject, TLayout, TFieldSettings, TConstructor>, MemoryStream> action,
+        protected virtual void InvokeReadbasedTest(Action<IFlatFileEngine<TestObject>, MemoryStream> action,
             string textSource)
         {
             using (var memory = new MemoryStream(Encoding.UTF8.GetBytes(textSource)))

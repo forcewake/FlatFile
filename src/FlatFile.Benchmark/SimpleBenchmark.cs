@@ -7,6 +7,7 @@ namespace FlatFile.Benchmark
     using BenchmarkIt;
     using FileHelpers;
     using FlatFile.Benchmark.Entities;
+    using FlatFile.Core;
     using FlatFile.Core.Base;
     using FlatFile.FixedLength.Implementation;
     using FluentAssertions;
@@ -53,9 +54,11 @@ namespace FlatFile.Benchmark
                     var layout = new FixedSampleRecordLayout();
                     using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(FixedFileSample)))
                     {
-                        var flatFile = new FixedLengthFileEngine<FixedSampleRecord>();
+                        var factory = new FixedLengthFileEngineFactory();
 
-                        var records = flatFile.Read(layout, stream).ToArray();
+                        var flatFile = factory.GetEngine<FixedSampleRecord>(layout);
+
+                        var records = flatFile.Read(stream).ToArray();
 
                         records.Should().HaveCount(19);
                     }
@@ -86,9 +89,11 @@ namespace FlatFile.Benchmark
                     var layout = new FixedSampleRecordLayout();
                     using (var stream = new MemoryStream())
                     {
-                        var flatFile = new FixedLengthFileEngine<FixedSampleRecord>();
+                        var factory = new FixedLengthFileEngineFactory();
 
-                        flatFile.Write(layout, stream, sampleRecords);
+                        var flatFile = factory.GetEngine<FixedSampleRecord>(layout);
+
+                        flatFile.Write(stream, sampleRecords);
                     }
                 })
                 .WithWarmup(1000)
@@ -119,9 +124,11 @@ namespace FlatFile.Benchmark
                     var layout = new FixedSampleRecordLayout();
                     using (var stream = new MemoryStream())
                     {
-                        var flatFile = new FixedLengthFileEngine<FixedSampleRecord>();
+                        var factory = new FixedLengthFileEngineFactory();
 
-                        flatFile.Write(layout, stream, sampleRecords);
+                        var flatFile = factory.GetEngine<FixedSampleRecord>(layout);
+
+                        flatFile.Write(stream, sampleRecords);
                     }
                 })
                 .WithWarmup(10)

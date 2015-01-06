@@ -98,7 +98,6 @@
     <Compile Include="IFixedLayout.cs" />
     <Compile Include="IFixedLengthLineBuilder.cs" />
     <Compile Include="IFixedLengthLineParser.cs" />
-    <Compile Include="IFixedLengthFileEngine.cs" />
     <Compile Include="IFixedLengthLineParserFactory.cs" />
     <Compile Include="IFixedLengthLineBuilderFactory.cs" />
     <Compile Include="Implementation\FixedLengthFileEngine.cs" />
@@ -106,6 +105,7 @@
     <Compile Include="Implementation\FixedFieldSettingsConstructor.cs" />
     <Compile Include="Implementation\FixedFieldSettingsFactory.cs" />
     <Compile Include="Implementation\FixedLayout.cs" />
+    <Compile Include="Implementation\FixedLengthFileEngineFactory.cs" />
     <Compile Include="Implementation\FixedLengthLineBuilder.cs" />
     <Compile Include="Implementation\FixedLengthLineBuilderFactory.cs" />
     <Compile Include="Implementation\FixedLengthLineParser.cs" />

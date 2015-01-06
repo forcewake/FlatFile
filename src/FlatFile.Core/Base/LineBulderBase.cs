@@ -4,16 +4,16 @@ namespace FlatFile.Core.Base
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings> 
         where TFieldSettings : FieldSettingsBase 
     {
-        private readonly TLayoutDescriptor _layout;
+        private readonly TLayoutDescriptor _descriptor;
 
-        protected LineBulderBase(TLayoutDescriptor layout)
+        protected LineBulderBase(TLayoutDescriptor descriptor)
         {
-            this._layout = layout;
+            this._descriptor = descriptor;
         }
 
-        protected TLayoutDescriptor Layout
+        protected TLayoutDescriptor Descriptor
         {
-            get { return _layout; }
+            get { return _descriptor; }
         }
 
         public abstract string BuildLine(TEntity entry);

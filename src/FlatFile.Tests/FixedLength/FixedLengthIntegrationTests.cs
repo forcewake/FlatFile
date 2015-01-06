@@ -13,7 +13,7 @@ namespace FlatFile.Tests.FixedLength
     {
         private FixedLengthFileEngine<TestObject> _flatFileEngine;
         private readonly IFixedLayout<TestObject> _layout;
-        private readonly Func<Stream, IFlatFileEngine<TestObject, IFixedLayout<TestObject>, FixedFieldSettings, IFixedFieldSettingsConstructor>> _engine;
+        private readonly Func<Stream, IFlatFileEngine<TestObject>> _engine;
         private const string _testSource = @"00001Description 1            00003
 00002Description 2            00003
 00003Description 3            00003
@@ -34,7 +34,7 @@ namespace FlatFile.Tests.FixedLength
 
             _engine = stream =>
             {
-                _flatFileEngine = new FixedLengthFileEngine<TestObject>();
+                _flatFileEngine = new FixedLengthFileEngine<TestObject>(Layout, new FixedLengthLineBuilderFactory<TestObject>(), new FixedLengthLineParserFactory<TestObject>());
 
                 return _flatFileEngine;
             };
@@ -45,7 +45,7 @@ namespace FlatFile.Tests.FixedLength
             get { return _layout; }
         }
 
-        protected override Func<Stream, IFlatFileEngine<TestObject, IFixedLayout<TestObject>, FixedFieldSettings, IFixedFieldSettingsConstructor>> Engine
+        protected override Func<Stream, IFlatFileEngine<TestObject>> Engine
         {
             get { return _engine; }
         }

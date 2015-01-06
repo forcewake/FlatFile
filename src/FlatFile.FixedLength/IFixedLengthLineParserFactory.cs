@@ -6,9 +6,8 @@ namespace FlatFile.FixedLength
         ILineParserFactory<
             TEntity,
             IFixedLengthLineParser<TEntity>,
-            IFixedLayout<TEntity>,
-            FixedFieldSettings,
-            IFixedFieldSettingsConstructor>
+            ILayoutDescriptor<FixedFieldSettings>,
+            FixedFieldSettings>
     {
     }
 }

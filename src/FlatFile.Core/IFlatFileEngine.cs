@@ -2,16 +2,12 @@
 {
     using System.Collections.Generic;
     using System.IO;
-    using FlatFile.Core.Base;
 
-    public interface IFlatFileEngine<TEntity, in TLayout, TFieldSettings, TConstructor>
+    public interface IFlatFileEngine<TEntity>
         where TEntity : class, new()
-        where TLayout : ILayout<TEntity, TFieldSettings, TConstructor, TLayout>
-        where TFieldSettings : FieldSettingsBase
-        where TConstructor : IFieldSettingsConstructor<TFieldSettings, TConstructor>
     {
-        IEnumerable<TEntity> Read(TLayout layout, Stream stream);
+        IEnumerable<TEntity> Read(Stream stream);
 
-        void Write(TLayout layout, Stream stream, IEnumerable<TEntity> entries);
+        void Write(Stream stream, IEnumerable<TEntity> entries);
     }
 }
