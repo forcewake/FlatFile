@@ -4,7 +4,7 @@
     using FlatFile.Core.Base;
 
     public class DelimitedLineBuilder<TEntry> : 
-        LineBulderBase<TEntry, IDelimitedLayout<TEntry>, DelimitedFieldSettings, IDelimitedFieldSettingsConstructor>, 
+        LineBulderBase<TEntry, IDelimitedLayout<TEntry>, DelimitedFieldSettings>, 
         IDelimitedLineBuilder<TEntry>
     {
         public DelimitedLineBuilder(IDelimitedLayout<TEntry> layout)
