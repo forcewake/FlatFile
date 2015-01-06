@@ -4,7 +4,7 @@ namespace FlatFile.Delimited.Implementation
     using FlatFile.Core.Base;
 
     public class DelimitedLineParser<TEntry> :
-        LineParserBase<TEntry, IDelimitedLayout<TEntry>, DelimitedFieldSettings, IDelimitedFieldSettingsConstructor>,
+        LineParserBase<TEntry, IDelimitedLayout<TEntry>, DelimitedFieldSettings>,
         IDelimitedLineParser<TEntry> 
         where TEntry : new()
     {

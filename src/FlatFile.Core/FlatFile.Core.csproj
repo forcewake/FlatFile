@@ -98,6 +98,7 @@
     <Compile Include="Base\FieldSettingsConstructorBase.cs" />
     <Compile Include="Base\FlatFileEngine.cs" />
     <Compile Include="Base\LayoutBase.cs" />
+    <Compile Include="Base\LayoutDescriptorBase.cs" />
     <Compile Include="Base\LineBulderBase.cs" />
     <Compile Include="Base\LineParserBase.cs" />
     <Compile Include="Exceptions\ParseLineException.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="IFieldSettingsConstructor.cs" />
     <Compile Include="IFieldSettingsFactory.cs" />
     <Compile Include="ILayout.cs" />
+    <Compile Include="ILayoutDescriptor.cs" />
     <Compile Include="ILineBuilderFactory.cs" />
     <Compile Include="ILineBulder.cs" />
     <Compile Include="ILineParser.cs" />

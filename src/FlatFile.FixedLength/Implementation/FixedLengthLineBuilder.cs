@@ -4,7 +4,7 @@ namespace FlatFile.FixedLength.Implementation
     using FlatFile.Core.Base;
 
     public class FixedLengthLineBuilder<T> :
-        LineBulderBase<T, IFixedLayout<T>, FixedFieldSettings, IFixedFieldSettingsConstructor>,
+        LineBulderBase<T, IFixedLayout<T>, FixedFieldSettings>,
         IFixedLengthLineBuilder<T>
     {
         public FixedLengthLineBuilder(IFixedLayout<T> layout)

@@ -1,4 +1,14 @@
-﻿namespace FlatFile.FixedLength.Attributes
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Xml;
+using FlatFile.Core.Attributes.Extensions;
+
+namespace FlatFile.FixedLength.Attributes
 {
     using FlatFile.Core.Attributes.Base;
 

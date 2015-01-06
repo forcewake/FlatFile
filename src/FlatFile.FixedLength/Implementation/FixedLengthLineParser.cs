@@ -3,7 +3,7 @@ namespace FlatFile.FixedLength.Implementation
     using FlatFile.Core.Base;
 
     public class FixedLengthLineParser<T> :
-        LineParserBase<T, IFixedLayout<T>, FixedFieldSettings, IFixedFieldSettingsConstructor>,
+        LineParserBase<T, IFixedLayout<T>, FixedFieldSettings>,
         IFixedLengthLineParser<T>
         where T : new()
     {
