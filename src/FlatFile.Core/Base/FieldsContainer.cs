@@ -15,9 +15,12 @@
             fields = new Dictionary<PropertyInfo, TFieldSettings>();
         }
 
-        public void AddOrUpdate(TFieldSettings settings)
+        public void AddOrUpdate(TFieldSettings settings, bool autoIncrement = true)
         {
-            settings.Index = currentPropertyId++;
+            if (autoIncrement)
+            {
+                settings.Index = currentPropertyId++;                
+            }
 
             fields[settings.PropertyInfo] = settings;
         }

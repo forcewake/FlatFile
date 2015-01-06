@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Xml;
-using FlatFile.Core.Attributes.Extensions;
-
-namespace FlatFile.FixedLength.Attributes
+﻿namespace FlatFile.FixedLength.Attributes
 {
+    using System.Reflection;
     using FlatFile.Core.Attributes.Base;
 
     public class FixedLengthFieldAttribute : FieldSettingsBaseAttribute
@@ -31,6 +22,20 @@ namespace FlatFile.FixedLength.Attributes
             Padding = Padding.Left;
 
             Lenght = lenght;
+        }
+
+        public FixedFieldSettings GetFieldSettings(PropertyInfo propertyInfo)
+        {
+            return new FixedFieldSettings
+            {
+                Index = this.Index,
+                IsNullable = this.IsNullable,
+                Lenght = this.Lenght,
+                NullValue = this.NullValue,
+                PaddingChar = this.PaddingChar,
+                PadLeft = this.PadLeft,
+                PropertyInfo = propertyInfo
+            };
         }
     }
 }

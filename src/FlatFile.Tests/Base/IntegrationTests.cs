@@ -20,9 +20,7 @@ namespace FlatFile.Tests.Base
 
         protected IList<TestObject> Objects { get; set; }
 
-        protected abstract Func<Stream, IFlatFileEngine<TestObject>> Engine
-        {
-            get; }
+        protected abstract IFlatFileEngine<TestObject> Engine { get; }
 
         public abstract string TestSource { get; }
 
@@ -81,13 +79,11 @@ namespace FlatFile.Tests.Base
         {
             using (var memory = new MemoryStream())
             {
-                var engine = Engine(memory);
-
-                engine.Write(memory, Objects);
+                Engine.Write(memory, Objects);
 
                 memory.Seek(0, SeekOrigin.Begin);
 
-                action(engine, memory);
+                action(Engine, memory);
             }
         }
 
@@ -96,8 +92,7 @@ namespace FlatFile.Tests.Base
         {
             using (var memory = new MemoryStream(Encoding.UTF8.GetBytes(textSource)))
             {
-                var engine = Engine(memory);
-                action(engine, memory);
+                action(Engine, memory);
             }
         }
     }

@@ -6,7 +6,7 @@
     public interface IFieldsContainer<TFieldSettings> 
         where TFieldSettings : FieldSettingsBase
     {
-        void AddOrUpdate(TFieldSettings settings);
+        void AddOrUpdate(TFieldSettings settings, bool autoIncrement = true);
 
         IOrderedEnumerable<TFieldSettings> OrderedFields { get; }
     }
