@@ -115,22 +115,23 @@ public class LayoutFactory
 #### Read from stream
 ```cs
 var layout = new FixedSampleRecordLayout();
+var factory = new FixedLengthFileEngineFactory();
 using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(FixedFileSample)))
 {
-    var flatFile = new FixedLengthFileEngine<FixedSampleRecord>();
+    var flatFile = factory.GetEngine<FixedSampleRecord>(layout);
 
-    var records = flatFile.Read(layout, stream).ToArray();
-
-    records.Should().HaveCount(19);
+    var records = flatFile.Read(stream).ToArray();
 }
 ```
 #### Write to stream
 ```cs
+var sampleRecords = GetRecords();
 var layout = new FixedSampleRecordLayout();
+var factory = new FixedLengthFileEngineFactory();
 using (var stream = new MemoryStream())
 {
-    var flatFile = new FixedLengthFileEngine<FixedSampleRecord>();
+    var flatFile = factory.GetEngine<FixedSampleRecord>(layout);
 
-    flatFile.Write(layout, stream, sampleRecords);
+    flatFile.Write(stream, sampleRecords);
 }
 ```
