@@ -112,6 +112,45 @@ public class LayoutFactory
     } 
 }
 ```
+
+#### Attribute mapping
+##### Delimited
+```cs
+using FlatFile.Delimited.Attributes;
+
+[DelimitedFile(Delimiter = ";", Quotes = "\"")]
+public class TestObject
+{
+    [DelimitedField(1)]
+    public int Id { get; set; }
+
+    [DelimitedField(2)]
+    public string Description { get; set; }
+
+    [DelimitedField(3, NullValue = "=Null")]
+    public int? NullableInt { get; set; }
+}
+```
+
+##### Fixed
+```cs
+using FlatFile.FixedLength;
+using FlatFile.FixedLength.Attributes;
+
+[FixedLengthFile]
+public class TestObject
+{
+    [FixedLengthField(1, 5, PaddingChar = '0')]
+    public int Id { get; set; }
+
+    [FixedLengthField(2, 25, PaddingChar = ' ', Padding = Padding.Right)]
+    public string Description { get; set; }
+
+    [FixedLengthField(2, 5, PaddingChar = '0', NullValue = "=Null")]
+    public int? NullableInt { get; set; }
+}
+```
+
 #### Read from stream
 ```cs
 var layout = new FixedSampleRecordLayout();
