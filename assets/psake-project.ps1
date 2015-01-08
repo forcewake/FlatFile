@@ -12,6 +12,7 @@ Task Pack -Depends Compile -Description "Create NuGet packages and archive files
     $version = Get-BuildVersion
 
     Create-Package "FlatFile.Core" $version
+    Create-Package "FlatFile.Core.Attributes" $version
     Create-Package "FlatFile.Delimited" $version
     Create-Package "FlatFile.FixedLength" $version
     Create-Package "FlatFile.Delimited.Attributes" $version
