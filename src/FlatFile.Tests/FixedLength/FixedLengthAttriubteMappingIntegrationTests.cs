@@ -8,7 +8,7 @@ namespace FlatFile.Tests.FixedLength
 
     public class FixedLengthAttriubteMappingIntegrationTests : FixedLengthIntegrationTests
     {
-        private readonly IFlatFileEngineFactory<IFixedFieldSettingsContainer> _fileEngineFactory;
+        private readonly IFlatFileEngineFactory<ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer> _fileEngineFactory;
 
         public FixedLengthAttriubteMappingIntegrationTests()
         {

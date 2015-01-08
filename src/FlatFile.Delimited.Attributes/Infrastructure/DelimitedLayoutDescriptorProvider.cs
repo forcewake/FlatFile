@@ -2,15 +2,14 @@
 {
     using System;
     using System.Linq;
-    using FlatFile.Core;
     using FlatFile.Core.Attributes.Extensions;
     using FlatFile.Core.Attributes.Infrastructure;
     using FlatFile.Core.Base;
     using FlatFile.Delimited.Implementation;
 
-    public class DelimitedLayoutDescriptorProvider : ILayoutDescriptorProvider<IDelimitedFieldSettingsContainer, ILayoutDescriptor<IDelimitedFieldSettingsContainer>>
+    public class DelimitedLayoutDescriptorProvider : ILayoutDescriptorProvider<IDelimitedFieldSettingsContainer, IDelimitedLayoutDescriptor>
     {
-        public ILayoutDescriptor<IDelimitedFieldSettingsContainer> GetDescriptor<T>()
+        public IDelimitedLayoutDescriptor GetDescriptor<T>()
         {
             var container = new FieldsContainer<IDelimitedFieldSettingsContainer>();
 

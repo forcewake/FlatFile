@@ -8,7 +8,7 @@
     public static class FlatFileEngineFactoryExtensions
     {
         public static IFlatFileEngine<T> GetEngine<T>(
-            this IFlatFileEngineFactory<IDelimitedFieldSettingsContainer> engineFactory,
+            this IFlatFileEngineFactory<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer> engineFactory,
             Func<string, Exception, bool> handleEntryReadError = null)
             where T : class, new()
         {
