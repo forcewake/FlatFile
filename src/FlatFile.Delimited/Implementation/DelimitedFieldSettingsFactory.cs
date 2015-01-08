@@ -4,7 +4,7 @@
     using FlatFile.Core;
 
     public class DelimitedFieldSettingsFactory :
-        IFieldSettingsFactory<DelimitedFieldSettings, IDelimitedFieldSettingsConstructor>
+        IFieldSettingsFactory<IDelimitedFieldSettingsConstructor>
     {
         public IDelimitedFieldSettingsConstructor CreateFieldSettings(PropertyInfo property)
         {

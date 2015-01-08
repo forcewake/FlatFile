@@ -4,11 +4,11 @@ namespace FlatFile.Delimited.Implementation
     using FlatFile.Core.Base;
 
     public class DelimitedLineParser<TEntry> :
-        LineParserBase<TEntry, IDelimitedLayout<TEntry>, DelimitedFieldSettings, IDelimitedFieldSettingsConstructor>,
+        LineParserBase<TEntry, IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>,
         IDelimitedLineParser<TEntry> 
         where TEntry : new()
     {
-        public DelimitedLineParser(IDelimitedLayout<TEntry> layout)
+        public DelimitedLineParser(IDelimitedLayoutDescriptor layout)
             : base(layout)
         {
         }
@@ -41,7 +41,7 @@ namespace FlatFile.Delimited.Implementation
             return entry;
         }
 
-        protected override string TransformStringValue(DelimitedFieldSettings fieldSettingsBuilder, string memberValue)
+        protected override string TransformStringValue(IDelimitedFieldSettingsContainer fieldSettingsBuilder, string memberValue)
         {
             if (string.IsNullOrEmpty(Layout.Quotes))
             {

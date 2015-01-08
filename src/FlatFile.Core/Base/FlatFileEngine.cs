@@ -6,35 +6,33 @@ namespace FlatFile.Core.Base
     using FlatFile.Core;
     using FlatFile.Core.Exceptions;
 
-    public abstract class FlatFileEngine<TEntity, TLayout, TFieldSettings, TConstructor, TBuilder, TParser> :
-        IFlatFileEngine<TEntity, TLayout, TFieldSettings, TConstructor>
+    public abstract class FlatFileEngine<TEntity, TFieldSettings, TLayoutDescriptor> : IFlatFileEngine<TEntity>
         where TEntity : class, new()
-        where TLayout : ILayout<TEntity, TFieldSettings, TConstructor, TLayout>
-        where TFieldSettings : FieldSettingsBase
-        where TConstructor : IFieldSettingsConstructor<TFieldSettings, TConstructor>
-        where TBuilder : ILineBulder<TEntity>
-        where TParser : ILineParser<TEntity>
+        where TFieldSettings : IFieldSettings
+        where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
     {
         private readonly Func<string, Exception, bool> _handleEntryReadError;
 
-        protected abstract ILineBuilderFactory<TEntity, TBuilder, TLayout, TFieldSettings, TConstructor> BuilderFactory { get; }
+        protected abstract ILineBulder<TEntity> LineBuilder { get; }
 
-        protected abstract ILineParserFactory<TEntity, TParser, TLayout, TFieldSettings, TConstructor> ParserFactory { get; }
+        protected abstract ILineParser<TEntity> LineParser { get; }
+
+        protected abstract TLayoutDescriptor LayoutDescriptor { get; }
 
         protected FlatFileEngine(Func<string, Exception, bool> handleEntryReadError = null)
         {
             _handleEntryReadError = handleEntryReadError;
         }
 
-        public virtual IEnumerable<TEntity> Read(TLayout layout, Stream stream)
+        public virtual IEnumerable<TEntity> Read(Stream stream)
         {
             var reader = new StreamReader(stream);
             string line;
             int lineNumber = 0;
 
-            if (layout.HasHeader)
+            if (LayoutDescriptor.HasHeader)
             {
-                ProcessHeader(layout, reader);
+                ProcessHeader(reader);
             }
 
             while ((line = reader.ReadLine()) != null)
@@ -43,7 +41,7 @@ namespace FlatFile.Core.Base
                 TEntity entry = null;
                 try
                 {
-                    if (!TryParseLine(layout, line, lineNumber++, out entry))
+                    if (!TryParseLine(line, lineNumber++, out entry))
                     {
                         throw new ParseLineException("Impossible to parse line", line, lineNumber);
                     }
@@ -70,56 +68,52 @@ namespace FlatFile.Core.Base
             }
         }
 
-        protected virtual void ProcessHeader(TLayout layout, StreamReader reader)
+        protected virtual void ProcessHeader(StreamReader reader)
         {
             reader.ReadLine();
         }
 
-        protected virtual bool TryParseLine(TLayout layout, string line, int lineNumber, out TEntity entity)
+        protected virtual bool TryParseLine(string line, int lineNumber, out TEntity entity)
         {
-            var parser = ParserFactory.GetParser(layout);
-
             entity = new TEntity();
 
-            parser.ParseLine(line, entity);
+            LineParser.ParseLine(line, entity);
 
             return true;
         }
 
-        protected virtual void WriteEntry(TLayout layout, TextWriter writer, int lineNumber, TEntity entity)
+        protected virtual void WriteEntry(TextWriter writer, int lineNumber, TEntity entity)
         {
-            var builder = BuilderFactory.GetBuilder(layout);
-
-            var line = builder.BuildLine(entity);
+            var line = LineBuilder.BuildLine(entity);
 
             writer.WriteLine(line);
         }
 
-        public virtual void Write(TLayout layout, Stream stream, IEnumerable<TEntity> entries)
+        public virtual void Write(Stream stream, IEnumerable<TEntity> entries)
         {
             TextWriter writer = new StreamWriter(stream);
 
-            this.WriteHeader(layout, writer);
+            this.WriteHeader(writer);
 
             int lineNumber = 0;
 
             foreach (var entry in entries)
             {
-                this.WriteEntry(layout, writer, lineNumber, entry);
+                this.WriteEntry(writer, lineNumber, entry);
 
                 lineNumber += 1;
             }
 
-            this.WriteFooter(layout, writer);
+            this.WriteFooter(writer);
 
             writer.Flush();
         }
 
-        protected virtual void WriteHeader(TLayout layout, TextWriter writer)
+        protected virtual void WriteHeader(TextWriter writer)
         {
         }
 
-        protected virtual void WriteFooter(TLayout layout, TextWriter writer)
+        protected virtual void WriteFooter(TextWriter writer)
         {
         }
     }

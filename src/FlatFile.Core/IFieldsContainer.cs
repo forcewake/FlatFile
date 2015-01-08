@@ -1,13 +1,14 @@
 ﻿namespace FlatFile.Core
 {
-    using System.Linq;
+    using System.Collections.Generic;
+    using System.Reflection;
     using FlatFile.Core.Base;
 
-    public interface IFieldsContainer<TFieldSettings> 
-        where TFieldSettings : FieldSettingsBase
+    public interface IFieldsContainer<TFieldSettings>
+        where TFieldSettings : IFieldSettings
     {
-        void AddOrUpdate(TFieldSettings settings);
+        void AddOrUpdate(PropertyInfo propertyInfo, TFieldSettings settings);
 
-        IOrderedEnumerable<TFieldSettings> OrderedFields { get; }
+        IEnumerable<TFieldSettings> OrderedFields { get; }
     }
 }

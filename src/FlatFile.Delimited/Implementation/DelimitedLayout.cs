@@ -6,22 +6,20 @@ namespace FlatFile.Delimited.Implementation
     using FlatFile.Core.Base;
 
     public class DelimitedLayout<TTarget> :
-        LayoutBase<TTarget, DelimitedFieldSettings, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TTarget>>,
+        LayoutBase<TTarget, IDelimitedFieldSettingsContainer, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TTarget>>,
         IDelimitedLayout<TTarget>
     {
         public DelimitedLayout()
             : this(
                 new DelimitedFieldSettingsFactory(),
-                new DelimitedFieldSettingsBuilder(),
-                new FieldsContainer<DelimitedFieldSettings>())
+                new FieldsContainer<IDelimitedFieldSettingsContainer>())
         {
         }
 
         public DelimitedLayout(
-            IFieldSettingsFactory<DelimitedFieldSettings, IDelimitedFieldSettingsConstructor> fieldSettingsFactory,
-            IFieldSettingsBuilder<DelimitedFieldSettings, IDelimitedFieldSettingsConstructor> builder,
-            IFieldsContainer<DelimitedFieldSettings> fieldsContainer)
-            : base(fieldSettingsFactory, builder, fieldsContainer)
+            IFieldSettingsFactory<IDelimitedFieldSettingsConstructor> fieldSettingsFactory,
+            IFieldsContainer<IDelimitedFieldSettingsContainer> fieldsContainer)
+            : base(fieldSettingsFactory, fieldsContainer)
         {
             Quotes = string.Empty;
             Delimiter = ",";

@@ -3,7 +3,7 @@ namespace FlatFile.FixedLength
     using FlatFile.Core;
 
     public interface IFixedFieldSettingsConstructor :
-        IFieldSettingsConstructor<FixedFieldSettings, IFixedFieldSettingsConstructor>
+        IFieldSettingsConstructor<IFixedFieldSettingsConstructor>
     {
         int Lenght { get; }
         char PaddingChar { get; }

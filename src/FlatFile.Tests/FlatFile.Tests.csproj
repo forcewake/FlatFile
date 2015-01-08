@@ -59,7 +59,9 @@
     <Compile Include="Delimited\DelimitedIntegrationTests.cs" />
     <Compile Include="Delimited\DelimitedLayoutTests.cs" />
     <Compile Include="Delimited\DelimitedWithHeaderIntegrationTests.cs" />
+    <Compile Include="Delimited\FixedLengthAttriubteMappingIntegrationTests.cs" />
     <Compile Include="FixedLength\FixedLayoutTests.cs" />
+    <Compile Include="FixedLength\FixedLengthAttriubteMappingIntegrationTests.cs" />
     <Compile Include="FixedLength\FixedLengthIntegrationTests.cs" />
     <Compile Include="FixedLength\FixedLengthLineParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,13 +70,25 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FlatFile.Core.Attributes\FlatFile.Core.Attributes.csproj">
+      <Project>{5849B415-6CC1-4615-A94F-265F5BD6F234}</Project>
+      <Name>FlatFile.Core.Attributes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FlatFile.Core\FlatFile.Core.csproj">
       <Project>{1CB90052-B97A-4AD4-B9FD-20A22914D129}</Project>
       <Name>FlatFile.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FlatFile.Delimited.Attributes\FlatFile.Delimited.Attributes.csproj">
+      <Project>{0313AD85-3109-4E8D-999C-D016943E83D5}</Project>
+      <Name>FlatFile.Delimited.Attributes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FlatFile.Delimited\FlatFile.Delimited.csproj">
       <Project>{F0478B76-5190-4B51-AA3A-C02D3A4109CA}</Project>
       <Name>FlatFile.Delimited</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FlatFile.FixedLength.Attributes\FlatFile.FixedLength.Attributes.csproj">
+      <Project>{65154587-18F2-45DC-8E86-B2177309A479}</Project>
+      <Name>FlatFile.FixedLength.Attributes</Name>
     </ProjectReference>
     <ProjectReference Include="..\FlatFile.FixedLength\FlatFile.FixedLength.csproj">
       <Project>{2D38BA1D-8D0C-4DC2-A7B1-7BA330D1DDCD}</Project>

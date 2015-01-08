@@ -95,25 +95,27 @@
   <ItemGroup>
     <Compile Include="Base\FieldsContainer.cs" />
     <Compile Include="Base\FieldSettingsBase.cs" />
-    <Compile Include="Base\FieldSettingsConstructorBase.cs" />
     <Compile Include="Base\FlatFileEngine.cs" />
     <Compile Include="Base\LayoutBase.cs" />
+    <Compile Include="Base\LayoutDescriptorBase.cs" />
     <Compile Include="Base\LineBulderBase.cs" />
     <Compile Include="Base\LineParserBase.cs" />
     <Compile Include="Exceptions\ParseLineException.cs" />
     <Compile Include="Extensions\ExpressionExtensions.cs" />
     <Compile Include="IFieldsContainer.cs" />
     <Compile Include="IFlatFileEngine.cs" />
-    <Compile Include="IFieldSettingsBuilder.cs" />
     <Compile Include="IFieldSettingsConstructor.cs" />
     <Compile Include="IFieldSettingsFactory.cs" />
+    <Compile Include="IFlatFileEngineFactory.cs" />
     <Compile Include="ILayout.cs" />
+    <Compile Include="ILayoutDescriptor.cs" />
     <Compile Include="ILineBuilderFactory.cs" />
     <Compile Include="ILineBulder.cs" />
     <Compile Include="ILineParser.cs" />
     <Compile Include="ILineParserFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

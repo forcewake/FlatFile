@@ -1,20 +1,19 @@
 namespace FlatFile.Core.Base
 {
-    public abstract class LineBulderBase<TEntity, TLayout, TFieldSettings, TConstructor> : ILineBulder<TEntity>
-        where TLayout : ILayout<TEntity, TFieldSettings, TConstructor, TLayout> 
-        where TFieldSettings : FieldSettingsBase 
-        where TConstructor : IFieldSettingsConstructor<TFieldSettings, TConstructor>
+    public abstract class LineBulderBase<TEntity, TLayoutDescriptor, TFieldSettings> : ILineBulder<TEntity>
+        where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
+        where TFieldSettings : IFieldSettingsContainer 
     {
-        private readonly TLayout _layout;
+        private readonly TLayoutDescriptor _descriptor;
 
-        protected LineBulderBase(TLayout layout)
+        protected LineBulderBase(TLayoutDescriptor descriptor)
         {
-            this._layout = layout;
+            this._descriptor = descriptor;
         }
 
-        protected TLayout Layout
+        protected TLayoutDescriptor Descriptor
         {
-            get { return _layout; }
+            get { return _descriptor; }
         }
 
         public abstract string BuildLine(TEntity entry);

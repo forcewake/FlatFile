@@ -2,12 +2,11 @@ namespace FlatFile.Core
 {
     using FlatFile.Core.Base;
 
-    public interface ILineParserFactory<TEntity, out TParser, in TLayout, TFieldSettings, TConstructor>
-        where TLayout : ILayout<TEntity, TFieldSettings, TConstructor, TLayout>
-        where TFieldSettings : FieldSettingsBase
-        where TConstructor : IFieldSettingsConstructor<TFieldSettings, TConstructor>
+    public interface ILineParserFactory<TEntity, out TParser, in TLayoutDescriptor, TFieldSettings>
+        where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
+        where TFieldSettings : IFieldSettings
         where TParser : ILineParser<TEntity>
     {
-        TParser GetParser(TLayout layout);
+        TParser GetParser(TLayoutDescriptor descriptor);
     }
 }

@@ -4,27 +4,49 @@
     using System.Linq;
     using System.Reflection;
 
-    public class FieldsContainer<TFieldSettings> : IFieldsContainer<TFieldSettings>
-        where TFieldSettings : FieldSettingsBase
+    public class AutoOrderedFieldsContainer<TFieldSettings> : FieldsContainer<TFieldSettings>
+        where TFieldSettings : IFieldSettingsContainer
     {
-        private readonly Dictionary<PropertyInfo, TFieldSettings> fields;
-        private int currentPropertyId = 0;
+        private int _currentPropertyId = 0;
+
+        public override void AddOrUpdate(PropertyInfo propertyInfo, TFieldSettings settings)
+        {
+            settings.Index = _currentPropertyId++;
+
+            base.AddOrUpdate(propertyInfo, settings);
+        }
+    }
+
+    public class FieldsContainer<TFieldSettings> : IFieldsContainer<TFieldSettings>
+        where TFieldSettings : IFieldSettings
+    {
+        protected Dictionary<PropertyInfo, PropertySettingsContainer<TFieldSettings>> Fields { get; private set; }
 
         public FieldsContainer()
         {
-            fields = new Dictionary<PropertyInfo, TFieldSettings>();
+            Fields = new Dictionary<PropertyInfo, PropertySettingsContainer<TFieldSettings>>();
         }
 
-        public void AddOrUpdate(TFieldSettings settings)
+        public virtual void AddOrUpdate(PropertyInfo propertyInfo, TFieldSettings settings)
         {
-            settings.Id = currentPropertyId++;
+            var propertySettings = new PropertySettingsContainer<TFieldSettings>
+            {
+                PropertySettings = settings,
+                Index = settings.Index.GetValueOrDefault()
+            };
 
-            fields[settings.PropertyInfo] = settings;
+            Fields[propertyInfo] = propertySettings;
         }
 
-        public IOrderedEnumerable<TFieldSettings> OrderedFields
+        public virtual IEnumerable<TFieldSettings> OrderedFields
         {
-            get { return fields.Values.OrderBy(settings => settings.Id); }
+            get
+            {
+                return Fields.Values
+                    .OrderBy(settings => settings.Index)
+                    .Select(x => x.PropertySettings)
+                    .AsEnumerable();
+            }
         }
     }
 }

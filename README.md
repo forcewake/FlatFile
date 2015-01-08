@@ -112,26 +112,66 @@ public class LayoutFactory
     } 
 }
 ```
+
+#### Attribute mapping
+##### Delimited
+```cs
+using FlatFile.Delimited.Attributes;
+
+[DelimitedFile(Delimiter = ";", Quotes = "\"")]
+public class TestObject
+{
+    [DelimitedField(1)]
+    public int Id { get; set; }
+
+    [DelimitedField(2)]
+    public string Description { get; set; }
+
+    [DelimitedField(3, NullValue = "=Null")]
+    public int? NullableInt { get; set; }
+}
+```
+
+##### Fixed
+```cs
+using FlatFile.FixedLength;
+using FlatFile.FixedLength.Attributes;
+
+[FixedLengthFile]
+public class TestObject
+{
+    [FixedLengthField(1, 5, PaddingChar = '0')]
+    public int Id { get; set; }
+
+    [FixedLengthField(2, 25, PaddingChar = ' ', Padding = Padding.Right)]
+    public string Description { get; set; }
+
+    [FixedLengthField(2, 5, PaddingChar = '0', NullValue = "=Null")]
+    public int? NullableInt { get; set; }
+}
+```
+
 #### Read from stream
 ```cs
 var layout = new FixedSampleRecordLayout();
+var factory = new FixedLengthFileEngineFactory();
 using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(FixedFileSample)))
 {
-    var flatFile = new FixedLengthFileEngine<FixedSampleRecord>();
+    var flatFile = factory.GetEngine<FixedSampleRecord>(layout);
 
-    var records = flatFile.Read(layout, stream).ToArray();
-
-    records.Should().HaveCount(19);
+    var records = flatFile.Read(stream).ToArray();
 }
 ```
 #### Write to stream
 ```cs
+var sampleRecords = GetRecords();
 var layout = new FixedSampleRecordLayout();
+var factory = new FixedLengthFileEngineFactory();
 using (var stream = new MemoryStream())
 {
-    var flatFile = new FixedLengthFileEngine<FixedSampleRecord>();
+    var flatFile = factory.GetEngine<FixedSampleRecord>(layout);
 
-    flatFile.Write(layout, stream, sampleRecords);
+    flatFile.Write(stream, sampleRecords);
 }
 ```
 

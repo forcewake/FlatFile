@@ -19,7 +19,7 @@
 
         public FieldsContainerTests()
         {
-            _fieldsContainer = new FieldsContainer<FixedFieldSettings>();
+            _fieldsContainer = new AutoOrderedFieldsContainer<FixedFieldSettings>();
             _testObject = new TestObject();
 
             _properties = new[]
@@ -31,16 +31,13 @@
 
             _propertyInfo = ExpressionExtensions.GetPropertyInfo(() => _testObject.Description);
 
-            _fieldSettings = new FixedFieldSettings
-            {
-                PropertyInfo = _propertyInfo
-            };
+            _fieldSettings = new FixedFieldSettings(_propertyInfo);
         }
 
         [Fact]
         public void OrderedFieldsShouldContainsOneItemAfterAdd()
         {
-            _fieldsContainer.AddOrUpdate(_fieldSettings);
+            _fieldsContainer.AddOrUpdate(_propertyInfo, _fieldSettings);
 
             _fieldsContainer.OrderedFields.Should().HaveCount(1);
         }
@@ -48,19 +45,19 @@
         [Fact]
         public void AddOrUpdateShouldAssingRightId()
         {
-            _fieldsContainer.AddOrUpdate(_fieldSettings);
+            _fieldsContainer.AddOrUpdate(_propertyInfo, _fieldSettings);
 
-            _fieldsContainer.OrderedFields.First().Id.Should().Be(0);
+            _fieldsContainer.OrderedFields.First().Index.Should().Be(0);
         }
 
         [Fact]
         public void OrderedFieldsShouldContainsOneItemAfterUpdate()
         {
-            _fieldsContainer.AddOrUpdate(_fieldSettings);
+            _fieldsContainer.AddOrUpdate(_propertyInfo, _fieldSettings);
 
             _fieldSettings.IsNullable = true;
 
-            _fieldsContainer.AddOrUpdate(_fieldSettings);
+            _fieldsContainer.AddOrUpdate(_propertyInfo, _fieldSettings);
 
             _fieldsContainer.OrderedFields.Should().HaveCount(1);
         }
@@ -70,10 +67,7 @@
         {
             foreach (var property in _properties)
             {
-                _fieldsContainer.AddOrUpdate(new FixedFieldSettings
-                {
-                    PropertyInfo = property
-                });
+                _fieldsContainer.AddOrUpdate(property, new FixedFieldSettings(property));
             }
 
             _fieldsContainer.OrderedFields.Should().HaveCount(_properties.Length);
@@ -84,17 +78,14 @@
         {
             foreach (var property in _properties)
             {
-                _fieldsContainer.AddOrUpdate(new FixedFieldSettings
-                {
-                    PropertyInfo = property
-                });
+                _fieldsContainer.AddOrUpdate(property, new FixedFieldSettings(property));
             }
 
             int id = 0;
 
             foreach (var field in _fieldsContainer.OrderedFields)
             {
-                field.Id.Should().Be(id++);
+                field.Index.Should().Be(id++);
             }
         }
     }

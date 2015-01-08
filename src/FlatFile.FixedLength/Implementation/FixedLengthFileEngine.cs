@@ -4,44 +4,37 @@ namespace FlatFile.FixedLength.Implementation
     using FlatFile.Core;
     using FlatFile.Core.Base;
 
-    public class FixedLengthFileEngine<T> :
-        FlatFileEngine
-            <T, IFixedLayout<T>, FixedFieldSettings, IFixedFieldSettingsConstructor, IFixedLengthLineBuilder<T>,
-                IFixedLengthLineParser<T>>,
-        IFixedLengthFileEngine<T> where T : class, new()
+    public class FixedLengthFileEngine<T> : FlatFileEngine<T, IFixedFieldSettingsContainer, ILayoutDescriptor<IFixedFieldSettingsContainer>>
+        where T : class, new()
     {
-        private readonly IFixedLengthLineBuilderFactory<T> builderFactory;
+        private readonly IFixedLengthLineBuilderFactory<T> lineBuilderFactory;
+        private readonly IFixedLengthLineParserFactory<T> lineParserFactory;
+        private readonly ILayoutDescriptor<IFixedFieldSettingsContainer> layoutDescriptor;
 
-        private readonly IFixedLengthLineParserFactory<T> parserFactory;
-
-        public FixedLengthFileEngine(Func<string, Exception, bool> handleEntryReadError = null)
-            : this(new FixedLengthLineBuilderFactory<T>(), new FixedLengthLineParserFactory<T>(), handleEntryReadError)
+        internal FixedLengthFileEngine(
+            ILayoutDescriptor<IFixedFieldSettingsContainer> layoutDescriptor,
+            IFixedLengthLineBuilderFactory<T> lineBuilderFactory,
+            IFixedLengthLineParserFactory<T> lineParserFactory,
+            Func<string, Exception, bool> handleEntryReadError = null) : base(handleEntryReadError)
         {
+            this.lineBuilderFactory = lineBuilderFactory;
+            this.lineParserFactory = lineParserFactory;
+            this.layoutDescriptor = layoutDescriptor;
         }
 
-        public FixedLengthFileEngine(IFixedLengthLineBuilderFactory<T> builderFactory,
-            IFixedLengthLineParserFactory<T> parserFactory,
-            Func<string, Exception, bool> handleEntryReadError = null)
-            : base(handleEntryReadError)
+        protected override ILineBulder<T> LineBuilder
         {
-            this.builderFactory = builderFactory;
-            this.parserFactory = parserFactory;
+            get { return lineBuilderFactory.GetBuilder(LayoutDescriptor); }
         }
 
-        protected override
-            ILineBuilderFactory
-                <T, IFixedLengthLineBuilder<T>, IFixedLayout<T>, FixedFieldSettings, IFixedFieldSettingsConstructor>
-            BuilderFactory
+        protected override ILineParser<T> LineParser
         {
-            get { return builderFactory; }
+            get { return lineParserFactory.GetParser(LayoutDescriptor); }
         }
 
-        protected override
-            ILineParserFactory
-                <T, IFixedLengthLineParser<T>, IFixedLayout<T>, FixedFieldSettings, IFixedFieldSettingsConstructor>
-            ParserFactory
+        protected override ILayoutDescriptor<IFixedFieldSettingsContainer> LayoutDescriptor
         {
-            get { return parserFactory; }
+            get { return layoutDescriptor; }
         }
     }
 }

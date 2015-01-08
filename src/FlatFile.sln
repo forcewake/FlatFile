@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatFile.Core", "FlatFile.Core\FlatFile.Core.csproj", "{1CB90052-B97A-4AD4-B9FD-20A22914D129}"
 EndProject
@@ -17,10 +17,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{874AF755-A91B-434F-9679-35BEBC8B7D9F}"
 	ProjectSection(SolutionItems) = preProject
 		..\appveyor.yml = ..\appveyor.yml
-		..\assets\FlatFile.Core.nuspec = ..\assets\FlatFile.Core.nuspec
-		..\assets\FlatFile.Delimited.nuspec = ..\assets\FlatFile.Delimited.nuspec
-		..\assets\FlatFile.FixedLength.nuspec = ..\assets\FlatFile.FixedLength.nuspec
-		..\assets\pack.ps1 = ..\assets\pack.ps1
+		..\nuspecs\FlatFile.Core.nuspec = ..\nuspecs\FlatFile.Core.nuspec
+		..\nuspecs\FlatFile.Delimited.nuspec = ..\nuspecs\FlatFile.Delimited.nuspec
+		..\nuspecs\FlatFile.FixedLength.nuspec = ..\nuspecs\FlatFile.FixedLength.nuspec
+		..\nuspecs\FlatFile.nuspec = ..\nuspecs\FlatFile.nuspec
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatFile.Delimited", "FlatFile.Delimited\FlatFile.Delimited.csproj", "{F0478B76-5190-4B51-AA3A-C02D3A4109CA}"
@@ -30,6 +30,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatFile.Benchmark", "FlatFile.Benchmark\FlatFile.Benchmark.csproj", "{1484D999-2EC8-4D73-ACCC-17E25F98E20F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatFile.Tests", "FlatFile.Tests\FlatFile.Tests.csproj", "{7B8FE44C-7725-40C2-AED4-7573F5ABAAB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatFile.Core.Attributes", "FlatFile.Core.Attributes\FlatFile.Core.Attributes.csproj", "{5849B415-6CC1-4615-A94F-265F5BD6F234}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatFile.Delimited.Attributes", "FlatFile.Delimited.Attributes\FlatFile.Delimited.Attributes.csproj", "{0313AD85-3109-4E8D-999C-D016943E83D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatFile.FixedLength.Attributes", "FlatFile.FixedLength.Attributes\FlatFile.FixedLength.Attributes.csproj", "{65154587-18F2-45DC-8E86-B2177309A479}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +63,18 @@ Global
 		{7B8FE44C-7725-40C2-AED4-7573F5ABAAB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B8FE44C-7725-40C2-AED4-7573F5ABAAB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B8FE44C-7725-40C2-AED4-7573F5ABAAB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5849B415-6CC1-4615-A94F-265F5BD6F234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5849B415-6CC1-4615-A94F-265F5BD6F234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5849B415-6CC1-4615-A94F-265F5BD6F234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5849B415-6CC1-4615-A94F-265F5BD6F234}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0313AD85-3109-4E8D-999C-D016943E83D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0313AD85-3109-4E8D-999C-D016943E83D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0313AD85-3109-4E8D-999C-D016943E83D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0313AD85-3109-4E8D-999C-D016943E83D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65154587-18F2-45DC-8E86-B2177309A479}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65154587-18F2-45DC-8E86-B2177309A479}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65154587-18F2-45DC-8E86-B2177309A479}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65154587-18F2-45DC-8E86-B2177309A479}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

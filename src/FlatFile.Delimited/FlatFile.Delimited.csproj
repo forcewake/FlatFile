@@ -95,13 +95,13 @@
   <ItemGroup>
     <Compile Include="DelimitedFieldSettings.cs" />
     <Compile Include="IDelimitedFieldSettingsConstructor.cs" />
-    <Compile Include="IDelimitedFileEngine.cs" />
     <Compile Include="IDelimitedLayout.cs" />
+    <Compile Include="IDelimitedLayoutDescriptor.cs" />
     <Compile Include="IDelimitedLineBuilder.cs" />
     <Compile Include="IDelimitedLineBuilderFactory.cs" />
     <Compile Include="IDelimitedLineParser.cs" />
     <Compile Include="IDelimitedLineParserFactory.cs" />
-    <Compile Include="Implementation\DelimitedFieldSettingsBuilder.cs" />
+    <Compile Include="Implementation\DelimitedFileEngineFactory.cs" />
     <Compile Include="Implementation\DelimitedFieldSettingsConstructor.cs" />
     <Compile Include="Implementation\DelimitedFieldSettingsFactory.cs" />
     <Compile Include="Implementation\DelimitedFileEngine.cs" />
