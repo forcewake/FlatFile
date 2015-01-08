@@ -3,12 +3,16 @@ namespace FlatFile.Delimited
     using System.Reflection;
     using FlatFile.Core.Base;
 
-    public interface IDelimitedFieldSettings : IFieldSettingsContainer
+    public interface IDelimitedFieldSettings : IFieldSettings
     {
         string Name { get; set; }
     }
 
-    public class DelimitedFieldSettings : FieldSettingsBase, IDelimitedFieldSettings
+    public interface IDelimitedFieldSettingsContainer : IDelimitedFieldSettings, IFieldSettingsContainer
+    {
+    }
+
+    public class DelimitedFieldSettings : FieldSettingsBase, IDelimitedFieldSettingsContainer
     {
         public DelimitedFieldSettings(PropertyInfo propertyInfo) : base(propertyInfo)
         {
