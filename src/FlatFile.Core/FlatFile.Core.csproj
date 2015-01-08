@@ -95,7 +95,6 @@
   <ItemGroup>
     <Compile Include="Base\FieldsContainer.cs" />
     <Compile Include="Base\FieldSettingsBase.cs" />
-    <Compile Include="Base\FieldSettingsConstructorBase.cs" />
     <Compile Include="Base\FlatFileEngine.cs" />
     <Compile Include="Base\LayoutBase.cs" />
     <Compile Include="Base\LayoutDescriptorBase.cs" />
@@ -105,7 +104,6 @@
     <Compile Include="Extensions\ExpressionExtensions.cs" />
     <Compile Include="IFieldsContainer.cs" />
     <Compile Include="IFlatFileEngine.cs" />
-    <Compile Include="IFieldSettingsBuilder.cs" />
     <Compile Include="IFieldSettingsConstructor.cs" />
     <Compile Include="IFieldSettingsFactory.cs" />
     <Compile Include="IFlatFileEngineFactory.cs" />

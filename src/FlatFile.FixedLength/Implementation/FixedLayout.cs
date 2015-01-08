@@ -6,22 +6,20 @@ namespace FlatFile.FixedLength.Implementation
     using FlatFile.Core.Base;
 
     public class FixedLayout<TTarget> :
-        LayoutBase<TTarget, FixedFieldSettings, IFixedFieldSettingsConstructor, IFixedLayout<TTarget>>,
+        LayoutBase<TTarget, IFixedFieldSettingsContainer, IFixedFieldSettingsConstructor, IFixedLayout<TTarget>>,
         IFixedLayout<TTarget>
     {
         public FixedLayout()
             : this(
                 new FixedFieldSettingsFactory(),
-                new FixedFieldSettingsBuilder(),
-                new FieldsContainer<FixedFieldSettings>())
+                new FieldsContainer<IFixedFieldSettingsContainer>())
         {
         }
 
         public FixedLayout(
-            IFieldSettingsFactory<FixedFieldSettings, IFixedFieldSettingsConstructor> fieldSettingsFactory,
-            IFieldSettingsBuilder<FixedFieldSettings, IFixedFieldSettingsConstructor> builder,
-            IFieldsContainer<FixedFieldSettings> fieldsContainer)
-            : base(fieldSettingsFactory, builder, fieldsContainer)
+            IFieldSettingsFactory<IFixedFieldSettingsConstructor> fieldSettingsFactory,
+            IFieldsContainer<IFixedFieldSettingsContainer> fieldsContainer)
+            : base(fieldSettingsFactory, fieldsContainer)
         {
         }
 

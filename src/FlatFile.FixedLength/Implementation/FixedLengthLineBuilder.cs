@@ -5,10 +5,10 @@ namespace FlatFile.FixedLength.Implementation
     using FlatFile.Core.Base;
 
     public class FixedLengthLineBuilder<T> :
-        LineBulderBase<T, ILayoutDescriptor<FixedFieldSettings>, FixedFieldSettings>,
+        LineBulderBase<T, ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer>,
         IFixedLengthLineBuilder<T>
     {
-        public FixedLengthLineBuilder(ILayoutDescriptor<FixedFieldSettings> descriptor)
+        public FixedLengthLineBuilder(ILayoutDescriptor<IFixedFieldSettingsContainer> descriptor)
             : base(descriptor)
         {
         }
@@ -20,7 +20,7 @@ namespace FlatFile.FixedLength.Implementation
             return line;
         }
 
-        protected override string TransformFieldValue(FixedFieldSettings field, string lineValue)
+        protected override string TransformFieldValue(IFixedFieldSettingsContainer field, string lineValue)
         {
             if (lineValue.Length >= field.Lenght)
             {

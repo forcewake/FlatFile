@@ -3,8 +3,8 @@ namespace FlatFile.Core
     using System.Collections.Generic;
     using FlatFile.Core.Base;
 
-    public interface ILayoutDescriptor<TFieldSettings> 
-        where TFieldSettings : FieldSettingsBase
+    public interface ILayoutDescriptor<TFieldSettings>
+        where TFieldSettings : IFieldSettings
     {
         IEnumerable<TFieldSettings> Fields { get; }
 

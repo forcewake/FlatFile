@@ -3,7 +3,7 @@ namespace FlatFile.Delimited
     using FlatFile.Core;
 
     public interface IDelimitedFieldSettingsConstructor :
-        IFieldSettingsConstructor<DelimitedFieldSettings, IDelimitedFieldSettingsConstructor>
+        IFieldSettingsConstructor<IDelimitedFieldSettingsConstructor>
     {
         string Name { get; }
 

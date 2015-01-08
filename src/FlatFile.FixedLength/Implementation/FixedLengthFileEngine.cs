@@ -4,15 +4,15 @@ namespace FlatFile.FixedLength.Implementation
     using FlatFile.Core;
     using FlatFile.Core.Base;
 
-    public class FixedLengthFileEngine<T> : FlatFileEngine<T, FixedFieldSettings, ILayoutDescriptor<FixedFieldSettings>>
+    public class FixedLengthFileEngine<T> : FlatFileEngine<T, IFixedFieldSettingsContainer, ILayoutDescriptor<IFixedFieldSettingsContainer>>
         where T : class, new()
     {
         private readonly IFixedLengthLineBuilderFactory<T> lineBuilderFactory;
         private readonly IFixedLengthLineParserFactory<T> lineParserFactory;
-        private readonly ILayoutDescriptor<FixedFieldSettings> layoutDescriptor;
+        private readonly ILayoutDescriptor<IFixedFieldSettingsContainer> layoutDescriptor;
 
         internal FixedLengthFileEngine(
-            ILayoutDescriptor<FixedFieldSettings> layoutDescriptor,
+            ILayoutDescriptor<IFixedFieldSettingsContainer> layoutDescriptor,
             IFixedLengthLineBuilderFactory<T> lineBuilderFactory,
             IFixedLengthLineParserFactory<T> lineParserFactory,
             Func<string, Exception, bool> handleEntryReadError = null) : base(handleEntryReadError)
@@ -32,7 +32,7 @@ namespace FlatFile.FixedLength.Implementation
             get { return lineParserFactory.GetParser(LayoutDescriptor); }
         }
 
-        protected override ILayoutDescriptor<FixedFieldSettings> LayoutDescriptor
+        protected override ILayoutDescriptor<IFixedFieldSettingsContainer> LayoutDescriptor
         {
             get { return layoutDescriptor; }
         }

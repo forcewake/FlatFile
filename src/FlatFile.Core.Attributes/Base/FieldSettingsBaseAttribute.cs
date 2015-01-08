@@ -1,11 +1,12 @@
 namespace FlatFile.Core.Attributes.Base
 {
     using System;
+    using FlatFile.Core.Base;
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public abstract class FieldSettingsBaseAttribute : Attribute
+    public abstract class FieldSettingsBaseAttribute : Attribute, IFieldSettings
     {
-        public int Index { get; protected set; }
+        public int? Index { get; set; }
 
         public bool IsNullable
         {

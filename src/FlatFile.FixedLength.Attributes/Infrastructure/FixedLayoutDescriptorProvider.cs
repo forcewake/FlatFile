@@ -7,11 +7,11 @@ namespace FlatFile.FixedLength.Attributes.Infrastructure
     using FlatFile.Core.Attributes.Infrastructure;
     using FlatFile.Core.Base;
 
-    public class FixedLayoutDescriptorProvider : ILayoutDescriptorProvider<FixedFieldSettings, ILayoutDescriptor<FixedFieldSettings>>
+    public class FixedLayoutDescriptorProvider : ILayoutDescriptorProvider<IFixedFieldSettingsContainer, ILayoutDescriptor<IFixedFieldSettingsContainer>>
     {
-        public ILayoutDescriptor<FixedFieldSettings> GetDescriptor<T>()
+        public ILayoutDescriptor<IFixedFieldSettingsContainer> GetDescriptor<T>()
         {
-            var container = new FieldsContainer<FixedFieldSettings>();
+            var container = new FieldsContainer<IFixedFieldSettingsContainer>();
 
             var fileMappingType = typeof(T);
 
@@ -28,17 +28,15 @@ namespace FlatFile.FixedLength.Attributes.Infrastructure
 
             foreach (var p in properties)
             {
-                var attribute = p.Attributes.FirstOrDefault() as FixedLengthFieldAttribute;
+                var attribute = p.Attributes.FirstOrDefault() as IFixedFieldSettings;
 
                 if (attribute != null)
                 {
-                    var fieldSettings = attribute.GetFieldSettings(p.Property);
-
-                    container.AddOrUpdate(fieldSettings, false);
+                    container.AddOrUpdate(p.Property, new FixedFieldSettings(p.Property, attribute));
                 }
             }
 
-            var descriptor = new LayoutDescriptorBase<FixedFieldSettings>(container)
+            var descriptor = new LayoutDescriptorBase<IFixedFieldSettingsContainer>(container)
             {
                 HasHeader = false
             };

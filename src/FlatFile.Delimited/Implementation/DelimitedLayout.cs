@@ -12,16 +12,14 @@ namespace FlatFile.Delimited.Implementation
         public DelimitedLayout()
             : this(
                 new DelimitedFieldSettingsFactory(),
-                new DelimitedFieldSettingsBuilder(),
                 new FieldsContainer<DelimitedFieldSettings>())
         {
         }
 
         public DelimitedLayout(
-            IFieldSettingsFactory<DelimitedFieldSettings, IDelimitedFieldSettingsConstructor> fieldSettingsFactory,
-            IFieldSettingsBuilder<DelimitedFieldSettings, IDelimitedFieldSettingsConstructor> builder,
+            IFieldSettingsFactory<IDelimitedFieldSettingsConstructor> fieldSettingsFactory,
             IFieldsContainer<DelimitedFieldSettings> fieldsContainer)
-            : base(fieldSettingsFactory, builder, fieldsContainer)
+            : base(fieldSettingsFactory, fieldsContainer)
         {
             Quotes = string.Empty;
             Delimiter = ",";

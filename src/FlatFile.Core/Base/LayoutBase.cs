@@ -7,20 +7,17 @@
 
     public abstract class LayoutBase<TTarget, TFieldSettings, TConstructor, TLayout>
         : LayoutDescriptorBase<TFieldSettings>, ILayout<TTarget, TFieldSettings, TConstructor, TLayout>
-        where TFieldSettings : FieldSettingsBase
-        where TConstructor : IFieldSettingsConstructor<TFieldSettings, TConstructor> 
+        where TFieldSettings : class, IFieldSettings
+        where TConstructor : IFieldSettingsConstructor<TConstructor> 
         where TLayout : ILayout<TTarget, TFieldSettings, TConstructor, TLayout>
     {
-        private readonly IFieldSettingsFactory<TFieldSettings, TConstructor> _fieldSettingsFactory;
-        private readonly IFieldSettingsBuilder<TFieldSettings, TConstructor> _builder;
+        private readonly IFieldSettingsFactory<TConstructor> _fieldSettingsFactory;
 
         protected LayoutBase(
-            IFieldSettingsFactory<TFieldSettings, TConstructor> fieldSettingsFactory, 
-            IFieldSettingsBuilder<TFieldSettings, TConstructor> builder, 
+            IFieldSettingsFactory<TConstructor> fieldSettingsFactory, 
             IFieldsContainer<TFieldSettings> fieldsContainer) : base(fieldsContainer)
         {
             this._fieldSettingsFactory = fieldSettingsFactory;
-            this._builder = builder;
         }
 
         protected virtual void ProcessProperty<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TConstructor> settings)
@@ -34,9 +31,7 @@
                 settings(constructor);
             }
 
-            var fieldSettings = _builder.BuildSettings(constructor);
-
-            FieldsContainer.AddOrUpdate(fieldSettings);
+            FieldsContainer.AddOrUpdate(constructor.PropertyInfo, constructor as TFieldSettings);
         }
 
         protected virtual PropertyInfo GetPropertyInfo<TProperty>(Expression<Func<TTarget, TProperty>> expression)

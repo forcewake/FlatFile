@@ -6,8 +6,8 @@ namespace FlatFile.FixedLength
         ILineBuilderFactory<
             TEntity,
             IFixedLengthLineBuilder<TEntity>,
-            ILayoutDescriptor<FixedFieldSettings>,
-            FixedFieldSettings>
+            ILayoutDescriptor<IFixedFieldSettingsContainer>,
+            IFixedFieldSettingsContainer>
     {
     }
 }

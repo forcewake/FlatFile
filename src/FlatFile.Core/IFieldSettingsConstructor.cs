@@ -1,14 +1,10 @@
 ﻿namespace FlatFile.Core
 {
-    using System.Reflection;
+    using FlatFile.Core.Base;
 
-    public interface IFieldSettingsConstructor<out TFieldSettings, out TConstructor>
-        where TConstructor : IFieldSettingsConstructor<TFieldSettings, TConstructor>
+    public interface IFieldSettingsConstructor<out TConstructor> : IFieldSettingsContainer
+        where TConstructor : IFieldSettingsConstructor<TConstructor>
     {
-        bool IsNullable { get; }
-        string NullValue { get; }
-        PropertyInfo PropertyInfo { get; }
-
         TConstructor AllowNull(string nullValue);
     }
 }

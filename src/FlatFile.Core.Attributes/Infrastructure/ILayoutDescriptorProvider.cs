@@ -3,7 +3,7 @@
     using FlatFile.Core.Base;
 
     public interface ILayoutDescriptorProvider<TFieldSettings, out TLayoutDescriptor>
-        where TFieldSettings : FieldSettingsBase
+        where TFieldSettings : IFieldSettings
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
     {
         TLayoutDescriptor GetDescriptor<T>();

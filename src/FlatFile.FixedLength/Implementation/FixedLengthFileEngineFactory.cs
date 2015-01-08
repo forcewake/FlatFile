@@ -3,10 +3,10 @@ namespace FlatFile.FixedLength.Implementation
     using System;
     using FlatFile.Core;
 
-    public class FixedLengthFileEngineFactory : IFlatFileEngineFactory<FixedFieldSettings>
+    public class FixedLengthFileEngineFactory : IFlatFileEngineFactory<IFixedFieldSettingsContainer>
     {
         public IFlatFileEngine<T> GetEngine<T>(
-            ILayoutDescriptor<FixedFieldSettings> descriptor,
+            ILayoutDescriptor<IFixedFieldSettingsContainer> descriptor,
             Func<string, Exception, bool> handleEntryReadError = null)
             where T : class, new()
         {

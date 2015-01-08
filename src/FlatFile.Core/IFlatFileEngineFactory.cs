@@ -4,7 +4,7 @@
     using FlatFile.Core.Base;
 
     public interface IFlatFileEngineFactory<TFieldSettings>
-        where TFieldSettings : FieldSettingsBase
+        where TFieldSettings : IFieldSettings
     {
         IFlatFileEngine<T> GetEngine<T>(
             ILayoutDescriptor<TFieldSettings> descriptor,

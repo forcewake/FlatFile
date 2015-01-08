@@ -7,7 +7,7 @@ namespace FlatFile.Tests.FixedLength
     using FlatFile.Tests.Base.Entities;
 
     public class FixedLengthIntegrationTests :
-        IntegrationTests<FixedFieldSettings, IFixedFieldSettingsConstructor, IFixedLayout<TestObject>>
+        IntegrationTests<IFixedFieldSettingsContainer, IFixedFieldSettingsConstructor, IFixedLayout<TestObject>>
     {
         private readonly IFixedLayout<TestObject> _layout;
         private readonly IFlatFileEngine<TestObject> _engine;
