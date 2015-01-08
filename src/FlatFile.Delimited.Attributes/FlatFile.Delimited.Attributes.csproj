@@ -95,6 +95,7 @@
   <ItemGroup>
     <Compile Include="DelimitedFieldAttribute.cs" />
     <Compile Include="DelimitedFileAttribute.cs" />
+    <Compile Include="Infrastructure\DelimitedLayoutDescriptorProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +106,10 @@
     <ProjectReference Include="..\FlatFile.Core\FlatFile.Core.csproj">
       <Project>{1CB90052-B97A-4AD4-B9FD-20A22914D129}</Project>
       <Name>FlatFile.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FlatFile.Delimited\FlatFile.Delimited.csproj">
+      <Project>{F0478B76-5190-4B51-AA3A-C02D3A4109CA}</Project>
+      <Name>FlatFile.Delimited</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

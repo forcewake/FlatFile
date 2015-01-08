@@ -7,7 +7,7 @@ namespace FlatFile.Delimited.Implementation
     using FlatFile.Core.Base;
 
     public class DelimitedFileEngine<T> :
-        FlatFileEngine<T, DelimitedFieldSettings, IDelimitedLayoutDescriptor>
+        FlatFileEngine<T, IDelimitedFieldSettingsContainer, IDelimitedLayoutDescriptor>
         where T : class, new()
     {
         private readonly IDelimitedLineBuilderFactory<T> _builderFactory;

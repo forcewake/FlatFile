@@ -4,7 +4,7 @@
     using FlatFile.Core.Base;
 
     public class DelimitedLineBuilder<TEntry> :
-        LineBulderBase<TEntry, IDelimitedLayoutDescriptor, DelimitedFieldSettings>, 
+        LineBulderBase<TEntry, IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>, 
         IDelimitedLineBuilder<TEntry>
     {
         public DelimitedLineBuilder(IDelimitedLayoutDescriptor descriptor)
@@ -21,7 +21,7 @@
             return line;
         }
 
-        protected override string TransformFieldValue(DelimitedFieldSettings field, string lineValue)
+        protected override string TransformFieldValue(IDelimitedFieldSettingsContainer field, string lineValue)
         {
             var quotes = Descriptor.Quotes;
             if (!string.IsNullOrEmpty(quotes))

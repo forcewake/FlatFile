@@ -7,7 +7,7 @@ namespace FlatFile.Delimited
             TEntity,
             IDelimitedLineParser<TEntity>,
             IDelimitedLayoutDescriptor,
-            DelimitedFieldSettings>
+            IDelimitedFieldSettingsContainer>
     {
     }
 }

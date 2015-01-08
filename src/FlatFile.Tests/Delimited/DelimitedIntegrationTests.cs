@@ -7,7 +7,7 @@ namespace FlatFile.Tests.Delimited
     using FlatFile.Tests.Base.Entities;
 
     public class DelimitedIntegrationTests :
-        IntegrationTests<DelimitedFieldSettings, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TestObject>>
+        IntegrationTests<IDelimitedFieldSettingsContainer, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TestObject>>
     {
         private readonly IDelimitedLayout<TestObject> _layout;
 

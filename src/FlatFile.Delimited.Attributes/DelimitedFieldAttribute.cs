@@ -2,7 +2,7 @@
 {
     using FlatFile.Core.Attributes.Base;
 
-    public class DelimitedFieldAttribute : FieldSettingsBaseAttribute
+    public class DelimitedFieldAttribute : FieldSettingsBaseAttribute, IDelimitedFieldSettings
     {
         public string Name { get; set; }
         

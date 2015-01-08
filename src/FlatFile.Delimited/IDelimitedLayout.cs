@@ -4,7 +4,7 @@ namespace FlatFile.Delimited
 
     public interface IDelimitedLayout<TTarget> :
         IDelimitedLayoutDescriptor,
-        ILayout<TTarget, DelimitedFieldSettings, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TTarget>>
+        ILayout<TTarget, IDelimitedFieldSettingsContainer, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TTarget>>
     {
         IDelimitedLayout<TTarget> WithQuote(string quote);
         IDelimitedLayout<TTarget> WithDelimiter(string delimiter);
