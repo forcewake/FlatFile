@@ -8,7 +8,7 @@ namespace FlatFile.Core.Base
 
     public abstract class FlatFileEngine<TEntity, TFieldSettings, TLayoutDescriptor> : IFlatFileEngine<TEntity>
         where TEntity : class, new()
-        where TFieldSettings : FieldSettingsBase
+        where TFieldSettings : IFieldSettings
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
     {
         private readonly Func<string, Exception, bool> _handleEntryReadError;

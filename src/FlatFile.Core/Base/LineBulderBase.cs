@@ -1,8 +1,8 @@
 namespace FlatFile.Core.Base
 {
     public abstract class LineBulderBase<TEntity, TLayoutDescriptor, TFieldSettings> : ILineBulder<TEntity>
-        where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings> 
-        where TFieldSettings : FieldSettingsBase 
+        where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
+        where TFieldSettings : IFieldSettingsContainer 
     {
         private readonly TLayoutDescriptor _descriptor;
 

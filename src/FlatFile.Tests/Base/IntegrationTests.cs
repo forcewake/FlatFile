@@ -13,8 +13,8 @@ namespace FlatFile.Tests.Base
 
     public abstract class IntegrationTests<TFieldSettings, TConstructor, TLayout>
         where TLayout : ILayout<TestObject, TFieldSettings, TConstructor, TLayout>
-        where TFieldSettings : FieldSettingsBase
-        where TConstructor : IFieldSettingsConstructor<TFieldSettings, TConstructor> 
+        where TFieldSettings : IFieldSettingsContainer
+        where TConstructor : IFieldSettingsConstructor<TConstructor> 
     {
         protected abstract TLayout Layout { get; }
 

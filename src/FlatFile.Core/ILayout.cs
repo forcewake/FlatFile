@@ -5,8 +5,8 @@ namespace FlatFile.Core
     using FlatFile.Core.Base;
 
     public interface ILayout<T, TFieldSettings, TConstructor, out TLayout> : ILayoutDescriptor<TFieldSettings>
-        where TFieldSettings : FieldSettingsBase
-        where TConstructor : IFieldSettingsConstructor<TFieldSettings, TConstructor>
+        where TFieldSettings : IFieldSettings
+        where TConstructor : IFieldSettingsConstructor<TConstructor>
         where TLayout : ILayout<T, TFieldSettings, TConstructor, TLayout>
     {
         TLayout WithMember<TProperty>(Expression<Func<T, TProperty>> expression, Action<TConstructor> settings = null);

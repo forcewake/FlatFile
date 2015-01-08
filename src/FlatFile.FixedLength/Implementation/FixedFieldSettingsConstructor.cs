@@ -1,19 +1,13 @@
 namespace FlatFile.FixedLength.Implementation
 {
     using System.Reflection;
-    using FlatFile.Core.Base;
 
-    public class FixedFieldSettingsConstructor :
-        FieldSettingsConstructorBase<FixedFieldSettings, IFixedFieldSettingsConstructor>,
+    public class FixedFieldSettingsConstructor : FixedFieldSettings,
         IFixedFieldSettingsConstructor
     {
         public FixedFieldSettingsConstructor(PropertyInfo propertyInfo) : base(propertyInfo)
         {
         }
-
-        public int Lenght { get; protected set; }
-        public char PaddingChar { get; protected set; }
-        public bool PadLeft { get; protected set; }
 
         public IFixedFieldSettingsConstructor WithLenght(int lenght)
         {
@@ -35,7 +29,7 @@ namespace FlatFile.FixedLength.Implementation
             return this;
         }
 
-        public override IFixedFieldSettingsConstructor AllowNull(string nullValue)
+        public IFixedFieldSettingsConstructor AllowNull(string nullValue)
         {
             IsNullable = true;
             NullValue = nullValue;

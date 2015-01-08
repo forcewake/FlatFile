@@ -4,11 +4,11 @@ namespace FlatFile.FixedLength.Implementation
     using FlatFile.Core.Base;
 
     public class FixedLengthLineParser<T> :
-        LineParserBase<T, ILayoutDescriptor<FixedFieldSettings>, FixedFieldSettings>,
+        LineParserBase<T, ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer>,
         IFixedLengthLineParser<T>
         where T : new()
     {
-        public FixedLengthLineParser(ILayoutDescriptor<FixedFieldSettings> layout)
+        public FixedLengthLineParser(ILayoutDescriptor<IFixedFieldSettingsContainer> layout)
             : base(layout)
         {
         }
@@ -16,7 +16,7 @@ namespace FlatFile.FixedLength.Implementation
         public override T ParseLine(string line, T entry)
         {
             int linePosition = 0;
-            foreach (FixedFieldSettings field in Layout.Fields)
+            foreach (var field in Layout.Fields)
             {
                 string fieldValueFromLine = line.Substring(linePosition, field.Lenght);
                 object convertedFieldValue = GetFieldValueFromString(field, fieldValueFromLine);
@@ -26,7 +26,7 @@ namespace FlatFile.FixedLength.Implementation
             return entry;
         }
 
-        protected override string TransformStringValue(FixedFieldSettings fieldSettingsBuilder, string memberValue)
+        protected override string TransformStringValue(IFixedFieldSettingsContainer fieldSettingsBuilder, string memberValue)
         {
             memberValue = fieldSettingsBuilder.PadLeft
                 ? memberValue.TrimStart(new[] {fieldSettingsBuilder.PaddingChar})

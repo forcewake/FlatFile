@@ -3,8 +3,8 @@ namespace FlatFile.Core.Base
     using System;
 
     public abstract class LineParserBase<TEntity, TLayoutDescriptor, TFieldSettings> : ILineParser<TEntity>
-        where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings> 
-        where TFieldSettings : FieldSettingsBase
+        where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
+        where TFieldSettings : IFieldSettingsContainer
     {
         private readonly TLayoutDescriptor _layout;
 

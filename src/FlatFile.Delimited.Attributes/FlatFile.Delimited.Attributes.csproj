@@ -102,6 +102,10 @@
       <Project>{5849B415-6CC1-4615-A94F-265F5BD6F234}</Project>
       <Name>FlatFile.Core.Attributes</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FlatFile.Core\FlatFile.Core.csproj">
+      <Project>{1CB90052-B97A-4AD4-B9FD-20A22914D129}</Project>
+      <Name>FlatFile.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

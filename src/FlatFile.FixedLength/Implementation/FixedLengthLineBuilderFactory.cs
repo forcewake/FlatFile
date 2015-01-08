@@ -4,7 +4,7 @@ namespace FlatFile.FixedLength.Implementation
 
     public class FixedLengthLineBuilderFactory<TEntity> : IFixedLengthLineBuilderFactory<TEntity>
     {
-        public IFixedLengthLineBuilder<TEntity> GetBuilder(ILayoutDescriptor<FixedFieldSettings> descriptor)
+        public IFixedLengthLineBuilder<TEntity> GetBuilder(ILayoutDescriptor<IFixedFieldSettingsContainer> descriptor)
         {
             return new FixedLengthLineBuilder<TEntity>(descriptor);
         }

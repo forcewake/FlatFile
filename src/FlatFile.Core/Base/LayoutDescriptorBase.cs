@@ -2,8 +2,8 @@
 
 namespace FlatFile.Core.Base
 {
-    public class LayoutDescriptorBase<TFieldSettings> : ILayoutDescriptor<TFieldSettings> 
-        where TFieldSettings : FieldSettingsBase
+    public class LayoutDescriptorBase<TFieldSettings> : ILayoutDescriptor<TFieldSettings>
+        where TFieldSettings : IFieldSettings
     {
         protected IFieldsContainer<TFieldSettings> FieldsContainer { get; private set; }
 

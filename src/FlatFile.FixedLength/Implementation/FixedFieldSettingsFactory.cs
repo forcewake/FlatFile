@@ -3,7 +3,7 @@
     using System.Reflection;
     using FlatFile.Core;
 
-    public class FixedFieldSettingsFactory : IFieldSettingsFactory<FixedFieldSettings, IFixedFieldSettingsConstructor>
+    public class FixedFieldSettingsFactory : IFieldSettingsFactory<IFixedFieldSettingsConstructor>
     {
         public IFixedFieldSettingsConstructor CreateFieldSettings(PropertyInfo property)
         {
