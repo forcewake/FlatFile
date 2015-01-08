@@ -134,3 +134,6 @@ using (var stream = new MemoryStream())
     flatFile.Write(layout, stream, sampleRecords);
 }
 ```
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/forcewake/flatfile/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
