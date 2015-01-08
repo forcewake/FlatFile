@@ -95,6 +95,7 @@
   <ItemGroup>
     <Compile Include="DelimitedFieldAttribute.cs" />
     <Compile Include="DelimitedFileAttribute.cs" />
+    <Compile Include="FlatFileEngineFactoryExtensions.cs" />
     <Compile Include="Infrastructure\DelimitedLayoutDescriptorProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
