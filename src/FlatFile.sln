@@ -17,8 +17,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{874AF755-A91B-434F-9679-35BEBC8B7D9F}"
 	ProjectSection(SolutionItems) = preProject
 		..\appveyor.yml = ..\appveyor.yml
+		..\nuspecs\FlatFile.Core.Attributes.nuspec = ..\nuspecs\FlatFile.Core.Attributes.nuspec
 		..\nuspecs\FlatFile.Core.nuspec = ..\nuspecs\FlatFile.Core.nuspec
+		..\nuspecs\FlatFile.Delimited.Attributes.nuspec = ..\nuspecs\FlatFile.Delimited.Attributes.nuspec
 		..\nuspecs\FlatFile.Delimited.nuspec = ..\nuspecs\FlatFile.Delimited.nuspec
+		..\nuspecs\FlatFile.FixedLength.Attributes.nuspec = ..\nuspecs\FlatFile.FixedLength.Attributes.nuspec
 		..\nuspecs\FlatFile.FixedLength.nuspec = ..\nuspecs\FlatFile.FixedLength.nuspec
 		..\nuspecs\FlatFile.nuspec = ..\nuspecs\FlatFile.nuspec
 	EndProjectSection
