@@ -7,14 +7,14 @@ namespace FlatFile.Benchmark
     using BenchmarkIt;
     using FileHelpers;
     using FlatFile.Benchmark.Entities;
-    using FlatFile.Core;
-    using FlatFile.Core.Base;
+    using FlatFile.Benchmark.Generators;
+    using FlatFile.Benchmark.Mapping;
     using FlatFile.FixedLength.Implementation;
     using FluentAssertions;
     using Hyper.ComponentModel;
     using Xunit;
 
-    public class SimpleBenchmark
+    public class FlatFileVsFileHelpersBenchmark
     {
         private const string FixedFileSample = @"20000000109PANIAGUA JOSE                                                                                                                                                   0     
 20000000125ACOSTA MARCOS                                                                                                                                                   0     

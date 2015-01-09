@@ -1,6 +1,7 @@
 namespace FlatFile.Core.Base
 {
     using System;
+    using FlatFile.Core.Extensions;
 
     public abstract class LineParserBase<TEntity, TLayoutDescriptor, TFieldSettings> : ILineParser<TEntity>
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
@@ -20,20 +21,23 @@ namespace FlatFile.Core.Base
 
         public abstract TEntity ParseLine(string line, TEntity entry);
 
-        protected virtual object GetFieldValueFromString(TFieldSettings fieldSettingsBuilder, string memberValue)
+        protected virtual object GetFieldValueFromString(TFieldSettings fieldSettings, string memberValue)
         {
-            if (fieldSettingsBuilder.IsNullable && memberValue.Equals(fieldSettingsBuilder.NullValue))
+            if (fieldSettings.IsNullable && memberValue.Equals(fieldSettings.NullValue))
             {
                 return null;
             }
-            memberValue = TransformStringValue(fieldSettingsBuilder, memberValue);
-            
-            if (fieldSettingsBuilder.PropertyInfo.PropertyType.IsGenericType
-                && fieldSettingsBuilder.PropertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+
+            memberValue = TransformStringValue(fieldSettings, memberValue);
+
+            var type = fieldSettings.PropertyInfo.PropertyType;
+
+            if (fieldSettings.IsNullablePropertyType())
             {
-                return Convert.ChangeType(memberValue, Nullable.GetUnderlyingType(fieldSettingsBuilder.PropertyInfo.PropertyType));
+                type = Nullable.GetUnderlyingType(fieldSettings.PropertyInfo.PropertyType);
             }
-            return Convert.ChangeType(memberValue, fieldSettingsBuilder.PropertyInfo.PropertyType);
+
+            return memberValue.Convert(type);
         }
 
         protected virtual string TransformStringValue(TFieldSettings fieldSettingsBuilder, string memberValue)

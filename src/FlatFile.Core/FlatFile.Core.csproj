@@ -102,6 +102,9 @@
     <Compile Include="Base\LineParserBase.cs" />
     <Compile Include="Exceptions\ParseLineException.cs" />
     <Compile Include="Extensions\ExpressionExtensions.cs" />
+    <Compile Include="Extensions\FieldsSettingsExtensions.cs" />
+    <Compile Include="Extensions\TypeChangeExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="IFieldsContainer.cs" />
     <Compile Include="IFlatFileEngine.cs" />
     <Compile Include="IFieldSettingsConstructor.cs" />
