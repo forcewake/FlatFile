@@ -1,5 +1,6 @@
-namespace FlatFile.Benchmark.Entities
+namespace FlatFile.Benchmark.Mapping
 {
+    using FlatFile.Benchmark.Entities;
     using FlatFile.FixedLength.Implementation;
 
     public class FixedSampleRecordLayout : FixedLayout<FixedSampleRecord>
