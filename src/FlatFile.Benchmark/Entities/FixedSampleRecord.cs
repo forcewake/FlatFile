@@ -9,21 +9,39 @@
     [FixedLengthRecord()]
     public class FixedSampleRecord : IEquatable<FixedSampleRecord>
     {
-        [FieldFixedLength(11)]
-        public long Cuit;
+        [FieldFixedLength(11)] 
+        private long _cuit;
 
-        [FieldFixedLength(160)]
-        [FieldTrim(TrimMode.Both)]
-        public string Nombre;
+        [FieldFixedLength(160)] 
+        [FieldTrim(TrimMode.Both)] 
+        private string _nombre;
 
-        [FieldFixedLength(6)]
-        public int Actividad;
+        [FieldFixedLength(6)] 
+        private int _actividad;
+
+        public long Cuit
+        {
+            get { return _cuit; }
+            set { _cuit = value; }
+        }
+
+        public string Nombre
+        {
+            get { return _nombre; }
+            set { _nombre = value; }
+        }
+
+        public int Actividad
+        {
+            get { return _actividad; }
+            set { _actividad = value; }
+        }
 
         public bool Equals(FixedSampleRecord other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Cuit == other.Cuit && string.Equals(Nombre, other.Nombre) && Actividad == other.Actividad;
+            return _cuit == other._cuit && string.Equals(_nombre, other._nombre) && _actividad == other._actividad;
         }
 
         public override bool Equals(object obj)
@@ -38,9 +56,9 @@
         {
             unchecked
             {
-                int hashCode = Cuit.GetHashCode();
-                hashCode = (hashCode*397) ^ (Nombre != null ? Nombre.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ Actividad;
+                int hashCode = _cuit.GetHashCode();
+                hashCode = (hashCode*397) ^ (_nombre != null ? _nombre.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ _actividad;
                 return hashCode;
             }
         }
