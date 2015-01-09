@@ -65,7 +65,7 @@
                 .PrintComparison();
         }
 
-        [Fact(Skip = "Bug for GUID")]
+        [Fact]
         public void ReadAllRecordsWithMapping()
         {
             const string fileContent =
