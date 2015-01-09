@@ -35,6 +35,9 @@
     <Reference Include="BenchmarkIt">
       <HintPath>..\packages\Benchmark.It.1.2.0\lib\BenchmarkIt.dll</HintPath>
     </Reference>
+    <Reference Include="CsvHelper">
+      <HintPath>..\packages\CsvHelper.2.10.0\lib\net40-client\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="FakeO">
       <HintPath>..\packages\FakeO.1.0.5302.23069\lib\net40\FakeO.dll</HintPath>
     </Reference>
@@ -61,6 +64,9 @@
       <HintPath>..\packages\FileHelpers.2.0.0.0\lib\Interop.Office.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -73,12 +79,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\DelimitedSampleRecordLayout.cs" />
-    <Compile Include="Entities\FakeGenarator.cs" />
+    <Compile Include="FlatFileVsCsvHelperBenchmark.cs" />
+    <Compile Include="Entities\CustomObject.cs" />
     <Compile Include="Entities\FixedSampleRecord.cs" />
-    <Compile Include="Entities\FixedSampleRecordLayout.cs" />
+    <Compile Include="Generators\FakeGenarator.cs" />
+    <Compile Include="Mapping\CsvHelperMappingForCustomObject.cs" />
+    <Compile Include="Mapping\DelimitedSampleRecordLayout.cs" />
+    <Compile Include="Mapping\FixedSampleRecordLayout.cs" />
+    <Compile Include="Mapping\FlatFileMappingForCustomObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleBenchmark.cs" />
+    <Compile Include="FlatFileVsFileHelpersBenchmark.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

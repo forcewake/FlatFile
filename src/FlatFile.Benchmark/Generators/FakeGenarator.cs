@@ -1,6 +1,7 @@
-namespace FlatFile.Benchmark.Entities
+namespace FlatFile.Benchmark.Generators
 {
     using FakeO;
+    using FlatFile.Benchmark.Entities;
 
     public class FakeGenarator
     {
