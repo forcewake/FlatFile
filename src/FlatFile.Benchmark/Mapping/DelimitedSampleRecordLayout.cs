@@ -3,9 +3,9 @@ namespace FlatFile.Benchmark.Mapping
     using FlatFile.Benchmark.Entities;
     using FlatFile.Delimited.Implementation;
 
-    public class DelimitedSampleRecordLayout : DelimitedLayout<FixedSampleRecord>
+    public sealed class DelimitedSampleRecordLayout : DelimitedLayout<FixedSampleRecord>
     {
-        protected override void MapLayout()
+        public DelimitedSampleRecordLayout()
         {
             this.WithDelimiter(";")
                 .WithQuote("\"")

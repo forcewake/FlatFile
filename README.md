@@ -78,9 +78,9 @@ FlatFileEngine.Write                    1689                100%
 #### Class mapping 
 ##### DelimitedLayout
 ```cs
-public class DelimitedSampleRecordLayout : DelimitedLayout<FixedSampleRecord>
+public sealed class DelimitedSampleRecordLayout : DelimitedLayout<FixedSampleRecord>
 {
-    protected override void MapLayout()
+    public DelimitedSampleRecordLayout()
     {
         this.WithDelimiter(";")
             .WithQuote("\"")
@@ -92,9 +92,9 @@ public class DelimitedSampleRecordLayout : DelimitedLayout<FixedSampleRecord>
 ```
 ##### FixedLayout
 ```cs
-public class FixedSampleRecordLayout : FixedLayout<FixedSampleRecord>
+public sealed class FixedSampleRecordLayout : FixedLayout<FixedSampleRecord>
 {
-    protected override void MapLayout()
+    public FixedSampleRecordLayout()
     {
         this.WithMember(x => x.Cuit, c => c.WithLenght(11))
             .WithMember(x => x.Nombre, c => c.WithLenght(160))
