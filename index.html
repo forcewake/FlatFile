@@ -1,0 +1,302 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>FlatFile by forcewake</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>FlatFile</h1>
+        <p>Quick and clear library for work with flat files (faster then FileHelpers up-to 100 times)</p>
+        <p class="view"><a href="https://github.com/forcewake/FlatFile">View the Project on GitHub <small>forcewake/FlatFile</small></a></p>
+        <ul>
+          <li><a href="https://github.com/forcewake/FlatFile/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/forcewake/FlatFile/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/forcewake/FlatFile">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="flatfile-" class="anchor" href="#flatfile-" aria-hidden="true"><span class="octicon octicon-link"></span></a>FlatFile </h1>
+
+<p><a href="https://ci.appveyor.com/project/forcewake/flatfile"><img src="https://ci.appveyor.com/api/projects/status/9uoix14g3w0rac3q?svg=true" alt="Build status"></a>
+<a href="https://bitdeli.com/free" title="Bitdeli Badge"><img src="https://d2weczhvl823v0.cloudfront.net/forcewake/flatfile/trend.png" alt="Bitdeli Badge"></a></p>
+
+<p>FlatFile is a library to work with flat files (work up-to 100 times faster then <a href="https://www.nuget.org/packages/FileHelpers/2.0.0">FileHelpers</a>)</p>
+
+<h3>
+<a id="installing-flatfile" class="anchor" href="#installing-flatfile" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing FlatFile</h3>
+
+<h4>
+<a id="installing-all-packages" class="anchor" href="#installing-all-packages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing all packages</h4>
+
+<p>You should install <a href="https://www.nuget.org/packages/FlatFile">FlatFile with NuGet</a>:</p>
+
+<div class="highlight highlight-sh"><pre>Install-Package FlatFile</pre></div>
+
+<h4>
+<a id="installing-flatfiledelimited" class="anchor" href="#installing-flatfiledelimited" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing FlatFile.Delimited</h4>
+
+<p>You should install <a href="https://www.nuget.org/packages/FlatFile.Delimited">FlatFile.Delimited with NuGet</a>:</p>
+
+<div class="highlight highlight-sh"><pre>Install-Package FlatFile.Delimited</pre></div>
+
+<h5>
+<a id="add-attribute-mapping-extensions" class="anchor" href="#add-attribute-mapping-extensions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Add attribute-mapping extensions</h5>
+
+<p>You should install <a href="https://www.nuget.org/packages/FlatFile.Delimited.Attributes">FlatFile.Delimited.Attributes with NuGet</a>:</p>
+
+<div class="highlight highlight-sh"><pre>Install-Package FlatFile.Delimited.Attributes</pre></div>
+
+<h4>
+<a id="installing-flatfilefixedlength" class="anchor" href="#installing-flatfilefixedlength" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing FlatFile.FixedLength</h4>
+
+<p>You should install <a href="https://www.nuget.org/packages/FlatFile.FixedLength">FlatFile.FixedLength with NuGet</a>:</p>
+
+<div class="highlight highlight-sh"><pre>Install-Package FlatFile.FixedLength</pre></div>
+
+<h5>
+<a id="add-attribute-mapping-extensions-1" class="anchor" href="#add-attribute-mapping-extensions-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Add attribute-mapping extensions</h5>
+
+<p>You should install <a href="https://www.nuget.org/packages/FlatFile.FixedLength.Attributes">FlatFile.FixedLength.Attributes with NuGet</a>:</p>
+
+<div class="highlight highlight-sh"><pre>Install-Package FlatFile.FixedLength.Attributes</pre></div>
+
+<p>This commands from Package Manager Console will download and install FlatFile and all required dependencies.</p>
+
+<h3>
+<a id="benchmarks" class="anchor" href="#benchmarks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Benchmarks</h3>
+
+<h4>
+<a id="simple-write" class="anchor" href="#simple-write" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simple write</h4>
+
+<pre><code>Name                                    Milliseconds        Percent                       
+FileHelperEngine.WriteStream            5175                11266.8%                      
+FlatFileEngine.Write                    45                  100%                          
+</code></pre>
+
+<h4>
+<a id="simple-read" class="anchor" href="#simple-read" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simple read</h4>
+
+<pre><code>Name                                    Milliseconds        Percent                       
+FileHelperEngine.ReadStream             7636                2764.4%                       
+FlatFileEngine.Read                     276                 100%                          
+</code></pre>
+
+<h4>
+<a id="big-100000-entities-write" class="anchor" href="#big-100000-entities-write" aria-hidden="true"><span class="octicon octicon-link"></span></a>Big (100000 entities) write</h4>
+
+<pre><code>Name                                    Milliseconds        Percent                       
+FileHelperEngine.WriteStream            17246               838.4%                        
+FlatFileEngine.Write                    2057                100%                          
+</code></pre>
+
+<h4>
+<a id="big-100000-entities-write-with-reflection-magic" class="anchor" href="#big-100000-entities-write-with-reflection-magic" aria-hidden="true"><span class="octicon octicon-link"></span></a>Big (100000 entities) write with reflection magic</h4>
+
+<pre><code>Name                                    Milliseconds        Percent                       
+FileHelperEngine.WriteStream            17778               1052.5%                       
+FlatFileEngine.Write                    1689                100%                          
+</code></pre>
+
+<h3>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h3>
+
+<h4>
+<a id="class-mapping" class="anchor" href="#class-mapping" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class mapping</h4>
+
+<h5>
+<a id="delimitedlayout" class="anchor" href="#delimitedlayout" aria-hidden="true"><span class="octicon octicon-link"></span></a>DelimitedLayout</h5>
+
+<div class="highlight highlight-cs"><pre><span class="pl-s">public</span> <span class="pl-s">class</span> <span class="pl-en">DelimitedSampleRecordLayout</span> : <span class="pl-st">DelimitedLayout</span>&lt;<span class="pl-st">FixedSampleRecord</span>&gt;
+{
+    <span class="pl-s">protected</span> <span class="pl-s">override</span> <span class="pl-st">void</span> <span class="pl-en">MapLayout</span>()
+    {
+        <span class="pl-c1">this</span>.WithDelimiter(<span class="pl-s1"><span class="pl-pds">"</span>;<span class="pl-pds">"</span></span>)
+            .WithQuote(<span class="pl-s1"><span class="pl-pds">"</span><span class="pl-cce">\"</span><span class="pl-pds">"</span></span>)
+            .WithMember(x =&gt; x.Cuit)
+            .WithMember(x =&gt; x.Nombre)
+            .WithMember(x =&gt; x.Actividad, c =&gt; c.WithName(<span class="pl-s1"><span class="pl-pds">"</span>AnotherName<span class="pl-pds">"</span></span>));
+    }
+}</pre></div>
+
+<h5>
+<a id="fixedlayout" class="anchor" href="#fixedlayout" aria-hidden="true"><span class="octicon octicon-link"></span></a>FixedLayout</h5>
+
+<div class="highlight highlight-cs"><pre><span class="pl-s">public</span> <span class="pl-s">class</span> <span class="pl-en">FixedSampleRecordLayout</span> : <span class="pl-st">FixedLayout</span>&lt;<span class="pl-st">FixedSampleRecord</span>&gt;
+{
+    <span class="pl-s">protected</span> <span class="pl-s">override</span> <span class="pl-st">void</span> <span class="pl-en">MapLayout</span>()
+    {
+        <span class="pl-c1">this</span>.WithMember(x =&gt; x.Cuit, c =&gt; c.WithLenght(<span class="pl-c1">11</span>))
+            .WithMember(x =&gt; x.Nombre, c =&gt; c.WithLenght(<span class="pl-c1">160</span>))
+            .WithMember(x =&gt; x.Actividad, c =&gt; c.WithLenght(<span class="pl-c1">6</span>));
+    }
+}</pre></div>
+
+<h4>
+<a id="run-time-mapping" class="anchor" href="#run-time-mapping" aria-hidden="true"><span class="octicon octicon-link"></span></a>Run-time mapping</h4>
+
+<h5>
+<a id="delimitedlayout-1" class="anchor" href="#delimitedlayout-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>DelimitedLayout</h5>
+
+<div class="highlight highlight-cs"><pre><span class="pl-s">public</span> <span class="pl-s">class</span> <span class="pl-en">LayoutFactory</span>
+{
+    <span class="pl-s">public</span> IDelimitedLayout&lt;TestObject&gt; <span class="pl-en">GetLayout</span>()
+    {
+        IDelimitedLayout&lt;TestObject&gt; layout = <span class="pl-s">new</span> DelimitedLayout&lt;TestObject&gt;()
+            .WithDelimiter(<span class="pl-s1"><span class="pl-pds">"</span>;<span class="pl-pds">"</span></span>)
+            .WithQuote(<span class="pl-s1"><span class="pl-pds">"</span><span class="pl-cce">\"</span><span class="pl-pds">"</span></span>)
+            .WithMember(o =&gt; o.Id)
+            .WithMember(o =&gt; o.Description)
+            .WithMember(o =&gt; o.NullableInt, <span class="pl-k">set</span> =&gt; <span class="pl-k">set</span>.AllowNull(<span class="pl-s1"><span class="pl-pds">"</span>=Null<span class="pl-pds">"</span></span>));
+
+        <span class="pl-k">return</span> layout;
+    } 
+}</pre></div>
+
+<h5>
+<a id="fixedlayout-1" class="anchor" href="#fixedlayout-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>FixedLayout</h5>
+
+<div class="highlight highlight-cs"><pre><span class="pl-s">public</span> <span class="pl-s">class</span> <span class="pl-en">LayoutFactory</span>
+{
+    <span class="pl-s">public</span> IFixedLayout&lt;TestObject&gt; <span class="pl-en">GetLayout</span>()
+    {
+        IFixedLayout&lt;TestObject&gt; layout = <span class="pl-s">new</span> FixedLayout&lt;TestObject&gt;()
+            .WithMember(o =&gt; o.Id, <span class="pl-k">set</span> =&gt; <span class="pl-k">set</span>
+                .WithLenght(<span class="pl-c1">5</span>)
+                .WithLeftPadding(<span class="pl-s1"><span class="pl-pds">'</span>0<span class="pl-pds">'</span></span>))
+            .WithMember(o =&gt; o.Description, <span class="pl-k">set</span> =&gt; <span class="pl-k">set</span>
+                .WithLenght(<span class="pl-c1">25</span>)
+                .WithRightPadding(<span class="pl-s1"><span class="pl-pds">'</span> <span class="pl-pds">'</span></span>))
+            .WithMember(o =&gt; o.NullableInt, <span class="pl-k">set</span> =&gt; <span class="pl-k">set</span>
+                .WithLenght(<span class="pl-c1">5</span>)
+                .AllowNull(<span class="pl-s1"><span class="pl-pds">"</span>=Null<span class="pl-pds">"</span></span>)
+                .WithLeftPadding(<span class="pl-s1"><span class="pl-pds">'</span>0<span class="pl-pds">'</span></span>));
+
+        <span class="pl-k">return</span> layout;
+    }</pre></div>
+
+<h4>
+<a id="attribute-mapping" class="anchor" href="#attribute-mapping" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attribute mapping</h4>
+
+<h5>
+<a id="delimited" class="anchor" href="#delimited" aria-hidden="true"><span class="octicon octicon-link"></span></a>Delimited</h5>
+
+<div class="highlight highlight-cs"><pre><span class="pl-k">using</span> FlatFile.Delimited.Attributes;
+
+[DelimitedFile(Delimiter = <span class="pl-s1"><span class="pl-pds">"</span>;<span class="pl-pds">"</span></span>, Quotes = <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-cce">\"</span><span class="pl-pds">"</span></span>)]
+<span class="pl-s">public</span> <span class="pl-s">class</span> <span class="pl-en">TestObject</span>
+{
+    [DelimitedField(<span class="pl-c1">1</span>)]
+    <span class="pl-s">public</span> <span class="pl-st">int</span> <span class="pl-en">Id</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+
+    [DelimitedField(<span class="pl-c1">2</span>)]
+    <span class="pl-s">public</span> <span class="pl-st">string</span> <span class="pl-en">Description</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+
+    [DelimitedField(<span class="pl-c1">3</span>, NullValue = <span class="pl-s1"><span class="pl-pds">"</span>=Null<span class="pl-pds">"</span></span>)]
+    <span class="pl-s">public</span> <span class="pl-st">int</span>? <span class="pl-en">NullableInt</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+}</pre></div>
+
+<h5>
+<a id="fixed" class="anchor" href="#fixed" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fixed</h5>
+
+<div class="highlight highlight-cs"><pre><span class="pl-k">using</span> FlatFile.FixedLength;
+<span class="pl-k">using</span> FlatFile.FixedLength.Attributes;
+
+[FixedLengthFile]
+<span class="pl-s">public</span> <span class="pl-s">class</span> <span class="pl-en">TestObject</span>
+{
+    [FixedLengthField(<span class="pl-c1">1</span>, <span class="pl-c1">5</span>, PaddingChar = <span class="pl-s1"><span class="pl-pds">'</span>0<span class="pl-pds">'</span></span>)]
+    <span class="pl-s">public</span> <span class="pl-st">int</span> <span class="pl-en">Id</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+
+    [FixedLengthField(<span class="pl-c1">2</span>, <span class="pl-c1">25</span>, PaddingChar = <span class="pl-s1"><span class="pl-pds">'</span> <span class="pl-pds">'</span></span>, Padding = Padding.Right)]
+    <span class="pl-s">public</span> <span class="pl-st">string</span> <span class="pl-en">Description</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+
+    [FixedLengthField(<span class="pl-c1">2</span>, <span class="pl-c1">5</span>, PaddingChar = <span class="pl-s1"><span class="pl-pds">'</span>0<span class="pl-pds">'</span></span>, NullValue = <span class="pl-s1"><span class="pl-pds">"</span>=Null<span class="pl-pds">"</span></span>)]
+    <span class="pl-s">public</span> <span class="pl-st">int</span>? <span class="pl-en">NullableInt</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+}</pre></div>
+
+<h4>
+<a id="read-from-stream" class="anchor" href="#read-from-stream" aria-hidden="true"><span class="octicon octicon-link"></span></a>Read from stream</h4>
+
+<h5>
+<a id="with-layout" class="anchor" href="#with-layout" aria-hidden="true"><span class="octicon octicon-link"></span></a>With layout</h5>
+
+<div class="highlight highlight-cs"><pre><span class="pl-k">var</span> layout = <span class="pl-s">new</span> FixedSampleRecordLayout();
+<span class="pl-k">var</span> factory = <span class="pl-s">new</span> FixedLengthFileEngineFactory();
+<span class="pl-k">using</span> (<span class="pl-k">var</span> stream = <span class="pl-s">new</span> MemoryStream(Encoding.UTF8.GetBytes(FixedFileSample)))
+{
+    <span class="pl-k">var</span> flatFile = factory.GetEngine&lt;FixedSampleRecord&gt;(layout);
+
+    <span class="pl-k">var</span> records = flatFile.Read(stream).ToArray();
+}</pre></div>
+
+<h5>
+<a id="with-attribute-mapping" class="anchor" href="#with-attribute-mapping" aria-hidden="true"><span class="octicon octicon-link"></span></a>With attribute-mapping</h5>
+
+<div class="highlight highlight-cs"><pre><span class="pl-k">var</span> factory = <span class="pl-s">new</span> FixedLengthFileEngineFactory();
+<span class="pl-k">using</span> (<span class="pl-k">var</span> stream = <span class="pl-s">new</span> MemoryStream(Encoding.UTF8.GetBytes(FixedFileSample)))
+{
+    <span class="pl-k">var</span> flatFile = factory.GetEngine&lt;FixedSampleRecord&gt;();
+
+    <span class="pl-k">var</span> records = flatFile.Read(stream).ToArray();
+}</pre></div>
+
+<h4>
+<a id="write-to-stream" class="anchor" href="#write-to-stream" aria-hidden="true"><span class="octicon octicon-link"></span></a>Write to stream</h4>
+
+<h5>
+<a id="with-layout-1" class="anchor" href="#with-layout-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>With layout</h5>
+
+<div class="highlight highlight-cs"><pre><span class="pl-k">var</span> sampleRecords = GetRecords();
+<span class="pl-k">var</span> layout = <span class="pl-s">new</span> FixedSampleRecordLayout();
+<span class="pl-k">var</span> factory = <span class="pl-s">new</span> FixedLengthFileEngineFactory();
+<span class="pl-k">using</span> (<span class="pl-k">var</span> stream = <span class="pl-s">new</span> MemoryStream())
+{
+    <span class="pl-k">var</span> flatFile = factory.GetEngine&lt;FixedSampleRecord&gt;(layout);
+
+    flatFile.Write(stream, sampleRecords);
+}</pre></div>
+
+<h5>
+<a id="with-attribute-mapping-1" class="anchor" href="#with-attribute-mapping-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>With attribute-mapping</h5>
+
+<div class="highlight highlight-cs"><pre><span class="pl-k">var</span> sampleRecords = GetRecords();
+<span class="pl-k">var</span> factory = <span class="pl-s">new</span> FixedLengthFileEngineFactory();
+<span class="pl-k">using</span> (<span class="pl-k">var</span> stream = <span class="pl-s">new</span> MemoryStream())
+{
+    <span class="pl-k">var</span> flatFile = factory.GetEngine&lt;FixedSampleRecord&gt;();
+
+    flatFile.Write(stream, sampleRecords);
+}</pre></div>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/forcewake">forcewake</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-58396828-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
