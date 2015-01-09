@@ -3,9 +3,9 @@ namespace FlatFile.Benchmark.Mapping
     using FlatFile.Benchmark.Entities;
     using FlatFile.FixedLength.Implementation;
 
-    public class FixedSampleRecordLayout : FixedLayout<FixedSampleRecord>
+    public sealed class FixedSampleRecordLayout : FixedLayout<FixedSampleRecord>
     {
-        protected override void MapLayout()
+        public FixedSampleRecordLayout()
         {
             this.WithMember(x => x.Cuit, c => c.WithLenght(11))
                 .WithMember(x => x.Nombre, c => c.WithLenght(160))

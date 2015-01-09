@@ -40,10 +40,6 @@
             return propertyInfo;
         }
 
-        protected virtual void MapLayout()
-        {
-        }
-
         public abstract TLayout WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TConstructor> settings = null);
 
         public abstract TLayout WithHeader();
