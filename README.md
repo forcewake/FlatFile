@@ -1,14 +1,31 @@
-FlatFile [![Build status](https://ci.appveyor.com/api/projects/status/9uoix14g3w0rac3q?svg=true)](https://ci.appveyor.com/project/forcewake/flatfile)
+FlatFile 
 ========
+[![Build status](https://ci.appveyor.com/api/projects/status/9uoix14g3w0rac3q?svg=true)](https://ci.appveyor.com/project/forcewake/flatfile)
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/forcewake/flatfile/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
-FlatFile is a library to work with flat files
+FlatFile is a library to work with flat files (work up-to 100 times faster then [FileHelpers](https://www.nuget.org/packages/FileHelpers/2.0.0))
 
 ### Installing FlatFile
+
+#### Installing all packages
+You should install [FlatFile with NuGet](https://www.nuget.org/packages/FlatFile):
+
+```sh
+Install-Package FlatFile
+```
+
 #### Installing FlatFile.Delimited
 You should install [FlatFile.Delimited with NuGet](https://www.nuget.org/packages/FlatFile.Delimited):
 
 ```sh
 Install-Package FlatFile.Delimited
+```
+
+##### Add attribute-mapping extensions
+You should install [FlatFile.Delimited.Attributes with NuGet](https://www.nuget.org/packages/FlatFile.Delimited.Attributes):
+
+```sh
+Install-Package FlatFile.Delimited.Attributes
 ```
 
 #### Installing FlatFile.FixedLength
@@ -18,7 +35,14 @@ You should install [FlatFile.FixedLength with NuGet](https://www.nuget.org/packa
 Install-Package FlatFile.FixedLength
 ```
 
-This command from Package Manager Console will download and install FlatFile and all required dependencies.
+##### Add attribute-mapping extensions
+You should install [FlatFile.FixedLength.Attributes with NuGet](https://www.nuget.org/packages/FlatFile.FixedLength.Attributes):
+
+```sh
+Install-Package FlatFile.FixedLength.Attributes
+```
+
+This commands from Package Manager Console will download and install FlatFile and all required dependencies.
 
 ### Benchmarks
 #### Simple write
@@ -104,13 +128,19 @@ public class LayoutFactory
     public IFixedLayout<TestObject> GetLayout()
     {
         IFixedLayout<TestObject> layout = new FixedLayout<TestObject>()
-            .WithMember(o => o.Id, set => set.WithLenght(5).WithLeftPadding('0'))
-            .WithMember(o => o.Description, set => set.WithLenght(25).WithRightPadding(' '))
-            .WithMember(o => o.NullableInt, set => set.WithLenght(5).AllowNull("=Null").WithLeftPadding('0'));
+            .WithMember(o => o.Id, set => set
+                .WithLenght(5)
+                .WithLeftPadding('0'))
+            .WithMember(o => o.Description, set => set
+                .WithLenght(25)
+                .WithRightPadding(' '))
+            .WithMember(o => o.NullableInt, set => set
+                .WithLenght(5)
+                .AllowNull("=Null")
+                .WithLeftPadding('0'));
 
         return layout;
-    } 
-}
+    }
 ```
 
 #### Attribute mapping
@@ -152,6 +182,7 @@ public class TestObject
 ```
 
 #### Read from stream
+##### With layout
 ```cs
 var layout = new FixedSampleRecordLayout();
 var factory = new FixedLengthFileEngineFactory();
@@ -162,7 +193,20 @@ using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(FixedFileSample)))
     var records = flatFile.Read(stream).ToArray();
 }
 ```
+
+##### With attribute-mapping
+```cs
+var factory = new FixedLengthFileEngineFactory();
+using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(FixedFileSample)))
+{
+    var flatFile = factory.GetEngine<FixedSampleRecord>();
+
+    var records = flatFile.Read(stream).ToArray();
+}
+```
+
 #### Write to stream
+##### With layout
 ```cs
 var sampleRecords = GetRecords();
 var layout = new FixedSampleRecordLayout();
@@ -175,5 +219,14 @@ using (var stream = new MemoryStream())
 }
 ```
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/forcewake/flatfile/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+##### With attribute-mapping
+```cs
+var sampleRecords = GetRecords();
+var factory = new FixedLengthFileEngineFactory();
+using (var stream = new MemoryStream())
+{
+    var flatFile = factory.GetEngine<FixedSampleRecord>();
 
+    flatFile.Write(stream, sampleRecords);
+}
+```
