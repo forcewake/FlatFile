@@ -6,5 +6,6 @@
         where TConstructor : IFieldSettingsConstructor<TConstructor>
     {
         TConstructor AllowNull(string nullValue);
+        TConstructor WithTypeConverter<TConverter>() where TConverter : ITypeConverter;
     }
 }

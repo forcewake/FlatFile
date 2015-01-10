@@ -2,6 +2,7 @@ namespace FlatFile.Core.Attributes.Base
 {
     using System;
     using FlatFile.Core.Base;
+    using FlatFile.Core.Extensions;
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public abstract class FieldSettingsBaseAttribute : Attribute, IFieldSettings
@@ -14,6 +15,13 @@ namespace FlatFile.Core.Attributes.Base
         }
 
         public string NullValue { get; set; }
+
+        public Type Converter { get; set; }
+
+        public ITypeConverter TypeConverter
+        {
+            get { return (ITypeConverter) ReflectionHelper.CreateInstance(Converter, true); }
+        }
 
         protected FieldSettingsBaseAttribute(int index)
         {

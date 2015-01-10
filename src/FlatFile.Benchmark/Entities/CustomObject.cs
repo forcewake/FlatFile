@@ -13,6 +13,8 @@
 
         public string IgnoredColumn { get; set; }
 
+        public CustomType CustomTypeColumn { get; set; }
+
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);

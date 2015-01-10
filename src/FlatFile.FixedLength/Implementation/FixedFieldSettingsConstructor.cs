@@ -1,6 +1,8 @@
 namespace FlatFile.FixedLength.Implementation
 {
     using System.Reflection;
+    using FlatFile.Core;
+    using FlatFile.Core.Extensions;
 
     public class FixedFieldSettingsConstructor : FixedFieldSettings,
         IFixedFieldSettingsConstructor
@@ -33,6 +35,12 @@ namespace FlatFile.FixedLength.Implementation
         {
             IsNullable = true;
             NullValue = nullValue;
+            return this;
+        }
+
+        public IFixedFieldSettingsConstructor WithTypeConverter<TConverter>() where TConverter : ITypeConverter
+        {
+            this.TypeConverter = ReflectionHelper.CreateInstance<TConverter>(true);
             return this;
         }
     }

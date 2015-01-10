@@ -79,6 +79,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\CsvHelperTypeConverterForCustomType.cs" />
+    <Compile Include="Converters\FlatFileTypeConverterForCustomType.cs" />
+    <Compile Include="Entities\CustomType.cs" />
     <Compile Include="FlatFileVsCsvHelperBenchmark.cs" />
     <Compile Include="Entities\CustomObject.cs" />
     <Compile Include="Entities\FixedSampleRecord.cs" />

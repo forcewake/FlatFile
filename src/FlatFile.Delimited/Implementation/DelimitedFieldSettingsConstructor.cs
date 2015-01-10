@@ -1,6 +1,8 @@
 ﻿namespace FlatFile.Delimited.Implementation
 {
     using System.Reflection;
+    using FlatFile.Core;
+    using FlatFile.Core.Extensions;
 
     public class DelimitedFieldSettingsConstructor :
         DelimitedFieldSettings,
@@ -14,6 +16,12 @@
         {
             this.IsNullable = true;
             this.NullValue = nullValue;
+            return this;
+        }
+
+        public IDelimitedFieldSettingsConstructor WithTypeConverter<TConverter>() where TConverter : ITypeConverter
+        {
+            this.TypeConverter = ReflectionHelper.CreateInstance<TConverter>(true);
             return this;
         }
 
