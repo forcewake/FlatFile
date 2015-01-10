@@ -1,5 +1,6 @@
 ﻿namespace FlatFile.Tests.Specifications.Defenitions
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -36,7 +37,7 @@
             foreach (var typeMapping in typeMappings)
             {
                 var propertyInfo = properties[typeMapping.Name];
-                
+
                 var settings = new FixedFieldSettingsConstructor(propertyInfo);
 
                 settings.WithLenght(typeMapping.Length);
@@ -94,6 +95,10 @@
         [Then(@"^the result should be$")]
         public void ThenTheResultShouldBe(string multilineText)
         {
+            var strings = multilineText.Split(new[] {Environment.NewLine}, StringSplitOptions.None);
+
+            multilineText = string.Join(Environment.NewLine, strings);
+
             string fileContent = string.Empty;
 
             ScenarioContext.Current.TryGetValue(() => fileContent, out fileContent);
