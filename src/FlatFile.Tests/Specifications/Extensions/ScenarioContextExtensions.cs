@@ -1,4 +1,4 @@
-namespace FlatFile.Tests.Specifications.Defenitions.Extensions
+namespace FlatFile.Tests.Specifications.Extensions
 {
     using System;
     using System.Linq.Expressions;

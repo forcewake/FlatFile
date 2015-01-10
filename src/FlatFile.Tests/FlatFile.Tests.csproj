@@ -68,12 +68,17 @@
     <Compile Include="FixedLength\FixedLengthIntegrationTests.cs" />
     <Compile Include="FixedLength\FixedLengthLineParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Specifications\Entities\FixedLengthTypeMapping.cs" />
+    <Compile Include="Specifications\Extensions\FileEngineExtensions.cs" />
+    <Compile Include="Specifications\Extensions\ScenarioContextExtensions.cs" />
     <Compile Include="Specifications\Defenitions\FlatFileDefinitions.cs" />
+    <Compile Include="Specifications\Extensions\StringExtensions.cs" />
     <Compile Include="Specifications\FixedLengthFileMappingFeature.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FixedLengthFileMappingFeature.feature</DependentUpon>
     </Compile>
+    <Compile Include="Specifications\Transforms\TransformsBinding.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
