@@ -1,6 +1,7 @@
 ﻿Feature: FixedLengthFileMappingFeature
 
-Scenario: Add two numbers
+@ignore
+Scenario: Write fixed-length file
 	Given I have specification for 'TestObject' fixed-length type
 	| Name        | Length | PaddingChar | Padding | NullValue |
 	| Id          | 5      | 0           | Left    |           |

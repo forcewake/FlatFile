@@ -16,7 +16,7 @@
     using TechTalk.SpecFlow.Assist;
 
     [Binding]
-    public class FlatFileDefinitions
+    public class FixedLengthFileDefinitions
     {
         [Given(@"I have specification for '(.*)' fixed-length type")]
         public void GivenIHaveSpecificationForType(string type, Table table)

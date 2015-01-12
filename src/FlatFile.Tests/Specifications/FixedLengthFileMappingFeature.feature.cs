@@ -72,13 +72,14 @@ namespace FlatFile.Tests.Specifications
             this.ScenarioTearDown();
         }
         
-        [Xunit.FactAttribute()]
+        [Xunit.FactAttribute(Skip="Ignored")]
         [Xunit.TraitAttribute("FeatureTitle", "FixedLengthFileMappingFeature")]
-        [Xunit.TraitAttribute("Description", "Add two numbers")]
-        public virtual void AddTwoNumbers()
+        [Xunit.TraitAttribute("Description", "Write fixed-length file")]
+        public virtual void WriteFixed_LengthFile()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add two numbers", ((string[])(null)));
-#line 3
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Write fixed-length file", new string[] {
+                        "ignore"});
+#line 4
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
@@ -105,7 +106,7 @@ this.ScenarioSetup(scenarioInfo);
                         "0",
                         "Left",
                         "=Null"});
-#line 4
+#line 5
  testRunner.Given("I have specification for \'TestObject\' fixed-length type", ((string)(null)), table1, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -152,12 +153,12 @@ this.ScenarioSetup(scenarioInfo);
                         "10",
                         "Description 10",
                         "=Null"});
-#line 9
+#line 10
  testRunner.And("I have several entities", ((string)(null)), table2, "And ");
-#line 21
+#line 22
  testRunner.When("I convert entities to the fixed-length format", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 22
+#line 23
  testRunner.Then("the result should be", @"00001Description 1            00003
 00002Description 2            00003
 00003Description 3            00003

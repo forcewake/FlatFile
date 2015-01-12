@@ -71,7 +71,7 @@
     <Compile Include="Specifications\Entities\FixedLengthTypeMapping.cs" />
     <Compile Include="Specifications\Extensions\FileEngineExtensions.cs" />
     <Compile Include="Specifications\Extensions\ScenarioContextExtensions.cs" />
-    <Compile Include="Specifications\Defenitions\FlatFileDefinitions.cs" />
+    <Compile Include="Specifications\Defenitions\FixedLengthFileDefinitions.cs" />
     <Compile Include="Specifications\Extensions\StringExtensions.cs" />
     <Compile Include="Specifications\FixedLengthFileMappingFeature.feature.cs">
       <AutoGen>True</AutoGen>
