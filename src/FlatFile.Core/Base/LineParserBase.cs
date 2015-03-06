@@ -28,8 +28,6 @@ namespace FlatFile.Core.Base
                 return null;
             }
 
-            memberValue = TransformStringValue(fieldSettings, memberValue);
-
             var type = fieldSettings.PropertyInfo.PropertyType;
 
             if (fieldSettings.IsNullablePropertyType())
@@ -37,12 +35,38 @@ namespace FlatFile.Core.Base
                 type = Nullable.GetUnderlyingType(fieldSettings.PropertyInfo.PropertyType);
             }
 
-            return memberValue.Convert(type);
+            memberValue = TransformStringValue(fieldSettings, memberValue);
+
+            object obj;
+            
+            if (!fieldSettings.TypeConverter.ConvertFromStringTo(memberValue, type, out obj))
+            {
+                obj = memberValue.Convert(type);
+            }
+
+            return obj;
         }
 
         protected virtual string TransformStringValue(TFieldSettings fieldSettingsBuilder, string memberValue)
         {
             return memberValue;
+        }
+    }
+
+    public static class TypeConverterExtensions
+    {
+
+        public static bool ConvertFromStringTo(this ITypeConverter converter, string source, Type targetType, out object obj)
+        {
+            if (converter != null && converter.CanConvertFrom(typeof(string)) && converter.CanConvertTo(targetType))
+            {
+                obj = converter.ConvertFromString(source);
+                return true;
+            }
+
+            obj = null;
+            
+            return false;
         }
     }
 }

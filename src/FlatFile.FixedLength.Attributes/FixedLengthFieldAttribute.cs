@@ -4,7 +4,7 @@
 
     public class FixedLengthFieldAttribute : FieldSettingsBaseAttribute, IFixedFieldSettings
     {
-        public int Lenght { get; protected set; }
+        public int Length { get; protected set; }
         
         public Padding Padding { get; set; }
 
@@ -15,12 +15,12 @@
 
         public char PaddingChar { get; set; }
 
-        public FixedLengthFieldAttribute(int index, int lenght)
+        public FixedLengthFieldAttribute(int index, int length)
             : base(index)
         {
             Padding = Padding.Left;
 
-            Lenght = lenght;
+            Length = length;
         }
     }
 }

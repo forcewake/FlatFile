@@ -25,12 +25,24 @@
                     GuidColumn = new Guid("f96a1c66-4777-4642-86fa-703098065f5f"),
                     IntColumn = 1,
                     StringColumn = "one",
+                    CustomTypeColumn = new CustomType
+					{
+					    First = 1,
+					    Second = 2,
+					    Third = 3,
+					},
                 },
                 new CustomObject
                 {
                     GuidColumn = new Guid("06776ed9-d33f-470f-bd3f-8db842356330"),
                     IntColumn = 2,
                     StringColumn = "two",
+                    CustomTypeColumn = new CustomType
+					{
+					    First = 4,
+					    Second = 5,
+					    Third = 6,
+					},
                 },
             };
 
@@ -69,9 +81,9 @@
         public void ReadAllRecordsWithMapping()
         {
             const string fileContent =
-@"String Column,Int Column,Guid Column
-one,1,f96a1c66-4777-4642-86fa-703098065f5f
-two,2,06776ed9-d33f-470f-bd3f-8db842356330
+@"String Column,Int Column,Guid Column,Custom Type Column
+one,1,f96a1c66-4777-4642-86fa-703098065f5f,1|2|3
+two,2,06776ed9-d33f-470f-bd3f-8db842356330,4|5|6
 ";
             Benchmark.This("CsvWriter.WriteRecords", () =>
             {
@@ -82,8 +94,6 @@ two,2,06776ed9-d33f-470f-bd3f-8db842356330
                     reader.Configuration.RegisterClassMap<CsvHelperMappingForCustomObject>();
 
                     var objects = reader.GetRecords<CustomObject>().ToArray();
-
-                    objects.Length.Should().Be(2);
                 }
             })
                 .Against.This("FlatFileEngine.Write", () =>
@@ -96,8 +106,6 @@ two,2,06776ed9-d33f-470f-bd3f-8db842356330
                         var flatFile = factory.GetEngine<CustomObject>(layout);
 
                         var objects = flatFile.Read(stream).ToArray();
-
-                        objects.Length.Should().Be(2);
 
                     }
                 })

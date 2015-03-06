@@ -7,6 +7,7 @@
         int? Index { get; set; }
         bool IsNullable { get; }
         string NullValue { get; }
+        ITypeConverter TypeConverter { get; }
     }
 
     public interface IFieldSettingsContainer : IFieldSettings
@@ -36,6 +37,7 @@
         public int? Index { get; set; }
         public bool IsNullable { get; set; }
         public string NullValue { get; set; }
+        public ITypeConverter TypeConverter { get; set; }
         public PropertyInfo PropertyInfo { get; set; }
     }
 

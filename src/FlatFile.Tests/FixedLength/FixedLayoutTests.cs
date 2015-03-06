@@ -13,9 +13,9 @@
         public FixedLayoutTests()
         {
             layout = new FixedLayout<TestObject>()
-                    .WithMember(o => o.Id, set => set.WithLenght(5).WithLeftPadding('0'))
-                    .WithMember(o => o.Description, set => set.WithLenght(25).WithRightPadding(' '))
-                    .WithMember(o => o.NullableInt, set => set.WithLenght(5).AllowNull("=Null").WithLeftPadding('0'));
+                    .WithMember(o => o.Id, set => set.WithLength(5).WithLeftPadding('0'))
+                    .WithMember(o => o.Description, set => set.WithLength(25).WithRightPadding(' '))
+                    .WithMember(o => o.NullableInt, set => set.WithLength(5).AllowNull("=Null").WithLeftPadding('0'));
         }
 
         [Fact]
@@ -27,7 +27,7 @@
         [Fact]
         public void FieldsCountAfterReplacementShouldNotChange()
         {
-            layout.WithMember(o => o.NullableInt, set => set.WithLenght(5).AllowNull(string.Empty).WithLeftPadding('0'));
+            layout.WithMember(o => o.NullableInt, set => set.WithLength(5).AllowNull(string.Empty).WithLeftPadding('0'));
 
             layout.Fields.Should().HaveCount(3);
         }

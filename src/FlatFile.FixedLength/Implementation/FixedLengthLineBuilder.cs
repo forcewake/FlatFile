@@ -22,14 +22,14 @@ namespace FlatFile.FixedLength.Implementation
 
         protected override string TransformFieldValue(IFixedFieldSettingsContainer field, string lineValue)
         {
-            if (lineValue.Length >= field.Lenght)
+            if (lineValue.Length >= field.Length)
             {
                 return lineValue;
             }
 
             lineValue = field.PadLeft
-                ? lineValue.PadLeft(field.Lenght, field.PaddingChar)
-                : lineValue.PadRight(field.Lenght, field.PaddingChar);
+                ? lineValue.PadLeft(field.Length, field.PaddingChar)
+                : lineValue.PadRight(field.Length, field.PaddingChar);
 
             return lineValue;
         }
