@@ -40,7 +40,7 @@
 
                 var settings = new FixedFieldSettingsConstructor(propertyInfo);
 
-                settings.WithLenght(typeMapping.Length);
+                settings.WithLength(typeMapping.Length);
 
                 if (!string.IsNullOrEmpty(typeMapping.NullValue))
                 {

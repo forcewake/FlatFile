@@ -24,19 +24,19 @@ namespace FlatFile.Delimited.Implementation
                 {
                     nextDelimiterIndex = line.IndexOf(Layout.Delimiter, linePosition, StringComparison.InvariantCultureIgnoreCase);
                 }
-                int fieldLenght;
+                int fieldLength;
                 if (nextDelimiterIndex > -1)
                 {
-                    fieldLenght = nextDelimiterIndex - linePosition;
+                    fieldLength = nextDelimiterIndex - linePosition;
                 }
                 else
                 {
-                    fieldLenght = line.Length - linePosition;
+                    fieldLength = line.Length - linePosition;
                 }
-                string fieldValueFromLine = line.Substring(linePosition, fieldLenght);
+                string fieldValueFromLine = line.Substring(linePosition, fieldLength);
                 var convertedFieldValue = GetFieldValueFromString(field, fieldValueFromLine);
                 field.PropertyInfo.SetValue(entry, convertedFieldValue, null);
-                linePosition += fieldLenght + (nextDelimiterIndex > -1 ? delimiterSize : 0);
+                linePosition += fieldLength + (nextDelimiterIndex > -1 ? delimiterSize : 0);
             }
             return entry;
         }

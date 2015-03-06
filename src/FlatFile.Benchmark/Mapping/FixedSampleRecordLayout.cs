@@ -7,9 +7,9 @@ namespace FlatFile.Benchmark.Mapping
     {
         public FixedSampleRecordLayout()
         {
-            this.WithMember(x => x.Cuit, c => c.WithLenght(11))
-                .WithMember(x => x.Nombre, c => c.WithLenght(160))
-                .WithMember(x => x.Actividad, c => c.WithLenght(6));
+            this.WithMember(x => x.Cuit, c => c.WithLength(11))
+                .WithMember(x => x.Nombre, c => c.WithLength(160))
+                .WithMember(x => x.Actividad, c => c.WithLength(6));
         }
     }
 }
