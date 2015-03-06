@@ -11,9 +11,9 @@ namespace FlatFile.FixedLength.Implementation
         {
         }
 
-        public IFixedFieldSettingsConstructor WithLenght(int lenght)
+        public IFixedFieldSettingsConstructor WithLength(int length)
         {
-            Lenght = lenght;
+            Length = length;
             return this;
         }
 

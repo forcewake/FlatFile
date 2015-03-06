@@ -18,10 +18,10 @@ namespace FlatFile.FixedLength.Implementation
             int linePosition = 0;
             foreach (var field in Layout.Fields)
             {
-                string fieldValueFromLine = line.Substring(linePosition, field.Lenght);
+                string fieldValueFromLine = line.Substring(linePosition, field.Length);
                 object convertedFieldValue = GetFieldValueFromString(field, fieldValueFromLine);
                 field.PropertyInfo.SetValue(entry, convertedFieldValue, null);
-                linePosition += field.Lenght;
+                linePosition += field.Length;
             }
             return entry;
         }

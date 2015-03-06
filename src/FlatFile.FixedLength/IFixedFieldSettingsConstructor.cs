@@ -5,11 +5,11 @@ namespace FlatFile.FixedLength
     public interface IFixedFieldSettingsConstructor :
         IFieldSettingsConstructor<IFixedFieldSettingsConstructor>
     {
-        int Lenght { get; }
+        int Length { get; }
         char PaddingChar { get; }
         bool PadLeft { get; }
 
-        IFixedFieldSettingsConstructor WithLenght(int lenght);
+        IFixedFieldSettingsConstructor WithLength(int length);
 
         IFixedFieldSettingsConstructor WithLeftPadding(char paddingChar);
 

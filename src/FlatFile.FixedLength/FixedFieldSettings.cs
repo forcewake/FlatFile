@@ -5,7 +5,7 @@ namespace FlatFile.FixedLength
 
     public interface IFixedFieldSettings : IFieldSettings
     {
-        int Lenght { get; }
+        int Length { get; }
         bool PadLeft { get; }
         char PaddingChar { get; }
     }
@@ -23,7 +23,7 @@ namespace FlatFile.FixedLength
         public FixedFieldSettings(IFixedFieldSettings settings)
             : base(settings)
         {
-            Lenght = settings.Lenght;
+            Length = settings.Length;
             PadLeft = settings.PadLeft;
             PaddingChar = settings.PaddingChar;
         }
@@ -34,7 +34,7 @@ namespace FlatFile.FixedLength
             PropertyInfo = propertyInfo;
         }
 
-        public int Lenght { get; set; }
+        public int Length { get; set; }
         public bool PadLeft { get; set; }
         public char PaddingChar { get; set; }
     }
