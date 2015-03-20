@@ -5,12 +5,11 @@ namespace FlatFile.FixedLength.Implementation
 
     public class FixedLengthFileEngineFactory : IFlatFileEngineFactory<ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer>
     {
-        public IFlatFileEngine<T> GetEngine<T>(
+        public IFlatFileEngine GetEngine(
             ILayoutDescriptor<IFixedFieldSettingsContainer> descriptor,
             Func<string, Exception, bool> handleEntryReadError = null)
-            where T : class, new()
         {
-            return new FixedLengthFileEngine<T>(
+            return new FixedLengthFileEngine(
                 descriptor, 
                 new FixedLengthLineBuilderFactory(),
                 new FixedLengthLineParserFactory(), 

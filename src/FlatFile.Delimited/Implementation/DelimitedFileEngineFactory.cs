@@ -6,11 +6,11 @@
     public class DelimitedFileEngineFactory :
         IFlatFileEngineFactory<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>
     {
-        public IFlatFileEngine<T> GetEngine<T>(
+        public IFlatFileEngine GetEngine(
             IDelimitedLayoutDescriptor descriptor,
-            Func<string, Exception, bool> handleEntryReadError = null) where T : class, new()
+            Func<string, Exception, bool> handleEntryReadError = null)
         {
-            return new DelimitedFileEngine<T>(
+            return new DelimitedFileEngine(
                 descriptor,
                 new DelimitedLineBuilderFactory(),
                 new DelimitedLineParserFactory(),

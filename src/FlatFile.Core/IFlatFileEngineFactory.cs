@@ -7,8 +7,6 @@
         where TDescriptor : ILayoutDescriptor<TFieldSettings> 
         where TFieldSettings : IFieldSettings
     {
-        IFlatFileEngine<T> GetEngine<T>(
-            TDescriptor descriptor,
-            Func<string, Exception, bool> handleEntryReadError = null) where T : class, new();
+        IFlatFileEngine GetEngine(TDescriptor descriptor, Func<string, Exception, bool> handleEntryReadError = null);
     }
 }

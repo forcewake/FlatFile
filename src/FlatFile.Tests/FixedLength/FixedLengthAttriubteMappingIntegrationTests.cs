@@ -1,3 +1,5 @@
+using System;
+
 namespace FlatFile.Tests.FixedLength
 {
     using FlatFile.Core;
@@ -15,7 +17,7 @@ namespace FlatFile.Tests.FixedLength
             _fileEngineFactory = new FixedLengthFileEngineFactory();
         }
 
-        protected override IFlatFileEngine<TestObject> Engine
+        protected override IFlatFileEngine Engine
         {
             get { return _fileEngineFactory.GetEngine<TestObject>(); }
         }

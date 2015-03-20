@@ -20,7 +20,7 @@ namespace FlatFile.Tests.Base
 
         protected IList<TestObject> Objects { get; set; }
 
-        protected abstract IFlatFileEngine<TestObject> Engine { get; }
+        protected abstract IFlatFileEngine Engine { get; }
 
         public abstract string TestSource { get; }
 
@@ -44,7 +44,7 @@ namespace FlatFile.Tests.Base
         {
             InvokeWriteTest((engine, stream) =>
             {
-                var objectsAfterRead = engine.Read(stream).ToArray();
+                var objectsAfterRead = engine.Read<TestObject>(stream).ToArray();
 
                 objectsAfterRead.Should().HaveCount(Objects.Count);
 
@@ -56,7 +56,7 @@ namespace FlatFile.Tests.Base
         {
             InvokeWriteTest((engine, stream) =>
             {
-                var objectsAfterRead = engine.Read(stream).ToList();
+                var objectsAfterRead = engine.Read<TestObject>(stream).ToList();
 
                 objectsAfterRead.ShouldAllBeEquivalentTo(Objects, options => options.IncludingAllDeclaredProperties());
 
@@ -68,14 +68,14 @@ namespace FlatFile.Tests.Base
         {
             InvokeReadbasedTest((engine, stream) =>
             {
-                var objectsAfterRead = engine.Read(stream).ToList();
+                var objectsAfterRead = engine.Read<TestObject>(stream).ToList();
 
                 objectsAfterRead.ShouldAllBeEquivalentTo(Objects, options => options.IncludingAllDeclaredProperties());
 
             }, TestSource);
         }
 
-        protected virtual void InvokeWriteTest(Action<IFlatFileEngine<TestObject>, MemoryStream> action)
+        protected virtual void InvokeWriteTest(Action<IFlatFileEngine, MemoryStream> action)
         {
             using (var memory = new MemoryStream())
             {
@@ -87,7 +87,7 @@ namespace FlatFile.Tests.Base
             }
         }
 
-        protected virtual void InvokeReadbasedTest(Action<IFlatFileEngine<TestObject>, MemoryStream> action,
+        protected virtual void InvokeReadbasedTest(Action<IFlatFileEngine, MemoryStream> action,
             string textSource)
         {
             using (var memory = new MemoryStream(Encoding.UTF8.GetBytes(textSource)))

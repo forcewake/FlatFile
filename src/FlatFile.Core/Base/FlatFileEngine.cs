@@ -6,8 +6,7 @@ namespace FlatFile.Core.Base
     using FlatFile.Core;
     using FlatFile.Core.Exceptions;
 
-    public abstract class FlatFileEngine<TEntity, TFieldSettings, TLayoutDescriptor> : IFlatFileEngine<TEntity>
-        where TEntity : class, new()
+    public abstract class FlatFileEngine<TFieldSettings, TLayoutDescriptor> : IFlatFileEngine
         where TFieldSettings : IFieldSettings
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
     {
@@ -24,7 +23,7 @@ namespace FlatFile.Core.Base
             _handleEntryReadError = handleEntryReadError;
         }
 
-        public virtual IEnumerable<TEntity> Read(Stream stream)
+        public virtual IEnumerable<TEntity> Read<TEntity>(Stream stream) where TEntity : class, new()
         {
             var reader = new StreamReader(stream);
             string line;
@@ -73,7 +72,7 @@ namespace FlatFile.Core.Base
             reader.ReadLine();
         }
 
-        protected virtual bool TryParseLine(string line, int lineNumber, out TEntity entity)
+        protected virtual bool TryParseLine<TEntity>(string line, int lineNumber, out TEntity entity) where TEntity : class, new()
         {
             entity = new TEntity();
 
@@ -82,14 +81,14 @@ namespace FlatFile.Core.Base
             return true;
         }
 
-        protected virtual void WriteEntry(TextWriter writer, int lineNumber, TEntity entity)
+        protected virtual void WriteEntry<TEntity>(TextWriter writer, int lineNumber, TEntity entity)
         {
             var line = LineBuilder.BuildLine(entity);
 
             writer.WriteLine(line);
         }
 
-        public virtual void Write(Stream stream, IEnumerable<TEntity> entries)
+        public virtual void Write<TEntity>(Stream stream, IEnumerable<TEntity> entries) where TEntity : class, new()
         {
             TextWriter writer = new StreamWriter(stream);
 

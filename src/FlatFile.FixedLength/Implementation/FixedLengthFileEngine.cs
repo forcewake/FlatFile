@@ -4,8 +4,7 @@ namespace FlatFile.FixedLength.Implementation
     using FlatFile.Core;
     using FlatFile.Core.Base;
 
-    public class FixedLengthFileEngine<T> : FlatFileEngine<T, IFixedFieldSettingsContainer, ILayoutDescriptor<IFixedFieldSettingsContainer>>
-        where T : class, new()
+    public class FixedLengthFileEngine : FlatFileEngine<IFixedFieldSettingsContainer, ILayoutDescriptor<IFixedFieldSettingsContainer>>
     {
         private readonly IFixedLengthLineBuilderFactory lineBuilderFactory;
         private readonly IFixedLengthLineParserFactory lineParserFactory;

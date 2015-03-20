@@ -6,16 +6,16 @@
 
     public static class FlatFileEngineFactoryExtensions
     {
-        public static IFlatFileEngine<T> GetEngine<T>(
+        public static IFlatFileEngine GetEngine<TEntity>(
             this IFlatFileEngineFactory<ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer> engineFactory,
             Func<string, Exception, bool> handleEntryReadError = null)
-            where T : class, new()
+            where TEntity : class, new()
         {
             var descriptorProvider = new FixedLayoutDescriptorProvider();
 
-            var descriptor = descriptorProvider.GetDescriptor<T>();
+            var descriptor = descriptorProvider.GetDescriptor<TEntity>();
 
-            return engineFactory.GetEngine<T>(descriptor, handleEntryReadError);
+            return engineFactory.GetEngine(descriptor, handleEntryReadError);
         }
     }
 }

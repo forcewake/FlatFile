@@ -83,7 +83,7 @@
 
             var descriptor = ScenarioContext.Current.Get<ILayoutDescriptor<IFixedFieldSettingsContainer>>("descriptor");
 
-            var fileEngine = fileEngineFactory.GetEngine<TestObject>(descriptor);
+            var fileEngine = fileEngineFactory.GetEngine(descriptor);
 
             var testObjects = ScenarioContext.Current.Get<TestObject[]>("testObjects");
 

@@ -11,7 +11,7 @@ namespace FlatFile.Tests.Delimited
     {
         private readonly IDelimitedLayout<TestObject> _layout;
 
-        private readonly IFlatFileEngine<TestObject> _engine;
+        private readonly IFlatFileEngine _engine;
 
         private const string _testSource = "\"1\";\"Description 1\";\"3\"\r\n" +
                                            "\"2\";\"Description 2\";\"3\"\r\n" +
@@ -33,7 +33,7 @@ namespace FlatFile.Tests.Delimited
                 .WithMember(o => o.Description)
                 .WithMember(o => o.NullableInt, set => set.AllowNull("=Null"));
 
-            _engine = new DelimitedFileEngine<TestObject>(
+            _engine = new DelimitedFileEngine(
                 Layout,
                 new DelimitedLineBuilderFactory(),
                 new DelimitedLineParserFactory());
@@ -44,7 +44,7 @@ namespace FlatFile.Tests.Delimited
             get { return _layout; }
         }
 
-        protected override IFlatFileEngine<TestObject> Engine
+        protected override IFlatFileEngine Engine
         {
             get { return _engine; }
         }

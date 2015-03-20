@@ -4,12 +4,14 @@ namespace FlatFile.Core
     using System.Linq.Expressions;
     using FlatFile.Core.Base;
 
-    public interface ILayout<T, TFieldSettings, TConstructor, out TLayout> : ILayoutDescriptor<TFieldSettings>
+    public interface ILayout<TTarget, TFieldSettings, TConstructor, out TLayout> : ILayoutDescriptor<TFieldSettings>
         where TFieldSettings : IFieldSettings
         where TConstructor : IFieldSettingsConstructor<TConstructor>
-        where TLayout : ILayout<T, TFieldSettings, TConstructor, TLayout>
+        where TLayout : ILayout<TTarget, TFieldSettings, TConstructor, TLayout>
     {
-        TLayout WithMember<TProperty>(Expression<Func<T, TProperty>> expression, Action<TConstructor> settings = null);
+        Type TargetType { get; }
+
+        TLayout WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TConstructor> settings = null);
 
         TLayout WithHeader();
     }
