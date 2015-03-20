@@ -13,7 +13,7 @@ namespace FlatFile.FixedLength.Implementation
         {
         }
 
-        public override string BuildLine<T1>(T1 entry)
+        public override string BuildLine<T>(T entry)
         {
             string line = Descriptor.Fields.Aggregate(string.Empty,
                 (current, field) => current + GetStringValueFromField(field, field.PropertyInfo.GetValue(entry, null)));
