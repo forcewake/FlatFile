@@ -4,16 +4,16 @@ namespace FlatFile.FixedLength.Implementation
     using FlatFile.Core;
     using FlatFile.Core.Base;
 
-    public class FixedLengthLineBuilder<T> :
-        LineBulderBase<T, ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer>,
-        IFixedLengthLineBuilder<T>
+    public class FixedLengthLineBuilder :
+        LineBulderBase<ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer>,
+        IFixedLengthLineBuilder
     {
         public FixedLengthLineBuilder(ILayoutDescriptor<IFixedFieldSettingsContainer> descriptor)
             : base(descriptor)
         {
         }
 
-        public override string BuildLine(T entry)
+        public override string BuildLine<T1>(T1 entry)
         {
             string line = Descriptor.Fields.Aggregate(string.Empty,
                 (current, field) => current + GetStringValueFromField(field, field.PropertyInfo.GetValue(entry, null)));

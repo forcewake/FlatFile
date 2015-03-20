@@ -12,8 +12,8 @@ namespace FlatFile.FixedLength.Implementation
         {
             return new FixedLengthFileEngine<T>(
                 descriptor, 
-                new FixedLengthLineBuilderFactory<T>(),
-                new FixedLengthLineParserFactory<T>(), 
+                new FixedLengthLineBuilderFactory(),
+                new FixedLengthLineParserFactory(), 
                 handleEntryReadError);
         }
     }

@@ -29,8 +29,8 @@ namespace FlatFile.Tests.FixedLength
                 .WithMember(o => o.Description, set => set.WithLength(25).WithRightPadding(' '))
                 .WithMember(o => o.NullableInt, set => set.WithLength(5).AllowNull("=Null").WithLeftPadding('0'));
 
-            _engine = new FixedLengthFileEngine<TestObject>(Layout, new FixedLengthLineBuilderFactory<TestObject>(),
-                new FixedLengthLineParserFactory<TestObject>());
+            _engine = new FixedLengthFileEngine<TestObject>(Layout, new FixedLengthLineBuilderFactory(),
+                new FixedLengthLineParserFactory());
         }
 
         protected override IFixedLayout<TestObject> Layout

@@ -12,8 +12,8 @@
         {
             return new DelimitedFileEngine<T>(
                 descriptor,
-                new DelimitedLineBuilderFactory<T>(),
-                new DelimitedLineParserFactory<T>(),
+                new DelimitedLineBuilderFactory(),
+                new DelimitedLineParserFactory(),
                 handleEntryReadError);
         }
     }

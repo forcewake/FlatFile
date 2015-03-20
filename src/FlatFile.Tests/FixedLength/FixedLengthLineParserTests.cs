@@ -8,7 +8,7 @@
 
     public class FixedLengthLineParserTests
     {
-        private readonly FixedLengthLineParser<TestObject> parser;
+        private readonly FixedLengthLineParser parser;
         private readonly IFixedLayout<TestObject> layout; 
 
         public FixedLengthLineParserTests()
@@ -18,7 +18,7 @@
                     .WithMember(o => o.Description, set => set.WithLength(25).WithRightPadding(' '))
                     .WithMember(o => o.NullableInt, set => set.WithLength(5).AllowNull("=Null").WithLeftPadding('0'));
 
-            parser = new FixedLengthLineParser<TestObject>(layout);
+            parser = new FixedLengthLineParser(layout);
         }
 
         [Theory]

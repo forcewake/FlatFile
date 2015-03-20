@@ -35,8 +35,8 @@ namespace FlatFile.Tests.Delimited
 
             _engine = new DelimitedFileEngine<TestObject>(
                 Layout,
-                new DelimitedLineBuilderFactory<TestObject>(),
-                new DelimitedLineParserFactory<TestObject>());
+                new DelimitedLineBuilderFactory(),
+                new DelimitedLineParserFactory());
         }
 
         protected override IDelimitedLayout<TestObject> Layout

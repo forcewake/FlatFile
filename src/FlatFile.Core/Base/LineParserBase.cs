@@ -3,7 +3,7 @@ namespace FlatFile.Core.Base
     using System;
     using FlatFile.Core.Extensions;
 
-    public abstract class LineParserBase<TEntity, TLayoutDescriptor, TFieldSettings> : ILineParser<TEntity>
+    public abstract class LineParserBase<TLayoutDescriptor, TFieldSettings> : ILineParser
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
         where TFieldSettings : IFieldSettingsContainer
     {
@@ -19,7 +19,7 @@ namespace FlatFile.Core.Base
             get { return _layout; }
         }
 
-        public abstract TEntity ParseLine(string line, TEntity entry);
+        public abstract TEntity ParseLine<TEntity>(string line, TEntity entity) where TEntity : new();
 
         protected virtual object GetFieldValueFromString(TFieldSettings fieldSettings, string memberValue)
         {

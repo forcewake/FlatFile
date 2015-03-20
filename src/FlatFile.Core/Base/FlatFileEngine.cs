@@ -13,9 +13,9 @@ namespace FlatFile.Core.Base
     {
         private readonly Func<string, Exception, bool> _handleEntryReadError;
 
-        protected abstract ILineBulder<TEntity> LineBuilder { get; }
+        protected abstract ILineBulder LineBuilder { get; }
 
-        protected abstract ILineParser<TEntity> LineParser { get; }
+        protected abstract ILineParser LineParser { get; }
 
         protected abstract TLayoutDescriptor LayoutDescriptor { get; }
 

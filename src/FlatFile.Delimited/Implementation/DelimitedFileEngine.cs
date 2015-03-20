@@ -10,16 +10,16 @@ namespace FlatFile.Delimited.Implementation
         FlatFileEngine<T, IDelimitedFieldSettingsContainer, IDelimitedLayoutDescriptor>
         where T : class, new()
     {
-        private readonly IDelimitedLineBuilderFactory<T> _builderFactory;
+        private readonly IDelimitedLineBuilderFactory _builderFactory;
 
-        private readonly IDelimitedLineParserFactory<T> _parserFactory;
+        private readonly IDelimitedLineParserFactory _parserFactory;
 
         private readonly IDelimitedLayoutDescriptor _layoutDescriptor;
 
         internal DelimitedFileEngine(
             IDelimitedLayoutDescriptor layoutDescriptor,
-            IDelimitedLineBuilderFactory<T> builderFactory,
-            IDelimitedLineParserFactory<T> parserFactory, 
+            IDelimitedLineBuilderFactory builderFactory,
+            IDelimitedLineParserFactory parserFactory, 
             Func<string, Exception, bool> handleEntryReadError = null)
             : base(handleEntryReadError)
         {
@@ -28,12 +28,12 @@ namespace FlatFile.Delimited.Implementation
             _layoutDescriptor = layoutDescriptor;
         }
 
-        protected override ILineBulder<T> LineBuilder
+        protected override ILineBulder LineBuilder
         {
             get { return _builderFactory.GetBuilder(LayoutDescriptor); }
         }
 
-        protected override ILineParser<T> LineParser
+        protected override ILineParser LineParser
         {
             get { return _parserFactory.GetParser(LayoutDescriptor); }
         }

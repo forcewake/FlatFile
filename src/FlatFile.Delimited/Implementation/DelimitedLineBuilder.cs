@@ -3,16 +3,16 @@
     using System.Linq;
     using FlatFile.Core.Base;
 
-    public class DelimitedLineBuilder<TEntry> :
-        LineBulderBase<TEntry, IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>, 
-        IDelimitedLineBuilder<TEntry>
+    public class DelimitedLineBuilder :
+        LineBulderBase<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>, 
+        IDelimitedLineBuilder
     {
         public DelimitedLineBuilder(IDelimitedLayoutDescriptor descriptor)
             : base(descriptor)
         {
         }
 
-        public override string BuildLine(TEntry entry)
+        public override string BuildLine<T>(T entry)
         {
             string line = Descriptor.Fields.Aggregate(string.Empty,
                 (current, field) =>
