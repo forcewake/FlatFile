@@ -40,7 +40,7 @@
             return propertyInfo;
         }
 
-        public Type TargetType { get { return typeof (TTarget); } }
+        public override Type TargetType { get { return typeof (TTarget); } }
 
         public abstract TLayout WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TConstructor> settings = null);
 

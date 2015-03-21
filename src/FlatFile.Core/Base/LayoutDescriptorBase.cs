@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FlatFile.Core.Base
 {
@@ -11,6 +12,8 @@ namespace FlatFile.Core.Base
         {
             FieldsContainer = fieldsContainer;
         }
+
+        public virtual Type TargetType { get { throw new NotImplementedException(); } }
 
         public IEnumerable<TFieldSettings> Fields
         {

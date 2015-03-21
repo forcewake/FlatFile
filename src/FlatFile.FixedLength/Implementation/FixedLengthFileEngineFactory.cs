@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace FlatFile.FixedLength.Implementation
 {
     using System;
@@ -13,6 +15,19 @@ namespace FlatFile.FixedLength.Implementation
                 descriptor, 
                 new FixedLengthLineBuilderFactory(),
                 new FixedLengthLineParserFactory(), 
+                handleEntryReadError);
+        }
+
+        public IFlatFileMultiEngine GetEngine(
+            IEnumerable<ILayoutDescriptor<IFixedFieldSettingsContainer>> layoutDescriptors,
+            Func<string, Type> typeSelectorFunc,
+            Func<string, Exception, bool> handleEntryReadError = null)
+        {
+            return new FixedLengthFileMultiEngine(
+                layoutDescriptors,
+                typeSelectorFunc,
+                new FixedLengthLineBuilderFactory(),
+                new FixedLengthLineParserFactory(),
                 handleEntryReadError);
         }
     }
