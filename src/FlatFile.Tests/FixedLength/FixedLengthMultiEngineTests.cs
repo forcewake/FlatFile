@@ -14,7 +14,7 @@ namespace FlatFile.Tests.FixedLength
     {
         readonly IFlatFileMultiEngine engine;
 
-        const string TestData = @"
+        const string TestData = @"Some Header To Skip
 STest Description    00042
 D20150323Another Description ";
 
@@ -117,7 +117,7 @@ D20150323Another Description ";
                                                         }
                                                     },
                                                     new FixedLengthLineBuilderFactory(),
-                                                    new FixedLengthLineParserFactory());
+                                                    new FixedLengthLineParserFactory()) {HasHeader = true};
         }
 
         [Fact]
@@ -129,8 +129,8 @@ D20150323Another Description ";
             var record1Results = engine.GetRecords<Record1>().ToList();
             var record2Results = engine.GetRecords<Record2>().ToList();
 
-            record1Results.Should().HaveCount(1);
-            record2Results.Should().HaveCount(1);
+            record1Results.Should().HaveCount(1, "because it should skip the header and read one 'S' record");
+            record2Results.Should().HaveCount(1, "because there is one 'D' record");
 
             record1Results.First().Should().Be(new Record1 {Description = "Test Description", Value = 42});
             record2Results.First().Should().Be(new Record2 {Description = "Another Description", Date = "20150323"});
