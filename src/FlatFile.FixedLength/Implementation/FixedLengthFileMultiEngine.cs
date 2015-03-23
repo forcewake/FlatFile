@@ -46,7 +46,7 @@ namespace FlatFile.FixedLength.Implementation
 
         public IEnumerable<TType> GetResults<TType>() where TType : Type
         {
-            return !results.ContainsKey(typeof (TType)) ? null : (TType[]) results[typeof (TType)].ToArray(typeof (TType));
+            return !results.ContainsKey(typeof (TType)) ? null : results[typeof(TType)].Cast<TType>();
         }
 
         protected override bool TryParseLine<TEntity>(string line, int lineNumber, out TEntity entity)
