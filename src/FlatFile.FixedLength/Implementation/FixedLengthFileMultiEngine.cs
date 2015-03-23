@@ -27,7 +27,7 @@ namespace FlatFile.FixedLength.Implementation
         {
             if (typeSelectorFunc == null) throw new ArgumentNullException("typeSelectorFunc");
             this.layoutDescriptors = layoutDescriptors.ToList();
-
+            results = new Dictionary<Type, ArrayList>(this.layoutDescriptors.Count());
             foreach (var descriptor in layoutDescriptors)
             {
                 results[descriptor.TargetType] = new ArrayList();
@@ -44,15 +44,15 @@ namespace FlatFile.FixedLength.Implementation
 
         protected override ILayoutDescriptor<IFixedFieldSettingsContainer> LayoutDescriptor { get { throw new NotImplementedException(); } }
 
-        public IEnumerable<TType> GetResults<TType>() where TType : Type
+        public IEnumerable<T> GetRecords<T>() where T : class, new()
         {
-            return !results.ContainsKey(typeof (TType)) ? null : results[typeof(TType)].Cast<TType>();
+            return !results.ContainsKey(typeof (T)) ? null : results[typeof(T)].Cast<T>();
         }
 
-        protected override bool TryParseLine<TEntity>(string line, int lineNumber, out TEntity entity)
+        protected override bool TryParseLine<TEntity>(string line, int lineNumber, ref TEntity entity)
         {
-            entity = new TEntity();
-            var lineParser = lineParserFactory.GetParser(layoutDescriptors.FirstOrDefault(l => l.TargetType == typeof (TEntity)));
+            var type = entity.GetType();
+            var lineParser = lineParserFactory.GetParser(layoutDescriptors.FirstOrDefault(l => l.TargetType == type));
             lineParser.ParseLine(line, entity);
 
             return true;
@@ -77,11 +77,12 @@ namespace FlatFile.FixedLength.Implementation
 
                 // Use selector func to find type for this line, and by effect, its layout
                 var type = typeSelectorFunc(line);
+                if (type == null) continue;
                 var entry = Activator.CreateInstance(type);
 
                 try
                 {
-                    if (!TryParseLine(line, lineNumber++, out entry))
+                    if (!TryParseLine(line, lineNumber++, ref entry))
                     {
                         throw new ParseLineException("Impossible to parse line", line, lineNumber);
                     }

@@ -37,10 +37,10 @@ namespace FlatFile.Core.Base
             while ((line = reader.ReadLine()) != null)
             {
                 bool ignoreEntry = false;
-                TEntity entry = null;
+                var entry = new TEntity();
                 try
                 {
-                    if (!TryParseLine(line, lineNumber++, out entry))
+                    if (!TryParseLine(line, lineNumber++, ref entry))
                     {
                         throw new ParseLineException("Impossible to parse line", line, lineNumber);
                     }
@@ -72,10 +72,8 @@ namespace FlatFile.Core.Base
             reader.ReadLine();
         }
 
-        protected virtual bool TryParseLine<TEntity>(string line, int lineNumber, out TEntity entity) where TEntity : class, new()
+        protected virtual bool TryParseLine<TEntity>(string line, int lineNumber, ref TEntity entity) where TEntity : class, new()
         {
-            entity = new TEntity();
-
             LineParser.ParseLine(line, entity);
 
             return true;

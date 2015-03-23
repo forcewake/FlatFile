@@ -7,6 +7,6 @@ namespace FlatFile.Core
     public interface IFlatFileMultiEngine : IFlatFileEngine
     {
         void Read(Stream stream);
-        IEnumerable<TType> GetResults<TType>() where TType : Type;
+        IEnumerable<T> GetRecords<T>() where T : class, new();
     }
 }
