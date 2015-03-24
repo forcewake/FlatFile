@@ -104,9 +104,9 @@ public sealed class FixedSampleRecordLayout : FixedLayout<FixedSampleRecord>
 {
     public FixedSampleRecordLayout()
     {
-        this.WithMember(x => x.Cuit, c => c.WithLenght(11))
-            .WithMember(x => x.Nombre, c => c.WithLenght(160))
-            .WithMember(x => x.Actividad, c => c.WithLenght(6));
+        this.WithMember(x => x.Cuit, c => c.WithLength(11))
+            .WithMember(x => x.Nombre, c => c.WithLength(160))
+            .WithMember(x => x.Actividad, c => c.WithLength(6));
     }
 }
 ```
@@ -137,13 +137,13 @@ public class LayoutFactory
     {
         IFixedLayout<TestObject> layout = new FixedLayout<TestObject>()
             .WithMember(o => o.Id, set => set
-                .WithLenght(5)
+                .WithLength(5)
                 .WithLeftPadding('0'))
             .WithMember(o => o.Description, set => set
-                .WithLenght(25)
+                .WithLength(25)
                 .WithRightPadding(' '))
             .WithMember(o => o.NullableInt, set => set
-                .WithLenght(5)
+                .WithLength(5)
                 .AllowNull("=Null")
                 .WithLeftPadding('0'));
 
