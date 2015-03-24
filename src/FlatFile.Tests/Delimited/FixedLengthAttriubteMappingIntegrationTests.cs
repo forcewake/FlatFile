@@ -1,3 +1,5 @@
+using System;
+
 namespace FlatFile.Tests.Delimited
 {
     using FlatFile.Core;
@@ -15,7 +17,7 @@ namespace FlatFile.Tests.Delimited
             _fileEngineFactory = new DelimitedFileEngineFactory();
         }
 
-        protected override IFlatFileEngine<TestObject> Engine
+        protected override IFlatFileEngine Engine
         {
             get { return _fileEngineFactory.GetEngine<TestObject>(); }
         }

@@ -4,17 +4,35 @@ namespace FlatFile.FixedLength.Implementation
     using FlatFile.Core;
     using FlatFile.Core.Base;
 
-    public class FixedLengthFileEngine<T> : FlatFileEngine<T, IFixedFieldSettingsContainer, ILayoutDescriptor<IFixedFieldSettingsContainer>>
-        where T : class, new()
+    /// <summary>
+    /// Class FixedLengthFileEngine.
+    /// </summary>
+    public class FixedLengthFileEngine : FlatFileEngine<IFixedFieldSettingsContainer, ILayoutDescriptor<IFixedFieldSettingsContainer>>
     {
-        private readonly IFixedLengthLineBuilderFactory<T> lineBuilderFactory;
-        private readonly IFixedLengthLineParserFactory<T> lineParserFactory;
+        /// <summary>
+        /// The line builder factory
+        /// </summary>
+        private readonly IFixedLengthLineBuilderFactory lineBuilderFactory;
+        /// <summary>
+        /// The line parser factory
+        /// </summary>
+        private readonly IFixedLengthLineParserFactory lineParserFactory;
+        /// <summary>
+        /// The layout descriptor
+        /// </summary>
         private readonly ILayoutDescriptor<IFixedFieldSettingsContainer> layoutDescriptor;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FixedLengthFileEngine"/> class.
+        /// </summary>
+        /// <param name="layoutDescriptor">The layout descriptor.</param>
+        /// <param name="lineBuilderFactory">The line builder factory.</param>
+        /// <param name="lineParserFactory">The line parser factory.</param>
+        /// <param name="handleEntryReadError">The handle entry read error.</param>
         internal FixedLengthFileEngine(
             ILayoutDescriptor<IFixedFieldSettingsContainer> layoutDescriptor,
-            IFixedLengthLineBuilderFactory<T> lineBuilderFactory,
-            IFixedLengthLineParserFactory<T> lineParserFactory,
+            IFixedLengthLineBuilderFactory lineBuilderFactory,
+            IFixedLengthLineParserFactory lineParserFactory,
             Func<string, Exception, bool> handleEntryReadError = null) : base(handleEntryReadError)
         {
             this.lineBuilderFactory = lineBuilderFactory;
@@ -22,16 +40,28 @@ namespace FlatFile.FixedLength.Implementation
             this.layoutDescriptor = layoutDescriptor;
         }
 
-        protected override ILineBulder<T> LineBuilder
+        /// <summary>
+        /// Gets the line builder.
+        /// </summary>
+        /// <value>The line builder.</value>
+        protected override ILineBulder LineBuilder
         {
             get { return lineBuilderFactory.GetBuilder(LayoutDescriptor); }
         }
 
-        protected override ILineParser<T> LineParser
+        /// <summary>
+        /// Gets the line parser.
+        /// </summary>
+        /// <value>The line parser.</value>
+        protected override ILineParser LineParser
         {
             get { return lineParserFactory.GetParser(LayoutDescriptor); }
         }
 
+        /// <summary>
+        /// Gets the layout descriptor.
+        /// </summary>
+        /// <value>The layout descriptor.</value>
         protected override ILayoutDescriptor<IFixedFieldSettingsContainer> LayoutDescriptor
         {
             get { return layoutDescriptor; }

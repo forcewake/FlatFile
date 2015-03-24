@@ -3,17 +3,17 @@ namespace FlatFile.Delimited.Implementation
     using System;
     using FlatFile.Core.Base;
 
-    public class DelimitedLineParser<TEntry> :
-        LineParserBase<TEntry, IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>,
-        IDelimitedLineParser<TEntry> 
-        where TEntry : new()
+    public class DelimitedLineParser :
+        LineParserBase<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>,
+        IDelimitedLineParser 
+        
     {
         public DelimitedLineParser(IDelimitedLayoutDescriptor layout)
             : base(layout)
         {
         }
 
-        public override TEntry ParseLine(string line, TEntry entry)
+        public override TEntity ParseLine<TEntity>(string line, TEntity entity)
         {
             int linePosition = 0;
             int delimiterSize = Layout.Delimiter.Length;
@@ -35,10 +35,10 @@ namespace FlatFile.Delimited.Implementation
                 }
                 string fieldValueFromLine = line.Substring(linePosition, fieldLength);
                 var convertedFieldValue = GetFieldValueFromString(field, fieldValueFromLine);
-                field.PropertyInfo.SetValue(entry, convertedFieldValue, null);
+                field.PropertyInfo.SetValue(entity, convertedFieldValue, null);
                 linePosition += fieldLength + (nextDelimiterIndex > -1 ? delimiterSize : 0);
             }
-            return entry;
+            return entity;
         }
 
         protected override string TransformStringValue(IDelimitedFieldSettingsContainer fieldSettingsBuilder, string memberValue)

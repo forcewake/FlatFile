@@ -2,12 +2,8 @@ namespace FlatFile.Delimited
 {
     using FlatFile.Core;
 
-    public interface IDelimitedLineParserFactory<TEntity> :
-        ILineParserFactory<
-            TEntity,
-            IDelimitedLineParser<TEntity>,
-            IDelimitedLayoutDescriptor,
-            IDelimitedFieldSettingsContainer>
+    public interface IDelimitedLineParserFactory :
+        ILineParserFactory<IDelimitedLineParser, IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>
     {
     }
 }

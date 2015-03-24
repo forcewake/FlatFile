@@ -6,7 +6,7 @@ namespace FlatFile.Tests.Specifications.Extensions
 
     public static class FileEngineExtensions
     {
-        public static string WriteToString<T>(this IFlatFileEngine<T> engine, IEnumerable<T> source)
+        public static string WriteToString<T>(this IFlatFileEngine engine, IEnumerable<T> source)
             where T : class, new()
         {
             using (var stream = new MemoryStream())

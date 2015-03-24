@@ -1,10 +1,10 @@
 namespace FlatFile.Delimited.Implementation
 {
-    public class DelimitedLineBuilderFactory<TEntity> : IDelimitedLineBuilderFactory<TEntity>
+    public class DelimitedLineBuilderFactory : IDelimitedLineBuilderFactory
     {
-        public IDelimitedLineBuilder<TEntity> GetBuilder(IDelimitedLayoutDescriptor descriptor)
+        public IDelimitedLineBuilder GetBuilder(IDelimitedLayoutDescriptor descriptor)
         {
-            return new DelimitedLineBuilder<TEntity>(descriptor);
+            return new DelimitedLineBuilder(descriptor);
         }
     }
 }
