@@ -6,6 +6,7 @@ using System.Linq;
 using FlatFile.Core;
 using FlatFile.Core.Base;
 using FlatFile.Core.Exceptions;
+using FlatFile.Core.Extensions;
 
 namespace FlatFile.FixedLength.Implementation
 {
@@ -149,7 +150,7 @@ namespace FlatFile.FixedLength.Implementation
                 // Use selector func to find type for this line, and by effect, its layout
                 var type = typeSelectorFunc(line);
                 if (type == null) continue;
-                var entry = Activator.CreateInstance(type);
+                var entry = ReflectionHelper.CreateInstance(type);
 
                 try
                 {
