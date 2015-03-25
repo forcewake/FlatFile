@@ -1,3 +1,5 @@
+using System;
+
 namespace FlatFile.Core
 {
     using System.Collections.Generic;
@@ -6,6 +8,8 @@ namespace FlatFile.Core
     public interface ILayoutDescriptor<TFieldSettings>
         where TFieldSettings : IFieldSettings
     {
+        Type TargetType { get; }
+
         IEnumerable<TFieldSettings> Fields { get; }
 
         bool HasHeader { get; }

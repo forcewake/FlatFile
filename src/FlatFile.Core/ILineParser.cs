@@ -1,7 +1,7 @@
 ﻿namespace FlatFile.Core
 {
-    public interface ILineParser<T>
+    public interface ILineParser
     {
-        T ParseLine(string line, T entry);
+        TEntity ParseLine<TEntity>(string line, TEntity entity) where TEntity : new();
     }
 }

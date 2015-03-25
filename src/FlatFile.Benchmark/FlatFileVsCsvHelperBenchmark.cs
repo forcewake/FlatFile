@@ -66,7 +66,7 @@
                     {
                         var factory = new DelimitedFileEngineFactory();
 
-                        var flatFile = factory.GetEngine<CustomObject>(layout);
+                        var flatFile = factory.GetEngine(layout);
 
                         flatFile.Write(stream, records);
                     }
@@ -103,9 +103,9 @@ two,2,06776ed9-d33f-470f-bd3f-8db842356330,4|5|6
                     {
                         var factory = new DelimitedFileEngineFactory();
 
-                        var flatFile = factory.GetEngine<CustomObject>(layout);
+                        var flatFile = factory.GetEngine(layout);
 
-                        var objects = flatFile.Read(stream).ToArray();
+                        var objects = flatFile.Read<CustomObject>(stream).ToArray();
 
                     }
                 })

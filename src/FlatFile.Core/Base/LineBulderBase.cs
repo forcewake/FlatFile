@@ -1,6 +1,6 @@
 namespace FlatFile.Core.Base
 {
-    public abstract class LineBulderBase<TEntity, TLayoutDescriptor, TFieldSettings> : ILineBulder<TEntity>
+    public abstract class LineBulderBase<TLayoutDescriptor, TFieldSettings> : ILineBulder
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
         where TFieldSettings : IFieldSettingsContainer 
     {
@@ -16,7 +16,7 @@ namespace FlatFile.Core.Base
             get { return _descriptor; }
         }
 
-        public abstract string BuildLine(TEntity entry);
+        public abstract string BuildLine<T>(T entry);
 
         protected virtual string GetStringValueFromField(TFieldSettings field, object fieldValue)
         {

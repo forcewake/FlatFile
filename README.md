@@ -104,9 +104,9 @@ public sealed class FixedSampleRecordLayout : FixedLayout<FixedSampleRecord>
 {
     public FixedSampleRecordLayout()
     {
-        this.WithMember(x => x.Cuit, c => c.WithLenght(11))
-            .WithMember(x => x.Nombre, c => c.WithLenght(160))
-            .WithMember(x => x.Actividad, c => c.WithLenght(6));
+        this.WithMember(x => x.Cuit, c => c.WithLength(11))
+            .WithMember(x => x.Nombre, c => c.WithLength(160))
+            .WithMember(x => x.Actividad, c => c.WithLength(6));
     }
 }
 ```
@@ -137,13 +137,13 @@ public class LayoutFactory
     {
         IFixedLayout<TestObject> layout = new FixedLayout<TestObject>()
             .WithMember(o => o.Id, set => set
-                .WithLenght(5)
+                .WithLength(5)
                 .WithLeftPadding('0'))
             .WithMember(o => o.Description, set => set
-                .WithLenght(25)
+                .WithLength(25)
                 .WithRightPadding(' '))
             .WithMember(o => o.NullableInt, set => set
-                .WithLenght(5)
+                .WithLength(5)
                 .AllowNull("=Null")
                 .WithLeftPadding('0'));
 
@@ -196,9 +196,9 @@ var layout = new FixedSampleRecordLayout();
 var factory = new FixedLengthFileEngineFactory();
 using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(FixedFileSample)))
 {
-    var flatFile = factory.GetEngine<FixedSampleRecord>(layout);
+    var flatFile = factory.GetEngine(layout);
 
-    var records = flatFile.Read(stream).ToArray();
+    var records = flatFile.Read<FixedSampleRecord>(stream).ToArray();
 }
 ```
 
@@ -209,7 +209,47 @@ using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(FixedFileSample)))
 {
     var flatFile = factory.GetEngine<FixedSampleRecord>();
 
-    var records = flatFile.Read(stream).ToArray();
+    var records = flatFile.Read<FixedSampleRecord>(stream).ToArray();
+}
+```
+
+##### With multiple fixed record types
+```cs
+var factory = new FixedLengthFileEngineFactory();
+using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(FixedFileSample)))
+{
+    // If using attribute mapping, pass an array of record types
+    // rather than layout instances
+    var layouts = new ILayoutDescriptor<IFixedFieldSettingsContainer>[]
+    {
+        new HeaderRecordLayout(),
+        new DetailRecordLayout(),
+        new TrailerRecordLayout()
+    };
+    var flatFile = factory.GetEngine(layouts,
+        line =>
+        {
+            // For each line, return the proper record type.
+            // The mapping for this line will be loaded based on that type.
+            // In this simple example, the first character determines the
+            // record type.
+            if (String.IsNullOrEmpty(line) || line.Length < 1) return null;
+            switch (line[0])
+            {
+                case 'H':
+                    return typeof (HeaderRecord);
+                case 'D':
+                    return typeof (DetailRecord);
+                case 'T':
+                    return typeof (TrailerRecord);
+            }
+            return null;
+        });
+
+    flatFile.Read(stream);
+    var header = flatFile.GetRecords<HeaderRecord>().FirstOrDefault();
+    var records = flatFile.GetRecords<DetailRecord>();
+    var trailer = flatFile.GetRecords<TrailerRecord>().FirstOrDefault();
 }
 ```
 
@@ -221,9 +261,9 @@ var layout = new FixedSampleRecordLayout();
 var factory = new FixedLengthFileEngineFactory();
 using (var stream = new MemoryStream())
 {
-    var flatFile = factory.GetEngine<FixedSampleRecord>(layout);
+    var flatFile = factory.GetEngine(layout);
 
-    flatFile.Write(stream, sampleRecords);
+    flatFile.Write<FixedSampleRecord>(stream, sampleRecords);
 }
 ```
 
@@ -235,6 +275,6 @@ using (var stream = new MemoryStream())
 {
     var flatFile = factory.GetEngine<FixedSampleRecord>();
 
-    flatFile.Write(stream, sampleRecords);
+    flatFile.Write<FixedSampleRecord>(stream, sampleRecords);
 }
 ```

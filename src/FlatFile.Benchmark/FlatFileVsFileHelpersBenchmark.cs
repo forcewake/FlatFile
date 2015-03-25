@@ -56,9 +56,9 @@ namespace FlatFile.Benchmark
                     {
                         var factory = new FixedLengthFileEngineFactory();
 
-                        var flatFile = factory.GetEngine<FixedSampleRecord>(layout);
+                        var flatFile = factory.GetEngine(layout);
 
-                        var records = flatFile.Read(stream).ToArray();
+                        var records = flatFile.Read<FixedSampleRecord>(stream).ToArray();
 
                         records.Should().HaveCount(19);
                     }
@@ -91,7 +91,7 @@ namespace FlatFile.Benchmark
                     {
                         var factory = new FixedLengthFileEngineFactory();
 
-                        var flatFile = factory.GetEngine<FixedSampleRecord>(layout);
+                        var flatFile = factory.GetEngine(layout);
 
                         flatFile.Write(stream, sampleRecords);
                     }
@@ -126,7 +126,7 @@ namespace FlatFile.Benchmark
                     {
                         var factory = new FixedLengthFileEngineFactory();
 
-                        var flatFile = factory.GetEngine<FixedSampleRecord>(layout);
+                        var flatFile = factory.GetEngine(layout);
 
                         flatFile.Write(stream, sampleRecords);
                     }

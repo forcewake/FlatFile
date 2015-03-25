@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FixedFieldSettings.cs" />
+    <Compile Include="Implementation\FixedLengthFileMultiEngine.cs" />
     <Compile Include="IFixedFieldSettingsConstructor.cs" />
     <Compile Include="IFixedLayout.cs" />
     <Compile Include="IFixedLengthLineBuilder.cs" />

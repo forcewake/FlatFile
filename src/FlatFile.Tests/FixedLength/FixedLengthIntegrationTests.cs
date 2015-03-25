@@ -10,7 +10,7 @@ namespace FlatFile.Tests.FixedLength
         IntegrationTests<IFixedFieldSettingsContainer, IFixedFieldSettingsConstructor, IFixedLayout<TestObject>>
     {
         private readonly IFixedLayout<TestObject> _layout;
-        private readonly IFlatFileEngine<TestObject> _engine;
+        private readonly IFlatFileEngine _engine;
         private const string _testSource = @"00001Description 1            00003
 00002Description 2            00003
 00003Description 3            00003
@@ -29,8 +29,8 @@ namespace FlatFile.Tests.FixedLength
                 .WithMember(o => o.Description, set => set.WithLength(25).WithRightPadding(' '))
                 .WithMember(o => o.NullableInt, set => set.WithLength(5).AllowNull("=Null").WithLeftPadding('0'));
 
-            _engine = new FixedLengthFileEngine<TestObject>(Layout, new FixedLengthLineBuilderFactory<TestObject>(),
-                new FixedLengthLineParserFactory<TestObject>());
+            _engine = new FixedLengthFileEngine(Layout, new FixedLengthLineBuilderFactory(),
+                new FixedLengthLineParserFactory());
         }
 
         protected override IFixedLayout<TestObject> Layout
@@ -38,7 +38,7 @@ namespace FlatFile.Tests.FixedLength
             get { return _layout; }
         }
 
-        protected override IFlatFileEngine<TestObject> Engine
+        protected override IFlatFileEngine Engine
         {
             get { return _engine; }
         }
