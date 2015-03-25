@@ -1,5 +1,5 @@
 - 
-  version: 0.1.{build}
+  version: 0.2.{build}
 
   environment:
     BuildEnvironment: appveyor
@@ -34,7 +34,7 @@
       branch: master
 
 -
-  version: 0.1.{build}
+  version: 0.2.{build}
 
   environment:
     BuildEnvironment: appveyor
