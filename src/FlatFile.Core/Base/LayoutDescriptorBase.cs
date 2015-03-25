@@ -13,7 +13,9 @@ namespace FlatFile.Core.Base
             FieldsContainer = fieldsContainer;
         }
 
-        public virtual Type TargetType { get { throw new NotImplementedException(); } }
+        public LayoutDescriptorBase(IFieldsContainer<TFieldSettings> fieldsContainer, Type targetType) : this(fieldsContainer) { TargetType = targetType; }
+
+        public virtual Type TargetType { get; private set; }
 
         public IEnumerable<TFieldSettings> Fields
         {
