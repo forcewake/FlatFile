@@ -41,10 +41,7 @@ namespace FlatFile.FixedLength.Attributes.Infrastructure
                 }
             }
 
-            var descriptor = new LayoutDescriptorBase<IFixedFieldSettingsContainer>(container)
-            {
-                HasHeader = false
-            };
+            var descriptor = new LayoutDescriptorBase<IFixedFieldSettingsContainer>(container, t) {HasHeader = false};
 
             return descriptor;
         }
