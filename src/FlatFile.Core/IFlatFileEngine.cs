@@ -3,11 +3,25 @@
     using System.Collections.Generic;
     using System.IO;
 
-    public interface IFlatFileEngine<TEntity>
-        where TEntity : class, new()
+    /// <summary>
+    /// Interface IFlatFileEngine
+    /// </summary>
+    public interface IFlatFileEngine
     {
-        IEnumerable<TEntity> Read(Stream stream);
+        /// <summary>
+        /// Reads the specified stream.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the t entity.</typeparam>
+        /// <param name="stream">The stream.</param>
+        /// <returns>IEnumerable&lt;TEntity&gt;.</returns>
+        IEnumerable<TEntity> Read<TEntity>(Stream stream) where TEntity : class, new();
 
-        void Write(Stream stream, IEnumerable<TEntity> entries);
+        /// <summary>
+        /// Writes to the specified stream.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the t entity.</typeparam>
+        /// <param name="stream">The stream.</param>
+        /// <param name="entries">The entries.</param>
+        void Write<TEntity>(Stream stream, IEnumerable<TEntity> entries) where TEntity : class, new();
     }
 }

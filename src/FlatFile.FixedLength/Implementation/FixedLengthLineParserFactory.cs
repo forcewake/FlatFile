@@ -2,12 +2,11 @@ namespace FlatFile.FixedLength.Implementation
 {
     using FlatFile.Core;
 
-    public class FixedLengthLineParserFactory<TEntity> : IFixedLengthLineParserFactory<TEntity> 
-        where TEntity : new()
+    public class FixedLengthLineParserFactory : IFixedLengthLineParserFactory
     {
-        public IFixedLengthLineParser<TEntity> GetParser(ILayoutDescriptor<IFixedFieldSettingsContainer> descriptor)
+        public IFixedLengthLineParser GetParser(ILayoutDescriptor<IFixedFieldSettingsContainer> descriptor)
         {
-            return new FixedLengthLineParser<TEntity>(descriptor);
+            return new FixedLengthLineParser(descriptor);
         }
     }
 }

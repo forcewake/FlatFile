@@ -11,9 +11,14 @@ namespace FlatFile.FixedLength.Attributes.Infrastructure
     {
         public ILayoutDescriptor<IFixedFieldSettingsContainer> GetDescriptor<T>()
         {
+            return GetDescriptor(typeof(T));
+        }
+
+        public ILayoutDescriptor<IFixedFieldSettingsContainer> GetDescriptor(Type t)
+        {
             var container = new FieldsContainer<IFixedFieldSettingsContainer>();
 
-            var fileMappingType = typeof(T);
+            var fileMappingType = t;
 
             var fileAttribute = fileMappingType.GetAttribute<FixedLengthFileAttribute>();
 
