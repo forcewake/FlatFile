@@ -26,6 +26,7 @@ namespace FlatFile.FixedLength
             Length = settings.Length;
             PadLeft = settings.PadLeft;
             PaddingChar = settings.PaddingChar;
+            TypeConverter = settings.TypeConverter;
         }
 
         public FixedFieldSettings(PropertyInfo propertyInfo, IFixedFieldSettings settings)
