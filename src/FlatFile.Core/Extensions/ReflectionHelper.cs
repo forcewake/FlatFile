@@ -16,6 +16,8 @@
 
         public static object CreateInstance(Type targetType, bool cached = false)
         {
+            if (targetType == null) return null;
+
             object value;
             lock (CacheLock)
             {
