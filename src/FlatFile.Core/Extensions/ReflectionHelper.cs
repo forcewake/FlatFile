@@ -13,7 +13,7 @@ namespace FlatFile.Core.Extensions
     public static class ReflectionHelper
     {
         static readonly object CacheLock = new object();
-        static readonly Dictionary<ConstructorInfo, Func<object>> Cache = new Dictionary<ConstructorInfo, Func<object>>();
+        static readonly Dictionary<ConstructorInfo, Delegate> Cache = new Dictionary<ConstructorInfo, Delegate>();
 
         /// <summary>
         /// Creates an instance of type <typeparamref name="T"/> using the default constructor.
@@ -60,7 +60,7 @@ namespace FlatFile.Core.Extensions
             if (ctorInfo == null) return null;
             var hasArguments = parameters != null && parameters.Any();
 
-            Func<object> ctor;
+            Delegate ctor;
             lock (CacheLock)
             {
                 if (!Cache.TryGetValue(ctorInfo, out ctor) || !cached)
@@ -69,19 +69,19 @@ namespace FlatFile.Core.Extensions
                     {
                         var ctorArgs = ctorInfo.GetParameters().Select((param, index) => Expression.Parameter(param.ParameterType, String.Format("Param{0}", index))).ToArray();
                         // ReSharper disable once CoVariantArrayConversion
-                        ctor = (Func<object>) Expression.Lambda(Expression.New(ctorInfo, ctorArgs), ctorArgs).Compile();
+                        ctor = Expression.Lambda(Expression.New(ctorInfo, ctorArgs), ctorArgs).Compile();
                     }
                     else
                     {
-                        ctor = (Func<object>) Expression.Lambda(Expression.New(ctorInfo)).Compile();
+                        ctor = Expression.Lambda(Expression.New(ctorInfo)).Compile();
                     }
                 }
 
                 if (cached) CacheCtor(ctorInfo, ctor);
             }
-            return hasArguments ? ctor.DynamicInvoke(parameters) : ctor();
+            return hasArguments ? ctor.DynamicInvoke(parameters) : ctor.DynamicInvoke();
         }
 
-        static void CacheCtor(ConstructorInfo key, Func<object> ctor) { if (!Cache.ContainsKey(key)) Cache.Add(key, ctor); }
+        static void CacheCtor(ConstructorInfo key, Delegate ctor) { if (!Cache.ContainsKey(key)) Cache.Add(key, ctor); }
     }
 }
