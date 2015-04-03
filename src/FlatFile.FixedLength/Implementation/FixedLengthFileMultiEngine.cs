@@ -59,7 +59,7 @@ namespace FlatFile.FixedLength.Implementation
             if (typeSelectorFunc == null) throw new ArgumentNullException("typeSelectorFunc");
             this.layoutDescriptors = layoutDescriptors.ToList();
             results = new Dictionary<Type, ArrayList>(this.layoutDescriptors.Count());
-            foreach (var descriptor in layoutDescriptors)
+            foreach (var descriptor in this.layoutDescriptors)
             {
                 results[descriptor.TargetType] = new ArrayList();
             }
@@ -150,7 +150,7 @@ namespace FlatFile.FixedLength.Implementation
                 // Use selector func to find type for this line, and by effect, its layout
                 var type = typeSelectorFunc(line);
                 if (type == null) continue;
-                var entry = ReflectionHelper.CreateInstance(type);
+                var entry = ReflectionHelper.CreateInstance(type, true);
 
                 try
                 {
