@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using FlatFile.Core;
@@ -80,6 +81,7 @@ D20150512Standalone                     ";
 
         abstract class RecordBaseLayout<T> : FixedLayout<T> where T : RecordBase
         {
+            [SuppressMessage("ReSharper", "DoNotCallOverridableMethodsInConstructor")]
             protected RecordBaseLayout()
             {
                 WithMember(x => x.Type, c => c.WithLength(1))
@@ -128,6 +130,7 @@ D20150512Standalone                     ";
         }
 
         [Fact]
+        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         void EngineShouldAssociateDetailRecordsWithPreceedingMasterRecord()
         {
             using (var stream = GetStringStream(TestData))
