@@ -40,6 +40,8 @@ namespace FlatFile.FixedLength.Implementation
         /// </summary>
         readonly Dictionary<Type, ArrayList> results;
 
+        IMasterRecord lastMasterRecord;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FixedLengthFileMultiEngine"/> class.
         /// </summary>
@@ -176,8 +178,48 @@ namespace FlatFile.FixedLength.Implementation
 
                 if (ignoreEntry) continue;
 
+                bool isDetailRecord;
+                HandleMasterDetail(entry, out isDetailRecord);
+
+                if (isDetailRecord) continue;
+
                 results[type].Add(entry);
             }
+        }
+
+
+        /// <summary>
+        /// Handles any master/detail relationships for this <paramref name="entry"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entry">The entry.</param>
+        /// <param name="isDetailRecord">if set to <c>true</c> [is detail record] and should not be added to the results dictionary.</param>
+        void HandleMasterDetail<T>(T entry, out bool isDetailRecord)
+        {
+            isDetailRecord = false;
+
+            var masterRecord = entry as IMasterRecord;
+            if (masterRecord != null)
+            {
+                // Found new master record
+                lastMasterRecord = masterRecord;
+                return;
+            }
+
+            // Record is standalone or unassociated detail record
+            if (lastMasterRecord == null) return;
+
+            var detailRecord = entry as IDetailRecord;
+            if (detailRecord == null)
+            {
+                // Record is standalone, reset master
+                lastMasterRecord = null;
+                return;
+            }
+
+            // Add detail record and indicate that it should not be added to the results dictionary
+            lastMasterRecord.DetailRecords.Add(detailRecord);
+            isDetailRecord = true;
         }
     }
 }
