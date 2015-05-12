@@ -39,7 +39,9 @@ namespace FlatFile.FixedLength.Implementation
         /// The results of a call to <see cref="Read"/> are stored in this Dictionary by type
         /// </summary>
         readonly Dictionary<Type, ArrayList> results;
-
+        /// <summary>
+        /// The last record parsed that implements <see cref="IMasterRecord"/>
+        /// </summary>
         IMasterRecord lastMasterRecord;
 
         /// <summary>
