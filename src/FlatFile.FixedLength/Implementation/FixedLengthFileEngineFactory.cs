@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FlatFile.Core.Base;
 
 namespace FlatFile.FixedLength.Implementation
 {
@@ -10,6 +11,30 @@ namespace FlatFile.FixedLength.Implementation
     /// </summary>
     public class FixedLengthFileEngineFactory : IFlatFileEngineFactory<ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer>
     {
+        readonly FixedLengthLineParserFactory lineParserFactory = new FixedLengthLineParserFactory();
+
+        /// <summary>
+        /// Registers the line parser <typeparamref name="TParser" /> for lines matching <paramref name="targetType" />.
+        /// </summary>
+        /// <typeparam name="TParser">The type of the t parser.</typeparam>
+        /// <param name="targetType">The target record type.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void RegisterLineParser<TParser>(Type targetType) where TParser : IFixedLengthLineParser
+        {
+            lineParserFactory.RegisterLineParser<TParser>(targetType);
+        }
+
+        /// <summary>
+        /// Registers the line parser <typeparamref name="TParser" /> for lines matching <paramref name="targetLayout" />.
+        /// </summary>
+        /// <typeparam name="TParser">The type of the t parser.</typeparam>
+        /// <param name="targetLayout">The target layout.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void RegisterLineParser<TParser>(ILayoutDescriptor<IFieldSettings> targetLayout) where TParser : IFixedLengthLineParser
+        {
+            lineParserFactory.RegisterLineParser<TParser>(targetLayout);
+        }
+
         /// <summary>
         /// Gets the <see cref="IFlatFileEngine" />.
         /// </summary>
@@ -23,7 +48,7 @@ namespace FlatFile.FixedLength.Implementation
             return new FixedLengthFileEngine(
                 descriptor, 
                 new FixedLengthLineBuilderFactory(),
-                new FixedLengthLineParserFactory(), 
+                lineParserFactory, 
                 handleEntryReadError);
         }
 
@@ -43,7 +68,7 @@ namespace FlatFile.FixedLength.Implementation
                 layoutDescriptors,
                 typeSelectorFunc,
                 new FixedLengthLineBuilderFactory(),
-                new FixedLengthLineParserFactory(),
+                lineParserFactory,
                 handleEntryReadError);
         }
     }
