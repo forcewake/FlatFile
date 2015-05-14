@@ -70,6 +70,7 @@
     <Compile Include="FixedLength\FixedLengthAttributeMappingIntegrationTests.cs" />
     <Compile Include="FixedLength\FixedLengthIntegrationTests.cs" />
     <Compile Include="FixedLength\FixedLengthLineParserTests.cs" />
+    <Compile Include="FixedLength\FixedLengthMasterDetailTests.cs" />
     <Compile Include="FixedLength\FixedLengthMultiEngineTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Specifications\Entities\FixedLengthTypeMapping.cs" />

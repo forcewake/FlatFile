@@ -20,7 +20,6 @@ D20150323Another Description ";
 
         class Record1
         {
-
             public char Type { get; set; }
             public string Description { get; set; }
             public int Value { get; set; }
@@ -99,7 +98,6 @@ D20150323Another Description ";
 
         public FixedLengthMultiEngineTests()
         {
-            // TODO: Instantiate the engine for layouts
             var layouts = new List<ILayoutDescriptor<IFixedFieldSettingsContainer>> {new Record1Layout(), new Record2Layout()};
             engine = new FixedLengthFileMultiEngine(layouts,
                                                     s =>
