@@ -16,7 +16,8 @@ namespace FlatFile.Benchmark
 
     public class FlatFileVsFileHelpersBenchmark
     {
-        private const string FixedFileSample = @"20000000109PANIAGUA JOSE                                                                                                                                                   0     
+        private const string FixedFileSample =
+            @"20000000109PANIAGUA JOSE                                                                                                                                                   0     
 20000000125ACOSTA MARCOS                                                                                                                                                   0     
 20000000141GONZALEZ DOMINGO                                                                                                                                                0     
 20000000168SENA RAUL                                                                                                                                                       0     
@@ -37,7 +38,7 @@ namespace FlatFile.Benchmark
 20000000923AQUINO VILLASANTI NICASIO                                                                                                                                       0     
 ";
 
-        [Fact]
+        [Fact(Skip = "Too long for CI")]
         public void ReadOperationShouldBeQuick()
         {
             Benchmark.This("FileHelperEngine.ReadStream", () =>
@@ -70,7 +71,7 @@ namespace FlatFile.Benchmark
         }
 
 
-        [Fact]
+        [Fact(Skip = "Too long for CI")]
         public void WriteOperationShouldBeQuick()
         {
             var sampleRecords = GetRecords();
@@ -140,7 +141,7 @@ namespace FlatFile.Benchmark
         [Fact(Skip = "Too long for CI")]
         public void BigDataWriteOperationShouldBeQuickWithReflectionMagic()
         {
-            HyperTypeDescriptionProvider.Add(typeof(FixedSampleRecord));
+            HyperTypeDescriptionProvider.Add(typeof (FixedSampleRecord));
 
             BigDataWriteOperationShouldBeQuick();
         }

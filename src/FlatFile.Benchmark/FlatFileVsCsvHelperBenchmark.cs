@@ -15,7 +15,7 @@
 
     public class FlatFileVsCsvHelperBenchmark
     {
-        [Fact]
+        [Fact(Skip = "Too long for CI")]
         public void WriteAllRecordsWithMapping()
         {
             var records = new List<CustomObject>
@@ -26,11 +26,11 @@
                     IntColumn = 1,
                     StringColumn = "one",
                     CustomTypeColumn = new CustomType
-					{
-					    First = 1,
-					    Second = 2,
-					    Third = 3,
-					},
+                    {
+                        First = 1,
+                        Second = 2,
+                        Third = 3,
+                    },
                 },
                 new CustomObject
                 {
@@ -38,11 +38,11 @@
                     IntColumn = 2,
                     StringColumn = "two",
                     CustomTypeColumn = new CustomType
-					{
-					    First = 4,
-					    Second = 5,
-					    Third = 6,
-					},
+                    {
+                        First = 4,
+                        Second = 5,
+                        Third = 6,
+                    },
                 },
             };
 
@@ -77,11 +77,11 @@
                 .PrintComparison();
         }
 
-        [Fact]
+        [Fact(Skip = "Too long for CI")]
         public void ReadAllRecordsWithMapping()
         {
             const string fileContent =
-@"String Column,Int Column,Guid Column,Custom Type Column
+                @"String Column,Int Column,Guid Column,Custom Type Column
 one,1,f96a1c66-4777-4642-86fa-703098065f5f,1|2|3
 two,2,06776ed9-d33f-470f-bd3f-8db842356330,4|5|6
 ";
