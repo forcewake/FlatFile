@@ -67,6 +67,8 @@ namespace FlatFile.Core.Base
 
             while ((line = reader.ReadLine()) != null)
             {
+                if (string.IsNullOrEmpty(line) || string.IsNullOrEmpty(line.Trim())) continue;
+                
                 bool ignoreEntry = false;
                 var entry = new TEntity();
                 try
