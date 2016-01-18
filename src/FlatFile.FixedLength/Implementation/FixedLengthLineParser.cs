@@ -42,8 +42,8 @@ namespace FlatFile.FixedLength.Implementation
                 }
 
                 throw new IndexOutOfRangeException(
-                    $"The field at {field.Index} with a length of {field.Length} cannot be found on the line because the line is too short." +
-                    "Setting IsNullable to true will allow the line to be parsed");
+                    $"The field at {field.Index} with a length of {field.Length} cannot be found on the line because the line is too short. " +
+                    "Setting a NullValue for this field will allow the line to be parsed and this field to be null.");
             }
 
             return line.Substring(linePosition, field.Length);
