@@ -34,5 +34,20 @@
             parsedEntity.Description.Should().Be(description);
             parsedEntity.NullableInt.Should().Be(nullableInt);
         }
+
+        [Theory]
+        [InlineData("00001Description 1            00003", 1, "Description 1", 3)]
+        [InlineData("00005Description 5            ", 5, "Description 5", null)]
+        [InlineData("00005Description 5            3", 5, "Description 5", 3)]
+        public void ParserShouldSetValueNullValueIfStringIsToShort(string inputString, int id, string description, int? nullableInt)
+        {
+            var entry = new TestObject();
+
+            var parsedEntity = parser.ParseLine(inputString, entry);
+
+            parsedEntity.Id.Should().Be(id);
+            parsedEntity.Description.Should().Be(description);
+            parsedEntity.NullableInt.Should().Be(nullableInt);
+        }
     }
 }
