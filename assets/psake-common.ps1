@@ -22,6 +22,9 @@ Properties {
 	$sharedAssemblyInfo = "$src_dir\SharedAssemblyInfo.cs"
     $config = "Release"    
 	$frameworks = @("NET35", "NET40", "NET45")
+    
+    ### Files
+    $releaseNotes = "$base_dir\ChangeLog.md"
 }
 
 ## Tasks
@@ -58,17 +61,25 @@ Task Compile -Depends Clean, Restore -Description "Compile all the projects in a
 
 ### Pack functions
 
-function Create-Package($project, $version) {
+function Create-Package($project, $version, $notes) {
     Create-Directory $temp_dir
     Copy-Files "$nuspec_dir\$project.nuspec" $temp_dir
 
     Try {
+        Replace-Content "$nuspec_dir\$project.nuspec" '#releaseNotes#' $notes
+        
         Replace-Content "$nuspec_dir\$project.nuspec" '$version$' $version
-        Exec { .$nuget pack "$nuspec_dir\$project.nuspec" -OutputDirectory "$build_dir" -BasePath "$build_dir" -Version $version }
+        
+        Exec { .$nuget pack "$nuspec_dir\$project.nuspec" -OutputDirectory "$build_dir" -BasePath "$build_dir" -Version $version}
     }
     Finally {
         Move-Files "$temp_dir\$project.nuspec" $nuspec_dir
     }
+}
+
+function Get-ReleaseNotes {
+    $content = (Get-Content "$releaseNotes")  -Join "`n"
+    return $content
 }
 
 ### Version functions

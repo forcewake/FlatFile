@@ -10,12 +10,19 @@ Task Default -Depends Pack
 
 Task Pack -Depends Compile -Description "Create NuGet packages and archive files." {
     $version = Get-BuildVersion
-
-    Create-Package "FlatFile.Core" $version
-    Create-Package "FlatFile.Core.Attributes" $version
-    Create-Package "FlatFile.Delimited" $version
-    Create-Package "FlatFile.FixedLength" $version
-    Create-Package "FlatFile.Delimited.Attributes" $version
-    Create-Package "FlatFile.FixedLength.Attributes" $version
-    Create-Package "FlatFile" $version
+    $releaseNotes = Get-ReleaseNotes    
+    
+    $projects = @(
+        "FlatFile.Core", 
+        "FlatFile.Core.Attributes", 
+        "FlatFile.Delimited",
+        "FlatFile.FixedLength",
+        "FlatFile.Delimited.Attributes",
+        "FlatFile.FixedLength.Attributes",
+        "FlatFile"
+        )
+    
+    $projects | ForEach {
+        Create-Package $_ $version $releaseNotes
+    }
 }
