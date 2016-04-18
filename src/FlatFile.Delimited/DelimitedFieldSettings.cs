@@ -22,6 +22,7 @@ namespace FlatFile.Delimited
             : base(settings)
         {
             Name = settings.Name;
+			TypeConverter = settings.TypeConverter;
         }
 
         public DelimitedFieldSettings(PropertyInfo propertyInfo, IDelimitedFieldSettings settings)
