@@ -20,12 +20,9 @@ namespace FlatFile.Core.Base
 
         protected virtual string GetStringValueFromField(TFieldSettings field, object fieldValue)
         {
-            if (fieldValue == null)
-            {
-                return field.NullValue;
-            }
-
-            string lineValue = fieldValue.ToString();
+            string lineValue = fieldValue != null
+                ? fieldValue.ToString()
+                : field.NullValue ?? string.Empty;
 
             lineValue = TransformFieldValue(field, lineValue);
 
