@@ -1,10 +1,11 @@
-﻿namespace FlatFile.Tests.FixedLength
+﻿using Xunit;
+
+namespace FlatFile.Tests.FixedLength
 {
     using FlatFile.FixedLength;
     using FlatFile.FixedLength.Implementation;
     using FlatFile.Tests.Base.Entities;
     using FluentAssertions;
-    using Xunit.Extensions;
 
     public class FixedLengthLineParserTests
     {

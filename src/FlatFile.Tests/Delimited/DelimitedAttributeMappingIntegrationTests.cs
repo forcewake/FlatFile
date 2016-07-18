@@ -2,7 +2,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using FakeItEasy;
-using FakeItEasy.ExtensionSyntax.Full;
 using FlatFile.Core.Base;
 using FlatFile.Core;
 using FlatFile.Delimited;
@@ -43,8 +42,8 @@ namespace FlatFile.Tests.Delimited
 
 			// an attribute to assign the property
 			var attribute = A.Fake<IDelimitedFieldSettings>();
-			attribute.CallsTo(x => x.Index).Returns(1);
-			attribute.CallsTo(x => x.TypeConverter).Returns(converter);
+		    A.CallTo(() => attribute.Index).Returns(1);
+		    A.CallTo(() => attribute.TypeConverter).Returns(converter);
 
 			// the properties of the class
 			var properties = typeof(ConverterTestObject).GetProperties(BindingFlags.Instance | BindingFlags.Public).ToDictionary(info => info.Name);
