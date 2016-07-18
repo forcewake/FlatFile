@@ -2,7 +2,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using FakeItEasy;
-using FakeItEasy.ExtensionSyntax.Full;
 using FlatFile.Core;
 using FlatFile.Core.Base;
 using FlatFile.FixedLength;
@@ -32,9 +31,9 @@ namespace FlatFile.Tests.FixedLength
             A.CallTo(converter).WithReturnType<bool>().Returns(true);
 
             var attribute = A.Fake<IFixedFieldSettings>();
-            attribute.CallsTo(x => x.Index).Returns(1);
-            attribute.CallsTo(x => x.Length).Returns(1);
-            attribute.CallsTo(x => x.TypeConverter).Returns(converter);
+            A.CallTo(() => attribute.Index).Returns(1);
+            A.CallTo(() => attribute.Length).Returns(1);
+            A.CallTo(() => attribute.TypeConverter).Returns(converter);
 
             var properties = typeof (ConverterTestObject).GetProperties(BindingFlags.Instance | BindingFlags.Public).ToDictionary(info => info.Name);
 
