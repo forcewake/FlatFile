@@ -11,6 +11,12 @@ namespace FlatFile.FixedLength.Implementation
         {
         }
 
+        public IFixedFieldSettingsConstructor TruncateFieldContentIfExceedLength()
+        {
+            TruncateIfExceedFieldLength = true;
+            return this;
+        }
+
         public IFixedFieldSettingsConstructor WithLength(int length)
         {
             Length = length;

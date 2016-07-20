@@ -8,6 +8,8 @@ namespace FlatFile.FixedLength
         int Length { get; }
         bool PadLeft { get; }
         char PaddingChar { get; }
+        bool TruncateIfExceedFieldLength { get; }
+
     }
 
     public interface IFixedFieldSettingsContainer : IFixedFieldSettings, IFieldSettingsContainer
@@ -27,6 +29,7 @@ namespace FlatFile.FixedLength
             PadLeft = settings.PadLeft;
             PaddingChar = settings.PaddingChar;
             TypeConverter = settings.TypeConverter;
+            TruncateIfExceedFieldLength = settings.TruncateIfExceedFieldLength;
         }
 
         public FixedFieldSettings(PropertyInfo propertyInfo, IFixedFieldSettings settings)
@@ -38,5 +41,6 @@ namespace FlatFile.FixedLength
         public int Length { get; set; }
         public bool PadLeft { get; set; }
         public char PaddingChar { get; set; }
+        public bool TruncateIfExceedFieldLength { get; set; }
     }
 }
