@@ -24,7 +24,7 @@ namespace FlatFile.FixedLength.Implementation
         {
             if (lineValue.Length >= field.Length)
             {
-                return lineValue;
+                return field.TruncateIfExceedFieldLength ? lineValue.Substring(0, field.Length) : lineValue;
             }
 
             lineValue = field.PadLeft

@@ -14,5 +14,7 @@ namespace FlatFile.FixedLength
         IFixedFieldSettingsConstructor WithLeftPadding(char paddingChar);
 
         IFixedFieldSettingsConstructor WithRightPadding(char paddingChar);
+
+        IFixedFieldSettingsConstructor TruncateFieldContentIfExceedLength();
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace FlatFile.FixedLength.Attributes
 {
+    using System;
     using FlatFile.Core.Attributes.Base;
 
     public class FixedLengthFieldAttribute : FieldSettingsBaseAttribute, IFixedFieldSettings
@@ -15,11 +16,13 @@
 
         public char PaddingChar { get; set; }
 
-        public FixedLengthFieldAttribute(int index, int length)
+        public bool TruncateIfExceedFieldLength { get; set; }
+
+        public FixedLengthFieldAttribute(int index, int length, bool truncateIfExceed = false)
             : base(index)
         {
             Padding = Padding.Left;
-
+            TruncateIfExceedFieldLength = truncateIfExceed;
             Length = length;
         }
     }
