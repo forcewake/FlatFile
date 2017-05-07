@@ -1,4 +1,7 @@
-﻿namespace FlatFile.Delimited.Implementation
+﻿using System.Collections.Generic;
+using FlatFile.Core.Base;
+
+namespace FlatFile.Delimited.Implementation
 {
     using System;
     using FlatFile.Core;
@@ -9,6 +12,31 @@
     public class DelimitedFileEngineFactory :
         IFlatFileEngineFactory<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>
     {
+
+        readonly DelimitedLineParserFactory lineParserFactory = new DelimitedLineParserFactory();
+
+        /// <summary>
+        /// Registers the line parser <typeparamref name="TParser" /> for lines matching <paramref name="targetType" />.
+        /// </summary>
+        /// <typeparam name="TParser">The type of the t parser.</typeparam>
+        /// <param name="targetType">The target record type.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void RegisterLineParser<TParser>(Type targetType) where TParser : IDelimitedLineParser
+        {
+            lineParserFactory.RegisterLineParser<TParser>(targetType);
+        }
+
+        /// <summary>
+        /// Registers the line parser <typeparamref name="TParser" /> for lines matching <paramref name="targetLayout" />.
+        /// </summary>
+        /// <typeparam name="TParser">The type of the t parser.</typeparam>
+        /// <param name="targetLayout">The target layout.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void RegisterLineParser<TParser>(ILayoutDescriptor<IFieldSettings> targetLayout) where TParser : IDelimitedLineParser
+        {
+            lineParserFactory.RegisterLineParser<TParser>(targetLayout);
+        }
+
         /// <summary>
         /// Gets the <see cref="IFlatFileEngine" />.
         /// </summary>
@@ -23,6 +51,28 @@
                 descriptor,
                 new DelimitedLineBuilderFactory(),
                 new DelimitedLineParserFactory(),
+                handleEntryReadError);
+        }
+
+
+
+        /// <summary>
+        /// Gets the <see cref="IFlatFileMultiEngine"/>.
+        /// </summary>
+        /// <param name="layoutDescriptors">The layout descriptors.</param>
+        /// <param name="typeSelectorFunc">The type selector function.</param>
+        /// <param name="handleEntryReadError">The handle entry read error func.</param>
+        /// <returns>IFlatFileMultiEngine.</returns>
+        public IFlatFileMultiEngine GetEngine(
+            IEnumerable<IDelimitedLayoutDescriptor> layoutDescriptors,
+            Func<string, Type> typeSelectorFunc,
+            Func<string, Exception, bool> handleEntryReadError = null)
+        {
+            return new DelimitedFileMultiEngine(
+                layoutDescriptors,
+                typeSelectorFunc,
+                new DelimitedLineBuilderFactory(),
+                lineParserFactory,
                 handleEntryReadError);
         }
     }
