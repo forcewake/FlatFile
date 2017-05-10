@@ -22,6 +22,11 @@ namespace FlatFile.FixedLength.Implementation
 
         protected override string TransformFieldValue(IFixedFieldSettingsContainer field, string lineValue)
         {
+            if (field.StringNormalizer != null)
+            {
+                lineValue = field.StringNormalizer(lineValue);
+            }
+
             if (lineValue.Length >= field.Length)
             {
                 return field.TruncateIfExceedFieldLength ? lineValue.Substring(0, field.Length) : lineValue;

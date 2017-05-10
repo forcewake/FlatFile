@@ -1,3 +1,5 @@
+using System;
+
 namespace FlatFile.FixedLength.Implementation
 {
     using System.Reflection;
@@ -14,6 +16,12 @@ namespace FlatFile.FixedLength.Implementation
         public IFixedFieldSettingsConstructor TruncateFieldContentIfExceedLength()
         {
             TruncateIfExceedFieldLength = true;
+            return this;
+        }
+
+        public IFixedFieldSettingsConstructor WithStringNormalizer(Func<string, string> stringNormalizer)
+        {
+            StringNormalizer = stringNormalizer;
             return this;
         }
 

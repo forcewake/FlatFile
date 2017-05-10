@@ -148,6 +148,34 @@ public class LayoutFactory
 
         return layout;
     }
+
+    // you can also register a StringNormalizer function to convert input into the FixedLengthLineBuilder
+    // to a string compatible with the specifications for your target File. 
+    //
+    // Note that the StringNormalizer function is only used when creating/building files. Not when reading/parsing files.
+    //
+    // example:
+    public IFixedLayout<TestObject> GetLayout()
+    {
+        IFixedLayout<TestObject> layout = new FixedLayout<TestObject>()
+            .WithMember(o => o.Description, set => set
+                .WithLength(25)
+                .WithRightPadding(' ')
+                .WithStringNormalizer((input) => {
+                     // the normalization to FormD splits accented letters in accents+letters,
+                     // the rest aftet that removes those accents (and other non-spacing characters) from the ouput
+                     // So unicode L'été becomes L'ete
+                     return new string(
+                        input.Normalize(System.Text.NormalizationForm.FormD)
+                             .ToCharArray()
+                             .Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+                             .ToArray());
+                }))
+
+        return layout;
+    }
+
+
 ```
 
 #### Attribute mapping
