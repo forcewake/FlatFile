@@ -79,6 +79,7 @@
     <Compile Include="Delimited\DelimitedAttributeMappingIntegrationTests.cs" />
     <Compile Include="Delimited\DelimitedIntegrationTests.cs" />
     <Compile Include="Delimited\DelimitedLayoutTests.cs" />
+    <Compile Include="Delimited\DelimitedMultiEngineTests.cs" />
     <Compile Include="Delimited\DelimitedWithHeaderIntegrationTests.cs" />
     <Compile Include="FixedLength\FixedLayoutTests.cs" />
     <Compile Include="FixedLength\FixedLengthAttributeMappingIntegrationTests.cs" />

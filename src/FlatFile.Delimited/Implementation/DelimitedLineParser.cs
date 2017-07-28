@@ -1,20 +1,23 @@
 namespace FlatFile.Delimited.Implementation
 {
     using System;
+    using FlatFile.Core;
     using FlatFile.Core.Base;
 
     public class DelimitedLineParser :
         LineParserBase<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>,
-        IDelimitedLineParser 
-        
+        IDelimitedLineParser
+
     {
         public DelimitedLineParser(IDelimitedLayoutDescriptor layout)
             : base(layout)
         {
         }
 
+
         public override TEntity ParseLine<TEntity>(string line, TEntity entity)
         {
+
             int linePosition = 0;
             int delimiterSize = Layout.Delimiter.Length;
             foreach (var field in Layout.Fields)
@@ -22,7 +25,21 @@ namespace FlatFile.Delimited.Implementation
                 int nextDelimiterIndex = -1;
                 if (line.Length > linePosition + delimiterSize)
                 {
-                    nextDelimiterIndex = line.IndexOf(Layout.Delimiter, linePosition, StringComparison.InvariantCultureIgnoreCase);
+                    if (!String.IsNullOrEmpty(Layout.Quotes)) {
+                        if (Layout.Quotes.Equals(line.Substring(linePosition, Layout.Quotes.Length)))
+                        {
+                            nextDelimiterIndex = line.IndexOf(Layout.Quotes, linePosition + 1, StringComparison.InvariantCultureIgnoreCase);
+                            if (line.Length > nextDelimiterIndex)
+                            {
+                                nextDelimiterIndex = line.IndexOf(Layout.Delimiter, nextDelimiterIndex, StringComparison.InvariantCultureIgnoreCase);
+                            }
+                        }
+                    }
+
+                    if (nextDelimiterIndex == -1)
+                    {
+                        nextDelimiterIndex = line.IndexOf(Layout.Delimiter, linePosition, StringComparison.InvariantCultureIgnoreCase);
+                    }
                 }
                 int fieldLength;
                 if (nextDelimiterIndex > -1)

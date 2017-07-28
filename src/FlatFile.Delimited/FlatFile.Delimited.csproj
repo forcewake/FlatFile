@@ -101,6 +101,9 @@
     <Compile Include="IDelimitedLineBuilderFactory.cs" />
     <Compile Include="IDelimitedLineParser.cs" />
     <Compile Include="IDelimitedLineParserFactory.cs" />
+    <Compile Include="IDetailRecord.cs" />
+    <Compile Include="IMasterRecord.cs" />
+    <Compile Include="Implementation\DelimetedFileMultiEngine.cs" />
     <Compile Include="Implementation\DelimitedFileEngineFactory.cs" />
     <Compile Include="Implementation\DelimitedFieldSettingsConstructor.cs" />
     <Compile Include="Implementation\DelimitedFieldSettingsFactory.cs" />
