@@ -18,6 +18,8 @@
 
         public bool TruncateIfExceedFieldLength { get; set; }
 
+        public Func<string, string> StringNormalizer { get; set; }
+
         public FixedLengthFieldAttribute(int index, int length, bool truncateIfExceed = false)
             : base(index)
         {

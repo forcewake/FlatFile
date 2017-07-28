@@ -1,3 +1,5 @@
+using System;
+
 namespace FlatFile.FixedLength
 {
     using FlatFile.Core;
@@ -16,5 +18,7 @@ namespace FlatFile.FixedLength
         IFixedFieldSettingsConstructor WithRightPadding(char paddingChar);
 
         IFixedFieldSettingsConstructor TruncateFieldContentIfExceedLength();
+
+        IFixedFieldSettingsConstructor WithStringNormalizer(Func<string, string> stringNormalizer);
     }
 }

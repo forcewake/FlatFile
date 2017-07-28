@@ -1,3 +1,5 @@
+using System;
+
 namespace FlatFile.FixedLength
 {
     using System.Reflection;
@@ -9,7 +11,7 @@ namespace FlatFile.FixedLength
         bool PadLeft { get; }
         char PaddingChar { get; }
         bool TruncateIfExceedFieldLength { get; }
-
+        Func<string, string> StringNormalizer { get; }
     }
 
     public interface IFixedFieldSettingsContainer : IFixedFieldSettings, IFieldSettingsContainer
@@ -30,6 +32,7 @@ namespace FlatFile.FixedLength
             PaddingChar = settings.PaddingChar;
             TypeConverter = settings.TypeConverter;
             TruncateIfExceedFieldLength = settings.TruncateIfExceedFieldLength;
+            StringNormalizer = settings.StringNormalizer;
         }
 
         public FixedFieldSettings(PropertyInfo propertyInfo, IFixedFieldSettings settings)
@@ -42,5 +45,6 @@ namespace FlatFile.FixedLength
         public bool PadLeft { get; set; }
         public char PaddingChar { get; set; }
         public bool TruncateIfExceedFieldLength { get; set; }
+        public Func<string, string> StringNormalizer { get; set; }
     }
 }
