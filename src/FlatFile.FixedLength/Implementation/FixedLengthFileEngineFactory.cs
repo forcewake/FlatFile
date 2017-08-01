@@ -61,7 +61,7 @@ namespace FlatFile.FixedLength.Implementation
         /// <returns>IFlatFileMultiEngine.</returns>
         public IFlatFileMultiEngine GetEngine(
             IEnumerable<ILayoutDescriptor<IFixedFieldSettingsContainer>> layoutDescriptors,
-            Func<string, Type> typeSelectorFunc,
+            Func<string, int, Type> typeSelectorFunc,
             Func<string, Exception, bool> handleEntryReadError = null)
         {
             return new FixedLengthFileMultiEngine(

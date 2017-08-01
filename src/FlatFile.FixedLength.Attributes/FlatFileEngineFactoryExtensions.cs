@@ -43,7 +43,7 @@ namespace FlatFile.FixedLength.Attributes
         public static IFlatFileMultiEngine GetEngine(
             this FixedLengthFileEngineFactory engineFactory,
             IEnumerable<Type> recordTypes,
-            Func<string, Type> typeSelectorFunc,
+            Func<string, int, Type> typeSelectorFunc,
             Func<string, Exception, bool> handleEntryReadError = null)
         {
             var descriptorProvider = new FixedLayoutDescriptorProvider();
