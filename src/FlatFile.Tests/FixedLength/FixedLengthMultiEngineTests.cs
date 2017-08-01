@@ -100,7 +100,7 @@ D20150323Another Description ";
         {
             var layouts = new List<ILayoutDescriptor<IFixedFieldSettingsContainer>> {new Record1Layout(), new Record2Layout()};
             engine = new FixedLengthFileMultiEngine(layouts,
-                                                    s =>
+                                                    (s, i) =>
                                                     {
                                                         if (String.IsNullOrEmpty(s) || s.Length < 1) return null;
 
