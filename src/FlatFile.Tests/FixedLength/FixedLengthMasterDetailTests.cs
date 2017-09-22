@@ -107,7 +107,7 @@ D20150512Standalone                     ";
                 new StandaloneLayout()
             };
             engine = new FixedLengthFileMultiEngine(layouts,
-                                                    s =>
+                                                    (s, i) =>
                                                     {
                                                         if (String.IsNullOrEmpty(s) || s.Length < 1) return null;
 

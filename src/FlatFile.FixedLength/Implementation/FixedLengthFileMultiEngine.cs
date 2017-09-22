@@ -34,7 +34,7 @@ namespace FlatFile.FixedLength.Implementation
         /// <summary>
         /// The type selector function used to determine the layout for a given line
         /// </summary>
-        readonly Func<string, Type> typeSelectorFunc;
+        readonly Func<string, int, Type> typeSelectorFunc;
         /// <summary>
         /// The results of a call to <see cref="Read"/> are stored in this Dictionary by type
         /// </summary>
@@ -55,7 +55,7 @@ namespace FlatFile.FixedLength.Implementation
         /// <exception cref="System.ArgumentNullException">typeSelectorFunc</exception>
         internal FixedLengthFileMultiEngine(
             IEnumerable<ILayoutDescriptor<IFixedFieldSettingsContainer>> layoutDescriptors,
-            Func<string, Type> typeSelectorFunc,
+            Func<string, int, Type> typeSelectorFunc,
             IFixedLengthLineBuilderFactory lineBuilderFactory,
             IFixedLengthLineParserFactory lineParserFactory,
             Func<string, Exception, bool> handleEntryReadError = null)
@@ -173,7 +173,7 @@ namespace FlatFile.FixedLength.Implementation
                 var ignoreEntry = false;
 
                 // Use selector func to find type for this line, and by effect, its layout
-                var type = typeSelectorFunc(line);
+                var type = typeSelectorFunc(line, lineNumber);
                 if (type == null) continue;
                 var entry = ReflectionHelper.CreateInstance(type, true);
 
