@@ -78,8 +78,8 @@ This commands from Package Manager Console will download and install FlatFile an
 ##### Read all records with class mapping
 | Name                   | Milliseconds | Percent |
 |------------------------|--------------|---------|
-| CsvWriter.WriteRecords | 18795        | 3190.5% |
-| FlatFileEngine.Write   | 589          | 100%    |  
+| CsvWriter.ReadRecords | 18795        | 3190.5% |
+| FlatFileEngine.Read   | 589          | 100%    |  
 
 ### Usage
 #### Class mapping 
