@@ -29,7 +29,7 @@ namespace FlatFile.FixedLength.Implementation
         /// <param name="lineBuilderFactory">The line builder factory.</param>
         /// <param name="lineParserFactory">The line parser factory.</param>
         /// <param name="handleEntryReadError">The handle entry read error.</param>
-        internal FixedLengthFileEngine(
+        public FixedLengthFileEngine(
             ILayoutDescriptor<IFixedFieldSettingsContainer> layoutDescriptor,
             IFixedLengthLineBuilderFactory lineBuilderFactory,
             IFixedLengthLineParserFactory lineParserFactory,
