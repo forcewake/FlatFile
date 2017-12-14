@@ -157,3 +157,6 @@ $RECYCLE.BIN/
 assets/FlatFile.Core.Compiled.nuspec
 assets/FlatFile.Delimited.Compiled.nuspec
 assets/FlatFile.FixedLength.Compiled.nuspec
+
+# Rider JetBrains
+.idea/
