@@ -22,6 +22,6 @@ namespace FlatFile.Core.Base
             get { return FieldsContainer.OrderedFields; }
         }
 
-        public bool HasHeader { get; protected internal set; }
+        public bool HasHeader { get; set; }
     }
 }

@@ -4,7 +4,7 @@ namespace FlatFile.Core.Extensions
     using System.Linq.Expressions;
     using System.Reflection;
 
-    internal static class ExpressionExtensions
+    public static class ExpressionExtensions
     {
         /// <summary>
         /// Gets the name of the member specified

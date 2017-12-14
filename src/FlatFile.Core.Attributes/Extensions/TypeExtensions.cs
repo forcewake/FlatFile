@@ -5,7 +5,7 @@
     using System.Linq;
     using FlatFile.Core.Attributes.Entities;
 
-    internal static class TypeExtensions
+    public static class TypeExtensions
     {
         public static IEnumerable<PropertyDescription> GetTypeDescription<TAttribute>(this Type targetType) where TAttribute : Attribute
         {
