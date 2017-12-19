@@ -31,7 +31,7 @@ namespace FlatFile.FixedLength.Implementation
         {
             if (linePosition + field.Length > line.Length)
             {
-                if ((linePosition + field.Length) - line.Length != field.Length)
+                if ((linePosition + field.Length) - line.Length != field.Length && linePosition <= line.Length)
                 {
                     return line.Substring(linePosition);
                 }
