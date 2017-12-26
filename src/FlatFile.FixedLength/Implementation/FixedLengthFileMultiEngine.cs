@@ -104,7 +104,7 @@ namespace FlatFile.FixedLength.Implementation
         /// <returns>IEnumerable&lt;T&gt;.</returns>
         public IEnumerable<T> GetRecords<T>() where T : class, new()
         {
-            return !results.ContainsKey(typeof (T)) ? new List<T>() : results[typeof(T)].Cast<T>();
+            return !results.ContainsKey(typeof(T)) ? new List<T>() : results[typeof(T)].Cast<T>();
         }
 
         /// <summary>
@@ -138,6 +138,27 @@ namespace FlatFile.FixedLength.Implementation
         public void Read(Stream stream)
         {
             var reader = new StreamReader(stream);
+            ReadInternal(reader);
+        }
+                
+        /// <summary>
+        /// Reads the specified stream reader.
+        /// </summary>
+        /// <param name="streamReader">The stream reader.</param>
+        /// <exception cref="ParseLineException">Impossible to parse line</exception>
+        public void Read(StreamReader reader)
+        {
+            ReadInternal(reader);
+        }
+
+        /// <summary>
+        /// Internal method (private) to read from streamreader instead of stream
+        /// This way the client code have a way to specify encoding.
+        /// </summary>
+        /// <param name="reader">The stream reader to read.</param>
+        /// <exception cref="ParseLineException">Impossible to parse line</exception>
+        private void ReadInternal(StreamReader reader)
+        {
             string line;
             var lineNumber = 0;
 

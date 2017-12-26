@@ -14,6 +14,11 @@ namespace FlatFile.Core
         /// <param name="stream">The stream.</param>
         void Read(Stream stream);
         /// <summary>
+        /// Reads the specified stream reader.
+        /// </summary>
+        /// <param name="streamReader">The stream reader.</param>
+        void Read(StreamReader streamReader);
+        /// <summary>
         /// Gets any records of type <typeparamref name="T"/> read by <see cref="Read"/>.
         /// </summary>
         /// <typeparam name="T"></typeparam>
