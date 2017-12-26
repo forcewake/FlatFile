@@ -3,7 +3,7 @@ FlatFile
 [![Build status](https://ci.appveyor.com/api/projects/status/9uoix14g3w0rac3q?svg=true)](https://ci.appveyor.com/project/forcewake/flatfile)
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/forcewake/flatfile/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
-FlatFile is a library to work with flat files (work up-to 100 times faster then [FileHelpers](https://www.nuget.org/packages/FileHelpers/2.0.0))
+FlatFile is a library to work with flat files (work up-to 100 times faster than [FileHelpers](https://www.nuget.org/packages/FileHelpers/2.0.0))
 
 ### Installing FlatFile
 
