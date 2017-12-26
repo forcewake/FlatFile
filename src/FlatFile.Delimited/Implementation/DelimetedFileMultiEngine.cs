@@ -129,7 +129,7 @@ namespace FlatFile.Delimited.Implementation
 
             return true;
         }
-
+        
         /// <summary>
         /// Reads the specified stream.
         /// </summary>
@@ -138,6 +138,17 @@ namespace FlatFile.Delimited.Implementation
         public void Read(Stream stream)
         {
             var reader = new StreamReader(stream);
+            ReadInternal(reader);  
+        }
+
+        /// <summary>
+        /// Internal method (private) to read from streamreader instead of stream
+        /// This way the client code have a way to specify encoding.
+        /// </summary>
+        /// <param name="reader">The stream reader to read.</param>
+        /// <exception cref="ParseLineException">Impossible to parse line</exception>
+        private void ReadInternal(StreamReader reader)
+        {
             string line;
             var lineNumber = 0;
 
@@ -223,6 +234,10 @@ namespace FlatFile.Delimited.Implementation
             lastMasterRecord.DetailRecords.Add(detailRecord);
             isDetailRecord = true;
         }
-        
+
+        public void Read(StreamReader streamReader)
+        {
+            ReadInternal(streamReader);
+        }
     }
 }
