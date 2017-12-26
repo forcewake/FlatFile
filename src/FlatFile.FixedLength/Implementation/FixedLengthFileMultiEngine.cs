@@ -104,7 +104,7 @@ namespace FlatFile.FixedLength.Implementation
         /// <returns>IEnumerable&lt;T&gt;.</returns>
         public IEnumerable<T> GetRecords<T>() where T : class, new()
         {
-            return !results.ContainsKey(typeof(T)) ? new List<T>() : results[typeof(T)].Cast<T>();
+            return !results.ContainsKey(typeof (T)) ? new List<T>() : results[typeof(T)].Cast<T>();
         }
 
         /// <summary>
