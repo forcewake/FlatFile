@@ -34,7 +34,7 @@ namespace FlatFile.Delimited.Implementation
         /// <param name="builderFactory">The builder factory.</param>
         /// <param name="parserFactory">The parser factory.</param>
         /// <param name="handleEntryReadError">The handle entry read error.</param>
-        public DelimitedFileEngine(
+        internal DelimitedFileEngine(
             IDelimitedLayoutDescriptor layoutDescriptor,
             IDelimitedLineBuilderFactory builderFactory,
             IDelimitedLineParserFactory parserFactory, 

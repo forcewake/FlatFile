@@ -53,7 +53,7 @@ namespace FlatFile.FixedLength.Implementation
         /// <param name="lineParserFactory">The line parser factory.</param>
         /// <param name="handleEntryReadError">The handle entry read error.</param>
         /// <exception cref="System.ArgumentNullException">typeSelectorFunc</exception>
-        public FixedLengthFileMultiEngine(
+        internal FixedLengthFileMultiEngine(
             IEnumerable<ILayoutDescriptor<IFixedFieldSettingsContainer>> layoutDescriptors,
             Func<string, int, Type> typeSelectorFunc,
             IFixedLengthLineBuilderFactory lineBuilderFactory,
