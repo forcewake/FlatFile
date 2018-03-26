@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace FlatFile.Core.Attributes.Extensions
 {
-    public static class AttributeUtil
+    internal static class AttributeUtil
     {
         public static T GetAttribute<T>(this FieldInfo field, bool inherited = true) where T : Attribute
         {

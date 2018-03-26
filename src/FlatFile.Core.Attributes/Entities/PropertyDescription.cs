@@ -3,7 +3,7 @@
     using System;
     using System.Reflection;
 
-    public class PropertyDescription
+    internal class PropertyDescription
     {
         public PropertyInfo Property { get; set; }
         public Attribute[] Attributes { get; set; }

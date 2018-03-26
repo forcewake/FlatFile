@@ -7,7 +7,7 @@ namespace FlatFile.FixedLength.Implementation
     /// <summary>
     /// Class FixedLengthFileEngine.
     /// </summary>
-    public class FixedLengthFileEngine : FlatFileEngine<IFixedFieldSettingsContainer, ILayoutDescriptor<IFixedFieldSettingsContainer>>
+    internal class FixedLengthFileEngine : FlatFileEngine<IFixedFieldSettingsContainer, ILayoutDescriptor<IFixedFieldSettingsContainer>>
     {
         /// <summary>
         /// The line builder factory
