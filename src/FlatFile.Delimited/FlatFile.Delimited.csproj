@@ -1,132 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F0478B76-5190-4B51-AA3A-C02D3A4109CA}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FlatFile.Delimited</RootNamespace>
     <AssemblyName>FlatFile.Delimited</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <!-- This establishes a new variable called 'Framework'. Don't confuse this with the actual .net TargetFrameworkVersion. It is just variable we can use in our conditions. We might as well set it to the main or current target framework if it is ''.-->
-    <Framework Condition=" '$(Framework)' == '' ">NET35</Framework>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\$(Configuration)\$(Framework)\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\$(Configuration)\$(Framework)\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\$(Configuration)\$(Framework)\FlatFile.Delimited.XML</DocumentationFile>
-  </PropertyGroup>
-  <!-- Here is our debug 4.0 group keep reading to see where this is set -->
-  <PropertyGroup Condition=" '$(Framework)' == 'NET40' And '$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <!-- Set the TargetFrameworkVersion here. This is the variable to tell ms build what .net framework to target.-->
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\$(Configuration)\$(Framework)\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <!-- Here is the release 4.0 group -->
-  <PropertyGroup Condition=" '$(Framework)' == 'NET40' And '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <!-- Set the TargetFrameworkVersion here. This is the variable to tell ms build what .net framework to target.-->
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\$(Configuration)\$(Framework)\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\$(Configuration)\$(Framework)\FlatFile.Delimited.XML</DocumentationFile>
-  </PropertyGroup>
-  <!-- Here is our debug 4.5 group keep reading to see where this is set -->
-  <PropertyGroup Condition=" '$(Framework)' == 'NET45' And '$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <!-- Set the TargetFrameworkVersion here. This is the variable to tell ms build what .net framework to target.-->
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\$(Configuration)\$(Framework)\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <!-- Here is the release 4.0 group -->
-  <PropertyGroup Condition=" '$(Framework)' == 'NET45' And '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <!-- Set the TargetFrameworkVersion here. This is the variable to tell ms build what .net framework to target.-->
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\$(Configuration)\$(Framework)\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\$(Configuration)\$(Framework)\FlatFile.Delimited.XML</DocumentationFile>
+    <TargetFramework>netstandard1.5</TargetFramework>
+    <Company>EPAM Systems</Company>
+    <Copyright>Copyright © EPAM Systems 2014</Copyright>
+    <ProjectGuid>d4d0ebc5-db19-42f6-b89b-13eb214ffcdf</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <ProjectReference Include="..\FlatFile.Core\FlatFile.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DelimitedFieldSettings.cs" />
-    <Compile Include="IDelimitedFieldSettingsConstructor.cs" />
-    <Compile Include="IDelimitedLayout.cs" />
-    <Compile Include="IDelimitedLayoutDescriptor.cs" />
-    <Compile Include="IDelimitedLineBuilder.cs" />
-    <Compile Include="IDelimitedLineBuilderFactory.cs" />
-    <Compile Include="IDelimitedLineParser.cs" />
-    <Compile Include="IDelimitedLineParserFactory.cs" />
-    <Compile Include="IDetailRecord.cs" />
-    <Compile Include="IMasterRecord.cs" />
-    <Compile Include="Implementation\DelimetedFileMultiEngine.cs" />
-    <Compile Include="Implementation\DelimitedFileEngineFactory.cs" />
-    <Compile Include="Implementation\DelimitedFieldSettingsConstructor.cs" />
-    <Compile Include="Implementation\DelimitedFieldSettingsFactory.cs" />
-    <Compile Include="Implementation\DelimitedFileEngine.cs" />
-    <Compile Include="Implementation\DelimitedLayout.cs" />
-    <Compile Include="Implementation\DelimitedLineBuilder.cs" />
-    <Compile Include="Implementation\DelimitedLineBuilderFactory.cs" />
-    <Compile Include="Implementation\DelimitedLineParser.cs" />
-    <Compile Include="Implementation\DelimitedLineParserFactory.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FlatFile.Core\FlatFile.Core.csproj">
-      <Project>{1CB90052-B97A-4AD4-B9FD-20A22914D129}</Project>
-      <Name>FlatFile.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

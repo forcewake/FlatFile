@@ -1,148 +1,26 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7B8FE44C-7725-40C2-AED4-7573F5ABAAB7}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FlatFile.Tests</RootNamespace>
     <AssemblyName>FlatFile.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <TargetFramework>net462</TargetFramework>
+    <Copyright>Copyright © 2014</Copyright>
+    <ProjectGuid>a0043c60-5d89-4a32-81ac-bf121ef52a5e</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FakeItEasy, Version=2.2.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
-      <HintPath>..\packages\FakeItEasy.2.2.0\lib\net40\FakeItEasy.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FluentAssertions, Version=4.12.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.4.12.0\lib\net45\FluentAssertions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FluentAssertions.Core, Version=4.12.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.4.12.0\lib\net45\FluentAssertions.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="TechTalk.SpecFlow, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpecFlow.2.1.0\lib\net45\TechTalk.SpecFlow.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.assert, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.assert.2.1.0\lib\dotnet\xunit.assert.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.core, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.core.2.1.0\lib\dotnet\xunit.core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.execution.desktop, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.execution.2.1.0\lib\net45\xunit.execution.desktop.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <PackageReference Include="FakeItEasy" Version="2.2.0" />
+    <PackageReference Include="FluentAssertions" Version="4.12.0" />
+    <PackageReference Include="SpecFlow" Version="2.1.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\Entities\TestObject.cs" />
-    <Compile Include="Base\IntegrationTests.cs" />
-    <Compile Include="Core\FieldsContainerTests.cs" />
-    <Compile Include="Delimited\DelimitedAttributeMappingIntegrationTests.cs" />
-    <Compile Include="Delimited\DelimitedIntegrationTests.cs" />
-    <Compile Include="Delimited\DelimitedLayoutTests.cs" />
-    <Compile Include="Delimited\DelimitedMultiEngineTests.cs" />
-    <Compile Include="Delimited\DelimitedWithHeaderIntegrationTests.cs" />
-    <Compile Include="FixedLength\FixedLayoutTests.cs" />
-    <Compile Include="FixedLength\FixedLengthAttributeMappingIntegrationTests.cs" />
-    <Compile Include="FixedLength\FixedLengthIntegrationTests.cs" />
-    <Compile Include="FixedLength\FixedLengthLineParserTests.cs" />
-    <Compile Include="FixedLength\FixedLengthMasterDetailTests.cs" />
-    <Compile Include="FixedLength\FixedLengthMultiEngineTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Specifications\Entities\FixedLengthTypeMapping.cs" />
-    <Compile Include="Specifications\Extensions\FileEngineExtensions.cs" />
-    <Compile Include="Specifications\Extensions\ScenarioContextExtensions.cs" />
-    <Compile Include="Specifications\Defenitions\FixedLengthFileDefinitions.cs" />
-    <Compile Include="Specifications\Extensions\StringExtensions.cs" />
-    <Compile Include="Specifications\FixedLengthFileMappingFeature.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FixedLengthFileMappingFeature.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Specifications\Transforms\TransformsBinding.cs" />
+    <ProjectReference Include="..\FlatFile.Core.Attributes\FlatFile.Core.Attributes.csproj" />
+    <ProjectReference Include="..\FlatFile.Core\FlatFile.Core.csproj" />
+    <ProjectReference Include="..\FlatFile.Delimited.Attributes\FlatFile.Delimited.Attributes.csproj" />
+    <ProjectReference Include="..\FlatFile.Delimited\FlatFile.Delimited.csproj" />
+    <ProjectReference Include="..\FlatFile.FixedLength.Attributes\FlatFile.FixedLength.Attributes.csproj" />
+    <ProjectReference Include="..\FlatFile.FixedLength\FlatFile.FixedLength.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-    <None Include="Specifications\FixedLengthFileMappingFeature.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>FixedLengthFileMappingFeature.feature.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FlatFile.Core.Attributes\FlatFile.Core.Attributes.csproj">
-      <Project>{5849B415-6CC1-4615-A94F-265F5BD6F234}</Project>
-      <Name>FlatFile.Core.Attributes</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FlatFile.Core\FlatFile.Core.csproj">
-      <Project>{1CB90052-B97A-4AD4-B9FD-20A22914D129}</Project>
-      <Name>FlatFile.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FlatFile.Delimited.Attributes\FlatFile.Delimited.Attributes.csproj">
-      <Project>{0313AD85-3109-4E8D-999C-D016943E83D5}</Project>
-      <Name>FlatFile.Delimited.Attributes</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FlatFile.Delimited\FlatFile.Delimited.csproj">
-      <Project>{F0478B76-5190-4B51-AA3A-C02D3A4109CA}</Project>
-      <Name>FlatFile.Delimited</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FlatFile.FixedLength.Attributes\FlatFile.FixedLength.Attributes.csproj">
-      <Project>{65154587-18F2-45DC-8E86-B2177309A479}</Project>
-      <Name>FlatFile.FixedLength.Attributes</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FlatFile.FixedLength\FlatFile.FixedLength.csproj">
-      <Project>{2D38BA1D-8D0C-4DC2-A7B1-7BA330D1DDCD}</Project>
-      <Name>FlatFile.FixedLength</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

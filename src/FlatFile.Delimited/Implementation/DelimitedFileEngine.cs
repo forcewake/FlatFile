@@ -9,7 +9,7 @@ namespace FlatFile.Delimited.Implementation
     /// <summary>
     /// Class DelimitedFileEngine.
     /// </summary>
-    public class DelimitedFileEngine :
+    internal class DelimitedFileEngine :
         FlatFileEngine<IDelimitedFieldSettingsContainer, IDelimitedLayoutDescriptor>
     {
         /// <summary>

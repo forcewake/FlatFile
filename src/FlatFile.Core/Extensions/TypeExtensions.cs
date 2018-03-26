@@ -2,6 +2,7 @@ namespace FlatFile.Core.Extensions
 {
     using System;
     using System.Linq.Expressions;
+    using System.Reflection;
 
     public static class TypeExtensions
     {
@@ -33,7 +34,7 @@ namespace FlatFile.Core.Extensions
                 throw new ArgumentNullException("type");
             }
 
-            if (type.IsValueType)
+            if (type.GetTypeInfo().IsValueType)
             {
                 return Expression.Constant(Activator.CreateInstance(type), type);
             }

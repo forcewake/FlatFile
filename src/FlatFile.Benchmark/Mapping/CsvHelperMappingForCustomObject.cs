@@ -6,7 +6,7 @@
 
     public sealed class CsvHelperMappingForCustomObject : CsvClassMap<CustomObject>
     {
-        public CsvHelperMappingForCustomObject()
+        public override void CreateMap()
         {
             Map(m => m.CustomTypeColumn).Name("Custom Type Column").Index(3).TypeConverter<CsvHelperTypeConverterForCustomType>();
             Map(m => m.GuidColumn).Name("Guid Column").Index(2);

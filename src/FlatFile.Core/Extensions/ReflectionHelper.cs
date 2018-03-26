@@ -1,11 +1,10 @@
-﻿using System.Linq;
-using System.Reflection;
-
-namespace FlatFile.Core.Extensions
+﻿namespace FlatFile.Core.Extensions
 {
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
+    using System.Linq;
+    using System.Reflection;
 
     /// <summary>
     /// Class ReflectionHelper.
@@ -33,7 +32,7 @@ namespace FlatFile.Core.Extensions
         {
             if (targetType == null) return null;
 
-            var ctorInfo = targetType.GetConstructor(Type.EmptyTypes);
+            var ctorInfo = targetType.GetTypeInfo().GetConstructor(Type.EmptyTypes);
 
             return CreateInstance(ctorInfo, cached);
         }
@@ -50,7 +49,7 @@ namespace FlatFile.Core.Extensions
             if (targetType == null) return null;
             if (parameters == null || !parameters.Any()) return CreateInstance(targetType, cached);
 
-            var ctorInfo = targetType.GetConstructor(parameters.Select(a => a.GetType()).ToArray());
+            var ctorInfo = targetType.GetTypeInfo().GetConstructor(parameters.Select(a => a.GetType()).ToArray());
 
             return CreateInstance(ctorInfo, cached, parameters);
         }

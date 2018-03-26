@@ -13,7 +13,7 @@ namespace FlatFile.Delimited.Implementation
     /// <summary>
     /// Class DelimetedFileMultiEngine.
     /// </summary>
-    public class DelimitedFileMultiEngine : FlatFileEngine<IDelimitedFieldSettingsContainer, ILayoutDescriptor<IDelimitedFieldSettingsContainer>>, IFlatFileMultiEngine
+    internal class DelimitedFileMultiEngine : FlatFileEngine<IDelimitedFieldSettingsContainer, ILayoutDescriptor<IDelimitedFieldSettingsContainer>>, IFlatFileMultiEngine
     {
         /// <summary>
         /// The handle entry read error func

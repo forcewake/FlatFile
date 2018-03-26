@@ -13,7 +13,7 @@ namespace FlatFile.FixedLength.Implementation
     /// <summary>
     /// Class FixedLengthFileMultiEngine.
     /// </summary>
-    public class FixedLengthFileMultiEngine : FlatFileEngine<IFixedFieldSettingsContainer, ILayoutDescriptor<IFixedFieldSettingsContainer>>, IFlatFileMultiEngine
+    internal class FixedLengthFileMultiEngine : FlatFileEngine<IFixedFieldSettingsContainer, ILayoutDescriptor<IFixedFieldSettingsContainer>>, IFlatFileMultiEngine
     {
         /// <summary>
         /// The handle entry read error func

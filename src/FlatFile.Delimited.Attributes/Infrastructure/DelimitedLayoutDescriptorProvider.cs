@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Reflection;
     using FlatFile.Core;
     using FlatFile.Core.Attributes.Extensions;
     using FlatFile.Core.Attributes.Infrastructure;
@@ -45,7 +46,8 @@
             
 
             var methodInfo = typeof(DelimedLayoutGeneric)
-                            .GetMethod("GetDelimitedLayout")
+                            .GetTypeInfo()
+                            .GetDeclaredMethod("GetDelimitedLayout")
                             .MakeGenericMethod(new[] { t });
             object[] args = { null, new DelimitedFieldSettingsFactory(), container, fileAttribute };
             var descriptor = (IDelimitedLayoutDescriptor)methodInfo.Invoke(null, args);

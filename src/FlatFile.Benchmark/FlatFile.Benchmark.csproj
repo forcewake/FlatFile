@@ -1,128 +1,28 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1484D999-2EC8-4D73-ACCC-17E25F98E20F}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FlatFile.Benchmark</RootNamespace>
     <AssemblyName>FlatFile.Benchmark</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <TargetFramework>net462</TargetFramework>
+    <Company>EPAM Systems</Company>
+    <Copyright>Copyright © EPAM Systems 2014</Copyright>
+    <ProjectGuid>26c53229-856a-4060-90bc-151ffd28e789</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BenchmarkIt">
-      <HintPath>..\packages\Benchmark.It.1.2.0\lib\BenchmarkIt.dll</HintPath>
-    </Reference>
-    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
-      <HintPath>..\packages\CsvHelper.2.16.0.0\lib\net45\CsvHelper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FakeO">
-      <HintPath>..\packages\FakeO.1.0.5302.23069\lib\net40\FakeO.dll</HintPath>
-    </Reference>
-    <Reference Include="FileHelpers, Version=3.1.5.0, Culture=neutral, PublicKeyToken=3e0c08d59cc3d657, processorArchitecture=MSIL">
-      <HintPath>..\packages\FileHelpers.3.1.5\lib\net45\FileHelpers.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FluentAssertions, Version=4.12.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.4.12.0\lib\net45\FluentAssertions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FluentAssertions.Core, Version=4.12.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.4.12.0\lib\net45\FluentAssertions.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Hyper.ComponentModel">
-      <HintPath>..\packages\HyperDescriptor.1.0.5\lib\net45\Hyper.ComponentModel.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.assert, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.assert.2.1.0\lib\dotnet\xunit.assert.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.core, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.core.2.1.0\lib\dotnet\xunit.core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.execution.desktop, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.execution.2.1.0\lib\net45\xunit.execution.desktop.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <PackageReference Include="Benchmark.It" Version="1.2.0" />
+    <PackageReference Include="CsvHelper" Version="2.0.0" />
+    <PackageReference Include="FakeO" Version="1.0.5302.23069" />
+    <PackageReference Include="FileHelpers" Version="3.1.5" />
+    <PackageReference Include="FluentAssertions" Version="4.12.0" />
+    <PackageReference Include="HyperDescriptor" Version="1.0.5"/>
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\CsvHelperTypeConverterForCustomType.cs" />
-    <Compile Include="Converters\FlatFileTypeConverterForCustomType.cs" />
-    <Compile Include="Entities\CustomType.cs" />
-    <Compile Include="FlatFileVsCsvHelperBenchmark.cs" />
-    <Compile Include="Entities\CustomObject.cs" />
-    <Compile Include="Entities\FixedSampleRecord.cs" />
-    <Compile Include="Generators\FakeGenarator.cs" />
-    <Compile Include="Mapping\CsvHelperMappingForCustomObject.cs" />
-    <Compile Include="Mapping\DelimitedSampleRecordLayout.cs" />
-    <Compile Include="Mapping\FixedSampleRecordLayout.cs" />
-    <Compile Include="Mapping\FlatFileMappingForCustomObject.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FlatFileVsFileHelpersBenchmark.cs" />
+    <ProjectReference Include="..\FlatFile.Core\FlatFile.Core.csproj" />
+    <ProjectReference Include="..\FlatFile.Delimited\FlatFile.Delimited.csproj" />
+    <ProjectReference Include="..\FlatFile.FixedLength\FlatFile.FixedLength.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FlatFile.Core\FlatFile.Core.csproj">
-      <Project>{1CB90052-B97A-4AD4-B9FD-20A22914D129}</Project>
-      <Name>FlatFile.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FlatFile.Delimited\FlatFile.Delimited.csproj">
-      <Project>{F0478B76-5190-4B51-AA3A-C02D3A4109CA}</Project>
-      <Name>FlatFile.Delimited</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FlatFile.FixedLength\FlatFile.FixedLength.csproj">
-      <Project>{2D38BA1D-8D0C-4DC2-A7B1-7BA330D1DDCD}</Project>
-      <Name>FlatFile.FixedLength</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
