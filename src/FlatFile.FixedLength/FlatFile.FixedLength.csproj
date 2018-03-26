@@ -3,9 +3,15 @@
     <OutputType>Library</OutputType>
     <RootNamespace>FlatFile.FixedLength</RootNamespace>
     <AssemblyName>FlatFile.FixedLength</AssemblyName>
-    <TargetFramework>netstandard20</TargetFramework>
+    <TargetFramework>netstandard1.5</TargetFramework>
+    <Company>EPAM Systems</Company>
+    <Copyright>Copyright © EPAM Systems 2014</Copyright>
+    <ProjectGuid>4f911ba4-3051-4146-a688-e11653eebc33</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\FlatFile.Core\FlatFile.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
   </ItemGroup>
 </Project>

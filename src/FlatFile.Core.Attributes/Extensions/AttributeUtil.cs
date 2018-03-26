@@ -77,7 +77,7 @@ namespace FlatFile.Core.Attributes.Extensions
 
         public static IEnumerable<T> GetAttributes<T>(this Type type, bool inherited = true) where T : Attribute
         {
-            return type.GetCustomAttributes(typeof (T), inherited).Cast<T>();
+            return type.GetTypeInfo().GetCustomAttributes(typeof (T), inherited).Cast<T>();
         }
     }
 }

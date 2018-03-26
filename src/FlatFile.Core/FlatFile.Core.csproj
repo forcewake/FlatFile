@@ -3,6 +3,13 @@
     <OutputType>Library</OutputType>
     <RootNamespace>FlatFile.Core</RootNamespace>
     <AssemblyName>FlatFile.Core</AssemblyName>
-    <TargetFramework>netstandard20</TargetFramework>
+    <TargetFramework>netstandard1.5</TargetFramework>
+    <Company>EPAM Systems</Company>
+    <Copyright>Copyright © EPAM Systems 2014</Copyright>
+    <ProjectGuid>f2c28e66-9e85-4264-a4c5-95a6a5f772a1</ProjectGuid>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
+  </ItemGroup>
 </Project>

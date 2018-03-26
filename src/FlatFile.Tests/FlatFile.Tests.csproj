@@ -4,6 +4,8 @@
     <RootNamespace>FlatFile.Tests</RootNamespace>
     <AssemblyName>FlatFile.Tests</AssemblyName>
     <TargetFramework>net462</TargetFramework>
+    <Copyright>Copyright © 2014</Copyright>
+    <ProjectGuid>a0043c60-5d89-4a32-81ac-bf121ef52a5e</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FakeItEasy" Version="2.2.0" />

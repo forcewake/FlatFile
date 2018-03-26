@@ -1,8 +1,7 @@
 namespace FlatFile.Delimited.Implementation
 {
     using System;
-    using FlatFile.Core;
-    using FlatFile.Core.Base;
+    using Core.Base;
 
     public class DelimitedLineParser :
         LineParserBase<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>,
@@ -28,17 +27,17 @@ namespace FlatFile.Delimited.Implementation
                     if (!String.IsNullOrEmpty(Layout.Quotes)) {
                         if (Layout.Quotes.Equals(line.Substring(linePosition, Layout.Quotes.Length)))
                         {
-                            nextDelimiterIndex = line.IndexOf(Layout.Quotes, linePosition + 1, StringComparison.InvariantCultureIgnoreCase);
+                            nextDelimiterIndex = line.IndexOf(Layout.Quotes, linePosition + 1, StringComparison.CurrentCultureIgnoreCase);
                             if (line.Length > nextDelimiterIndex)
                             {
-                                nextDelimiterIndex = line.IndexOf(Layout.Delimiter, nextDelimiterIndex, StringComparison.InvariantCultureIgnoreCase);
+                                nextDelimiterIndex = line.IndexOf(Layout.Delimiter, nextDelimiterIndex, StringComparison.CurrentCultureIgnoreCase);
                             }
                         }
                     }
 
                     if (nextDelimiterIndex == -1)
                     {
-                        nextDelimiterIndex = line.IndexOf(Layout.Delimiter, linePosition, StringComparison.InvariantCultureIgnoreCase);
+                        nextDelimiterIndex = line.IndexOf(Layout.Delimiter, linePosition, StringComparison.CurrentCultureIgnoreCase);
                     }
                 }
                 int fieldLength;

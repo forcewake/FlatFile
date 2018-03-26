@@ -3,9 +3,15 @@
     <OutputType>Library</OutputType>
     <RootNamespace>FlatFile.Delimited</RootNamespace>
     <AssemblyName>FlatFile.Delimited</AssemblyName>
-    <TargetFramework>netstandard20</TargetFramework>
+    <TargetFramework>netstandard1.5</TargetFramework>
+    <Company>EPAM Systems</Company>
+    <Copyright>Copyright © EPAM Systems 2014</Copyright>
+    <ProjectGuid>d4d0ebc5-db19-42f6-b89b-13eb214ffcdf</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\FlatFile.Core\FlatFile.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
   </ItemGroup>
 </Project>

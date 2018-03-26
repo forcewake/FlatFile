@@ -3,7 +3,9 @@
     <OutputType>Library</OutputType>
     <RootNamespace>FlatFile.FixedLength.Attributes</RootNamespace>
     <AssemblyName>FlatFile.FixedLength.Attributes</AssemblyName>
-    <TargetFramework>netstandard20</TargetFramework>
+    <TargetFramework>netstandard1.5</TargetFramework>
+    <Copyright>Copyright © 2014</Copyright>
+    <ProjectGuid>f41f342b-68ca-4b29-b095-a8bbdae59ba0</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\FlatFile.Core.Attributes\FlatFile.Core.Attributes.csproj" />

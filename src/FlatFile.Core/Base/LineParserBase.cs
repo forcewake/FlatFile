@@ -23,7 +23,7 @@ namespace FlatFile.Core.Base
 
         protected virtual object GetFieldValueFromString(TFieldSettings fieldSettings, string memberValue)
         {
-            if (fieldSettings.IsNullable && memberValue.Trim('"').Equals(fieldSettings.NullValue, StringComparison.InvariantCultureIgnoreCase))
+            if (fieldSettings.IsNullable && memberValue.Trim('"').Equals(fieldSettings.NullValue, StringComparison.CurrentCultureIgnoreCase))
             {
                 return null;
             }
