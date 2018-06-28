@@ -100,7 +100,7 @@
     <Compile Include="Base\FlatFileEngine.cs" />
     <Compile Include="Base\LayoutBase.cs" />
     <Compile Include="Base\LayoutDescriptorBase.cs" />
-    <Compile Include="Base\LineBulderBase.cs" />
+    <Compile Include="Base\LineBuilderBase.cs" />
     <Compile Include="Base\LineParserBase.cs" />
     <Compile Include="Exceptions\ParseLineException.cs" />
     <Compile Include="Extensions\ExpressionExtensions.cs" />
@@ -117,7 +117,7 @@
     <Compile Include="ILayout.cs" />
     <Compile Include="ILayoutDescriptor.cs" />
     <Compile Include="ILineBuilderFactory.cs" />
-    <Compile Include="ILineBulder.cs" />
+    <Compile Include="ILineBuilder.cs" />
     <Compile Include="ILineParser.cs" />
     <Compile Include="ILineParserFactory.cs" />
     <Compile Include="ITypeConverter.cs" />
