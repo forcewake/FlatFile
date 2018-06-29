@@ -8,9 +8,7 @@
     <ProjectReference Include="..\FlatFile.Core.Attributes\FlatFile.Core.Attributes.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" version="0.10.14" />
-    <PackageReference Include="BenchmarkDotNet.Core" version="0.10.14" />
-    <PackageReference Include="BenchmarkDotNet.Toolchains.Roslyn" version="0.10.14" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.10.14" />
     <PackageReference Include="CsvHelper" version="7.1.1" />
     <PackageReference Include="FakeO" version="1.0.5302.23069" />
     <PackageReference Include="FileHelpers" version="3.2.7" />
