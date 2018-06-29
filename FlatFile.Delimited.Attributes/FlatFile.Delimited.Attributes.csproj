@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\FlatFile.Delimited\FlatFile.Delimited.csproj" />
+    <ProjectReference Include="..\FlatFile.Core.Attributes\FlatFile.Core.Attributes.csproj" />
+    <ProjectReference Include="..\FlatFile.Core\FlatFile.Core.csproj" />
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>FlatFile.Delimited.Attributes</RootNamespace>
+    <AssemblyName>FlatFile.Delimited.Attributes</AssemblyName>
+  </PropertyGroup>
+</Project>

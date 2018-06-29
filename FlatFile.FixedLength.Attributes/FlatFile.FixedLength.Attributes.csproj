@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\FlatFile.Core.Attributes\FlatFile.Core.Attributes.csproj" />
+    <ProjectReference Include="..\FlatFile.Core\FlatFile.Core.csproj" />
+    <ProjectReference Include="..\FlatFile.FixedLength\FlatFile.FixedLength.csproj" />
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>FlatFile.FixedLength.Attributes</RootNamespace>
+    <AssemblyName>FlatFile.FixedLength.Attributes</AssemblyName>
+  </PropertyGroup>
+</Project>
