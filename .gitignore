@@ -162,6 +162,6 @@ assets/FlatFile.FixedLength.Compiled.nuspec
 .vs
 
 # Unwanted BenchmarkDotNet Artifacts
-**/BenchmarkDotNet.Artifacts/resuts/*.csv
-**/BenchmarkDotNet.Artifacts/resuts/*.html
-**/BenchmarkDotNet.Artifacts/resuts/*.csv
+**/BenchmarkDotNet.Artifacts/results/*.csv
+**/BenchmarkDotNet.Artifacts/results/*.html
+**/BenchmarkDotNet.Artifacts/results/*.csv

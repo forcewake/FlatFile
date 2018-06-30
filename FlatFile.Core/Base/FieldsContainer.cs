@@ -36,16 +36,22 @@
             };
 
             Fields[propertyInfo] = propertySettings;
+            fieldSettings = null;
         }
 
-        public virtual IEnumerable<TFieldSettings> OrderedFields
+        private TFieldSettings[] fieldSettings;
+
+        public IEnumerable<TFieldSettings> OrderedFields
         {
             get
             {
-                return Fields.Values
+                if (fieldSettings == null){
+                    fieldSettings =  Fields.Values
                     .OrderBy(settings => settings.Index)
                     .Select(x => x.PropertySettings)
-                    .AsEnumerable();
+                    .ToArray();
+                }
+                return fieldSettings;
             }
         }
     }

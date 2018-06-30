@@ -25,7 +25,10 @@
                 "kind": "build"
             },
             "presentation": {
-                "reveal": "silent"
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
             },
             "args": [
                 "run",
