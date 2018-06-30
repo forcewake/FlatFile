@@ -133,9 +133,8 @@ namespace FlatFile.Core.Base
         /// <param name="entity">The entity.</param>
         protected virtual void WriteEntry<TEntity>(TextWriter writer, int lineNumber, TEntity entity)
         {
-            var line = LineBuilder.BuildLine(entity);
-
-            writer.WriteLine(line);
+            LineBuilder.BuildLine(entity, writer);
+            writer.WriteLine(); 
         }
 
         /// <summary>

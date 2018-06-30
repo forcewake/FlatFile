@@ -1,5 +1,6 @@
 ﻿namespace FlatFile.Delimited.Implementation
 {
+    using System.IO;
     using System.Linq;
     using FlatFile.Core.Base;
 
@@ -12,23 +13,27 @@
         {
         }
 
-        public override string BuildLine<T>(T entry)
+        public override void BuildLine<T>(T entry, TextWriter writer)
         {
-            string line = Descriptor.Fields.Aggregate(string.Empty,
-                (current, field) =>
-                    current + (current.Length > 0 ? Descriptor.Delimiter : "") +
-                    GetStringValueFromField(field, field.PropertyInfo.GetValue(entry, null)));
-            return line;
+            foreach(var field in Descriptor.Fields)
+            {
+                GetStringValueFromField(field, field.PropertyInfo.GetValue(entry, null), writer);
+            }
         }
 
-        protected override string TransformFieldValue(IDelimitedFieldSettingsContainer field, string lineValue)
+        protected override void TransformFieldValue(IDelimitedFieldSettingsContainer field, string lineValue, TextWriter writer)
         {
             var quotes = Descriptor.Quotes;
             if (!string.IsNullOrEmpty(quotes))
             {
-                lineValue = string.Format("{0}{1}{0}", quotes, lineValue);
+                writer.Write(quotes);
+                writer.Write(lineValue);
+                writer.Write(quotes);
             }
-            return lineValue;
+            else
+            {
+                writer.Write(lineValue);
+            }
         }
     }
 }

@@ -1,3 +1,5 @@
+using System.IO;
+
 namespace FlatFile.Core.Base
 {
     public abstract class LineBuilderBase<TLayoutDescriptor, TFieldSettings> : ILineBuilder
@@ -16,22 +18,20 @@ namespace FlatFile.Core.Base
             get { return _descriptor; }
         }
 
-        public abstract string BuildLine<T>(T entry);
+        public abstract void BuildLine<T>(T entry, TextWriter writer);
 
-        protected virtual string GetStringValueFromField(TFieldSettings field, object fieldValue)
+        protected virtual void GetStringValueFromField(TFieldSettings field, object fieldValue, TextWriter writer)
         {
             string lineValue = fieldValue != null
                 ? fieldValue.ToString()
                 : field.NullValue ?? string.Empty;
 
-            lineValue = TransformFieldValue(field, lineValue);
-
-            return lineValue;
+            TransformFieldValue(field, lineValue, writer);
         }
 
-        protected virtual string TransformFieldValue(TFieldSettings field, string lineValue)
+        protected virtual void TransformFieldValue(TFieldSettings field, string lineValue, TextWriter writer)
         {
-            return lineValue;
+            writer.Write(lineValue);
         }
     }
 }
