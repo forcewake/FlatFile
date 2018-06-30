@@ -2,6 +2,7 @@ namespace FlatFile.FixedLength.Implementation
 {
     using System.Collections.Concurrent;
     using System.Linq;
+    using System.Text;
     using FlatFile.Core;
     using FlatFile.Core.Base;
 
@@ -16,9 +17,12 @@ namespace FlatFile.FixedLength.Implementation
 
         public override string BuildLine<T>(T entry)
         {
-            string line = Descriptor.Fields.Aggregate(string.Empty,
-                (current, field) => current + GetStringValueFromField(field, field.PropertyInfo.GetValue(entry, null)));
-            return line;
+            var sb = new StringBuilder();
+            foreach (var field in Descriptor.Fields)
+            {
+                sb.Append(GetStringValueFromField(field, field.PropertyInfo.GetValue(entry, null)));
+            }
+            return sb.ToString();
         }
 
         private static ConcurrentDictionary<char, ConcurrentDictionary<int, string>> _paddings = new ConcurrentDictionary<char, ConcurrentDictionary<int, string>>();
@@ -48,8 +52,9 @@ namespace FlatFile.FixedLength.Implementation
             else
             {
                 var padding = getPadding(field.PaddingChar, field.Length - lineValue.Length);
-                if (field.PadLeft) {
-                    return  padding + lineValue;
+                if (field.PadLeft)
+                {
+                    return padding + lineValue;
                 }
                 else
                 {
