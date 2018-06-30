@@ -6,6 +6,7 @@
 
     using BenchmarkDotNet.Attributes;
     using BenchmarkDotNet.Running;
+    
     using FileHelpers;
 
     using FlatFile.Benchmarks.Entities;
@@ -16,7 +17,6 @@
     using Hyper.ComponentModel;
 
     [MemoryDiagnoser]
-    [Config(typeof(AllowNonOptimized))]
     public class FlatFileVsFileHelpers_Writing
     {
         FakeGenarator genarator;
@@ -29,7 +29,7 @@
         public void GlobalSetupAttribute()
         {
             genarator = new FakeGenarator();
-            sampleRecords = Enumerable.Range(0, 100000).Select(genarator.Generate).ToArray();
+            sampleRecords = Enumerable.Range(0, Program.iterations).Select(genarator.Generate).ToArray();
             if (useHyperTypeDescriptionProvider)
             {
                 HyperTypeDescriptionProvider.Add(typeof(FixedSampleRecord));

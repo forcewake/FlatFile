@@ -160,3 +160,8 @@ assets/FlatFile.FixedLength.Compiled.nuspec
 
 # Visual Studio '17 files
 .vs
+
+# Unwanted BenchmarkDotNet Artifacts
+**/BenchmarkDotNet.Artifacts/resuts/*.csv
+**/BenchmarkDotNet.Artifacts/resuts/*.html
+**/BenchmarkDotNet.Artifacts/resuts/*.csv

@@ -10,6 +10,8 @@ namespace FlatFile.Benchmarks
 
     public class Program
     {
+        public const int iterations = 10_000;
+
         public static void Main()
         {
             Console.WriteLine("Starting benchmarks");

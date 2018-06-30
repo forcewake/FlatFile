@@ -1,11 +1,14 @@
 namespace FlatFile.Benchmarks
 {
+    using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Text;
 
     using BenchmarkDotNet.Attributes;
     using BenchmarkDotNet.Running;
+
     using FileHelpers;
 
     using FlatFile.Benchmarks.Entities;
@@ -13,7 +16,6 @@ namespace FlatFile.Benchmarks
     using FlatFile.FixedLength.Implementation;
 
     [MemoryDiagnoser]
-    [Config(typeof(AllowNonOptimized))]
     public class FlatFileVsFileHelpers_Reading
     {
         const string FixedFileSample =
@@ -38,14 +40,23 @@ namespace FlatFile.Benchmarks
 20000000923AQUINO VILLASANTI NICASIO                                                                                                                                       0     
 ";
 
+
+        [GlobalSetup]
+        public void GlobalSetupAttribute()
+        {
+            sampleText = String.Join("", Enumerable.Repeat(FixedFileSample, Program.iterations));
+            Console.WriteLine($"// Benchmark input is {sampleText.Length} characters or {Encoding.Default.GetByteCount(sampleText)} bytes.");
+        }
+
         [Params(true, false)]
         public bool useHyperTypeDescriptionProvider;
+        private string sampleText;
 
         [Benchmark]
         public void FlatFile()
         {
             var layout = new FixedSampleRecordLayout();
-            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(FixedFileSample)))
+            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(sampleText)))
             {
                 var factory = new FixedLengthFileEngineFactory();
                 var flatFile = factory.GetEngine(layout);
@@ -57,7 +68,7 @@ namespace FlatFile.Benchmarks
         public void FileHelpers()
         {
             var engine = new FileHelperEngine<FixedSampleRecord>();
-            using (var stream = new StringReader(FixedFileSample))
+            using (var stream = new StringReader(sampleText))
             {
                 var records = engine.ReadStream(stream);
             }

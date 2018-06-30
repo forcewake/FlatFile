@@ -3,9 +3,9 @@ namespace FlatFile.Benchmarks
     using System;
     using System.Collections.Generic;
     using System.IO;
-
+    using System.Linq;
     using BenchmarkDotNet.Attributes;
-
+    
     using CsvHelper;
 
     using FlatFile.Benchmarks.Entities;
@@ -13,7 +13,6 @@ namespace FlatFile.Benchmarks
     using FlatFile.Delimited.Implementation;
 
     [MemoryDiagnoser]
-    [Config(typeof(AllowNonOptimized))]
     public class FlatFileVsCsv_Writing
     {
         private List<CustomObject> records;
@@ -21,11 +20,12 @@ namespace FlatFile.Benchmarks
         [GlobalSetup]
         public void GlobalSetup()
         {
-            records = new List<CustomObject>
+            records = new List<CustomObject>();
+            for (var x = 0; x < Program.iterations; x++)
             {
-                new CustomObject
+                records.Add(new CustomObject
                 {
-                    GuidColumn = new Guid("f96a1c66-4777-4642-86fa-703098065f5f"),
+                    GuidColumn = Guid.NewGuid(),
                     IntColumn = 1,
                     StringColumn = "one",
                     CustomTypeColumn = new CustomType
@@ -34,20 +34,8 @@ namespace FlatFile.Benchmarks
                         Second = 2,
                         Third = 3,
                     },
-                },
-                new CustomObject
-                {
-                    GuidColumn = new Guid("06776ed9-d33f-470f-bd3f-8db842356330"),
-                    IntColumn = 2,
-                    StringColumn = "two",
-                    CustomTypeColumn = new CustomType
-                    {
-                        First = 4,
-                        Second = 5,
-                        Third = 6,
-                    },
-                },
-            };
+                });
+            }
         }
 
         [Benchmark]
