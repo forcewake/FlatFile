@@ -1,6 +1,6 @@
-namespace FlatFile.Benchmark.Mapping
+namespace FlatFile.Benchmarks.Mapping
 {
-    using FlatFile.Benchmark.Entities;
+    using FlatFile.Benchmarks.Entities;
     using FlatFile.Delimited.Implementation;
 
     public sealed class DelimitedSampleRecordLayout : DelimitedLayout<FixedSampleRecord>

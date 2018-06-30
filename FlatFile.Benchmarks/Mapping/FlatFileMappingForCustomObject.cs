@@ -1,7 +1,7 @@
-namespace FlatFile.Benchmark.Mapping
+namespace FlatFile.Benchmarks.Mapping
 {
-    using FlatFile.Benchmark.Converters;
-    using FlatFile.Benchmark.Entities;
+    using FlatFile.Benchmarks.Converters;
+    using FlatFile.Benchmarks.Entities;
     using FlatFile.Delimited.Implementation;
 
     public sealed class FlatFileMappingForCustomObject : DelimitedLayout<CustomObject>

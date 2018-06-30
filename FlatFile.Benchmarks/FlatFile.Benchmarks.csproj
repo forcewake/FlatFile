@@ -25,8 +25,10 @@
     <PackageReference Include="xunit.runner.console" version="2.3.1" developmentDependency="true" />
   </ItemGroup>
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>FlatFile.Benchmark</RootNamespace>
-    <AssemblyName>FlatFile.Benchmark</AssemblyName>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <LangVersion>7.1</LangVersion>
+    <RootNamespace>FlatFile.Benchmarks</RootNamespace>
+    <AssemblyName>FlatFile.Benchmarks</AssemblyName>
   </PropertyGroup>
 </Project>

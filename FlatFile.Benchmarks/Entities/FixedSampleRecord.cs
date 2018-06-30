@@ -1,4 +1,4 @@
-﻿namespace FlatFile.Benchmark.Entities
+﻿namespace FlatFile.Benchmarks.Entities
 {
     using System;
     using FileHelpers;

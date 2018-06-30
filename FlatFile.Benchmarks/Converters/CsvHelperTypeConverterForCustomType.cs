@@ -1,4 +1,4 @@
-﻿namespace FlatFile.Benchmark.Converters
+﻿namespace FlatFile.Benchmarks.Converters
 {
     using CsvHelper;
     using CsvHelper.Configuration;

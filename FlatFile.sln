@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatFile.Delimited", "FlatF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{58C25CA0-7F53-46A6-873E-1E1B18D65222}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatFile.Benchmark", "FlatFile.Benchmark\FlatFile.Benchmark.csproj", "{1484D999-2EC8-4D73-ACCC-17E25F98E20F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatFile.Benchmark", "FlatFile.Benchmarks\FlatFile.Benchmarks.csproj", "{1484D999-2EC8-4D73-ACCC-17E25F98E20F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatFile.Tests", "FlatFile.Tests\FlatFile.Tests.csproj", "{7B8FE44C-7725-40C2-AED4-7573F5ABAAB7}"
 EndProject

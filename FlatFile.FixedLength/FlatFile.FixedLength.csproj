@@ -3,7 +3,7 @@
     <ProjectReference Include="..\FlatFile.Core\FlatFile.Core.csproj" />
   </ItemGroup>
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <RootNamespace>FlatFile.Core.FixedLength</RootNamespace>
     <AssemblyName>FlatFile.Core.FixedLength</AssemblyName>
   </PropertyGroup>

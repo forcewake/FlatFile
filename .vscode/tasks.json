@@ -7,11 +7,34 @@
             "label": "build",
             "command": "dotnet build",
             "type": "shell",
-            "group": "build",
+            "group": {
+                "isDefault": true,
+                "kind": "build"
+            },
             "presentation": {
                 "reveal": "silent"
             },
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+        },
+        {
+            "label": "benchmark",
+            "command": "dotnet",
+            "type": "shell",
+            "group": {  
+                "isDefault": true,
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "silent"
+            },
+            "args": [
+                "run",
+                "-c",
+                "Release",
+                "-p",
+                "./FlatFile.Benchmarks/FlatFile.Benchmarks.csproj"
+            ],
+            "problemMatcher": "$msCompile",
         }
     ]
 }

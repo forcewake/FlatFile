@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>FlatFileVsFileHelpers_Reading</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.10.14, OS=Windows 10.0.17134
+Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
+.NET Core SDK=2.1.301
+  [Host]     : .NET Core 2.1.1 (CoreCLR 4.6.26606.02, CoreFX 4.6.26606.05), 64bit RyuJIT
+  DefaultJob : .NET Core 2.1.1 (CoreCLR 4.6.26606.02, CoreFX 4.6.26606.05), 64bit RyuJIT
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>Method</th><th>useHyperTypeDescriptionProvider</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Median</th><th>Gen 0</th><th>Gen 1</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>FlatFile</td><td>False</td><td>101.04 us</td><td>7.742 us</td><td>21.837 us</td><td>94.25 us</td><td>11.5967</td><td>0.1221</td><td>53.54 KB</td>
+</tr><tr><td>FileHelpers</td><td>False</td><td>516.53 us</td><td>53.082 us</td><td>156.513 us</td><td>520.84 us</td><td>4.8828</td><td>2.4414</td><td>24.52 KB</td>
+</tr><tr><td>FlatFile</td><td>True</td><td>83.00 us</td><td>2.366 us</td><td>3.542 us</td><td>81.30 us</td><td>11.5967</td><td>0.1221</td><td>53.54 KB</td>
+</tr><tr><td>FileHelpers</td><td>True</td><td>548.46 us</td><td>68.278 us</td><td>201.319 us</td><td>575.73 us</td><td>4.8828</td><td>2.4414</td><td>24.52 KB</td>
+</tr></tbody></table>
+</body>
+</html>

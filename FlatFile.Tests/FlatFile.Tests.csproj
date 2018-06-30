@@ -23,7 +23,7 @@
     <PackageReference Include="xunit.runner.console" version="2.3.1" developmentDependency="true" />
   </ItemGroup>
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <RootNamespace>FlatFile.Tests</RootNamespace>
     <AssemblyName>FlatFile.Tests</AssemblyName>
   </PropertyGroup>

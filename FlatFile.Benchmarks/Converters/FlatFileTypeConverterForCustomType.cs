@@ -1,7 +1,7 @@
-﻿namespace FlatFile.Benchmark.Converters
+﻿namespace FlatFile.Benchmarks.Converters
 {
     using System;
-    using FlatFile.Benchmark.Entities;
+    using FlatFile.Benchmarks.Entities;
     using FlatFile.Core;
 
     public class FlatFileTypeConverterForCustomType : ITypeConverter
