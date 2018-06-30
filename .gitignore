@@ -157,3 +157,11 @@ $RECYCLE.BIN/
 assets/FlatFile.Core.Compiled.nuspec
 assets/FlatFile.Delimited.Compiled.nuspec
 assets/FlatFile.FixedLength.Compiled.nuspec
+
+# Visual Studio '17 files
+.vs
+
+# Unwanted BenchmarkDotNet Artifacts
+**/BenchmarkDotNet.Artifacts/results/*.csv
+**/BenchmarkDotNet.Artifacts/results/*.html
+**/BenchmarkDotNet.Artifacts/results/*.csv

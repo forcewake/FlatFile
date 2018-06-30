@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\FlatFile.Core\FlatFile.Core.csproj" />
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RootNamespace>FlatFile.Core.FixedLength</RootNamespace>
+    <AssemblyName>FlatFile.Core.FixedLength</AssemblyName>
+  </PropertyGroup>
+</Project>

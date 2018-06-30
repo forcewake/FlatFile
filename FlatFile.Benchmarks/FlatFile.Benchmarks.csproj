@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\FlatFile.FixedLength.Attributes\FlatFile.FixedLength.Attributes.csproj" />
+    <ProjectReference Include="..\FlatFile.FixedLength\FlatFile.FixedLength.csproj" />
+    <ProjectReference Include="..\FlatFile.Delimited.Attributes\FlatFile.Delimited.Attributes.csproj" />
+    <ProjectReference Include="..\FlatFile.Delimited\FlatFile.Delimited.csproj" />
+    <ProjectReference Include="..\FlatFile.Core\FlatFile.Core.csproj" />
+    <ProjectReference Include="..\FlatFile.Core.Attributes\FlatFile.Core.Attributes.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.10.14" />
+    <PackageReference Include="CsvHelper" version="7.1.1" />
+    <PackageReference Include="FakeO" version="1.0.5302.23069" />
+    <PackageReference Include="FileHelpers" version="3.2.7" />
+    <PackageReference Include="FluentAssertions" version="5.4.1" />
+    <PackageReference Include="HyperDescriptor" version="1.0.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="xunit" version="2.3.1" />
+    <PackageReference Include="xunit.abstractions" version="2.0.1" />
+    <PackageReference Include="xunit.analyzers" version="0.9.0" />
+    <PackageReference Include="xunit.assert" version="2.3.1" />
+    <PackageReference Include="xunit.core" version="2.3.1" />
+    <PackageReference Include="xunit.extensibility.core" version="2.3.1" />
+    <PackageReference Include="xunit.extensibility.execution" version="2.3.1" />
+    <PackageReference Include="xunit.runner.console" version="2.3.1" developmentDependency="true" />
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <LangVersion>7.1</LangVersion>
+    <RootNamespace>FlatFile.Benchmarks</RootNamespace>
+    <AssemblyName>FlatFile.Benchmarks</AssemblyName>
+  </PropertyGroup>
+</Project>
