@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using FlatFile.Core;
 using FlatFile.FixedLength;
 using FlatFile.FixedLength.Implementation;
@@ -11,7 +12,7 @@ using Xunit;
 
 namespace FlatFile.Tests.FixedLength
 {
-    public class FixedLengthMasterDetailTests
+    public class FixedLengthMasterDetailCustomTests
     {
         readonly IFlatFileMultiEngine engine;
 
@@ -24,6 +25,12 @@ HAnotherHeader
 D20150511FooBarBaz                     
 SNonHeaderRecord                     
 D20150512Standalone                     ";
+
+        [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
+        public sealed class MasterAttribute : Attribute { }
+
+        [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
+        public sealed class DetailAttribute : Attribute { }
 
         abstract class RecordBase
         {
@@ -50,13 +57,14 @@ D20150512Standalone                     ";
             }
         }
 
-        class HeaderRecord : RecordBase, IMasterRecord
+        [Master]
+        class HeaderRecord : RecordBase
         {
-            public IList<IDetailRecord> DetailRecords { get; protected set; }
+            public IList<DetailRecord> DetailRecords { get; protected set; }
             public HeaderRecord()
             {
                 Type = 'H';
-                DetailRecords = new List<IDetailRecord>();
+                DetailRecords = new List<DetailRecord>();
             }
         }
 
@@ -65,11 +73,12 @@ D20150512Standalone                     ";
             public HeaderRecordContinuation()
             {
                 Type = 'M';
-                DetailRecords = new List<IDetailRecord>();
+                DetailRecords = new List<DetailRecord>();
             }
         }
 
-        class DetailRecord : RecordBase, IDetailRecord
+        [Detail]
+        class DetailRecord : RecordBase
         {
             public DetailRecord() { Type = 'D'; }
         }
@@ -97,7 +106,7 @@ D20150512Standalone                     ";
 
         class StandaloneLayout : RecordBaseLayout<StandaloneRecord> { }
 
-        public FixedLengthMasterDetailTests()
+        public FixedLengthMasterDetailCustomTests()
         {
             var layouts = new List<ILayoutDescriptor<IFixedFieldSettingsContainer>>
             {
@@ -127,7 +136,10 @@ D20150512Standalone                     ";
                                                     },
                                                     new FixedLengthLineBuilderFactory(),
                                                     new FixedLengthLineParserFactory(),
-                                                    new MasterDetailTracker());
+                                                    new MasterDetailTracker(
+                                                        x => x.GetType().GetCustomAttribute<MasterAttribute>(true) != null,
+                                                        x => x.GetType().GetCustomAttribute<DetailAttribute>(true) != null,
+                                                        (master, detail) => ((HeaderRecord)master).DetailRecords.Add((DetailRecord)detail)));
         }
 
         [Fact]

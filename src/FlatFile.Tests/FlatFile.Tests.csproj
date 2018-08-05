@@ -86,6 +86,7 @@
     <Compile Include="Delimited\DelimitedWithHeaderIntegrationTests.cs" />
     <Compile Include="FixedLength\FixedLayoutTests.cs" />
     <Compile Include="FixedLength\FixedLengthAttributeMappingIntegrationTests.cs" />
+    <Compile Include="FixedLength\FixedLengthMasterDetailCustomTests.cs" />
     <Compile Include="FixedLength\FixedLengthIntegrationTests.cs" />
     <Compile Include="FixedLength\FixedLengthLineParserTests.cs" />
     <Compile Include="FixedLength\FixedLengthMasterDetailTests.cs" />
