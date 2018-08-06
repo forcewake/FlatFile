@@ -18,7 +18,7 @@ namespace FlatFile.Delimited.Implementation
         /// <summary>
         /// The handle entry read error func
         /// </summary>
-        readonly Func<string, Exception, bool> handleEntryReadError;
+        readonly Func<FlatFileErrorContext, bool> handleEntryReadError;
         /// <summary>
         /// The layout descriptors for this engine
         /// </summary>
@@ -58,7 +58,7 @@ namespace FlatFile.Delimited.Implementation
             Func<string, Type> typeSelectorFunc,
             IDelimitedLineBuilderFactory lineBuilderFactory,
             IDelimitedLineParserFactory lineParserFactory,
-            Func<string, Exception, bool> handleEntryReadError = null)
+            Func<FlatFileErrorContext, bool> handleEntryReadError = null)
         {
             if (typeSelectorFunc == null) throw new ArgumentNullException("typeSelectorFunc");
             this.layoutDescriptors = layoutDescriptors.ToList();
@@ -170,7 +170,7 @@ namespace FlatFile.Delimited.Implementation
                         throw;
                     }
 
-                    if (!handleEntryReadError(line, ex))
+                    if (!handleEntryReadError(new FlatFileErrorContext(line, lineNumber, ex)))
                     {
                         throw;
                     }

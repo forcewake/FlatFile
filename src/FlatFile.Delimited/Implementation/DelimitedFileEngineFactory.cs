@@ -51,10 +51,25 @@ namespace FlatFile.Delimited.Implementation
                 descriptor,
                 new DelimitedLineBuilderFactory(),
                 new DelimitedLineParserFactory(),
-                handleEntryReadError);
+                ctx => handleEntryReadError(ctx.Line, ctx.Exception));
         }
 
-
+        /// <summary>
+        /// Gets the <see cref="IFlatFileEngine" />.
+        /// </summary>
+        /// <param name="descriptor">The descriptor.</param>
+        /// <param name="handleEntryReadError">The handle entry read error func.</param>
+        /// <returns>IFlatFileEngine.</returns>
+        public IFlatFileEngine GetEngine(
+            IDelimitedLayoutDescriptor descriptor,
+            Func<FlatFileErrorContext, bool> handleEntryReadError)
+        {
+            return new DelimitedFileEngine(
+                descriptor,
+                new DelimitedLineBuilderFactory(),
+                new DelimitedLineParserFactory(),
+                handleEntryReadError);
+        }
 
         /// <summary>
         /// Gets the <see cref="IFlatFileMultiEngine"/>.
@@ -67,6 +82,26 @@ namespace FlatFile.Delimited.Implementation
             IEnumerable<IDelimitedLayoutDescriptor> layoutDescriptors,
             Func<string, Type> typeSelectorFunc,
             Func<string, Exception, bool> handleEntryReadError = null)
+        {
+            return new DelimitedFileMultiEngine(
+                layoutDescriptors,
+                typeSelectorFunc,
+                new DelimitedLineBuilderFactory(),
+                lineParserFactory,
+                ctx => handleEntryReadError(ctx.Line, ctx.Exception));
+        }
+
+        /// <summary>
+        /// Gets the <see cref="IFlatFileMultiEngine"/>.
+        /// </summary>
+        /// <param name="layoutDescriptors">The layout descriptors.</param>
+        /// <param name="typeSelectorFunc">The type selector function.</param>
+        /// <param name="handleEntryReadError">The handle entry read error func.</param>
+        /// <returns>IFlatFileMultiEngine.</returns>
+        public IFlatFileMultiEngine GetEngine(
+            IEnumerable<IDelimitedLayoutDescriptor> layoutDescriptors,
+            Func<string, Type> typeSelectorFunc,
+            Func<FlatFileErrorContext, bool> handleEntryReadError)
         {
             return new DelimitedFileMultiEngine(
                 layoutDescriptors,

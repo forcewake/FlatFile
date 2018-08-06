@@ -18,7 +18,7 @@ namespace FlatFile.Core.Base
         /// <summary>
         /// The handle entry read error func
         /// </summary>
-        private readonly Func<string, Exception, bool> _handleEntryReadError;
+        private readonly Func<FlatFileErrorContext, bool> _handleEntryReadError;
 
         /// <summary>
         /// Gets the line builder.
@@ -42,7 +42,7 @@ namespace FlatFile.Core.Base
         /// Initializes a new instance of the <see cref="FlatFileEngine{TFieldSettings, TLayoutDescriptor}"/> class.
         /// </summary>
         /// <param name="handleEntryReadError">The handle entry read error.</param>
-        protected FlatFileEngine(Func<string, Exception, bool> handleEntryReadError = null)
+        protected FlatFileEngine(Func<FlatFileErrorContext, bool> handleEntryReadError = null)
         {
             _handleEntryReadError = handleEntryReadError;
         }
@@ -85,7 +85,7 @@ namespace FlatFile.Core.Base
                         throw;
                     }
 
-                    if (!_handleEntryReadError(line, ex))
+                    if (!_handleEntryReadError(new FlatFileErrorContext(line, lineNumber, ex)))
                     {
                         throw;
                     }
