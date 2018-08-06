@@ -30,7 +30,7 @@ STest Description    00044";
 
             lineParserFactory = new FixedLengthLineParserFactory(new Dictionary<Type, Type>
             {
-                [typeof(Record)] = typeof(FakeLineParser)
+                { typeof(Record),  typeof(FakeLineParser) }
             });
         }
 

@@ -31,9 +31,9 @@ S,Test Description,00044";
             A.CallTo(() => lineParserFactory.GetParser(A<IDelimitedLayoutDescriptor>.Ignored))
                 .Returns(new FakeLineParser());
                 
-                new DelimitedLineParserFactory(new Dictionary<Type, Type>
+            new DelimitedLineParserFactory(new Dictionary<Type, Type>
             {
-                [typeof(Record)] = typeof(FakeLineParser)
+                { typeof(Record), typeof(FakeLineParser) }
             });
         }
 
