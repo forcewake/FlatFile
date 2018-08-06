@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace FlatFile.FixedLength.Implementation
+namespace FlatFile.Core.Base
 {
     /// <summary>
     /// Uses records that implement <see cref="IMasterRecord"/> and <see cref="IDetailRecord"/> to handle
     /// master-detail record relationships.
     /// </summary>
-    public class MasterDetailTracker : IMasterDetailTracker
+    public class MasterDetailTrackerBase : IMasterDetailTracker
     {
         /// <summary>
         /// Determines whether a record is a master record.
@@ -25,24 +25,13 @@ namespace FlatFile.FixedLength.Implementation
         /// </summary>
         object lastMasterRecord;
 
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MasterDetailTracker"/> class.
-        /// </summary>
-        public MasterDetailTracker()
-            : this(entry => entry is IMasterRecord,
-                   entry => entry is IDetailRecord,
-                   (master, detail) => ((IMasterRecord)master).DetailRecords.Add((IDetailRecord)detail))
-        {
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MasterDetailTracker"/> class.
         /// </summary>
         /// <param name="checkIsMasterRecord">Determines whether a record is a master record.</param>
         /// <param name="checkIsDetailRecord">Determines whether a record is a detail record.</param>
         /// <param name="handleDetailRecord">Handles confirmed detail records.</param>
-        public MasterDetailTracker(
+        public MasterDetailTrackerBase(
             Func<object, bool> checkIsMasterRecord,
             Func<object, bool> checkIsDetailRecord,
             Action<object, object> handleDetailRecord)

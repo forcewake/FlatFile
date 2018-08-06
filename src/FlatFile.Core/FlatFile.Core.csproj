@@ -95,6 +95,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\MasterDetailTrackerBase.cs" />
     <Compile Include="Base\FieldsContainer.cs" />
     <Compile Include="Base\FieldSettingsBase.cs" />
     <Compile Include="Base\FlatFileEngine.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="ILineBulder.cs" />
     <Compile Include="ILineParser.cs" />
     <Compile Include="ILineParserFactory.cs" />
+    <Compile Include="IMasterDetailTracker.cs" />
     <Compile Include="ITypeConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

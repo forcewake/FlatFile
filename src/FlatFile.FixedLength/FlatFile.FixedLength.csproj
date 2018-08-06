@@ -95,7 +95,6 @@
   <ItemGroup>
     <Compile Include="FixedFieldSettings.cs" />
     <Compile Include="IDetailRecord.cs" />
-    <Compile Include="IMasterDetailTracker.cs" />
     <Compile Include="IMasterRecord.cs" />
     <Compile Include="Implementation\FixedLengthFileMultiEngine.cs" />
     <Compile Include="IFixedFieldSettingsConstructor.cs" />
@@ -113,7 +112,7 @@
     <Compile Include="Implementation\FixedLengthLineBuilderFactory.cs" />
     <Compile Include="Implementation\FixedLengthLineParser.cs" />
     <Compile Include="Implementation\FixedLengthLineParserFactory.cs" />
-    <Compile Include="Implementation\MasterDetailTracker.cs" />
+    <Compile Include="Implementation\FixedLengthMasterDetailTracker.cs" />
     <Compile Include="Padding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

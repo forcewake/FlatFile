@@ -127,7 +127,7 @@ D20150512Standalone                     ";
                                                     },
                                                     new FixedLengthLineBuilderFactory(),
                                                     new FixedLengthLineParserFactory(),
-                                                    new MasterDetailTracker());
+                                                    new FixedLengthMasterDetailTracker());
         }
 
         [Fact]

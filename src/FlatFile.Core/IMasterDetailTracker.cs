@@ -1,4 +1,4 @@
-﻿namespace FlatFile.FixedLength
+﻿namespace FlatFile.Core
 {
     /// <summary>
     /// Determines how master-detail record relationships are handled.

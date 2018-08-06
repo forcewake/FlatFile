@@ -71,7 +71,7 @@ namespace FlatFile.FixedLength.Implementation
                 typeSelectorFunc,
                 new FixedLengthLineBuilderFactory(),
                 lineParserFactory,
-                masterDetailTracker ?? new MasterDetailTracker(),
+                masterDetailTracker ?? new FixedLengthMasterDetailTracker(),
                 handleEntryReadError);
         }
     }

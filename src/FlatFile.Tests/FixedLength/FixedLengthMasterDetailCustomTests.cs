@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using FlatFile.Core;
+using FlatFile.Core.Base;
 using FlatFile.FixedLength;
 using FlatFile.FixedLength.Implementation;
 using FluentAssertions;
@@ -136,7 +137,7 @@ D20150512Standalone                     ";
                                                     },
                                                     new FixedLengthLineBuilderFactory(),
                                                     new FixedLengthLineParserFactory(),
-                                                    new MasterDetailTracker(
+                                                    new MasterDetailTrackerBase(
                                                         x => x.GetType().GetCustomAttribute<MasterAttribute>(true) != null,
                                                         x => x.GetType().GetCustomAttribute<DetailAttribute>(true) != null,
                                                         (master, detail) => ((HeaderRecord)master).DetailRecords.Add((DetailRecord)detail)));
