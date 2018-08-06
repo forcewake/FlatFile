@@ -23,16 +23,16 @@
         /// <summary>
         /// The content of the line on which the error occurred.
         /// </summary>
-        public string Line { get; }
+        public string Line { get; private set; }
 
         /// <summary>
         /// The line numer at which the error occurred.
         /// </summary>
-        public int LineNumber { get; }
+        public int LineNumber { get; private set; }
 
         /// <summary>
         /// The error that occurred.
         /// </summary>
-        public Exception Exception { get; }
+        public Exception Exception { get; private set; }
     }
 }
