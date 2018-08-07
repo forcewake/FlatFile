@@ -102,6 +102,8 @@
     <Compile Include="Base\LayoutDescriptorBase.cs" />
     <Compile Include="Base\LineBuilderBase.cs" />
     <Compile Include="Base\LineParserBase.cs" />
+    <Compile Include="Base\TypeConverterBase.cs" />
+    <Compile Include="DelegatingTypeConverter.cs" />
     <Compile Include="Exceptions\ParseLineException.cs" />
     <Compile Include="Extensions\ExpressionExtensions.cs" />
     <Compile Include="Extensions\FieldsSettingsExtensions.cs" />

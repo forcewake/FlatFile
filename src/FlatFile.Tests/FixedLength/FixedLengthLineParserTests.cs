@@ -2,10 +2,14 @@
 
 namespace FlatFile.Tests.FixedLength
 {
+    using FlatFile.Core.Base;
     using FlatFile.FixedLength;
     using FlatFile.FixedLength.Implementation;
     using FlatFile.Tests.Base.Entities;
     using FluentAssertions;
+    using System;
+    using System.Globalization;
+    using System.Reflection;
 
     public class FixedLengthLineParserTests
     {
@@ -49,6 +53,45 @@ namespace FlatFile.Tests.FixedLength
             parsedEntity.Id.Should().Be(id);
             parsedEntity.Description.Should().Be(description);
             parsedEntity.NullableInt.Should().Be(nullableInt);
+        }
+
+        [Fact]
+        public void ParserShouldUseTypeConverter()
+        {
+            layout.WithMember(o => o.Id, set => set.WithLength(4).WithTypeConverter<IdHexConverter>())
+                  .WithMember(o => o.Description, set => set.WithLength(25).AllowNull(string.Empty))
+                  .WithMember(o => o.NullableInt, set => set.WithLength(5).AllowNull(string.Empty));
+
+            var entry = new TestObject();
+            var parsedEntity = parser.ParseLine("BEEF", entry);
+
+            parsedEntity.Id.Should().Be(48879);
+        }
+
+        [Fact]
+        public void ParserShouldUseConversionFunction()
+        {
+            layout.WithMember(o => o.Id, set => set.WithLength(4).WithConversionFromString(s => Int32.Parse(s, NumberStyles.AllowHexSpecifier)))
+                  .WithMember(o => o.Description, set => set.WithLength(25).AllowNull(string.Empty))
+                  .WithMember(o => o.NullableInt, set => set.WithLength(5).AllowNull(string.Empty));
+
+            var entry = new TestObject();
+            var parsedEntity = parser.ParseLine("BEEF", entry);
+
+            parsedEntity.Id.Should().Be(48879);
+        }
+
+        class IdHexConverter : TypeConverterBase<int>
+        {
+            protected override int ConvertFrom(string source, PropertyInfo targetProperty)
+            {
+                return Int32.Parse(source, NumberStyles.AllowHexSpecifier);
+            }
+
+            protected override string ConvertTo(int source, PropertyInfo sourceProperty)
+            {
+                return source.ToString("X");
+            }
         }
     }
 }
