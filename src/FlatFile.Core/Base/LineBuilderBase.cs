@@ -21,7 +21,7 @@ namespace FlatFile.Core.Base
         protected virtual string GetStringValueFromField(TFieldSettings field, object fieldValue)
         {
             string lineValue = fieldValue != null
-                ? fieldValue.ToString()
+                ? ConvertToString(field, fieldValue)
                 : field.NullValue ?? string.Empty;
 
             lineValue = TransformFieldValue(field, lineValue);
@@ -32,6 +32,15 @@ namespace FlatFile.Core.Base
         protected virtual string TransformFieldValue(TFieldSettings field, string lineValue)
         {
             return lineValue;
+        }
+
+        private static string ConvertToString(TFieldSettings field, object fieldValue)
+        {
+            var converter = field.TypeConverter;
+            if (converter != null && converter.CanConvertTo(typeof(string)) && converter.CanConvertFrom(field.PropertyInfo.PropertyType))
+                return field.TypeConverter.ConvertToString(fieldValue, field.PropertyInfo);
+
+            return fieldValue.ToString();
         }
     }
 }
