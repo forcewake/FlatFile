@@ -36,7 +36,7 @@ namespace FlatFile.Tests.Delimited
 		{
 			// a converter to convert "A" to "foo"
 			var converter = A.Fake<ITypeConverter>();
-			A.CallTo(() => converter.ConvertFromString("A")).Returns("foo");
+			A.CallTo(() => converter.ConvertFromString("A", A<PropertyInfo>.Ignored)).Returns("foo");
 			A.CallTo(() => converter.CanConvertFrom(typeof(string))).Returns(true);
 			A.CallTo(() => converter.CanConvertTo(typeof(string))).Returns(true);
 
