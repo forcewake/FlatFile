@@ -1,12 +1,12 @@
 namespace FlatFile.Core.Base
 {
-    public abstract class LineBulderBase<TLayoutDescriptor, TFieldSettings> : ILineBulder
+    public abstract class LineBuilderBase<TLayoutDescriptor, TFieldSettings> : ILineBuilder
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
         where TFieldSettings : IFieldSettingsContainer 
     {
         private readonly TLayoutDescriptor _descriptor;
 
-        protected LineBulderBase(TLayoutDescriptor descriptor)
+        protected LineBuilderBase(TLayoutDescriptor descriptor)
         {
             this._descriptor = descriptor;
         }
