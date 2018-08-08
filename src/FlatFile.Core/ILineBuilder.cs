@@ -1,6 +1,6 @@
 namespace FlatFile.Core
 {
-    public interface ILineBulder
+    public interface ILineBuilder
     {
         string BuildLine<T>(T entry);
     }

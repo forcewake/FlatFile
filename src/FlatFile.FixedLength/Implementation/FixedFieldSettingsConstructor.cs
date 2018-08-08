@@ -57,5 +57,31 @@ namespace FlatFile.FixedLength.Implementation
             this.TypeConverter = ReflectionHelper.CreateInstance<TConverter>(true);
             return this;
         }
+
+        public IFixedFieldSettingsConstructor WithConversionFromString<TProperty>(Func<string, TProperty> conversion)
+        {
+            if (TypeConverter == null)
+                TypeConverter = new DelegatingTypeConverter<TProperty>();
+
+            if (TypeConverter is DelegatingTypeConverter<TProperty>)
+                ((DelegatingTypeConverter<TProperty>)TypeConverter).ConversionFromString = conversion;
+            else
+                throw new InvalidOperationException("A type converter has already been explicitly set.");
+
+            return this;
+        }
+
+        public IFixedFieldSettingsConstructor WithConversionToString<TProperty>(Func<TProperty, string> conversion)
+        {
+            if (TypeConverter == null)
+                TypeConverter = new DelegatingTypeConverter<TProperty>();
+
+            if (TypeConverter is DelegatingTypeConverter<TProperty>)
+                ((DelegatingTypeConverter<TProperty>)TypeConverter).ConversionToString = conversion;
+            else
+                throw new InvalidOperationException("A type converter has already been explicitly set.");
+
+            return this;
+        }
     }
 }

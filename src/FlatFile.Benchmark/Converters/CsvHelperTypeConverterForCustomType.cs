@@ -14,12 +14,12 @@
 
         public string ConvertToString(CsvHelperTypeConversion.TypeConverterOptions options, object value)
         {
-            return converter.ConvertToString(value);
+            return converter.ConvertToString(value, null);
         }
 
         public object ConvertFromString(CsvHelperTypeConversion.TypeConverterOptions options, string text)
         {
-            return converter.ConvertFromString(text);
+            return converter.ConvertFromString(text, null);
         }
 
         public bool CanConvertFrom(Type type)

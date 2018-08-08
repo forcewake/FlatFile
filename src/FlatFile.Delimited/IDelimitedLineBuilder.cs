@@ -2,7 +2,7 @@
 {
     using FlatFile.Core;
 
-    public interface IDelimitedLineBuilder : ILineBulder
+    public interface IDelimitedLineBuilder : ILineBuilder
     {
     }
 }
