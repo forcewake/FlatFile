@@ -50,7 +50,7 @@ namespace FlatFile.Delimited.Implementation
         /// Gets the line builder.
         /// </summary>
         /// <value>The line builder.</value>
-        protected override ILineBulder LineBuilder
+        protected override ILineBuilder LineBuilder
         {
             get { return _builderFactory.GetBuilder(LayoutDescriptor); }
         }

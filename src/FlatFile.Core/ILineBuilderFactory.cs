@@ -5,7 +5,7 @@ namespace FlatFile.Core
     public interface ILineBuilderFactory<out TBuilder, in TLayout, TFieldSettings>
         where TFieldSettings : IFieldSettings   
         where TLayout : ILayoutDescriptor<TFieldSettings>
-        where TBuilder : ILineBulder
+        where TBuilder : ILineBuilder
     {
         TBuilder GetBuilder(TLayout layout);
     }
