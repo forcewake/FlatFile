@@ -142,7 +142,7 @@ namespace FlatFile.FixedLength.Implementation
         }
 
         /// <summary>
-        /// Reads the specified text reader.
+        /// Reads from the specified text reader.
         /// </summary>
         /// <param name="reader">The text reader configured as the user wants.</param>
         /// <exception cref="ParseLineException">Impossible to parse line</exception>

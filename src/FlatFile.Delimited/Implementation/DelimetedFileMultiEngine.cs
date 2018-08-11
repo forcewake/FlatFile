@@ -141,7 +141,7 @@ namespace FlatFile.Delimited.Implementation
         }
 
         /// <summary>
-        /// Reads the specified text reader.
+        /// Reads from the specified text reader.
         /// </summary>
         /// <param name="stream">The text reader.</param>
         /// <exception cref="ParseLineException">Impossible to parse line</exception>
