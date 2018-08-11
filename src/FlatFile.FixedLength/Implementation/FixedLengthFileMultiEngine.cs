@@ -142,22 +142,22 @@ namespace FlatFile.FixedLength.Implementation
         }
 
         /// <summary>
-        /// Reads the specified streamReader.
+        /// Reads the specified text reader.
         /// </summary>
-        /// <param name="reader">The stream reader configured as the user wants.</param>
+        /// <param name="reader">The text reader configured as the user wants.</param>
         /// <exception cref="ParseLineException">Impossible to parse line</exception>
-        public void Read(StreamReader reader)
+        public void Read(TextReader reader)
         {
             ReadInternal(reader);
         }
 
         /// <summary>
-        /// Internal method (private) to read from streamreader instead of stream
+        /// Internal method (private) to read from a text reader instead of stream
         /// This way the client code have a way to specify encoding.
         /// </summary>
-        /// <param name="reader">The stream reader to read.</param>
+        /// <param name="reader">The text reader to read.</param>
         /// <exception cref="ParseLineException">Impossible to parse line</exception>
-        private void ReadInternal(StreamReader reader)
+        private void ReadInternal(TextReader reader)
         {
             string line;
             var lineNumber = 0;
