@@ -57,6 +57,18 @@ namespace FlatFile.Core.Base
         public virtual IEnumerable<TEntity> Read<TEntity>(Stream stream) where TEntity : class, new()
         {
             var reader = new StreamReader(stream);
+            return Read<TEntity>(reader);
+        }
+
+        /// <summary>
+        /// Reads the specified text reader.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the t entity.</typeparam>
+        /// <param name="reader">The reader.</param>
+        /// <returns>IEnumerable&lt;TEntity&gt;.</returns>
+        /// <exception cref="ParseLineException">Impossible to parse line</exception>
+        public virtual IEnumerable<TEntity> Read<TEntity>(TextReader reader) where TEntity : class, new()
+        {
             string line;
             int lineNumber = 0;
 
@@ -68,7 +80,7 @@ namespace FlatFile.Core.Base
             while ((line = reader.ReadLine()) != null)
             {
                 if (string.IsNullOrEmpty(line) || string.IsNullOrEmpty(line.Trim())) continue;
-                
+
                 bool ignoreEntry = false;
                 var entry = new TEntity();
                 try
@@ -104,7 +116,7 @@ namespace FlatFile.Core.Base
         /// Processes the header.
         /// </summary>
         /// <param name="reader">The reader.</param>
-        protected virtual void ProcessHeader(StreamReader reader)
+        protected virtual void ProcessHeader(TextReader reader)
         {
             reader.ReadLine();
         }
@@ -147,7 +159,17 @@ namespace FlatFile.Core.Base
         public virtual void Write<TEntity>(Stream stream, IEnumerable<TEntity> entries) where TEntity : class, new()
         {
             TextWriter writer = new StreamWriter(stream);
+            Write(writer, entries);
+        }
 
+        /// <summary>
+        /// Writes to the specified text writer.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the t entity.</typeparam>
+        /// <param name="stream">The text writer.</param>
+        /// <param name="entries">The entries.</param>
+        public void Write<TEntity>(TextWriter writer, IEnumerable<TEntity> entries) where TEntity : class, new()
+        {
             this.WriteHeader(writer);
 
             int lineNumber = 0;

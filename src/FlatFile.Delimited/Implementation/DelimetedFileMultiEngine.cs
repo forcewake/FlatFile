@@ -137,7 +137,16 @@ namespace FlatFile.Delimited.Implementation
         /// <exception cref="ParseLineException">Impossible to parse line</exception>
         public void Read(Stream stream)
         {
-            var reader = new StreamReader(stream);
+            Read(new StreamReader(stream));
+        }
+
+        /// <summary>
+        /// Reads from the specified text reader.
+        /// </summary>
+        /// <param name="stream">The text reader.</param>
+        /// <exception cref="ParseLineException">Impossible to parse line</exception>
+        public void Read(TextReader reader)
+        {
             string line;
             var lineNumber = 0;
 
