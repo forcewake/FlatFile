@@ -2,7 +2,7 @@ namespace FlatFile.FixedLength
 {
     using FlatFile.Core;
 
-    public interface IFixedLengthLineBuilder : ILineBulder
+    public interface IFixedLengthLineBuilder : ILineBuilder
     {
     }
 }
