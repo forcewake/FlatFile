@@ -1,6 +1,7 @@
 ﻿namespace FlatFile.Core
 {
     using System;
+    using System.Reflection;
 
     public interface ITypeConverter
     {
@@ -8,8 +9,8 @@
 
         bool CanConvertTo(Type type);
 
-        string ConvertToString(object source);
+        string ConvertToString(object source, PropertyInfo sourceProperty);
 
-        object ConvertFromString(string source);
+        object ConvertFromString(string source, PropertyInfo targetProperty);
     }
 }

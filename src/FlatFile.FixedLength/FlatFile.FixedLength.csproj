@@ -112,6 +112,7 @@
     <Compile Include="Implementation\FixedLengthLineBuilderFactory.cs" />
     <Compile Include="Implementation\FixedLengthLineParser.cs" />
     <Compile Include="Implementation\FixedLengthLineParserFactory.cs" />
+    <Compile Include="Implementation\FixedLengthMasterDetailTracker.cs" />
     <Compile Include="Padding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

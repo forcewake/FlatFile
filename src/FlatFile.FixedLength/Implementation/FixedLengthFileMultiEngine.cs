@@ -18,7 +18,7 @@ namespace FlatFile.FixedLength.Implementation
         /// <summary>
         /// The handle entry read error func
         /// </summary>
-        readonly Func<string, Exception, bool> handleEntryReadError;
+        readonly Func<FlatFileErrorContext, bool> handleEntryReadError;
         /// <summary>
         /// The layout descriptors for this engine
         /// </summary>
@@ -40,9 +40,9 @@ namespace FlatFile.FixedLength.Implementation
         /// </summary>
         readonly Dictionary<Type, ArrayList> results;
         /// <summary>
-        /// The last record parsed that implements <see cref="IMasterRecord"/>
+        /// Determines how master-detail record relationships are handled.
         /// </summary>
-        IMasterRecord lastMasterRecord;
+        readonly IMasterDetailTracker masterDetailTracker;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FixedLengthFileMultiEngine"/> class.
@@ -51,6 +51,7 @@ namespace FlatFile.FixedLength.Implementation
         /// <param name="typeSelectorFunc">The type selector function.</param>
         /// <param name="lineBuilderFactory">The line builder factory.</param>
         /// <param name="lineParserFactory">The line parser factory.</param>
+        /// <param name="masterDetailTracker">Determines how master-detail record relationships are handled.</param>
         /// <param name="handleEntryReadError">The handle entry read error.</param>
         /// <exception cref="System.ArgumentNullException">typeSelectorFunc</exception>
         internal FixedLengthFileMultiEngine(
@@ -58,7 +59,8 @@ namespace FlatFile.FixedLength.Implementation
             Func<string, int, Type> typeSelectorFunc,
             IFixedLengthLineBuilderFactory lineBuilderFactory,
             IFixedLengthLineParserFactory lineParserFactory,
-            Func<string, Exception, bool> handleEntryReadError = null)
+            IMasterDetailTracker masterDetailTracker,
+            Func<FlatFileErrorContext, bool> handleEntryReadError = null)
         {
             if (typeSelectorFunc == null) throw new ArgumentNullException("typeSelectorFunc");
             this.layoutDescriptors = layoutDescriptors.ToList();
@@ -70,6 +72,7 @@ namespace FlatFile.FixedLength.Implementation
             this.typeSelectorFunc = typeSelectorFunc;
             this.lineBuilderFactory = lineBuilderFactory;
             this.lineParserFactory = lineParserFactory;
+            this.masterDetailTracker = masterDetailTracker;
             this.handleEntryReadError = handleEntryReadError;
         }
 
@@ -79,7 +82,7 @@ namespace FlatFile.FixedLength.Implementation
         /// <value>The line builder.</value>
         /// <remarks>The <see cref="FixedLengthFileMultiEngine"/> does not contain just a single line builder.</remarks>
         /// <exception cref="System.NotImplementedException"></exception>
-        protected override ILineBulder LineBuilder { get { throw new NotImplementedException(); } }
+        protected override ILineBuilder LineBuilder { get { throw new NotImplementedException(); } }
 
         /// <summary>
         /// Gets the line parser.
@@ -142,22 +145,22 @@ namespace FlatFile.FixedLength.Implementation
         }
 
         /// <summary>
-        /// Reads the specified streamReader.
+        /// Reads from the specified text reader.
         /// </summary>
-        /// <param name="reader">The stream reader configured as the user wants.</param>
+        /// <param name="reader">The text reader configured as the user wants.</param>
         /// <exception cref="ParseLineException">Impossible to parse line</exception>
-        public void Read(StreamReader reader)
+        public void Read(TextReader reader)
         {
             ReadInternal(reader);
         }
 
         /// <summary>
-        /// Internal method (private) to read from streamreader instead of stream
+        /// Internal method (private) to read from a text reader instead of stream
         /// This way the client code have a way to specify encoding.
         /// </summary>
-        /// <param name="reader">The stream reader to read.</param>
+        /// <param name="reader">The text reader to read.</param>
         /// <exception cref="ParseLineException">Impossible to parse line</exception>
-        private void ReadInternal(StreamReader reader)
+        private void ReadInternal(TextReader reader)
         {
             string line;
             var lineNumber = 0;
@@ -191,7 +194,7 @@ namespace FlatFile.FixedLength.Implementation
                         throw;
                     }
 
-                    if (!handleEntryReadError(line, ex))
+                    if (!handleEntryReadError(new FlatFileErrorContext(line, lineNumber, ex)))
                     {
                         throw;
                     }
@@ -202,47 +205,12 @@ namespace FlatFile.FixedLength.Implementation
                 if (ignoreEntry) continue;
 
                 bool isDetailRecord;
-                HandleMasterDetail(entry, out isDetailRecord);
+                masterDetailTracker.HandleMasterDetail(entry, out isDetailRecord);
 
                 if (isDetailRecord) continue;
 
                 results[type].Add(entry);
             }
-        }
-
-
-        /// <summary>
-        /// Handles any master/detail relationships for this <paramref name="entry"/>.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="entry">The entry.</param>
-        /// <param name="isDetailRecord">if set to <c>true</c> [is detail record] and should not be added to the results dictionary.</param>
-        void HandleMasterDetail<T>(T entry, out bool isDetailRecord)
-        {
-            isDetailRecord = false;
-
-            var masterRecord = entry as IMasterRecord;
-            if (masterRecord != null)
-            {
-                // Found new master record
-                lastMasterRecord = masterRecord;
-                return;
-            }
-
-            // Record is standalone or unassociated detail record
-            if (lastMasterRecord == null) return;
-
-            var detailRecord = entry as IDetailRecord;
-            if (detailRecord == null)
-            {
-                // Record is standalone, reset master
-                lastMasterRecord = null;
-                return;
-            }
-
-            // Add detail record and indicate that it should not be added to the results dictionary
-            lastMasterRecord.DetailRecords.Add(detailRecord);
-            isDetailRecord = true;
         }
     }
 }

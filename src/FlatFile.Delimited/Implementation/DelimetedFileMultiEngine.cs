@@ -18,7 +18,7 @@ namespace FlatFile.Delimited.Implementation
         /// <summary>
         /// The handle entry read error func
         /// </summary>
-        readonly Func<string, Exception, bool> handleEntryReadError;
+        readonly Func<FlatFileErrorContext, bool> handleEntryReadError;
         /// <summary>
         /// The layout descriptors for this engine
         /// </summary>
@@ -40,9 +40,9 @@ namespace FlatFile.Delimited.Implementation
         /// </summary>
         readonly Dictionary<Type, ArrayList> results;
         /// <summary>
-        /// The last record parsed that implements <see cref="IMasterRecord"/>
+        /// Determines how master-detail record relationships are handled.
         /// </summary>
-        IMasterRecord lastMasterRecord;
+        readonly IMasterDetailTracker masterDetailTracker;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DelimetedFileMultiEngine"/> class.
@@ -58,7 +58,8 @@ namespace FlatFile.Delimited.Implementation
             Func<string, Type> typeSelectorFunc,
             IDelimitedLineBuilderFactory lineBuilderFactory,
             IDelimitedLineParserFactory lineParserFactory,
-            Func<string, Exception, bool> handleEntryReadError = null)
+            IMasterDetailTracker masterDetailTracker,
+            Func<FlatFileErrorContext, bool> handleEntryReadError = null)
         {
             if (typeSelectorFunc == null) throw new ArgumentNullException("typeSelectorFunc");
             this.layoutDescriptors = layoutDescriptors.ToList();
@@ -70,6 +71,7 @@ namespace FlatFile.Delimited.Implementation
             this.typeSelectorFunc = typeSelectorFunc;
             this.lineBuilderFactory = lineBuilderFactory;
             this.lineParserFactory = lineParserFactory;
+            this.masterDetailTracker = masterDetailTracker;
             this.handleEntryReadError = handleEntryReadError;
         }
 
@@ -79,7 +81,7 @@ namespace FlatFile.Delimited.Implementation
         /// <value>The line builder.</value>
         /// <remarks>The <see cref="DelimitedFileMultiEngine"/> does not contain just a single line builder.</remarks>
         /// <exception cref="System.NotImplementedException"></exception>
-        protected override ILineBulder LineBuilder { get { throw new NotImplementedException(); } }
+        protected override ILineBuilder LineBuilder { get { throw new NotImplementedException(); } }
 
         /// <summary>
         /// Gets the line parser.
@@ -137,7 +139,16 @@ namespace FlatFile.Delimited.Implementation
         /// <exception cref="ParseLineException">Impossible to parse line</exception>
         public void Read(Stream stream)
         {
-            var reader = new StreamReader(stream);
+            Read(new StreamReader(stream));
+        }
+
+        /// <summary>
+        /// Reads from the specified text reader.
+        /// </summary>
+        /// <param name="stream">The text reader.</param>
+        /// <exception cref="ParseLineException">Impossible to parse line</exception>
+        public void Read(TextReader reader)
+        {
             string line;
             var lineNumber = 0;
 
@@ -170,7 +181,7 @@ namespace FlatFile.Delimited.Implementation
                         throw;
                     }
 
-                    if (!handleEntryReadError(line, ex))
+                    if (!handleEntryReadError(new FlatFileErrorContext(line, lineNumber, ex)))
                     {
                         throw;
                     }
@@ -181,48 +192,12 @@ namespace FlatFile.Delimited.Implementation
                 if (ignoreEntry) continue;
 
                 bool isDetailRecord;
-                HandleMasterDetail(entry, out isDetailRecord);
+                masterDetailTracker.HandleMasterDetail(entry, out isDetailRecord);
 
                 if (isDetailRecord) continue;
 
                 results[type].Add(entry);
             }
         }
-
-
-        /// <summary>
-        /// Handles any master/detail relationships for this <paramref name="entry"/>.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="entry">The entry.</param>
-        /// <param name="isDetailRecord">if set to <c>true</c> [is detail record] and should not be added to the results dictionary.</param>
-        void HandleMasterDetail<T>(T entry, out bool isDetailRecord)
-        {
-            isDetailRecord = false;
-
-            var masterRecord = entry as IMasterRecord;
-            if (masterRecord != null)
-            {
-                // Found new master record
-                lastMasterRecord = masterRecord;
-                return;
-            }
-
-            // Record is standalone or unassociated detail record
-            if (lastMasterRecord == null) return;
-
-            var detailRecord = entry as IDetailRecord;
-            if (detailRecord == null)
-            {
-                // Record is standalone, reset master
-                lastMasterRecord = null;
-                return;
-            }
-
-            // Add detail record and indicate that it should not be added to the results dictionary
-            lastMasterRecord.DetailRecords.Add(detailRecord);
-            isDetailRecord = true;
-        }
-        
     }
 }
