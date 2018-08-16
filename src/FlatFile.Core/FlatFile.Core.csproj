@@ -98,6 +98,7 @@
     <Compile Include="Base\FieldsContainer.cs" />
     <Compile Include="Base\FieldSettingsBase.cs" />
     <Compile Include="Base\FlatFileEngine.cs" />
+    <Compile Include="Base\FlatFileErrorContext.cs" />
     <Compile Include="Base\LayoutBase.cs" />
     <Compile Include="Base\LayoutDescriptorBase.cs" />
     <Compile Include="Base\LineBuilderBase.cs" />
