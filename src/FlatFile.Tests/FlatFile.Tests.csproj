@@ -89,6 +89,7 @@
     <Compile Include="Delimited\DelimitedErrorHandlingTests.cs" />
     <Compile Include="FixedLength\FixedLayoutTests.cs" />
     <Compile Include="FixedLength\FixedLengthAttributeMappingIntegrationTests.cs" />
+    <Compile Include="FixedLength\FixedLengthMasterDetailCustomTests.cs" />
     <Compile Include="FixedLength\FixedLengthErrorHandlingTests.cs" />
     <Compile Include="FixedLength\FixedLengthIntegrationTests.cs" />
     <Compile Include="FixedLength\FixedLengthLineBuilderTests.cs" />

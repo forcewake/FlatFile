@@ -113,6 +113,7 @@
     <Compile Include="Implementation\DelimitedLineBuilderFactory.cs" />
     <Compile Include="Implementation\DelimitedLineParser.cs" />
     <Compile Include="Implementation\DelimitedLineParserFactory.cs" />
+    <Compile Include="Implementation\DelimitedMasterDetailTracker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
