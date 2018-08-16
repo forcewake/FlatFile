@@ -18,7 +18,7 @@ namespace FlatFile.Delimited.Implementation
         /// <summary>
         /// The handle entry read error func
         /// </summary>
-        readonly Func<string, Exception, bool> handleEntryReadError;
+        readonly Func<FlatFileErrorContext, bool> handleEntryReadError;
         /// <summary>
         /// The layout descriptors for this engine
         /// </summary>
@@ -59,7 +59,7 @@ namespace FlatFile.Delimited.Implementation
             IDelimitedLineBuilderFactory lineBuilderFactory,
             IDelimitedLineParserFactory lineParserFactory,
             IMasterDetailTracker masterDetailTracker,
-            Func<string, Exception, bool> handleEntryReadError = null)
+            Func<FlatFileErrorContext, bool> handleEntryReadError = null)
         {
             if (typeSelectorFunc == null) throw new ArgumentNullException("typeSelectorFunc");
             this.layoutDescriptors = layoutDescriptors.ToList();
@@ -81,7 +81,7 @@ namespace FlatFile.Delimited.Implementation
         /// <value>The line builder.</value>
         /// <remarks>The <see cref="DelimitedFileMultiEngine"/> does not contain just a single line builder.</remarks>
         /// <exception cref="System.NotImplementedException"></exception>
-        protected override ILineBulder LineBuilder { get { throw new NotImplementedException(); } }
+        protected override ILineBuilder LineBuilder { get { throw new NotImplementedException(); } }
 
         /// <summary>
         /// Gets the line parser.
@@ -139,7 +139,16 @@ namespace FlatFile.Delimited.Implementation
         /// <exception cref="ParseLineException">Impossible to parse line</exception>
         public void Read(Stream stream)
         {
-            var reader = new StreamReader(stream);
+            Read(new StreamReader(stream));
+        }
+
+        /// <summary>
+        /// Reads from the specified text reader.
+        /// </summary>
+        /// <param name="stream">The text reader.</param>
+        /// <exception cref="ParseLineException">Impossible to parse line</exception>
+        public void Read(TextReader reader)
+        {
             string line;
             var lineNumber = 0;
 
@@ -172,7 +181,7 @@ namespace FlatFile.Delimited.Implementation
                         throw;
                     }
 
-                    if (!handleEntryReadError(line, ex))
+                    if (!handleEntryReadError(new FlatFileErrorContext(line, lineNumber, ex)))
                     {
                         throw;
                     }

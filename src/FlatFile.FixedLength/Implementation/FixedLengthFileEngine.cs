@@ -33,7 +33,7 @@ namespace FlatFile.FixedLength.Implementation
             ILayoutDescriptor<IFixedFieldSettingsContainer> layoutDescriptor,
             IFixedLengthLineBuilderFactory lineBuilderFactory,
             IFixedLengthLineParserFactory lineParserFactory,
-            Func<string, Exception, bool> handleEntryReadError = null) : base(handleEntryReadError)
+            Func<FlatFileErrorContext, bool> handleEntryReadError = null) : base(handleEntryReadError)
         {
             this.lineBuilderFactory = lineBuilderFactory;
             this.lineParserFactory = lineParserFactory;
@@ -44,7 +44,7 @@ namespace FlatFile.FixedLength.Implementation
         /// Gets the line builder.
         /// </summary>
         /// <value>The line builder.</value>
-        protected override ILineBulder LineBuilder
+        protected override ILineBuilder LineBuilder
         {
             get { return lineBuilderFactory.GetBuilder(LayoutDescriptor); }
         }

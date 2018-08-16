@@ -38,7 +38,7 @@ namespace FlatFile.Delimited.Implementation
             IDelimitedLayoutDescriptor layoutDescriptor,
             IDelimitedLineBuilderFactory builderFactory,
             IDelimitedLineParserFactory parserFactory, 
-            Func<string, Exception, bool> handleEntryReadError = null)
+            Func<FlatFileErrorContext, bool> handleEntryReadError = null)
             : base(handleEntryReadError)
         {
             _builderFactory = builderFactory;
@@ -50,7 +50,7 @@ namespace FlatFile.Delimited.Implementation
         /// Gets the line builder.
         /// </summary>
         /// <value>The line builder.</value>
-        protected override ILineBulder LineBuilder
+        protected override ILineBuilder LineBuilder
         {
             get { return _builderFactory.GetBuilder(LayoutDescriptor); }
         }
