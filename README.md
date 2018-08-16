@@ -1,47 +1,48 @@
-FlatFile 
+FluentFiles 
 ========
-[![Build status](https://ci.appveyor.com/api/projects/status/9uoix14g3w0rac3q?svg=true)](https://ci.appveyor.com/project/forcewake/flatfile)
+[![Build status](https://ci.appveyor.com/api/projects/status/s52n84t6o4nr92c3?svg=true)](https://ci.appveyor.com/project/mthamil/fluentfiles)
 
-FlatFile is a library to work with flat files (work up-to 100 times faster then [FileHelpers](https://www.nuget.org/packages/FileHelpers/2.0.0))
+FluentFiles is a fork of the [FlatFile](https://github.com/forcewake/FlatFile) project. It is library for working with flat files (work up-to 100 times faster then [FileHelpers](https://www.nuget.org/packages/FileHelpers/2.0.0))
 
-### Installing FlatFile
+### Installing FluentFiles
 
 #### Installing all packages
-You should install [FlatFile with NuGet](https://www.nuget.org/packages/FlatFile):
+You should install [FluentFiles with NuGet](https://www.nuget.org/packages/FluentFiles):
 
 ```sh
-Install-Package FlatFile
+Install-Package FluentFiles
 ```
 
-#### Installing FlatFile.Delimited
-You should install [FlatFile.Delimited with NuGet](https://www.nuget.org/packages/FlatFile.Delimited):
+#### Installing FluentFiles.Delimited
+You should install [FluentFiles.Delimited with NuGet](https://www.nuget.org/packages/FluentFiles.Delimited):
 
 ```sh
-Install-Package FlatFile.Delimited
-```
-
-##### Add attribute-mapping extensions
-You should install [FlatFile.Delimited.Attributes with NuGet](https://www.nuget.org/packages/FlatFile.Delimited.Attributes):
-
-```sh
-Install-Package FlatFile.Delimited.Attributes
-```
-
-#### Installing FlatFile.FixedLength
-You should install [FlatFile.FixedLength with NuGet](https://www.nuget.org/packages/FlatFile.FixedLength):
-
-```sh
-Install-Package FlatFile.FixedLength
+Install-Package FluentFiles.Delimited
 ```
 
 ##### Add attribute-mapping extensions
-You should install [FlatFile.FixedLength.Attributes with NuGet](https://www.nuget.org/packages/FlatFile.FixedLength.Attributes):
+You should install [FluentFiles.Delimited.Attributes with NuGet](https://www.nuget.org/packages/FluentFiles.Delimited.Attributes):
 
 ```sh
-Install-Package FlatFile.FixedLength.Attributes
+Install-Package FluentFiles.Delimited.Attributes
 ```
 
-This commands from Package Manager Console will download and install FlatFile and all required dependencies.
+#### Installing FluentFiles.FixedLength
+You should install [FluentFiles.FixedLength with NuGet](https://www.nuget.org/packages/FluentFiles.FixedLength):
+
+```sh
+Install-Package FluentFiles.FixedLength
+```
+
+##### Add attribute-mapping extensions
+You should install [FluentFiles.FixedLength.Attributes with NuGet](https://www.nuget.org/packages/FluentFiles.FixedLength.Attributes):
+
+```sh
+Install-Package FluentFiles.FixedLength.Attributes
+```
+
+These commands from Package Manager Console will download and install FluentFiles and all required dependencies.
+
 
 ### Benchmarks
 #### Simple write
