@@ -51,8 +51,8 @@ namespace FlatFile.FixedLength.Implementation
         /// <param name="typeSelectorFunc">The type selector function.</param>
         /// <param name="lineBuilderFactory">The line builder factory.</param>
         /// <param name="lineParserFactory">The line parser factory.</param>
-        /// <param name="handleEntryReadError">The handle entry read error.</param>
         /// <param name="masterDetailTracker">Determines how master-detail record relationships are handled.</param>
+        /// <param name="handleEntryReadError">The handle entry read error.</param>
         /// <exception cref="System.ArgumentNullException">typeSelectorFunc</exception>
         internal FixedLengthFileMultiEngine(
             IEnumerable<ILayoutDescriptor<IFixedFieldSettingsContainer>> layoutDescriptors,
@@ -60,7 +60,6 @@ namespace FlatFile.FixedLength.Implementation
             IFixedLengthLineBuilderFactory lineBuilderFactory,
             IFixedLengthLineParserFactory lineParserFactory,
             IMasterDetailTracker masterDetailTracker,
-            Func<string, Exception, bool> handleEntryReadError = null)
             Func<FlatFileErrorContext, bool> handleEntryReadError = null)
         {
             if (typeSelectorFunc == null) throw new ArgumentNullException("typeSelectorFunc");

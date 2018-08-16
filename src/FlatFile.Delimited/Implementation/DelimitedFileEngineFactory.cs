@@ -100,17 +100,20 @@ namespace FlatFile.Delimited.Implementation
         /// <param name="layoutDescriptors">The layout descriptors.</param>
         /// <param name="typeSelectorFunc">The type selector function.</param>
         /// <param name="handleEntryReadError">The handle entry read error func.</param>
+        /// <param name="masterDetailTracker">Determines how master-detail record relationships are handled.</param>
         /// <returns>IFlatFileMultiEngine.</returns>
         public IFlatFileMultiEngine GetEngine(
             IEnumerable<IDelimitedLayoutDescriptor> layoutDescriptors,
             Func<string, Type> typeSelectorFunc,
-            Func<FlatFileErrorContext, bool> handleEntryReadError)
+            Func<FlatFileErrorContext, bool> handleEntryReadError,
+            IMasterDetailTracker masterDetailTracker = null)
         {
             return new DelimitedFileMultiEngine(
                 layoutDescriptors,
                 typeSelectorFunc,
                 new DelimitedLineBuilderFactory(),
                 lineParserFactory,
+                masterDetailTracker ?? new DelimitedMasterDetailTracker(),
                 handleEntryReadError);
         }
     }

@@ -98,17 +98,20 @@ namespace FlatFile.FixedLength.Implementation
         /// <param name="layoutDescriptors">The layout descriptors.</param>
         /// <param name="typeSelectorFunc">The type selector function.</param>
         /// <param name="handleEntryReadError">The handle entry read error func.</param>
+        /// <param name="masterDetailTracker">Determines how master-detail record relationships are handled.</param>
         /// <returns>IFlatFileMultiEngine.</returns>
         public IFlatFileMultiEngine GetEngine(
             IEnumerable<ILayoutDescriptor<IFixedFieldSettingsContainer>> layoutDescriptors,
             Func<string, int, Type> typeSelectorFunc,
-            Func<FlatFileErrorContext, bool> handleEntryReadError)
+            Func<FlatFileErrorContext, bool> handleEntryReadError,
+            IMasterDetailTracker masterDetailTracker = null)
         {
             return new FixedLengthFileMultiEngine(
                 layoutDescriptors,
                 typeSelectorFunc,
                 new FixedLengthLineBuilderFactory(),
                 lineParserFactory,
+                masterDetailTracker ?? new FixedLengthMasterDetailTracker(),
                 handleEntryReadError);
         }
     }
