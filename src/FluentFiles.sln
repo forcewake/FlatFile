@@ -1,0 +1,89 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2000
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentFiles.Core", "FluentFiles.Core\FluentFiles.Core.csproj", "{1CB90052-B97A-4AD4-B9FD-20A22914D129}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentFiles.FixedLength", "FluentFiles.FixedLength\FluentFiles.FixedLength.csproj", "{2D38BA1D-8D0C-4DC2-A7B1-7BA330D1DDCD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{874AF755-A91B-434F-9679-35BEBC8B7D9F}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
+		..\appveyor.yml = ..\appveyor.yml
+		..\ChangeLog.md = ..\ChangeLog.md
+		..\nuspecs\FluentFiles.Core.Attributes.nuspec = ..\nuspecs\FluentFiles.Core.Attributes.nuspec
+		..\nuspecs\FluentFiles.Core.nuspec = ..\nuspecs\FluentFiles.Core.nuspec
+		..\nuspecs\FluentFiles.Delimited.Attributes.nuspec = ..\nuspecs\FluentFiles.Delimited.Attributes.nuspec
+		..\nuspecs\FluentFiles.Delimited.nuspec = ..\nuspecs\FluentFiles.Delimited.nuspec
+		..\nuspecs\FluentFiles.FixedLength.Attributes.nuspec = ..\nuspecs\FluentFiles.FixedLength.Attributes.nuspec
+		..\nuspecs\FluentFiles.FixedLength.nuspec = ..\nuspecs\FluentFiles.FixedLength.nuspec
+		..\nuspecs\FluentFiles.nuspec = ..\nuspecs\FluentFiles.nuspec
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentFiles.Delimited", "FluentFiles.Delimited\FluentFiles.Delimited.csproj", "{F0478B76-5190-4B51-AA3A-C02D3A4109CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{58C25CA0-7F53-46A6-873E-1E1B18D65222}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentFiles.Benchmark", "FluentFiles.Benchmark\FluentFiles.Benchmark.csproj", "{1484D999-2EC8-4D73-ACCC-17E25F98E20F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentFiles.Tests", "FluentFiles.Tests\FluentFiles.Tests.csproj", "{7B8FE44C-7725-40C2-AED4-7573F5ABAAB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentFiles.Core.Attributes", "FluentFiles.Core.Attributes\FluentFiles.Core.Attributes.csproj", "{5849B415-6CC1-4615-A94F-265F5BD6F234}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentFiles.Delimited.Attributes", "FluentFiles.Delimited.Attributes\FluentFiles.Delimited.Attributes.csproj", "{0313AD85-3109-4E8D-999C-D016943E83D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentFiles.FixedLength.Attributes", "FluentFiles.FixedLength.Attributes\FluentFiles.FixedLength.Attributes.csproj", "{65154587-18F2-45DC-8E86-B2177309A479}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1CB90052-B97A-4AD4-B9FD-20A22914D129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CB90052-B97A-4AD4-B9FD-20A22914D129}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CB90052-B97A-4AD4-B9FD-20A22914D129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CB90052-B97A-4AD4-B9FD-20A22914D129}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D38BA1D-8D0C-4DC2-A7B1-7BA330D1DDCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D38BA1D-8D0C-4DC2-A7B1-7BA330D1DDCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D38BA1D-8D0C-4DC2-A7B1-7BA330D1DDCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D38BA1D-8D0C-4DC2-A7B1-7BA330D1DDCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0478B76-5190-4B51-AA3A-C02D3A4109CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0478B76-5190-4B51-AA3A-C02D3A4109CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0478B76-5190-4B51-AA3A-C02D3A4109CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0478B76-5190-4B51-AA3A-C02D3A4109CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1484D999-2EC8-4D73-ACCC-17E25F98E20F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1484D999-2EC8-4D73-ACCC-17E25F98E20F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1484D999-2EC8-4D73-ACCC-17E25F98E20F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1484D999-2EC8-4D73-ACCC-17E25F98E20F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B8FE44C-7725-40C2-AED4-7573F5ABAAB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B8FE44C-7725-40C2-AED4-7573F5ABAAB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B8FE44C-7725-40C2-AED4-7573F5ABAAB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B8FE44C-7725-40C2-AED4-7573F5ABAAB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5849B415-6CC1-4615-A94F-265F5BD6F234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5849B415-6CC1-4615-A94F-265F5BD6F234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5849B415-6CC1-4615-A94F-265F5BD6F234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5849B415-6CC1-4615-A94F-265F5BD6F234}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0313AD85-3109-4E8D-999C-D016943E83D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0313AD85-3109-4E8D-999C-D016943E83D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0313AD85-3109-4E8D-999C-D016943E83D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0313AD85-3109-4E8D-999C-D016943E83D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65154587-18F2-45DC-8E86-B2177309A479}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65154587-18F2-45DC-8E86-B2177309A479}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65154587-18F2-45DC-8E86-B2177309A479}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65154587-18F2-45DC-8E86-B2177309A479}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1484D999-2EC8-4D73-ACCC-17E25F98E20F} = {58C25CA0-7F53-46A6-873E-1E1B18D65222}
+		{7B8FE44C-7725-40C2-AED4-7573F5ABAAB7} = {58C25CA0-7F53-46A6-873E-1E1B18D65222}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1CDB73F9-C29E-473D-96C3-D0FA67CCCF42}
+	EndGlobalSection
+EndGlobal

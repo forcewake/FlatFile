@@ -2,9 +2,9 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyProduct("FlatFile")]
-[assembly: AssemblyCompany("Pavel Nasovich")]
-[assembly: AssemblyCopyright("Copyright © 2014 Pavel Nasovich")]
+[assembly: AssemblyProduct("FluentFiles")]
+[assembly: AssemblyCompany("Matt Hamilton")]
+[assembly: AssemblyCopyright("Copyright © 2018 Matt Hamilton")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
