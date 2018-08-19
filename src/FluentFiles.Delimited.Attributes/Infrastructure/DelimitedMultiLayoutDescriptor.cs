@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using FluentFiles.Core;
+using FluentFiles.Core.Attributes.Infrastructure;
 
-using FlatFile.Core;
-using FlatFile.Core.Base;
-using FlatFile.Core.Attributes.Extensions;
-using FlatFile.Core.Attributes.Infrastructure;
-
-namespace FlatFile.Delimited.Attributes.Infrastructure
+namespace FluentFiles.Delimited.Attributes.Infrastructure
 {
     public class DelimitedMultiLayoutDescriptor<TFieldSettings> : ILayoutDescriptorProvider<TFieldSettings, ILayoutDescriptor<TFieldSettings>>
         where TFieldSettings : IDelimitedFieldSettingsContainer
