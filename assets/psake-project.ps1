@@ -1,5 +1,5 @@
 Properties {
-    $solution = "FlatFile.sln"
+    $solution = "FluentFiles.sln"
 }
 
 $root = (split-path -parent $MyInvocation.MyCommand.Definition) + '\..'
@@ -13,13 +13,13 @@ Task Pack -Depends Compile -Description "Create NuGet packages and archive files
     $releaseNotes = Get-ReleaseNotes    
     
     $projects = @(
-        "FlatFile.Core", 
-        "FlatFile.Core.Attributes", 
-        "FlatFile.Delimited",
-        "FlatFile.FixedLength",
-        "FlatFile.Delimited.Attributes",
-        "FlatFile.FixedLength.Attributes",
-        "FlatFile"
+        "FluentFiles.Core", 
+        "FluentFiles.Core.Attributes", 
+        "FluentFiles.Delimited",
+        "FluentFiles.FixedLength",
+        "FluentFiles.Delimited.Attributes",
+        "FluentFiles.FixedLength.Attributes",
+        "FluentFiles"
         )
     
     $projects | ForEach {
