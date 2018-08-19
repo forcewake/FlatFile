@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{874AF7
 	ProjectSection(SolutionItems) = preProject
 		..\.gitignore = ..\.gitignore
 		..\appveyor.yml = ..\appveyor.yml
+		..\ChangeLog.md = ..\ChangeLog.md
 		..\nuspecs\FluentFiles.Core.Attributes.nuspec = ..\nuspecs\FluentFiles.Core.Attributes.nuspec
 		..\nuspecs\FluentFiles.Core.nuspec = ..\nuspecs\FluentFiles.Core.nuspec
 		..\nuspecs\FluentFiles.Delimited.Attributes.nuspec = ..\nuspecs\FluentFiles.Delimited.Attributes.nuspec
@@ -18,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{874AF7
 		..\nuspecs\FluentFiles.FixedLength.Attributes.nuspec = ..\nuspecs\FluentFiles.FixedLength.Attributes.nuspec
 		..\nuspecs\FluentFiles.FixedLength.nuspec = ..\nuspecs\FluentFiles.FixedLength.nuspec
 		..\nuspecs\FluentFiles.nuspec = ..\nuspecs\FluentFiles.nuspec
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentFiles.Delimited", "FluentFiles.Delimited\FluentFiles.Delimited.csproj", "{F0478B76-5190-4B51-AA3A-C02D3A4109CA}"
