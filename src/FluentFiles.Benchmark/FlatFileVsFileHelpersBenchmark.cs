@@ -7,12 +7,12 @@ namespace FluentFiles.Benchmark
     using BenchmarkIt;
     using FileHelpers;
     using FluentFiles.Benchmark.Entities;
-    using FluentFiles.Benchmark.Generators;
     using FluentFiles.Benchmark.Mapping;
     using FluentFiles.FixedLength.Implementation;
     using FluentAssertions;
     using Hyper.ComponentModel;
     using Xunit;
+    using AutoFixture;
 
     public class FlatFileVsFileHelpersBenchmark
     {
@@ -42,16 +42,18 @@ namespace FluentFiles.Benchmark
         [Trait("Category", "Benchmarks")]
         public void ReadOperationShouldBeQuick()
         {
-            Benchmark.This("FileHelperEngine.ReadStream", () =>
-            {
-                var engine = new FileHelperEngine<FixedSampleRecord>();
-                using (var stream = new StringReader(FixedFileSample))
+            Benchmark
+                .This("FileHelperEngine.ReadStream", () =>
                 {
-                    var records = engine.ReadStream(stream);
-                    records.Should().HaveCount(19);
-                }
-            })
-                .Against.This("FlatFileEngine.Read", () =>
+                    var engine = new FileHelperEngine<FixedSampleRecord>();
+                    using (var stream = new StringReader(FixedFileSample))
+                    {
+                        var records = engine.ReadStream(stream);
+                        records.Should().HaveCount(19);
+                    }
+                })
+                .Against
+                .This("FlatFileEngine.Read", () =>
                 {
                     var layout = new FixedSampleRecordLayout();
                     using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(FixedFileSample)))
@@ -78,16 +80,18 @@ namespace FluentFiles.Benchmark
         {
             var sampleRecords = GetRecords();
 
-            Benchmark.This("FileHelperEngine.WriteStream", () =>
-            {
-                var engine = new FileHelperEngine<FixedSampleRecord>();
-                using (var stream = new MemoryStream())
-                using (var streamWriter = new StreamWriter(stream))
+            Benchmark
+                .This("FileHelperEngine.WriteStream", () =>
                 {
-                    engine.WriteStream(streamWriter, sampleRecords);
-                }
-            })
-                .Against.This("FlatFileEngine.Write", () =>
+                    var engine = new FileHelperEngine<FixedSampleRecord>();
+                    using (var stream = new MemoryStream())
+                    using (var streamWriter = new StreamWriter(stream))
+                    {
+                        engine.WriteStream(streamWriter, sampleRecords);
+                    }
+                })
+                .Against
+                .This("FlatFileEngine.Write", () =>
                 {
                     var layout = new FixedSampleRecordLayout();
                     using (var stream = new MemoryStream())
@@ -110,20 +114,21 @@ namespace FluentFiles.Benchmark
         [Trait("Category", "Benchmarks")]
         public void BigDataWriteOperationShouldBeQuick()
         {
-            var genarator = new FakeGenarator();
+            var fixture = new Fixture();
+            var sampleRecords = fixture.CreateMany<FixedSampleRecord>(100000).ToArray();
 
-            var sampleRecords = Enumerable.Range(0, 100000).Select(genarator.Generate).ToArray();
-
-            Benchmark.This("FileHelperEngine.WriteStream", () =>
-            {
-                var engine = new FileHelperEngine<FixedSampleRecord>();
-                using (var stream = new MemoryStream())
-                using (var streamWriter = new StreamWriter(stream))
+            Benchmark
+                .This("FileHelperEngine.WriteStream", () =>
                 {
-                    engine.WriteStream(streamWriter, sampleRecords);
-                }
-            })
-                .Against.This("FlatFileEngine.Write", () =>
+                    var engine = new FileHelperEngine<FixedSampleRecord>();
+                    using (var stream = new MemoryStream())
+                    using (var streamWriter = new StreamWriter(stream))
+                    {
+                        engine.WriteStream(streamWriter, sampleRecords);
+                    }
+                })
+                .Against
+                .This("FlatFileEngine.Write", () =>
                 {
                     var layout = new FixedSampleRecordLayout();
                     using (var stream = new MemoryStream())

@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoFixture" Version="4.5.0" />
     <PackageReference Include="Benchmark.It" version="1.2.0" />
     <PackageReference Include="CsvHelper" version="7.1.1" />
-    <PackageReference Include="FakeO" version="1.0.5302.23069" />
     <PackageReference Include="FileHelpers" version="3.3.0" />
     <PackageReference Include="FluentAssertions" version="5.4.1" />
     <PackageReference Include="HyperDescriptor" version="1.0.5" />
