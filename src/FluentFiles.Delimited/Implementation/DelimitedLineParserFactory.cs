@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FlatFile.Core;
-using FlatFile.Core.Base;
-using FlatFile.Core.Extensions;
+using FluentFiles.Core;
+using FluentFiles.Core.Base;
+using FluentFiles.Core.Extensions;
 
-namespace FlatFile.Delimited.Implementation
+namespace FluentFiles.Delimited.Implementation
 {
     public class DelimitedLineParserFactory : IDelimitedLineParserFactory
     {

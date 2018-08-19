@@ -1,7 +1,7 @@
-namespace FlatFile.Benchmark.Generators
+namespace FluentFiles.Benchmark.Generators
 {
     using FakeO;
-    using FlatFile.Benchmark.Entities;
+    using FluentFiles.Benchmark.Entities;
 
     public class FakeGenarator
     {

@@ -1,7 +1,7 @@
-﻿using FakeItEasy;
-using FlatFile.Core.Base;
-using FlatFile.Delimited;
-using FlatFile.Delimited.Implementation;
+using FakeItEasy;
+using FluentFiles.Core.Base;
+using FluentFiles.Delimited;
+using FluentFiles.Delimited.Implementation;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace FlatFile.Tests.Delimited
+namespace FluentFiles.Tests.Delimited
 {
     public class DelimitedErrorHandlingTests
     {

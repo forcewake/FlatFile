@@ -1,8 +1,8 @@
-namespace FlatFile.Tests.Specifications.Extensions
+namespace FluentFiles.Tests.Specifications.Extensions
 {
     using System;
     using System.Linq.Expressions;
-    using FlatFile.Core.Extensions;
+    using FluentFiles.Core.Extensions;
     using TechTalk.SpecFlow;
 
     public static class ScenarioContextExtensions

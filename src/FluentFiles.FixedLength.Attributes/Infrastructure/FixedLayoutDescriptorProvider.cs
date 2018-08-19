@@ -1,11 +1,11 @@
-namespace FlatFile.FixedLength.Attributes.Infrastructure
+namespace FluentFiles.FixedLength.Attributes.Infrastructure
 {
     using System;
     using System.Linq;
-    using FlatFile.Core;
-    using FlatFile.Core.Attributes.Extensions;
-    using FlatFile.Core.Attributes.Infrastructure;
-    using FlatFile.Core.Base;
+    using FluentFiles.Core;
+    using FluentFiles.Core.Attributes.Extensions;
+    using FluentFiles.Core.Attributes.Infrastructure;
+    using FluentFiles.Core.Base;
 
     public class FixedLayoutDescriptorProvider : ILayoutDescriptorProvider<IFixedFieldSettingsContainer, ILayoutDescriptor<IFixedFieldSettingsContainer>>
     {

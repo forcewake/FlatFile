@@ -1,6 +1,6 @@
-﻿namespace FlatFile.Delimited.Attributes
+﻿namespace FluentFiles.Delimited.Attributes
 {
-    using FlatFile.Core.Attributes.Base;
+    using FluentFiles.Core.Attributes.Base;
 
     public class DelimitedFieldAttribute : FieldSettingsBaseAttribute, IDelimitedFieldSettings
     {

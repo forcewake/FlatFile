@@ -1,6 +1,6 @@
-﻿namespace FlatFile.Core
+﻿namespace FluentFiles.Core
 {
-    using FlatFile.Core.Base;
+    using FluentFiles.Core.Base;
     using System;
 
     public interface IFieldSettingsConstructor<out TConstructor> : IFieldSettingsContainer

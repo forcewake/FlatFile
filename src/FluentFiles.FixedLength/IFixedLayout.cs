@@ -1,6 +1,6 @@
-﻿namespace FlatFile.FixedLength
+﻿namespace FluentFiles.FixedLength
 {
-    using FlatFile.Core;
+    using FluentFiles.Core;
 
     public interface IFixedLayout<TTarget> :
         ILayout<TTarget, IFixedFieldSettingsContainer, IFixedFieldSettingsConstructor, IFixedLayout<TTarget>>

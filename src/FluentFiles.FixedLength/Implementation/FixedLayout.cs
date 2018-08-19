@@ -1,9 +1,9 @@
-namespace FlatFile.FixedLength.Implementation
+namespace FluentFiles.FixedLength.Implementation
 {
     using System;
     using System.Linq.Expressions;
-    using FlatFile.Core;
-    using FlatFile.Core.Base;
+    using FluentFiles.Core;
+    using FluentFiles.Core.Base;
 
     public class FixedLayout<TTarget> :
         LayoutBase<TTarget, IFixedFieldSettingsContainer, IFixedFieldSettingsConstructor, IFixedLayout<TTarget>>,

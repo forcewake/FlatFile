@@ -1,4 +1,4 @@
-﻿namespace FlatFile.Benchmark.Converters
+namespace FluentFiles.Benchmark.Converters
 {
     using System;
     using CsvHelperTypeConversion = CsvHelper.TypeConversion;

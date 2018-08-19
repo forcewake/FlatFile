@@ -1,4 +1,4 @@
-namespace FlatFile.Core
+namespace FluentFiles.Core
 {
     public interface ILineBuilder
     {

@@ -1,8 +1,8 @@
 using System;
 
-namespace FlatFile.FixedLength
+namespace FluentFiles.FixedLength
 {
-    using FlatFile.Core;
+    using FluentFiles.Core;
 
     public interface IFixedFieldSettingsConstructor :
         IFieldSettingsConstructor<IFixedFieldSettingsConstructor>

@@ -1,6 +1,6 @@
-namespace FlatFile.Tests.Specifications.Entities
+namespace FluentFiles.Tests.Specifications.Entities
 {
-    using FlatFile.FixedLength;
+    using FluentFiles.FixedLength;
 
     public class FixedLengthTypeMapping
     {

@@ -1,7 +1,7 @@
-namespace FlatFile.Delimited
+namespace FluentFiles.Delimited
 {
     using System.Reflection;
-    using FlatFile.Core.Base;
+    using FluentFiles.Core.Base;
 
     public interface IDelimitedFieldSettings : IFieldSettings
     {

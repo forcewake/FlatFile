@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace FlatFile.Core
+namespace FluentFiles.Core
 {
     /// <summary>
     /// Interface IFlatFileMultiEngine

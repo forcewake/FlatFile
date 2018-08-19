@@ -1,7 +1,7 @@
-﻿namespace FlatFile.Core
+﻿namespace FluentFiles.Core
 {
     using System;
-    using FlatFile.Core.Base;
+    using FluentFiles.Core.Base;
 
     /// <summary>
     /// Interface IFlatFileEngineFactory

@@ -1,4 +1,4 @@
-﻿namespace FlatFile.Benchmark.Entities
+namespace FluentFiles.Benchmark.Entities
 {
     using Newtonsoft.Json;
 

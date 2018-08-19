@@ -1,10 +1,10 @@
-namespace FlatFile.Delimited.Implementation
+namespace FluentFiles.Delimited.Implementation
 {
     using System;
     using System.IO;
     using System.Text;
-    using FlatFile.Core;
-    using FlatFile.Core.Base;
+    using FluentFiles.Core;
+    using FluentFiles.Core.Base;
 
     /// <summary>
     /// Class DelimitedFileEngine.

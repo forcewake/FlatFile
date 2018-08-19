@@ -1,4 +1,4 @@
-﻿namespace FlatFile.Core.Base
+namespace FluentFiles.Core.Base
 {
     using System.Collections.Generic;
     using System.Linq;

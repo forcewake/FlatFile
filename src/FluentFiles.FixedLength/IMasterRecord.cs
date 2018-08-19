@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using FlatFile.Core;
+using FluentFiles.Core;
 
-namespace FlatFile.FixedLength
+namespace FluentFiles.FixedLength
 {
     /// <summary>
     /// Interface IMasterRecord

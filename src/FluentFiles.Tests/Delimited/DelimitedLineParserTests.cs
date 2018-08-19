@@ -1,9 +1,9 @@
-﻿namespace FlatFile.Tests.Delimited
+namespace FluentFiles.Tests.Delimited
 {
-    using FlatFile.Core.Base;
-    using FlatFile.Delimited;
-    using FlatFile.Delimited.Implementation;
-    using FlatFile.Tests.Base.Entities;
+    using FluentFiles.Core.Base;
+    using FluentFiles.Delimited;
+    using FluentFiles.Delimited.Implementation;
+    using FluentFiles.Tests.Base.Entities;
     using FluentAssertions;
     using System;
     using System.Globalization;

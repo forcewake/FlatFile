@@ -1,4 +1,4 @@
-﻿namespace FlatFile.Core.Attributes.Entities
+﻿namespace FluentFiles.Core.Attributes.Entities
 {
     using System;
     using System.Reflection;

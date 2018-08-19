@@ -1,9 +1,9 @@
 using System;
 
-namespace FlatFile.FixedLength.Implementation
+namespace FluentFiles.FixedLength.Implementation
 {
-    using FlatFile.Core;
-    using FlatFile.Core.Base;
+    using FluentFiles.Core;
+    using FluentFiles.Core.Base;
 
     public class FixedLengthLineParser :
         LineParserBase<ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer>,

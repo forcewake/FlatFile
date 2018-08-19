@@ -1,7 +1,7 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Reflection;
 
-namespace FlatFile.Core.Extensions
+namespace FluentFiles.Core.Extensions
 {
     using System;
     using System.Collections.Generic;

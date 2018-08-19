@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace FlatFile.Core.Base
+namespace FluentFiles.Core.Base
 {
     /// <summary>
     /// Uses records that implement <see cref="IMasterRecord"/> and <see cref="IDetailRecord"/> to handle

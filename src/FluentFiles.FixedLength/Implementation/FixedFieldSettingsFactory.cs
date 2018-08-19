@@ -1,7 +1,7 @@
-﻿namespace FlatFile.FixedLength.Implementation
+﻿namespace FluentFiles.FixedLength.Implementation
 {
     using System.Reflection;
-    using FlatFile.Core;
+    using FluentFiles.Core;
 
     public class FixedFieldSettingsFactory : IFieldSettingsFactory<IFixedFieldSettingsConstructor>
     {

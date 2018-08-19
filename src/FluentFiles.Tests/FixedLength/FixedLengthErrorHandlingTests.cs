@@ -1,8 +1,8 @@
-﻿using FakeItEasy;
-using FlatFile.Core;
-using FlatFile.Core.Base;
-using FlatFile.FixedLength;
-using FlatFile.FixedLength.Implementation;
+using FakeItEasy;
+using FluentFiles.Core;
+using FluentFiles.Core.Base;
+using FluentFiles.FixedLength;
+using FluentFiles.FixedLength.Implementation;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace FlatFile.Tests.FixedLength
+namespace FluentFiles.Tests.FixedLength
 {
     public class FixedLengthErrorHandlingTests
     {

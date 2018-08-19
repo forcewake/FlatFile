@@ -1,8 +1,8 @@
-﻿namespace FlatFile.Core
+﻿namespace FluentFiles.Core
 {
     using System.Collections.Generic;
     using System.Reflection;
-    using FlatFile.Core.Base;
+    using FluentFiles.Core.Base;
 
     public interface IFieldsContainer<TFieldSettings>
         where TFieldSettings : IFieldSettings

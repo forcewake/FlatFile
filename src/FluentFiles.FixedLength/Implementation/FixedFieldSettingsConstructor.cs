@@ -1,10 +1,10 @@
 using System;
 
-namespace FlatFile.FixedLength.Implementation
+namespace FluentFiles.FixedLength.Implementation
 {
     using System.Reflection;
-    using FlatFile.Core;
-    using FlatFile.Core.Extensions;
+    using FluentFiles.Core;
+    using FluentFiles.Core.Extensions;
 
     public class FixedFieldSettingsConstructor : FixedFieldSettings,
         IFixedFieldSettingsConstructor

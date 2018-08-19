@@ -1,15 +1,15 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using FlatFile.Core;
-using FlatFile.Delimited;
-using FlatFile.Delimited.Attributes;
-using FlatFile.Delimited.Implementation;
+using FluentFiles.Core;
+using FluentFiles.Delimited;
+using FluentFiles.Delimited.Attributes;
+using FluentFiles.Delimited.Implementation;
 using FluentAssertions;
 using Xunit;
 
-namespace FlatFile.Tests.Delimited
+namespace FluentFiles.Tests.Delimited
 {
     public class DelimitedMultiEngineTests
     {

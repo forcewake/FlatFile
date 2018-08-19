@@ -1,10 +1,10 @@
-namespace FlatFile.Tests.Delimited
+namespace FluentFiles.Tests.Delimited
 {
-    using FlatFile.Core;
-    using FlatFile.Delimited;
-    using FlatFile.Delimited.Implementation;
-    using FlatFile.Tests.Base;
-    using FlatFile.Tests.Base.Entities;
+    using FluentFiles.Core;
+    using FluentFiles.Delimited;
+    using FluentFiles.Delimited.Implementation;
+    using FluentFiles.Tests.Base;
+    using FluentFiles.Tests.Base.Entities;
 
     public class DelimitedIntegrationTests :
         IntegrationTests<IDelimitedFieldSettingsContainer, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TestObject>>

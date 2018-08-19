@@ -1,4 +1,4 @@
-namespace FlatFile.Core.Base
+namespace FluentFiles.Core.Base
 {
     public abstract class LineBuilderBase<TLayoutDescriptor, TFieldSettings> : ILineBuilder
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>

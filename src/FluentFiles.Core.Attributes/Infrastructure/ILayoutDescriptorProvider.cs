@@ -1,6 +1,6 @@
-﻿namespace FlatFile.Core.Attributes.Infrastructure
+﻿namespace FluentFiles.Core.Attributes.Infrastructure
 {
-    using FlatFile.Core.Base;
+    using FluentFiles.Core.Base;
 
     public interface ILayoutDescriptorProvider<TFieldSettings, out TLayoutDescriptor>
         where TFieldSettings : IFieldSettings

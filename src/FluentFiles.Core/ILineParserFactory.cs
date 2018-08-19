@@ -1,6 +1,6 @@
-namespace FlatFile.Core
+namespace FluentFiles.Core
 {
-    using FlatFile.Core.Base;
+    using FluentFiles.Core.Base;
 
     public interface ILineParserFactory<out TParser, in TLayoutDescriptor, TFieldSettings>
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>

@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Reflection;
 
-namespace FlatFile.Core.Base
+namespace FluentFiles.Core.Base
 {
     /// <summary>
     /// A generic base class for converting between strings and a given type.

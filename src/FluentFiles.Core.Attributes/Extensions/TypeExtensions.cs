@@ -1,9 +1,9 @@
-﻿namespace FlatFile.Core.Attributes.Extensions
+﻿namespace FluentFiles.Core.Attributes.Extensions
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using FlatFile.Core.Attributes.Entities;
+    using FluentFiles.Core.Attributes.Entities;
 
     internal static class TypeExtensions
     {

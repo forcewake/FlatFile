@@ -1,8 +1,8 @@
-namespace FlatFile.Delimited.Implementation
+namespace FluentFiles.Delimited.Implementation
 {
     using System;
-    using FlatFile.Core;
-    using FlatFile.Core.Base;
+    using FluentFiles.Core;
+    using FluentFiles.Core.Base;
 
     public class DelimitedLineParser :
         LineParserBase<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>,

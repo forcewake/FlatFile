@@ -1,4 +1,4 @@
-namespace FlatFile.Core.Attributes.Base
+namespace FluentFiles.Core.Attributes.Base
 {
     using System;
 

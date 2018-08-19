@@ -1,4 +1,4 @@
-namespace FlatFile.Benchmark
+namespace FluentFiles.Benchmark
 {
     using System.Collections.Generic;
     using System.IO;
@@ -6,10 +6,10 @@ namespace FlatFile.Benchmark
     using System.Text;
     using BenchmarkIt;
     using FileHelpers;
-    using FlatFile.Benchmark.Entities;
-    using FlatFile.Benchmark.Generators;
-    using FlatFile.Benchmark.Mapping;
-    using FlatFile.FixedLength.Implementation;
+    using FluentFiles.Benchmark.Entities;
+    using FluentFiles.Benchmark.Generators;
+    using FluentFiles.Benchmark.Mapping;
+    using FluentFiles.FixedLength.Implementation;
     using FluentAssertions;
     using Hyper.ComponentModel;
     using Xunit;

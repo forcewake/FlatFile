@@ -1,4 +1,4 @@
-﻿namespace FlatFile.Core
+﻿namespace FluentFiles.Core
 {
     using System;
     using System.Reflection;

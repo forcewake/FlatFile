@@ -1,16 +1,16 @@
-﻿namespace FlatFile.Tests.Specifications.Defenitions
+namespace FluentFiles.Tests.Specifications.Defenitions
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using FlatFile.Core;
-    using FlatFile.Core.Base;
-    using FlatFile.FixedLength;
-    using FlatFile.FixedLength.Implementation;
-    using FlatFile.Tests.Base.Entities;
-    using FlatFile.Tests.Specifications.Entities;
-    using FlatFile.Tests.Specifications.Extensions;
+    using FluentFiles.Core;
+    using FluentFiles.Core.Base;
+    using FluentFiles.FixedLength;
+    using FluentFiles.FixedLength.Implementation;
+    using FluentFiles.Tests.Base.Entities;
+    using FluentFiles.Tests.Specifications.Entities;
+    using FluentFiles.Tests.Specifications.Extensions;
     using FluentAssertions;
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;

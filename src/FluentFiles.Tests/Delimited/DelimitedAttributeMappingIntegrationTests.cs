@@ -2,15 +2,15 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using FakeItEasy;
-using FlatFile.Core.Base;
-using FlatFile.Core;
-using FlatFile.Delimited;
-using FlatFile.Delimited.Attributes;
-using FlatFile.Delimited.Implementation;
-using FlatFile.Tests.Base.Entities;
+using FluentFiles.Core.Base;
+using FluentFiles.Core;
+using FluentFiles.Delimited;
+using FluentFiles.Delimited.Attributes;
+using FluentFiles.Delimited.Implementation;
+using FluentFiles.Tests.Base.Entities;
 using Xunit;
 
-namespace FlatFile.Tests.Delimited
+namespace FluentFiles.Tests.Delimited
 {
     public class DelimitedAttributeMappingIntegrationTests : DelimitedIntegrationTests
     {

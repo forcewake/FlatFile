@@ -1,7 +1,7 @@
-﻿namespace FlatFile.Delimited.Implementation
+﻿namespace FluentFiles.Delimited.Implementation
 {
     using System.Linq;
-    using FlatFile.Core.Base;
+    using FluentFiles.Core.Base;
 
     public class DelimitedLineBuilder :
         LineBuilderBase<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>, 

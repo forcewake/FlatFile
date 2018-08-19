@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using FlatFile.Core.Base;
+using FluentFiles.Core.Base;
 
-namespace FlatFile.FixedLength.Implementation
+namespace FluentFiles.FixedLength.Implementation
 {
     using System;
-    using FlatFile.Core;
+    using FluentFiles.Core;
 
     /// <summary>
     /// Class FixedLengthFileEngineFactory.

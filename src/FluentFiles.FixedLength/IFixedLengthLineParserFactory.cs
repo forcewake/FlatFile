@@ -1,9 +1,9 @@
 using System;
-using FlatFile.Core.Base;
+using FluentFiles.Core.Base;
 
-namespace FlatFile.FixedLength
+namespace FluentFiles.FixedLength
 {
-    using FlatFile.Core;
+    using FluentFiles.Core;
 
     /// <summary>
     /// Interface IFixedLengthLineParserFactory

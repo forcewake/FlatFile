@@ -1,9 +1,9 @@
 using System;
 
-namespace FlatFile.Core
+namespace FluentFiles.Core
 {
     using System.Collections.Generic;
-    using FlatFile.Core.Base;
+    using FluentFiles.Core.Base;
 
     public interface ILayoutDescriptor<TFieldSettings>
         where TFieldSettings : IFieldSettings

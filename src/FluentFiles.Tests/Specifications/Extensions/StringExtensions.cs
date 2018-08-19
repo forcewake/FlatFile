@@ -1,4 +1,4 @@
-namespace FlatFile.Tests.Specifications.Extensions
+namespace FluentFiles.Tests.Specifications.Extensions
 {
     public static class StringExtensions
     {

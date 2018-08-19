@@ -1,7 +1,7 @@
-namespace FlatFile.Core.Extensions
+namespace FluentFiles.Core.Extensions
 {
     using System;
-    using FlatFile.Core.Base;
+    using FluentFiles.Core.Base;
 
     public static class FieldsSettingsExtensions
     {

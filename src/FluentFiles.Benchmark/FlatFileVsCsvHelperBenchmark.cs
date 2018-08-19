@@ -1,4 +1,4 @@
-﻿namespace FlatFile.Benchmark
+namespace FluentFiles.Benchmark
 {
     using System;
     using System.Collections.Generic;
@@ -7,9 +7,9 @@
     using System.Text;
     using BenchmarkIt;
     using CsvHelper;
-    using FlatFile.Benchmark.Entities;
-    using FlatFile.Benchmark.Mapping;
-    using FlatFile.Delimited.Implementation;
+    using FluentFiles.Benchmark.Entities;
+    using FluentFiles.Benchmark.Mapping;
+    using FluentFiles.Delimited.Implementation;
     using FluentAssertions;
     using Xunit;
 

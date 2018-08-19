@@ -1,4 +1,4 @@
-﻿namespace FlatFile.Core.Exceptions
+namespace FluentFiles.Core.Exceptions
 {
     using System;
     using System.Runtime.Serialization;

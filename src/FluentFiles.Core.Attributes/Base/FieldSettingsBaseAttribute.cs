@@ -1,8 +1,8 @@
-namespace FlatFile.Core.Attributes.Base
+namespace FluentFiles.Core.Attributes.Base
 {
     using System;
-    using FlatFile.Core.Base;
-    using FlatFile.Core.Extensions;
+    using FluentFiles.Core.Base;
+    using FluentFiles.Core.Extensions;
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public abstract class FieldSettingsBaseAttribute : Attribute, IFieldSettings

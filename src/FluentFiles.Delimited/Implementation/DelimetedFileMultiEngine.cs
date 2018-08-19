@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using FlatFile.Core;
-using FlatFile.Core.Base;
-using FlatFile.Core.Exceptions;
-using FlatFile.Core.Extensions;
+using FluentFiles.Core;
+using FluentFiles.Core.Base;
+using FluentFiles.Core.Exceptions;
+using FluentFiles.Core.Extensions;
 
-namespace FlatFile.Delimited.Implementation
+namespace FluentFiles.Delimited.Implementation
 {
     /// <summary>
     /// Class DelimetedFileMultiEngine.

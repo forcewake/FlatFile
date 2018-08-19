@@ -1,4 +1,4 @@
-namespace FlatFile.Tests.Delimited
+namespace FluentFiles.Tests.Delimited
 {
     public sealed class DelimitedWithHeaderIntegrationTests : DelimitedIntegrationTests
     {

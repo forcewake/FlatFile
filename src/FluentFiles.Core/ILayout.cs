@@ -1,8 +1,8 @@
-namespace FlatFile.Core
+namespace FluentFiles.Core
 {
     using System;
     using System.Linq.Expressions;
-    using FlatFile.Core.Base;
+    using FluentFiles.Core.Base;
 
     public interface ILayout<TTarget, TFieldSettings, TConstructor, out TLayout> : ILayoutDescriptor<TFieldSettings>
         where TFieldSettings : IFieldSettings

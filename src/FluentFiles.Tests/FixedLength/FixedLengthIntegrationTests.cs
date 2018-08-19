@@ -1,10 +1,10 @@
-namespace FlatFile.Tests.FixedLength
+namespace FluentFiles.Tests.FixedLength
 {
-    using FlatFile.Core;
-    using FlatFile.FixedLength;
-    using FlatFile.FixedLength.Implementation;
-    using FlatFile.Tests.Base;
-    using FlatFile.Tests.Base.Entities;
+    using FluentFiles.Core;
+    using FluentFiles.FixedLength;
+    using FluentFiles.FixedLength.Implementation;
+    using FluentFiles.Tests.Base;
+    using FluentFiles.Tests.Base.Entities;
 
     public class FixedLengthIntegrationTests :
         IntegrationTests<IFixedFieldSettingsContainer, IFixedFieldSettingsConstructor, IFixedLayout<TestObject>>

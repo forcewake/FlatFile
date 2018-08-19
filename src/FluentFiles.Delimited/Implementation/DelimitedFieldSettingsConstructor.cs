@@ -1,9 +1,9 @@
-﻿namespace FlatFile.Delimited.Implementation
+﻿namespace FluentFiles.Delimited.Implementation
 {
     using System;
     using System.Reflection;
-    using FlatFile.Core;
-    using FlatFile.Core.Extensions;
+    using FluentFiles.Core;
+    using FluentFiles.Core.Extensions;
 
     public class DelimitedFieldSettingsConstructor :
         DelimitedFieldSettings,

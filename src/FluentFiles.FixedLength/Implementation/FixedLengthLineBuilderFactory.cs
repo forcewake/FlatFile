@@ -1,6 +1,6 @@
-namespace FlatFile.FixedLength.Implementation
+namespace FluentFiles.FixedLength.Implementation
 {
-    using FlatFile.Core;
+    using FluentFiles.Core;
 
     public class FixedLengthLineBuilderFactory : IFixedLengthLineBuilderFactory
     {

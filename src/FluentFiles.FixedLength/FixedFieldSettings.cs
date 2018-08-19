@@ -1,9 +1,9 @@
 using System;
 
-namespace FlatFile.FixedLength
+namespace FluentFiles.FixedLength
 {
     using System.Reflection;
-    using FlatFile.Core.Base;
+    using FluentFiles.Core.Base;
 
     public interface IFixedFieldSettings : IFieldSettings
     {

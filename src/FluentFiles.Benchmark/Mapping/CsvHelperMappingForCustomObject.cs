@@ -1,8 +1,8 @@
-﻿namespace FlatFile.Benchmark.Mapping
+namespace FluentFiles.Benchmark.Mapping
 {
     using CsvHelper.Configuration;
-    using FlatFile.Benchmark.Converters;
-    using FlatFile.Benchmark.Entities;
+    using FluentFiles.Benchmark.Converters;
+    using FluentFiles.Benchmark.Entities;
 
     public sealed class CsvHelperMappingForCustomObject : CsvClassMap<CustomObject>
     {

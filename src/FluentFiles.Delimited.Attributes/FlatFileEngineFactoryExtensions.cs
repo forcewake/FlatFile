@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FlatFile.Delimited.Implementation;
+using FluentFiles.Delimited.Implementation;
 
-namespace FlatFile.Delimited.Attributes
+namespace FluentFiles.Delimited.Attributes
 {
     using System;
-    using FlatFile.Core;
-    using FlatFile.Delimited;
-    using FlatFile.Delimited.Attributes.Infrastructure;
+    using FluentFiles.Core;
+    using FluentFiles.Delimited;
+    using FluentFiles.Delimited.Attributes.Infrastructure;
 
     public static class FlatFileEngineFactoryExtensions
     {

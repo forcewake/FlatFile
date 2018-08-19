@@ -1,7 +1,7 @@
-﻿namespace FlatFile.FixedLength.Attributes
+﻿namespace FluentFiles.FixedLength.Attributes
 {
     using System;
-    using FlatFile.Core.Attributes.Base;
+    using FluentFiles.Core.Attributes.Base;
 
     public class FixedLengthFieldAttribute : FieldSettingsBaseAttribute, IFixedFieldSettings
     {

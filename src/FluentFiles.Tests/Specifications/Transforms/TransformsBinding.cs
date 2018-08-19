@@ -1,9 +1,9 @@
-namespace FlatFile.Tests.Specifications.Transforms
+namespace FluentFiles.Tests.Specifications.Transforms
 {
     using System.Collections.Generic;
     using System.Linq;
-    using FlatFile.Tests.Base.Entities;
-    using FlatFile.Tests.Specifications.Extensions;
+    using FluentFiles.Tests.Base.Entities;
+    using FluentFiles.Tests.Specifications.Extensions;
     using TechTalk.SpecFlow;
 
     [Binding]

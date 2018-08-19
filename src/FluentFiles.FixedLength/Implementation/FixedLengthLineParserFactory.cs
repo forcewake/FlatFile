@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FlatFile.Core.Base;
-using FlatFile.Core.Extensions;
+using FluentFiles.Core.Base;
+using FluentFiles.Core.Extensions;
 
-namespace FlatFile.FixedLength.Implementation
+namespace FluentFiles.FixedLength.Implementation
 {
     using Core;
 

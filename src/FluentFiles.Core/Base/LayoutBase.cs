@@ -1,9 +1,9 @@
-﻿namespace FlatFile.Core.Base
+namespace FluentFiles.Core.Base
 {
     using System;
     using System.Linq.Expressions;
     using System.Reflection;
-    using FlatFile.Core.Extensions;
+    using FluentFiles.Core.Extensions;
 
     public abstract class LayoutBase<TTarget, TFieldSettings, TConstructor, TLayout>
         : LayoutDescriptorBase<TFieldSettings>, ILayout<TTarget, TFieldSettings, TConstructor, TLayout>

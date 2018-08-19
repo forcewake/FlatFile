@@ -1,8 +1,8 @@
-namespace FlatFile.Core.Base
+namespace FluentFiles.Core.Base
 {
     using System;
     using System.Reflection;
-    using FlatFile.Core.Extensions;
+    using FluentFiles.Core.Extensions;
 
     public abstract class LineParserBase<TLayoutDescriptor, TFieldSettings> : ILineParser
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>

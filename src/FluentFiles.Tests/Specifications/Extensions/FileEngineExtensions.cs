@@ -1,8 +1,8 @@
-namespace FlatFile.Tests.Specifications.Extensions
+namespace FluentFiles.Tests.Specifications.Extensions
 {
     using System.Collections.Generic;
     using System.IO;
-    using FlatFile.Core;
+    using FluentFiles.Core;
 
     public static class FileEngineExtensions
     {

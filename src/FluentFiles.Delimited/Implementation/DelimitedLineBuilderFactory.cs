@@ -1,4 +1,4 @@
-namespace FlatFile.Delimited.Implementation
+namespace FluentFiles.Delimited.Implementation
 {
     public class DelimitedLineBuilderFactory : IDelimitedLineBuilderFactory
     {

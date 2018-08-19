@@ -1,7 +1,7 @@
-namespace FlatFile.Benchmark.Mapping
+namespace FluentFiles.Benchmark.Mapping
 {
-    using FlatFile.Benchmark.Entities;
-    using FlatFile.FixedLength.Implementation;
+    using FluentFiles.Benchmark.Entities;
+    using FluentFiles.FixedLength.Implementation;
 
     public sealed class FixedSampleRecordLayout : FixedLayout<FixedSampleRecord>
     {

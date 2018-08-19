@@ -1,12 +1,12 @@
-﻿namespace FlatFile.Delimited.Attributes.Infrastructure
+﻿namespace FluentFiles.Delimited.Attributes.Infrastructure
 {
     using System;
     using System.Linq;
-    using FlatFile.Core;
-    using FlatFile.Core.Attributes.Extensions;
-    using FlatFile.Core.Attributes.Infrastructure;
-    using FlatFile.Core.Base;
-    using FlatFile.Delimited.Implementation;
+    using FluentFiles.Core;
+    using FluentFiles.Core.Attributes.Extensions;
+    using FluentFiles.Core.Attributes.Infrastructure;
+    using FluentFiles.Core.Base;
+    using FluentFiles.Delimited.Implementation;
     
 
     public class DelimitedLayoutDescriptorProvider : ILayoutDescriptorProvider<IDelimitedFieldSettingsContainer, IDelimitedLayoutDescriptor>

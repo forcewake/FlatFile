@@ -1,4 +1,4 @@
-﻿namespace FlatFile.Delimited
+﻿namespace FluentFiles.Delimited
 {
     /// <summary>
     /// Interface IDetailRecord

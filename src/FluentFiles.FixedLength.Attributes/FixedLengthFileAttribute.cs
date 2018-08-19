@@ -1,6 +1,6 @@
-﻿namespace FlatFile.FixedLength.Attributes
+﻿namespace FluentFiles.FixedLength.Attributes
 {
-    using FlatFile.Core.Attributes.Base;
+    using FluentFiles.Core.Attributes.Base;
 
     public class FixedLengthFileAttribute : LayoutBaseAttribute
     {

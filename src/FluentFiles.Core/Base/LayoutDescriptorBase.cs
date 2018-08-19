@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
-namespace FlatFile.Core.Base
+namespace FluentFiles.Core.Base
 {
     public class LayoutDescriptorBase<TFieldSettings> : ILayoutDescriptor<TFieldSettings>
         where TFieldSettings : IFieldSettings

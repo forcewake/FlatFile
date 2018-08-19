@@ -1,11 +1,11 @@
-﻿namespace FlatFile.Tests.Core
+namespace FluentFiles.Tests.Core
 {
     using System.Linq;
     using System.Reflection;
-    using FlatFile.Core.Base;
-    using FlatFile.Core.Extensions;
-    using FlatFile.FixedLength;
-    using FlatFile.Tests.Base.Entities;
+    using FluentFiles.Core.Base;
+    using FluentFiles.Core.Extensions;
+    using FluentFiles.FixedLength;
+    using FluentFiles.Tests.Base.Entities;
     using FluentAssertions;
     using Xunit;
 

@@ -1,6 +1,6 @@
-namespace FlatFile.Delimited
+namespace FluentFiles.Delimited
 {
-    using FlatFile.Core;
+    using FluentFiles.Core;
 
     public interface IDelimitedLineParserFactory :
         ILineParserFactory<IDelimitedLineParser, IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>

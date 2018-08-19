@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace FlatFile.Core.Attributes.Extensions
+namespace FluentFiles.Core.Attributes.Extensions
 {
     internal static class AttributeUtil
     {

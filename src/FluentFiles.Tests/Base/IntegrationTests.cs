@@ -1,13 +1,13 @@
-namespace FlatFile.Tests.Base
+namespace FluentFiles.Tests.Base
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Text;
-    using FlatFile.Core;
-    using FlatFile.Core.Base;
-    using FlatFile.Tests.Base.Entities;
+    using FluentFiles.Core;
+    using FluentFiles.Core.Base;
+    using FluentFiles.Tests.Base.Entities;
     using FluentAssertions;
     using Xunit;
 

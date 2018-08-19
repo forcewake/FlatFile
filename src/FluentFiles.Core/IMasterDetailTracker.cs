@@ -1,4 +1,4 @@
-﻿namespace FlatFile.Core
+﻿namespace FluentFiles.Core
 {
     /// <summary>
     /// Determines how master-detail record relationships are handled.

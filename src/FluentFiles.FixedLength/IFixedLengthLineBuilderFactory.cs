@@ -1,6 +1,6 @@
-namespace FlatFile.FixedLength
+namespace FluentFiles.FixedLength
 {
-    using FlatFile.Core;
+    using FluentFiles.Core;
 
     public interface IFixedLengthLineBuilderFactory :
         ILineBuilderFactory<IFixedLengthLineBuilder, ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer>

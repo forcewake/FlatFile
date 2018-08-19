@@ -1,7 +1,7 @@
-﻿namespace FlatFile.Delimited.Implementation
+﻿namespace FluentFiles.Delimited.Implementation
 {
     using System.Reflection;
-    using FlatFile.Core;
+    using FluentFiles.Core;
 
     public class DelimitedFieldSettingsFactory :
         IFieldSettingsFactory<IDelimitedFieldSettingsConstructor>

@@ -1,9 +1,9 @@
-﻿namespace FlatFile.Tests.FixedLength
+namespace FluentFiles.Tests.FixedLength
 {
-    using FlatFile.Core.Base;
-    using FlatFile.FixedLength;
-    using FlatFile.FixedLength.Implementation;
-    using FlatFile.Tests.Base.Entities;
+    using FluentFiles.Core.Base;
+    using FluentFiles.FixedLength;
+    using FluentFiles.FixedLength.Implementation;
+    using FluentFiles.Tests.Base.Entities;
     using FluentAssertions;
     using System;
     using System.Globalization;

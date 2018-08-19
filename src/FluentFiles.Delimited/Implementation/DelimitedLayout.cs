@@ -1,9 +1,9 @@
-namespace FlatFile.Delimited.Implementation
+namespace FluentFiles.Delimited.Implementation
 {
     using System;
     using System.Linq.Expressions;
-    using FlatFile.Core;
-    using FlatFile.Core.Base;
+    using FluentFiles.Core;
+    using FluentFiles.Core.Base;
 
     public class DelimitedLayout<TTarget> :
         LayoutBase<TTarget, IDelimitedFieldSettingsContainer, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TTarget>>,

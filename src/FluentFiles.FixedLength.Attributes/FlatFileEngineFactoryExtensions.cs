@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FlatFile.FixedLength.Implementation;
+using FluentFiles.FixedLength.Implementation;
 
-namespace FlatFile.FixedLength.Attributes
+namespace FluentFiles.FixedLength.Attributes
 {
     using System;
-    using FlatFile.Core;
-    using FlatFile.FixedLength.Attributes.Infrastructure;
+    using FluentFiles.Core;
+    using FluentFiles.FixedLength.Attributes.Infrastructure;
 
     /// <summary>
     /// Class FlatFileEngineFactoryExtensions.

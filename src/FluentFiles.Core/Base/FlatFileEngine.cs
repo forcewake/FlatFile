@@ -1,10 +1,10 @@
-namespace FlatFile.Core.Base
+namespace FluentFiles.Core.Base
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using FlatFile.Core;
-    using FlatFile.Core.Exceptions;
+    using FluentFiles.Core;
+    using FluentFiles.Core.Exceptions;
 
     /// <summary>
     /// Class FlatFileEngine.

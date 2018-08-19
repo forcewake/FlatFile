@@ -1,4 +1,4 @@
-namespace FlatFile.Core.Extensions
+namespace FluentFiles.Core.Extensions
 {
     using System;
     using System.ComponentModel;

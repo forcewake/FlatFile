@@ -1,9 +1,9 @@
-namespace FlatFile.Tests.Base.Entities
+namespace FluentFiles.Tests.Base.Entities
 {
     using System;
-    using FlatFile.Delimited.Attributes;
-    using FlatFile.FixedLength;
-    using FlatFile.FixedLength.Attributes;
+    using FluentFiles.Delimited.Attributes;
+    using FluentFiles.FixedLength;
+    using FluentFiles.FixedLength.Attributes;
 
     [FixedLengthFile]
     [DelimitedFile(Delimiter = ";", Quotes = "\"")]

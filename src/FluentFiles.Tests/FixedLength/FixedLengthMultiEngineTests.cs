@@ -1,14 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using FlatFile.Core;
-using FlatFile.FixedLength;
-using FlatFile.FixedLength.Implementation;
+using FluentFiles.Core;
+using FluentFiles.FixedLength;
+using FluentFiles.FixedLength.Implementation;
 using FluentAssertions;
 using Xunit;
 
-namespace FlatFile.Tests.FixedLength
+namespace FluentFiles.Tests.FixedLength
 {
     public class FixedLengthMultiEngineTests
     {
