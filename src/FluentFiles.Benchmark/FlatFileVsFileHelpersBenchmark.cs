@@ -38,7 +38,8 @@ namespace FluentFiles.Benchmark
 20000000923AQUINO VILLASANTI NICASIO                                                                                                                                       0     
 ";
 
-        [Fact(Skip = "Too long for CI")]
+        [Fact]
+        [Trait("Category", "Benchmarks")]
         public void ReadOperationShouldBeQuick()
         {
             Benchmark.This("FileHelperEngine.ReadStream", () =>
@@ -71,7 +72,8 @@ namespace FluentFiles.Benchmark
         }
 
 
-        [Fact(Skip = "Too long for CI")]
+        [Fact]
+        [Trait("Category", "Benchmarks")]
         public void WriteOperationShouldBeQuick()
         {
             var sampleRecords = GetRecords();
@@ -104,7 +106,8 @@ namespace FluentFiles.Benchmark
         }
 
 
-        [Fact(Skip = "Too long for CI")]
+        [Fact]
+        [Trait("Category", "Benchmarks")]
         public void BigDataWriteOperationShouldBeQuick()
         {
             var genarator = new FakeGenarator();
@@ -138,7 +141,8 @@ namespace FluentFiles.Benchmark
                 .PrintComparison();
         }
 
-        [Fact(Skip = "Too long for CI")]
+        [Fact]
+        [Trait("Category", "Benchmarks")]
         public void BigDataWriteOperationShouldBeQuickWithReflectionMagic()
         {
             HyperTypeDescriptionProvider.Add(typeof (FixedSampleRecord));

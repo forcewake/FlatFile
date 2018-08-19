@@ -10,12 +10,12 @@ namespace FluentFiles.Benchmark
     using FluentFiles.Benchmark.Entities;
     using FluentFiles.Benchmark.Mapping;
     using FluentFiles.Delimited.Implementation;
-    using FluentAssertions;
     using Xunit;
 
     public class FlatFileVsCsvHelperBenchmark
     {
-        [Fact(Skip = "Too long for CI")]
+        [Fact]
+        [Trait("Category", "Benchmarks")]
         public void WriteAllRecordsWithMapping()
         {
             var records = new List<CustomObject>
@@ -77,7 +77,8 @@ namespace FluentFiles.Benchmark
                 .PrintComparison();
         }
 
-        [Fact(Skip = "Too long for CI")]
+        [Fact]
+        [Trait("Category", "Benchmarks")]
         public void ReadAllRecordsWithMapping()
         {
             const string fileContent =
