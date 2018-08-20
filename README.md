@@ -2,7 +2,7 @@ FluentFiles
 ========
 [![Build status](https://ci.appveyor.com/api/projects/status/s52n84t6o4nr92c3?svg=true)](https://ci.appveyor.com/project/mthamil/fluentfiles)
 
-FluentFiles is a fork of the [FlatFile](https://github.com/forcewake/FlatFile) project. It is library for working with flat files (work up-to 100 times faster then [FileHelpers](https://www.nuget.org/packages/FileHelpers/2.0.0))
+FluentFiles is a fork of the [FlatFile](https://github.com/forcewake/FlatFile) project. It is library for working with flat files (up to 100 times faster then [FileHelpers](https://www.nuget.org/packages/FileHelpers/2.0.0))
 
 ### Installing FluentFiles
 
