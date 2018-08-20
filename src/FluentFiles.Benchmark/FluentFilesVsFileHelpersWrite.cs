@@ -23,7 +23,7 @@ namespace FluentFiles.Benchmark
             _records = fixture.CreateMany<FixedSampleRecord>(N).ToArray();
         }
 
-        [Benchmark]
+        [Benchmark(Baseline = true)]
         public void FileHelpers()
         {
             var engine = new FileHelperEngine<FixedSampleRecord>();
