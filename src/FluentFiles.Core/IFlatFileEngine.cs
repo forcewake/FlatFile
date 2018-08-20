@@ -20,7 +20,7 @@
         /// Reads from the specified text reader.
         /// </summary>
         /// <typeparam name="TEntity">The type of the t entity.</typeparam>
-        /// <param name="stream">The text reader.</param>
+        /// <param name="reader">The text reader.</param>
         /// <returns>IEnumerable&lt;TEntity&gt;.</returns>
         IEnumerable<TEntity> Read<TEntity>(TextReader reader) where TEntity : class, new();
 
