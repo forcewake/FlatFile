@@ -38,7 +38,7 @@ build:
   verbosity: minimal               # MSBuild verbosity level
 
 after_build:
-  - 
+  - ps: nuget pack $Env:APPVEYOR_BUILD_FOLDER\nuspecs\FluentFiles.nuspec -Properties version=$Env:APPVEYOR_BUILD_VERSION   # meta package
 
 nuget:
   project_feed: true
@@ -57,7 +57,7 @@ test_script:
 #---------------------------------#
 
 artifacts:
-  - path: '**\*\bin\**\*.nupkg'
+  - path: '**\*.nupkg'
 
 
 #---------------------------------#
