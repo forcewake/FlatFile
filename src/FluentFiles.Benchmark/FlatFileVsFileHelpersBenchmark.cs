@@ -3,7 +3,6 @@ namespace FluentFiles.Benchmark
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Text;
     using BenchmarkIt;
     using FileHelpers;
     using FluentFiles.Benchmark.Entities;
@@ -56,13 +55,12 @@ namespace FluentFiles.Benchmark
                 .This("FlatFileEngine.Read", () =>
                 {
                     var layout = new FixedSampleRecordLayout();
-                    using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(FixedFileSample)))
+                    using (var stream = new StringReader(FixedFileSample))
                     {
                         var factory = new FixedLengthFileEngineFactory();
+                        var engine = factory.GetEngine(layout);
 
-                        var flatFile = factory.GetEngine(layout);
-
-                        var records = flatFile.Read<FixedSampleRecord>(stream).ToArray();
+                        var records = engine.Read<FixedSampleRecord>(stream).ToArray();
 
                         records.Should().HaveCount(19);
                     }
@@ -95,12 +93,12 @@ namespace FluentFiles.Benchmark
                 {
                     var layout = new FixedSampleRecordLayout();
                     using (var stream = new MemoryStream())
+                    using (var streamWriter = new StreamWriter(stream))
                     {
                         var factory = new FixedLengthFileEngineFactory();
+                        var engine = factory.GetEngine(layout);
 
-                        var flatFile = factory.GetEngine(layout);
-
-                        flatFile.Write(stream, sampleRecords);
+                        engine.Write(streamWriter, sampleRecords);
                     }
                 })
                 .WithWarmup(1000)
@@ -132,12 +130,12 @@ namespace FluentFiles.Benchmark
                 {
                     var layout = new FixedSampleRecordLayout();
                     using (var stream = new MemoryStream())
+                    using (var streamWriter = new StreamWriter(stream))
                     {
                         var factory = new FixedLengthFileEngineFactory();
+                        var engine = factory.GetEngine(layout);
 
-                        var flatFile = factory.GetEngine(layout);
-
-                        flatFile.Write(stream, sampleRecords);
+                        engine.Write(streamWriter, sampleRecords);
                     }
                 })
                 .WithWarmup(10)

@@ -166,7 +166,7 @@ namespace FluentFiles.Core.Base
         /// Writes to the specified text writer.
         /// </summary>
         /// <typeparam name="TEntity">The type of the t entity.</typeparam>
-        /// <param name="stream">The text writer.</param>
+        /// <param name="writer">The text writer.</param>
         /// <param name="entries">The entries.</param>
         public void Write<TEntity>(TextWriter writer, IEnumerable<TEntity> entries) where TEntity : class, new()
         {

@@ -46,29 +46,31 @@ namespace FluentFiles.Benchmark
                 },
             };
 
-            Benchmark.This("CsvWriter.WriteRecords", () =>
-            {
-                using (var memoryStream = new MemoryStream())
-                using (var streamWriter = new StreamWriter(memoryStream))
-                using (var writer = new CsvWriter(streamWriter))
+            Benchmark
+                .This("CsvWriter.WriteRecords", () =>
                 {
-                    writer.Configuration.RegisterClassMap<CsvHelperMappingForCustomObject>();
+                    using (var stream = new MemoryStream())
+                    using (var streamWriter = new StreamWriter(stream))
+                    using (var writer = new CsvWriter(streamWriter))
+                    {
+                        writer.Configuration.RegisterClassMap<CsvHelperMappingForCustomObject>();
 
-                    writer.WriteRecords(records);
+                        writer.WriteRecords(records);
 
-                    streamWriter.Flush();
-                }
-            })
-                .Against.This("FlatFileEngine.Write", () =>
+                        streamWriter.Flush();
+                    }
+                })
+                .Against
+                .This("FlatFileEngine.Write", () =>
                 {
                     var layout = new FlatFileMappingForCustomObject();
                     using (var stream = new MemoryStream())
+                    using (var streamWriter = new StreamWriter(stream))
                     {
                         var factory = new DelimitedFileEngineFactory();
+                        var engine = factory.GetEngine(layout);
 
-                        var flatFile = factory.GetEngine(layout);
-
-                        flatFile.Write(stream, records);
+                        engine.Write(streamWriter, records);
                     }
                 })
                 .WithWarmup(1000)
@@ -86,27 +88,29 @@ namespace FluentFiles.Benchmark
 one,1,f96a1c66-4777-4642-86fa-703098065f5f,1|2|3
 two,2,06776ed9-d33f-470f-bd3f-8db842356330,4|5|6
 ";
-            Benchmark.This("CsvWriter.WriteRecords", () =>
-            {
-                using (var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(fileContent)))
-                using (var streamReader = new StreamReader(memoryStream))
-                using (var reader = new CsvReader(streamReader))
+            Benchmark
+                .This("CsvWriter.GetRecords", () =>
                 {
-                    reader.Configuration.RegisterClassMap<CsvHelperMappingForCustomObject>();
+                    using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(fileContent)))
+                    using (var streamReader = new StreamReader(stream))
+                    using (var reader = new CsvReader(streamReader))
+                    {
+                        reader.Configuration.RegisterClassMap<CsvHelperMappingForCustomObject>();
 
-                    var objects = reader.GetRecords<CustomObject>().ToArray();
-                }
-            })
-                .Against.This("FlatFileEngine.Write", () =>
+                        var objects = reader.GetRecords<CustomObject>().ToArray();
+                    }
+                })
+                .Against
+                .This("FlatFileEngine.Read", () =>
                 {
                     var layout = new FlatFileMappingForCustomObject();
                     using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(fileContent)))
+                    using (var streamReader = new StreamReader(stream))
                     {
                         var factory = new DelimitedFileEngineFactory();
+                        var engine = factory.GetEngine(layout);
 
-                        var flatFile = factory.GetEngine(layout);
-
-                        var objects = flatFile.Read<CustomObject>(stream).ToArray();
+                        var objects = engine.Read<CustomObject>(streamReader).ToArray();
 
                     }
                 })
