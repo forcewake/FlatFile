@@ -10,7 +10,6 @@
     <PackageReference Include="BenchmarkDotNet" Version="0.11.0" />
     <PackageReference Include="CsvHelper" Version="7.1.1" />
     <PackageReference Include="FileHelpers" Version="3.3.0" />
-    <PackageReference Include="HyperDescriptor" Version="1.0.5" />
     <PackageReference Include="Newtonsoft.Json" Version=" 11.0.2" />
   </ItemGroup>
 

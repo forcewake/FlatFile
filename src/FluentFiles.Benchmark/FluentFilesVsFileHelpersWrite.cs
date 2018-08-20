@@ -4,7 +4,6 @@ using FileHelpers;
 using FluentFiles.Benchmark.Entities;
 using FluentFiles.Benchmark.Mapping;
 using FluentFiles.FixedLength.Implementation;
-using Hyper.ComponentModel;
 using AutoFixture;
 using BenchmarkDotNet.Attributes;
 
@@ -45,20 +44,6 @@ namespace FluentFiles.Benchmark
             {
                 engine.Write(streamWriter, _records);
             }
-        }
-
-        [Benchmark]
-        public void FileHelpers_FastReflection()
-        {
-            HyperTypeDescriptionProvider.Add(typeof(FixedSampleRecord));
-            FileHelpers();
-        }
-
-        [Benchmark]
-        public void FluentFiles_FastReflection()
-        {
-            HyperTypeDescriptionProvider.Add(typeof(FixedSampleRecord));
-            FluentFiles();
         }
     }
 }
