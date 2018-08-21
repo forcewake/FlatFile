@@ -1,57 +1,77 @@
-- 
-  version: 0.3.{build}
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
 
-  environment:
-    BuildEnvironment: appveyor
+# Operating system (build VM template)
+os: Visual Studio 2017
 
-  branches:
-    only:
-      - master
+environment:  
+  major: 0
+  minor: 3
+  patch: 0
 
-  assembly_info:
-    patch: true
-    file: AssemblyInfo.*
-    assembly_version: "{version}"
-    assembly_file_version: "{version}"
-    assembly_informational_version: "{version}"
 
-  test: off
+# scripts that are called at very beginning, before repo cloning
+init:
+  - git config --global core.autocrlf true
+  - ps: |
+      $isCI = $Env:APPVEYOR_REPO_TAG -eq $false
+      $isBranch = $isCI -and ($Env:APPVEYOR_REPO_BRANCH -ne 'master')
+      $branchTag = "$(if ($isBranch) { $Env:APPVEYOR_REPO_BRANCH + '-' } else { $null })"
+      $Env:VersionPrefix = "$($Env:major).$($Env:minor).$($Env:patch)"
+      $Env:VersionSuffix = "$(if ($isCI) { $branchTag + 'CI' + $Env:APPVEYOR_BUILD_NUMBER } else { $null })"
+      appveyor UpdateBuild -Version "$($Env:VersionPrefix)$(if ($isCI) { '-' } else { $null })$($Env:VersionSuffix)"
 
-  artifacts:
-    - path: 'build\**\*.nupkg'
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
 
-  build_script: assets\build.bat pack
+# build Configuration, i.e. Debug, Release, etc.
+configuration: Release
 
-  cache:
-    - src\packages # preserve "packages" directory in the root of build folder
+# scripts to run before build
+before_build:
+  - cd src
+  - dotnet restore
 
-  deploy:
-    provider: NuGet
+build:
+  verbosity: minimal               # MSBuild verbosity level
+
+after_build:
+  - ps: nuget pack $Env:APPVEYOR_BUILD_FOLDER\nuspecs\FluentFiles.nuspec -Properties version=$Env:APPVEYOR_BUILD_VERSION   # meta package
+
+nuget:
+  project_feed: true
+  disable_publish_on_pr: true
+
+#---------------------------------#
+#       tests configuration       #
+#---------------------------------#
+
+test_script:
+  - ps: Get-ChildItem *.Tests | % { cd $_; dotnet xunit --configuration $Env:CONFIGURATION --no-build; cd ..; }
+
+
+#---------------------------------#
+#      artifacts configuration    #
+#---------------------------------#
+
+artifacts:
+  - path: '**\*.nupkg'
+
+
+#---------------------------------#
+#     deployment configuration    #
+#---------------------------------#
+
+deploy:
+  # Deploying to NuGet feed
+  - provider: NuGet
+    on:
+      appveyor_repo_tag: true
+    server: # nuget.org
     api_key:
       secure: NPuXv53mhVj9uqIWCqDfbU0I9OP8wkdJwB09ZSBLt/Z0q9znnvzzRqiW/ia5Yn9d
-    artifact: /.*build.*\.nupkg/
-    on:
-      branch: master
-
--
-  version: 0.2.{build}
-
-  environment:
-    BuildEnvironment: appveyor
-
-  branches:
-    only:
-      - /dev.*/
-      - /feature.*/
-
-  assembly_info:
-    patch: true
-    file: AssemblyInfo.*
-    assembly_version: "{version}"
-    assembly_file_version: "{version}"
-    assembly_informational_version: "{version}"
-
-  build_script: assets\build.bat pack
-
-  cache:
-    - src\packages # preserve "packages" directory in the root of build folder
+    skip_symbols: false
+    symbol_server: # SymbolSource.org
+    artifact: /.*\.nupkg/

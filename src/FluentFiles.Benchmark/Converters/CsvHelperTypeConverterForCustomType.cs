@@ -1,6 +1,8 @@
 namespace FluentFiles.Benchmark.Converters
 {
-    using System;
+    using CsvHelper;
+    using CsvHelper.Configuration;
+    using System.Reflection;
     using CsvHelperTypeConversion = CsvHelper.TypeConversion;
 
     public class CsvHelperTypeConverterForCustomType : CsvHelperTypeConversion.ITypeConverter
@@ -12,24 +14,14 @@ namespace FluentFiles.Benchmark.Converters
             converter = new FlatFileTypeConverterForCustomType();
         }
 
-        public string ConvertToString(CsvHelperTypeConversion.TypeConverterOptions options, object value)
+        public string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
         {
-            return converter.ConvertToString(value, null);
+            return converter.ConvertToString(value, (PropertyInfo)memberMapData.Member);
         }
 
-        public object ConvertFromString(CsvHelperTypeConversion.TypeConverterOptions options, string text)
+        public object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
         {
-            return converter.ConvertFromString(text, null);
-        }
-
-        public bool CanConvertFrom(Type type)
-        {
-            return converter.CanConvertFrom(type);
-        }
-
-        public bool CanConvertTo(Type type)
-        {
-            return converter.CanConvertTo(type);
+            return converter.ConvertFromString(text, (PropertyInfo)memberMapData.Member);
         }
     }
 }

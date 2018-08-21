@@ -4,7 +4,7 @@ namespace FluentFiles.Benchmark.Mapping
     using FluentFiles.Benchmark.Converters;
     using FluentFiles.Benchmark.Entities;
 
-    public sealed class CsvHelperMappingForCustomObject : CsvClassMap<CustomObject>
+    public sealed class CsvHelperMappingForCustomObject : ClassMap<CustomObject>
     {
         public CsvHelperMappingForCustomObject()
         {
