@@ -5,12 +5,8 @@ namespace FluentFiles.Core.Base
     /// <summary>
     /// Provides information about a file parsing error.
     /// </summary>
-    public struct FlatFileErrorContext
+    public readonly struct FlatFileErrorContext
     {
-        private readonly string line;
-        private readonly int lineNumber;
-        private readonly Exception exception;
-
         /// <summary>
         /// Initializes a new instance of <see cref="FlatFileErrorContext"/>.
         /// </summary>
@@ -19,33 +15,24 @@ namespace FluentFiles.Core.Base
         /// <param name="exception">The error that occurred.</param>
         public FlatFileErrorContext(string line, int lineNumber, Exception exception)
         {
-            this.line = line;
-            this.lineNumber = lineNumber;
-            this.exception = exception;
+            Line = line;
+            LineNumber = lineNumber;
+            Exception = exception;
         }
 
         /// <summary>
         /// The content of the line on which the error occurred.
         /// </summary>
-        public string Line
-        {
-            get { return line; }
-        }
+        public string Line { get; }
 
         /// <summary>
         /// The line numer at which the error occurred.
         /// </summary>
-        public int LineNumber
-        {
-            get { return lineNumber; }
-        }
+        public int LineNumber { get; }
 
         /// <summary>
         /// The error that occurred.
         /// </summary>
-        public Exception Exception
-        {
-            get { return exception; }
-        }
+        public Exception Exception { get; }
     }
 }
