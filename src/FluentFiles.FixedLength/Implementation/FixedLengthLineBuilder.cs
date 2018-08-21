@@ -1,6 +1,7 @@
 namespace FluentFiles.FixedLength.Implementation
 {
     using System.Linq;
+    using System.Text;
     using FluentFiles.Core;
     using FluentFiles.Core.Base;
 
@@ -15,9 +16,10 @@ namespace FluentFiles.FixedLength.Implementation
 
         public override string BuildLine<T>(T entry)
         {
-            string line = Descriptor.Fields.Aggregate(string.Empty,
-                (current, field) => current + GetStringValueFromField(field, field.PropertyInfo.GetValue(entry, null)));
-            return line;
+            var builder = new StringBuilder(Descriptor.Fields.Sum(f => f.Length));
+            var line = Descriptor.Fields.Aggregate(builder,
+                (current, field) => current.Append(GetStringValueFromField(field, field.PropertyInfo.GetValue(entry, null))));
+            return line.ToString();
         }
 
         protected override string TransformFieldValue(IFixedFieldSettingsContainer field, string lineValue)

@@ -1,6 +1,7 @@
 ﻿namespace FluentFiles.Delimited.Implementation
 {
     using System.Linq;
+    using System.Text;
     using FluentFiles.Core.Base;
 
     public class DelimitedLineBuilder :
@@ -14,11 +15,11 @@
 
         public override string BuildLine<T>(T entry)
         {
-            string line = Descriptor.Fields.Aggregate(string.Empty,
-                (current, field) =>
-                    current + (current.Length > 0 ? Descriptor.Delimiter : "") +
-                    GetStringValueFromField(field, field.PropertyInfo.GetValue(entry, null)));
-            return line;
+            var builder = new StringBuilder();
+            var line = Descriptor.Fields.Aggregate(builder,
+                (current, field) => current.Append(current.Length > 0 ? Descriptor.Delimiter : string.Empty)
+                                           .Append(GetStringValueFromField(field, field.PropertyInfo.GetValue(entry, null))));
+            return line.ToString();
         }
 
         protected override string TransformFieldValue(IDelimitedFieldSettingsContainer field, string lineValue)

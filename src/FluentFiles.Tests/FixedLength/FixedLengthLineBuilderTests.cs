@@ -23,6 +23,23 @@ namespace FluentFiles.Tests.FixedLength
         }
 
         [Fact]
+        public void BuilderShouldHandleMultipleFields()
+        {
+            layout.WithMember(o => o.Id, set => set.WithLength(4).WithTypeConverter<IdHexConverter>())
+                  .WithMember(o => o.Description, set => set.WithLength(7));
+
+            var entry = new TestObject
+            {
+                Id = 48879,
+                Description = "testing"
+            };
+
+            var line = builder.BuildLine(entry);
+
+            line.Should().Be("BEEFtesting");
+        }
+
+        [Fact]
         public void BuilderShouldUseTypeConverter()
         {
             layout.WithMember(o => o.Id, set => set.WithLength(4).WithTypeConverter<IdHexConverter>());

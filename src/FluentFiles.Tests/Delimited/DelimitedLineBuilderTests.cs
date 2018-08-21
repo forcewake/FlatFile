@@ -23,6 +23,23 @@ namespace FluentFiles.Tests.Delimited
         }
 
         [Fact]
+        public void BuilderShouldDelimitFields()
+        {
+            layout.WithMember(o => o.Id, set => set.WithTypeConverter<IdHexConverter>())
+                  .WithMember(o => o.Description);
+
+            var entry = new TestObject
+            {
+                Id = 48879,
+                Description = "testing"
+            };
+
+            var line = builder.BuildLine(entry);
+
+            line.Should().Be("BEEF,testing");
+        }
+
+        [Fact]
         public void BuilderShouldUseTypeConverter()
         {
             layout.WithMember(o => o.Id, set => set.WithTypeConverter<IdHexConverter>());
