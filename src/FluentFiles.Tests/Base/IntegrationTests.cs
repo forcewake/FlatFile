@@ -40,7 +40,7 @@ namespace FluentFiles.Tests.Base
         }
 
         [Fact]
-        public virtual void CoundOfTheObjectsAfterWriteReadShouldBeTheSame()
+        public virtual void CountOfTheObjectsAfterWriteReadShouldBeTheSame()
         {
             InvokeWriteTest((engine, stream) =>
             {
