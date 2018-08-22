@@ -13,7 +13,7 @@ namespace FluentFiles.Benchmark
     {
         FixedSampleRecord[] _records;
 
-        [Params(100, 100000)]
+        [Params(10, 100, 1000, 10000, 100000)]
         public int N;
 
         [GlobalSetup]
