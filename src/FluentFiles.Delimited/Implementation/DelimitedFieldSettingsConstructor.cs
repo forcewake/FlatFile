@@ -5,9 +5,7 @@
     using FluentFiles.Core;
     using FluentFiles.Core.Extensions;
 
-    public class DelimitedFieldSettingsConstructor :
-        DelimitedFieldSettings,
-        IDelimitedFieldSettingsConstructor
+    public class DelimitedFieldSettingsConstructor : DelimitedFieldSettings, IDelimitedFieldSettingsConstructor
     {
         public DelimitedFieldSettingsConstructor(PropertyInfo propertyInfo) : base(propertyInfo)
         {
@@ -20,9 +18,14 @@
             return this;
         }
 
-        public IDelimitedFieldSettingsConstructor WithTypeConverter<TConverter>() where TConverter : ITypeConverter
+        public IDelimitedFieldSettingsConstructor WithTypeConverter<TConverter>() where TConverter : ITypeConverter, new()
         {
-            this.TypeConverter = ReflectionHelper.CreateInstance<TConverter>(true);
+            return WithTypeConverter(ReflectionHelper.CreateInstance<TConverter>(true));
+        }
+
+        public IDelimitedFieldSettingsConstructor WithTypeConverter(ITypeConverter converter)
+        {
+            this.TypeConverter = converter ?? throw new ArgumentNullException(nameof(converter));
             return this;
         }
 
