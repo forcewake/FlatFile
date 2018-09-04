@@ -6,8 +6,7 @@ namespace FluentFiles.FixedLength.Implementation
     using FluentFiles.Core;
     using FluentFiles.Core.Extensions;
 
-    public class FixedFieldSettingsConstructor : FixedFieldSettings,
-        IFixedFieldSettingsConstructor
+    public class FixedFieldSettingsConstructor : FixedFieldSettings, IFixedFieldSettingsConstructor
     {
         public FixedFieldSettingsConstructor(PropertyInfo propertyInfo) : base(propertyInfo)
         {
@@ -52,9 +51,14 @@ namespace FluentFiles.FixedLength.Implementation
             return this;
         }
 
-        public IFixedFieldSettingsConstructor WithTypeConverter<TConverter>() where TConverter : ITypeConverter
+        public IFixedFieldSettingsConstructor WithTypeConverter<TConverter>() where TConverter : ITypeConverter, new()
         {
-            this.TypeConverter = ReflectionHelper.CreateInstance<TConverter>(true);
+            return WithTypeConverter(ReflectionHelper.CreateInstance<TConverter>(true));
+        }
+
+        public IFixedFieldSettingsConstructor WithTypeConverter(ITypeConverter converter)
+        {
+            this.TypeConverter = converter ?? throw new ArgumentNullException(nameof(converter));
             return this;
         }
 
