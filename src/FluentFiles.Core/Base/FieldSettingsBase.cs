@@ -1,5 +1,7 @@
 namespace FluentFiles.Core.Base
 {
+    using FluentFiles.Core.Extensions;
+    using System;
     using System.Reflection;
 
     public interface IFieldSettings
@@ -17,27 +19,33 @@ namespace FluentFiles.Core.Base
 
     public abstract class FieldSettingsBase : IFieldSettingsContainer
     {
+        private ITypeConverter _converter;
+
+        protected readonly ITypeConverter DefaultConverter;
+
         protected FieldSettingsBase(PropertyInfo propertyInfo)
         {
             PropertyInfo = propertyInfo;
+            DefaultConverter = propertyInfo.PropertyType.GetConverter();
         }
 
-        protected FieldSettingsBase(IFieldSettings settings)
+        protected FieldSettingsBase(PropertyInfo propertyInfo, IFieldSettings settings)
+            : this(propertyInfo)
         {
             Index = settings.Index;
             IsNullable = settings.IsNullable;
             NullValue = settings.NullValue;
-        }
-
-        protected FieldSettingsBase(PropertyInfo propertyInfo, IFieldSettings settings) : this(settings)
-        {
-            PropertyInfo = propertyInfo;
+            TypeConverter = settings.TypeConverter;
         }
 
         public int? Index { get; set; }
         public bool IsNullable { get; set; }
         public string NullValue { get; set; }
-        public ITypeConverter TypeConverter { get; set; }
+        public ITypeConverter TypeConverter
+        {
+            get => _converter ?? DefaultConverter;
+            set => _converter = value;
+        }
         public PropertyInfo PropertyInfo { get; set; }
     }
 

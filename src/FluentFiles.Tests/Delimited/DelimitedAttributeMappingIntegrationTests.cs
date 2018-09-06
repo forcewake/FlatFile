@@ -52,7 +52,7 @@ namespace FluentFiles.Tests.Delimited
 			var container = new FieldsContainer<IDelimitedFieldSettingsContainer>();
 			container.AddOrUpdate(properties["Foo"], new DelimitedFieldSettings(properties["Foo"], attribute));
 
-			var layout = new DelimitedLayout<ConverterTestObject>(new DelimitedFieldSettingsFactory(), container);
+			var layout = new DelimitedLayout<ConverterTestObject>(new DelimitedFieldSettingsBuilderFactory(), container);
 			var engine = _fileEngineFactory.GetEngine(layout);
 
 			// write "A" to the stream and verify it is converted to "foo"

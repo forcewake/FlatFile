@@ -7,7 +7,7 @@ namespace FluentFiles.Tests.Delimited
     using FluentFiles.Tests.Base.Entities;
 
     public class DelimitedIntegrationTests :
-        IntegrationTests<IDelimitedFieldSettingsContainer, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TestObject>>
+        IntegrationTests<IDelimitedFieldSettingsContainer, IDelimitedFieldSettingsBuilder, IDelimitedLayout<TestObject>>
     {
         private readonly IDelimitedLayout<TestObject> _layout;
 

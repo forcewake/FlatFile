@@ -47,7 +47,7 @@
             var methodInfo = typeof(DelimedLayoutGeneric)
                             .GetMethod("GetDelimitedLayout")
                             .MakeGenericMethod(new[] { t });
-            object[] args = { null, new DelimitedFieldSettingsFactory(), container, fileAttribute };
+            object[] args = { null, new DelimitedFieldSettingsBuilderFactory(), container, fileAttribute };
             var descriptor = (IDelimitedLayoutDescriptor)methodInfo.Invoke(null, args);
             
             //var descriptor = DelimedLayoutGeneric.GetDelimitedLayout(t, new DelimitedFieldSettingsFactory(), container)
@@ -66,7 +66,7 @@
     public class DelimedLayoutGeneric
     {
         public static IDelimitedLayoutDescriptor GetDelimitedLayout<TTarget>(TTarget t,
-            IFieldSettingsFactory<IDelimitedFieldSettingsConstructor> fieldSettingsFactory,
+            IFieldSettingsBuilderFactory<IDelimitedFieldSettingsBuilder, IDelimitedFieldSettingsContainer> fieldSettingsFactory,
             IFieldsContainer<IDelimitedFieldSettingsContainer> fieldsContainer,
             DelimitedFileAttribute fileAttribute)
         {

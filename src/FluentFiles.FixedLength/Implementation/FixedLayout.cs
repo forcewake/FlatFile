@@ -6,28 +6,27 @@ namespace FluentFiles.FixedLength.Implementation
     using FluentFiles.Core.Base;
 
     public class FixedLayout<TTarget> :
-        LayoutBase<TTarget, IFixedFieldSettingsContainer, IFixedFieldSettingsConstructor, IFixedLayout<TTarget>>,
+        LayoutBase<TTarget, IFixedFieldSettingsContainer, IFixedFieldSettingsBuilder, IFixedLayout<TTarget>>,
         IFixedLayout<TTarget>
     {
         public FixedLayout()
-            : this(
-                new FixedFieldSettingsFactory(),
-                new FieldsContainer<IFixedFieldSettingsContainer>())
+            : this(new FixedFieldSettingsBuilderFactory(),
+                   new FieldsContainer<IFixedFieldSettingsContainer>())
         {
         }
 
         public FixedLayout(
-            IFieldSettingsFactory<IFixedFieldSettingsConstructor> fieldSettingsFactory,
+            IFieldSettingsBuilderFactory<IFixedFieldSettingsBuilder, IFixedFieldSettingsContainer> fieldSettingsFactory,
             IFieldsContainer<IFixedFieldSettingsContainer> fieldsContainer)
-            : base(fieldSettingsFactory, fieldsContainer)
+                : base(fieldSettingsFactory, fieldsContainer)
         {
         }
 
         public override IFixedLayout<TTarget> WithMember<TProperty>(
             Expression<Func<TTarget, TProperty>> expression,
-            Action<IFixedFieldSettingsConstructor> settings = null)
+            Action<IFixedFieldSettingsBuilder> configure = null)
         {
-            ProcessProperty(expression, settings);
+            ProcessProperty(expression, configure);
 
             return this;
         }

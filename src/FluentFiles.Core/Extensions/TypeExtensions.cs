@@ -1,10 +1,27 @@
 namespace FluentFiles.Core.Extensions
 {
+    using FluentFiles.Core.Base;
     using System;
+    using System.ComponentModel;
     using System.Linq.Expressions;
 
     public static class TypeExtensions
     {
+        public static ITypeConverter GetConverter(this Type type)
+        {
+            var converter = TypeDescriptor.GetConverter(type.Unwrap());
+            return converter != null 
+                ? new TypeConverterAdapter(converter) { OverrideCanConvertTo = true } 
+                : DefaultValueTypeConverter.Instance;
+        }
+
+        public static bool IsNullable(this Type type)
+        {
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+        }
+
+        public static Type Unwrap(this Type type) => type.IsNullable() ? Nullable.GetUnderlyingType(type) : type;
+
         public static object GetDefaultValue(this Type type)
         {
             if (type == null)

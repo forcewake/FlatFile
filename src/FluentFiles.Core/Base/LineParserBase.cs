@@ -8,17 +8,12 @@ namespace FluentFiles.Core.Base
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
         where TFieldSettings : IFieldSettingsContainer
     {
-        private readonly TLayoutDescriptor _layout;
-
         protected LineParserBase(TLayoutDescriptor layout)
         {
-            this._layout = layout;
+            this.Layout = layout;
         }
 
-        protected TLayoutDescriptor Layout
-        {
-            get { return _layout; }
-        }
+        protected TLayoutDescriptor Layout { get; }
 
         public abstract TEntity ParseLine<TEntity>(string line, TEntity entity) where TEntity : new();
 
@@ -29,45 +24,24 @@ namespace FluentFiles.Core.Base
                 return null;
             }
 
-            var type = fieldSettings.PropertyInfo.PropertyType;
+            var targetType = fieldSettings.PropertyInfo.PropertyType.Unwrap();
 
-            if (fieldSettings.IsNullablePropertyType())
-            {
-                type = Nullable.GetUnderlyingType(fieldSettings.PropertyInfo.PropertyType);
-            }
+            memberValue = PreprocessFieldValue(fieldSettings, memberValue);
 
-            memberValue = TransformStringValue(fieldSettings, memberValue);
-
-            object obj;
-            
-            if (!fieldSettings.TypeConverter.ConvertFromStringTo(memberValue, type, fieldSettings.PropertyInfo, out obj))
-            {
-                obj = memberValue.Convert(type);
-            }
-
-            return obj;
+            var value = ConvertFromStringTo(fieldSettings.TypeConverter, memberValue, targetType, fieldSettings.PropertyInfo);
+            return value;
         }
 
-        protected virtual string TransformStringValue(TFieldSettings fieldSettingsBuilder, string memberValue)
-        {
-            return memberValue;
-        }
-    }
+        protected virtual string PreprocessFieldValue(TFieldSettings fieldSettingsBuilder, string memberValue) => memberValue;
 
-    public static class TypeConverterExtensions
-    {
-
-        public static bool ConvertFromStringTo(this ITypeConverter converter, string source, Type targetType, PropertyInfo targetProperty, out object obj)
+        private static object ConvertFromStringTo(ITypeConverter converter, string source, Type targetType, PropertyInfo targetProperty)
         {
             if (converter != null && converter.CanConvertFrom(typeof(string)) && converter.CanConvertTo(targetType))
             {
-                obj = converter.ConvertFromString(source, targetProperty);
-                return true;
+                return converter.ConvertFromString(source, targetProperty);
             }
 
-            obj = null;
-            
-            return false;
+            return null;
         }
     }
 }

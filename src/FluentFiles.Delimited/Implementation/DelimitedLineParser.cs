@@ -58,7 +58,7 @@ namespace FluentFiles.Delimited.Implementation
             return entity;
         }
 
-        protected override string TransformStringValue(IDelimitedFieldSettingsContainer fieldSettingsBuilder, string memberValue)
+        protected override string PreprocessFieldValue(IDelimitedFieldSettingsContainer fieldSettingsBuilder, string memberValue)
         {
             if (string.IsNullOrEmpty(Layout.Quotes))
             {

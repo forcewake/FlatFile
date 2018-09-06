@@ -49,7 +49,7 @@ namespace FluentFiles.FixedLength.Implementation
             return line.Substring(linePosition, field.Length);
         }
 
-        protected override string TransformStringValue(IFixedFieldSettingsContainer fieldSettingsBuilder, string memberValue)
+        protected override string PreprocessFieldValue(IFixedFieldSettingsContainer fieldSettingsBuilder, string memberValue)
         {
             memberValue = fieldSettingsBuilder.PadLeft
                 ? memberValue.TrimStart(new[] {fieldSettingsBuilder.PaddingChar})

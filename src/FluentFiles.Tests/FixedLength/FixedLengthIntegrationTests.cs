@@ -7,7 +7,7 @@ namespace FluentFiles.Tests.FixedLength
     using FluentFiles.Tests.Base.Entities;
 
     public class FixedLengthIntegrationTests :
-        IntegrationTests<IFixedFieldSettingsContainer, IFixedFieldSettingsConstructor, IFixedLayout<TestObject>>
+        IntegrationTests<IFixedFieldSettingsContainer, IFixedFieldSettingsBuilder, IFixedLayout<TestObject>>
     {
         private readonly IFixedLayout<TestObject> _layout;
         private readonly IFlatFileEngine _engine;

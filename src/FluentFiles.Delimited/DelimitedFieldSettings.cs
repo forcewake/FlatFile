@@ -14,21 +14,15 @@ namespace FluentFiles.Delimited
 
     public class DelimitedFieldSettings : FieldSettingsBase, IDelimitedFieldSettingsContainer
     {
-        public DelimitedFieldSettings(PropertyInfo propertyInfo) : base(propertyInfo)
+        public DelimitedFieldSettings(PropertyInfo propertyInfo)
+            : base(propertyInfo)
         {
-        }
-
-        public DelimitedFieldSettings(IDelimitedFieldSettings settings)
-            : base(settings)
-        {
-            Name = settings.Name;
-			TypeConverter = settings.TypeConverter;
         }
 
         public DelimitedFieldSettings(PropertyInfo propertyInfo, IDelimitedFieldSettings settings)
-            : this(settings)
+            : base(propertyInfo, settings)
         {
-            PropertyInfo = propertyInfo;
+            Name = settings.Name;
         }
 
         public string Name { get; set; }

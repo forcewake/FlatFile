@@ -1,48 +1,38 @@
 namespace FluentFiles.Core.Base
 {
+    using FluentFiles.Core.Extensions;
     using System;
     using System.Linq.Expressions;
-    using System.Reflection;
-    using FluentFiles.Core.Extensions;
 
-    public abstract class LayoutBase<TTarget, TFieldSettings, TConstructor, TLayout>
-        : LayoutDescriptorBase<TFieldSettings>, ILayout<TTarget, TFieldSettings, TConstructor, TLayout>
+    public abstract class LayoutBase<TTarget, TFieldSettings, TBuilder, TLayout> : LayoutDescriptorBase<TFieldSettings>, ILayout<TTarget, TFieldSettings, TBuilder, TLayout>
         where TFieldSettings : class, IFieldSettings
-        where TConstructor : IFieldSettingsConstructor<TConstructor> 
-        where TLayout : ILayout<TTarget, TFieldSettings, TConstructor, TLayout>
+        where TBuilder : IFieldSettingsBuilder<TBuilder, TFieldSettings> 
+        where TLayout : ILayout<TTarget, TFieldSettings, TBuilder, TLayout>
     {
-        private readonly IFieldSettingsFactory<TConstructor> _fieldSettingsFactory;
+        private readonly IFieldSettingsBuilderFactory<TBuilder, TFieldSettings> _fieldBuilderFactory;
 
         protected LayoutBase(
-            IFieldSettingsFactory<TConstructor> fieldSettingsFactory, 
+            IFieldSettingsBuilderFactory<TBuilder, TFieldSettings> fieldBuilderFactory, 
             IFieldsContainer<TFieldSettings> fieldsContainer) : base(fieldsContainer)
         {
-            this._fieldSettingsFactory = fieldSettingsFactory;
+            this._fieldBuilderFactory = fieldBuilderFactory;
         }
 
-        protected virtual void ProcessProperty<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TConstructor> settings)
+        protected virtual void ProcessProperty<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TBuilder> configure)
         {
-            var propertyInfo = GetPropertyInfo(expression);
+            var property = expression.GetPropertyInfo();
+            var builder = _fieldBuilderFactory.CreateBuilder(property);
 
-            var constructor = _fieldSettingsFactory.CreateFieldSettings(propertyInfo);
+            configure?.Invoke(builder);
 
-            if (settings != null)
-            {
-                settings(constructor);
-            }
+            var fieldSettings = builder.Build();
 
-            FieldsContainer.AddOrUpdate(constructor.PropertyInfo, constructor as TFieldSettings);
-        }
-
-        protected virtual PropertyInfo GetPropertyInfo<TProperty>(Expression<Func<TTarget, TProperty>> expression)
-        {
-            var propertyInfo = expression.GetPropertyInfo();
-            return propertyInfo;
+            FieldsContainer.AddOrUpdate(property, fieldSettings);
         }
 
         public override Type TargetType { get { return typeof (TTarget); } }
 
-        public abstract TLayout WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TConstructor> settings = null);
+        public abstract TLayout WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TBuilder> configure = null);
 
         public abstract TLayout WithHeader();
     }
