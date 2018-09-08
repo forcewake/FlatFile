@@ -37,7 +37,7 @@ namespace FluentFiles.FixedLength.Implementation
         {
             this.lineBuilderFactory = lineBuilderFactory;
             this.lineParserFactory = lineParserFactory;
-            this.layoutDescriptor = layoutDescriptor;
+            this.layoutDescriptor = new FixedLengthImmutableLayoutDescriptor(layoutDescriptor);
         }
 
         /// <summary>

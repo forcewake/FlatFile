@@ -1,3 +1,6 @@
+using FluentFiles.Delimited.Implementation;
+using FluentFiles.Tests.Base.Entities;
+
 namespace FluentFiles.Tests.Delimited
 {
     public sealed class DelimitedWithHeaderIntegrationTests : DelimitedIntegrationTests
@@ -16,7 +19,13 @@ namespace FluentFiles.Tests.Delimited
 
         public DelimitedWithHeaderIntegrationTests()
         {
-            Layout.WithHeader();
+            _layout = new DelimitedLayout<TestObject>()
+                .WithHeader()
+                .WithDelimiter(";")
+                .WithQuote("\"")
+                .WithMember(o => o.Id)
+                .WithMember(o => o.Description)
+                .WithMember(o => o.NullableInt, set => set.AllowNull("=Null"));
         }
 
         public override string TestSource

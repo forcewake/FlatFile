@@ -63,7 +63,9 @@ namespace FluentFiles.FixedLength.Implementation
             Func<FlatFileErrorContext, bool> handleEntryReadError = null)
         {
             if (typeSelectorFunc == null) throw new ArgumentNullException("typeSelectorFunc");
-            this.layoutDescriptors = layoutDescriptors.ToList();
+            this.layoutDescriptors = layoutDescriptors.Select(ld => new FixedLengthImmutableLayoutDescriptor(ld))
+                                                      .Cast<ILayoutDescriptor<IFixedFieldSettingsContainer>>()
+                                                      .ToList();
             results = new Dictionary<Type, ArrayList>(this.layoutDescriptors.Count());
             foreach (var descriptor in this.layoutDescriptors)
             {
