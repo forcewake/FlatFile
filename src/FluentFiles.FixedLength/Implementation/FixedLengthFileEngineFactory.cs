@@ -49,7 +49,9 @@ namespace FluentFiles.FixedLength.Implementation
                 descriptor, 
                 new FixedLengthLineBuilderFactory(),
                 lineParserFactory,
-                ctx => handleEntryReadError(ctx.Line, ctx.Exception));
+                handleEntryReadError == null
+                    ? (Func<FlatFileErrorContext, bool>)null
+                    : ctx => handleEntryReadError(ctx.Line, ctx.Exception));
         }
 
         /// <summary>
@@ -89,7 +91,9 @@ namespace FluentFiles.FixedLength.Implementation
                 new FixedLengthLineBuilderFactory(),
                 lineParserFactory,
                 masterDetailTracker ?? new FixedLengthMasterDetailTracker(),
-                ctx => handleEntryReadError(ctx.Line, ctx.Exception));
+                handleEntryReadError == null
+                    ? (Func<FlatFileErrorContext, bool>)null
+                    : ctx => handleEntryReadError(ctx.Line, ctx.Exception));
         }
 
         /// <summary>

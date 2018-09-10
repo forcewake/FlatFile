@@ -51,7 +51,9 @@ namespace FluentFiles.Delimited.Implementation
                 descriptor,
                 new DelimitedLineBuilderFactory(),
                 new DelimitedLineParserFactory(),
-                ctx => handleEntryReadError(ctx.Line, ctx.Exception));
+                handleEntryReadError == null 
+                    ? (Func<FlatFileErrorContext, bool>)null
+                    : ctx => handleEntryReadError(ctx.Line, ctx.Exception));
         }
 
         /// <summary>
@@ -91,7 +93,9 @@ namespace FluentFiles.Delimited.Implementation
                 new DelimitedLineBuilderFactory(),
                 lineParserFactory,
                 masterDetailTracker ?? new DelimitedMasterDetailTracker(),
-                ctx => handleEntryReadError(ctx.Line, ctx.Exception));
+                handleEntryReadError == null
+                    ? (Func<FlatFileErrorContext, bool>)null
+                    : ctx => handleEntryReadError(ctx.Line, ctx.Exception));
         }
 
         /// <summary>
