@@ -7,6 +7,6 @@ namespace FluentFiles.Core
         where TBuilder : IFieldSettingsBuilder<TBuilder, TSettings>
         where TSettings : IFieldSettings
     {
-        TBuilder CreateBuilder(PropertyInfo property);
+        TBuilder CreateBuilder<TTarget, TProperty>(PropertyInfo property);
     }
 }

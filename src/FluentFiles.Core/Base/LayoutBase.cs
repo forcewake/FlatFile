@@ -21,7 +21,7 @@ namespace FluentFiles.Core.Base
         protected virtual void ProcessProperty<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TBuilder> configure)
         {
             var property = expression.GetPropertyInfo();
-            var builder = _fieldBuilderFactory.CreateBuilder(property);
+            var builder = _fieldBuilderFactory.CreateBuilder<TTarget, TProperty>(property);
 
             configure?.Invoke(builder);
 

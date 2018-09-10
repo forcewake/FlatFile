@@ -21,7 +21,7 @@ namespace FluentFiles.FixedLength.Implementation
             {
                 string fieldValueFromLine = GetValueFromLine(line, linePosition, field);
                 object convertedFieldValue = GetFieldValueFromString(field, fieldValueFromLine);
-                field.PropertyInfo.SetValue(entity, convertedFieldValue, null);
+                field.SetValueOf(entity, convertedFieldValue);
                 linePosition += field.Length;
             }
             return entity;

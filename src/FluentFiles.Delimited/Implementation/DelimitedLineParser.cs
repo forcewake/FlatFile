@@ -52,7 +52,7 @@ namespace FluentFiles.Delimited.Implementation
                 }
                 string fieldValueFromLine = line.Substring(linePosition, fieldLength);
                 var convertedFieldValue = GetFieldValueFromString(field, fieldValueFromLine);
-                field.PropertyInfo.SetValue(entity, convertedFieldValue, null);
+                field.SetValueOf(entity, convertedFieldValue);
                 linePosition += fieldLength + (nextDelimiterIndex > -1 ? delimiterSize : 0);
             }
             return entity;

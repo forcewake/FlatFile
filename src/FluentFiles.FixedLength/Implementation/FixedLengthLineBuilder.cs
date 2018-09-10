@@ -1,28 +1,32 @@
 namespace FluentFiles.FixedLength.Implementation
 {
+    using System;
     using System.Linq;
     using System.Text;
     using FluentFiles.Core;
     using FluentFiles.Core.Base;
 
-    public class FixedLengthLineBuilder :
-        LineBuilderBase<ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer>,
+    public class FixedLengthLineBuilder : LineBuilderBase<ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer>,
         IFixedLengthLineBuilder
     {
+        private readonly Lazy<int> _totalLength;
+
         public FixedLengthLineBuilder(ILayoutDescriptor<IFixedFieldSettingsContainer> descriptor)
-            : base(descriptor)
+            : base(descriptor, TransformFieldValue)
         {
+            _totalLength = new Lazy<int>(() => descriptor.Fields.Sum(f => f.Length));
         }
 
         public override string BuildLine<T>(T entry)
         {
-            var builder = new StringBuilder(Descriptor.Fields.Sum(f => f.Length));
-            var line = Descriptor.Fields.Aggregate(builder,
-                (current, field) => current.Append(GetStringValueFromField(field, field.PropertyInfo.GetValue(entry, null))));
+            var line = new StringBuilder(_totalLength.Value);
+            foreach (var field in Descriptor.Fields)
+                line.Append(GetStringValueFromField(field, field.GetValueOf(entry)));
+
             return line.ToString();
         }
 
-        protected override string TransformFieldValue(IFixedFieldSettingsContainer field, string lineValue)
+        private static string TransformFieldValue(IFixedFieldSettingsContainer field, string lineValue)
         {
             if (field.StringNormalizer != null)
             {

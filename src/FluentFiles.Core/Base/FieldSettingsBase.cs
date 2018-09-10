@@ -14,12 +14,32 @@ namespace FluentFiles.Core.Base
 
     public interface IFieldSettingsContainer : IFieldSettings
     {
+        /// <summary>
+        /// The target type of a field.
+        /// </summary>
+        Type Type { get; }
+
+        /// <summary>
+        /// Gets the value of a field for a record instance.
+        /// </summary>
+        object GetValueOf(object instance);
+
+        /// <summary>
+        /// Sets the value of a field for a record instance.
+        /// </summary>
+        void SetValueOf(object instance, object value);
+
+        /// <summary>
+        /// The property underlying a field.
+        /// </summary>
         PropertyInfo PropertyInfo { get; }
     }
 
     public abstract class FieldSettingsBase : IFieldSettingsContainer
     {
         private ITypeConverter _converter;
+        private Func<object, object> _getValue;
+        private Action<object, object> _setValue;
 
         protected readonly ITypeConverter DefaultConverter;
 
@@ -27,6 +47,8 @@ namespace FluentFiles.Core.Base
         {
             PropertyInfo = propertyInfo;
             DefaultConverter = propertyInfo.PropertyType.GetConverter();
+            _getValue = ReflectionHelper.CreatePropertyGetter(propertyInfo);
+            _setValue = ReflectionHelper.CreatePropertySetter(propertyInfo);
         }
 
         protected FieldSettingsBase(PropertyInfo propertyInfo, IFieldSettings settings)
@@ -41,17 +63,31 @@ namespace FluentFiles.Core.Base
         public int? Index { get; set; }
         public bool IsNullable { get; set; }
         public string NullValue { get; set; }
+
         public ITypeConverter TypeConverter
         {
             get => _converter ?? DefaultConverter;
             set => _converter = value;
         }
-        public PropertyInfo PropertyInfo { get; set; }
-    }
 
-    public class PropertySettingsContainer<TPropertySettings> where TPropertySettings : IFieldSettings
-    {
-        public int Index { get; set; }
-        public TPropertySettings PropertySettings { get; set; }
+        public PropertyInfo PropertyInfo { get; set; }
+
+        public Type Type => PropertyInfo.PropertyType;
+
+        public object GetValueOf(object instance)
+        {
+            if (_getValue != null)
+                return _getValue(instance);
+            else
+                return PropertyInfo.GetValue(instance);
+        }
+
+        public void SetValueOf(object instance, object value)
+        {
+            if (_setValue != null)
+                _setValue(instance, value);
+            else
+                PropertyInfo.SetValue(instance, value);
+        }
     }
 }

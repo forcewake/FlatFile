@@ -9,7 +9,7 @@
         IDelimitedLineBuilder
     {
         public DelimitedLineBuilder(IDelimitedLayoutDescriptor descriptor)
-            : base(descriptor)
+            : base(descriptor, (f, v) => TransformFieldValue(descriptor, f, v))
         {
         }
 
@@ -18,13 +18,13 @@
             var builder = new StringBuilder();
             var line = Descriptor.Fields.Aggregate(builder,
                 (current, field) => current.Append(current.Length > 0 ? Descriptor.Delimiter : string.Empty)
-                                           .Append(GetStringValueFromField(field, field.PropertyInfo.GetValue(entry, null))));
+                                           .Append(GetStringValueFromField(field, field.GetValueOf(entry))));
             return line.ToString();
         }
 
-        protected override string TransformFieldValue(IDelimitedFieldSettingsContainer field, string lineValue)
+        private static string TransformFieldValue(IDelimitedLayoutDescriptor descriptor, IDelimitedFieldSettingsContainer field, string lineValue)
         {
-            var quotes = Descriptor.Quotes;
+            var quotes = descriptor.Quotes;
             if (!string.IsNullOrEmpty(quotes))
             {
                 lineValue = string.Format("{0}{1}{0}", quotes, lineValue);

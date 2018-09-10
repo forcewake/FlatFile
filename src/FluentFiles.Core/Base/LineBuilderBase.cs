@@ -1,20 +1,20 @@
+using System;
+
 namespace FluentFiles.Core.Base
 {
     public abstract class LineBuilderBase<TLayoutDescriptor, TFieldSettings> : ILineBuilder
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
         where TFieldSettings : IFieldSettingsContainer 
     {
-        private readonly TLayoutDescriptor _descriptor;
+        private readonly Func<TFieldSettings, string, string> _valueTransformer;
 
-        protected LineBuilderBase(TLayoutDescriptor descriptor)
+        protected LineBuilderBase(TLayoutDescriptor descriptor, Func<TFieldSettings, string, string> valueTransformer = null)
         {
-            this._descriptor = descriptor;
+            Descriptor = descriptor;
+            _valueTransformer = valueTransformer;
         }
 
-        protected TLayoutDescriptor Descriptor
-        {
-            get { return _descriptor; }
-        }
+        protected TLayoutDescriptor Descriptor { get; }
 
         public abstract string BuildLine<T>(T entry);
 
@@ -24,20 +24,15 @@ namespace FluentFiles.Core.Base
                 ? ConvertToString(field, fieldValue)
                 : field.NullValue ?? string.Empty;
 
-            lineValue = TransformFieldValue(field, lineValue);
+            lineValue = _valueTransformer?.Invoke(field, lineValue) ?? lineValue;
 
-            return lineValue;
-        }
-
-        protected virtual string TransformFieldValue(TFieldSettings field, string lineValue)
-        {
             return lineValue;
         }
 
         private static string ConvertToString(TFieldSettings field, object fieldValue)
         {
             var converter = field.TypeConverter;
-            if (converter != null && converter.CanConvertTo(typeof(string)) && converter.CanConvertFrom(field.PropertyInfo.PropertyType))
+            if (converter != null && converter.CanConvertTo(typeof(string)) && converter.CanConvertFrom(field.Type))
                 return field.TypeConverter.ConvertToString(fieldValue, field.PropertyInfo);
 
             return fieldValue.ToString();

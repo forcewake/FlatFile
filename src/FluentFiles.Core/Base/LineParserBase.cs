@@ -19,16 +19,14 @@ namespace FluentFiles.Core.Base
 
         protected virtual object GetFieldValueFromString(TFieldSettings fieldSettings, string memberValue)
         {
-            if (fieldSettings.IsNullable && memberValue.Trim('"').Equals(fieldSettings.NullValue, StringComparison.InvariantCultureIgnoreCase))
+            if (fieldSettings.IsNullable && memberValue.Trim('"').Equals(fieldSettings.NullValue, StringComparison.OrdinalIgnoreCase))
             {
                 return null;
             }
 
-            var targetType = fieldSettings.PropertyInfo.PropertyType.Unwrap();
-
             memberValue = PreprocessFieldValue(fieldSettings, memberValue);
 
-            var value = ConvertFromStringTo(fieldSettings.TypeConverter, memberValue, targetType, fieldSettings.PropertyInfo);
+            var value = ConvertFromStringTo(fieldSettings.TypeConverter, memberValue, fieldSettings.Type.Unwrap(), fieldSettings.PropertyInfo);
             return value;
         }
 

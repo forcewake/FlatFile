@@ -5,6 +5,6 @@
 
     public class FixedFieldSettingsBuilderFactory : IFieldSettingsBuilderFactory<IFixedFieldSettingsBuilder, IFixedFieldSettingsContainer>
     {
-        public IFixedFieldSettingsBuilder CreateBuilder(PropertyInfo property) => new FixedFieldSettingsBuilder(property);
+        public IFixedFieldSettingsBuilder CreateBuilder<TTarget, TProperty>(PropertyInfo property) => new FixedFieldSettingsBuilder(property);
     }
 }

@@ -5,6 +5,6 @@
 
     public class DelimitedFieldSettingsBuilderFactory : IFieldSettingsBuilderFactory<IDelimitedFieldSettingsBuilder, IDelimitedFieldSettingsContainer>
     {
-        public IDelimitedFieldSettingsBuilder CreateBuilder(PropertyInfo property) => new DelimitedFieldSettingsBuilder(property);
+        public IDelimitedFieldSettingsBuilder CreateBuilder<TTarget, TProperty>(PropertyInfo property) => new DelimitedFieldSettingsBuilder(property);
     }
 }

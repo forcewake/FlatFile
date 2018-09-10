@@ -47,4 +47,10 @@ namespace FluentFiles.Core.Base
             }
         }
     }
+
+    public class PropertySettingsContainer<TPropertySettings> where TPropertySettings : IFieldSettings
+    {
+        public int Index { get; set; }
+        public TPropertySettings PropertySettings { get; set; }
+    }
 }
