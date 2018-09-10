@@ -1,3 +1,4 @@
+using FluentFiles.Core.Extensions;
 using System;
 using System.Collections.Generic;
 
@@ -8,20 +9,24 @@ namespace FluentFiles.Core.Base
     {
         protected IFieldsContainer<TFieldSettings> FieldsContainer { get; private set; }
 
-        public LayoutDescriptorBase(IFieldsContainer<TFieldSettings> fieldsContainer)
+        protected LayoutDescriptorBase(IFieldsContainer<TFieldSettings> fieldsContainer)
         {
             FieldsContainer = fieldsContainer;
         }
 
-        public LayoutDescriptorBase(IFieldsContainer<TFieldSettings> fieldsContainer, Type targetType) : this(fieldsContainer) { TargetType = targetType; }
+        public LayoutDescriptorBase(IFieldsContainer<TFieldSettings> fieldsContainer, Type targetType) 
+            : this(fieldsContainer)
+        {
+            TargetType = targetType;
+            InstanceFactory = ReflectionHelper.CreateConstructor(targetType);
+        }
 
         public virtual Type TargetType { get; private set; }
 
-        public IEnumerable<TFieldSettings> Fields
-        {
-            get { return FieldsContainer.OrderedFields; }
-        }
+        public IEnumerable<TFieldSettings> Fields => FieldsContainer.OrderedFields;
 
         public bool HasHeader { get; protected internal set; }
+
+        public virtual Func<object> InstanceFactory { get; }
     }
 }

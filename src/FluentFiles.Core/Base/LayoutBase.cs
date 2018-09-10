@@ -13,9 +13,11 @@ namespace FluentFiles.Core.Base
 
         protected LayoutBase(
             IFieldSettingsBuilderFactory<TBuilder, TFieldSettings> fieldBuilderFactory, 
-            IFieldsContainer<TFieldSettings> fieldsContainer) : base(fieldsContainer)
+            IFieldsContainer<TFieldSettings> fieldsContainer)
+                : base(fieldsContainer)
         {
-            this._fieldBuilderFactory = fieldBuilderFactory;
+            _fieldBuilderFactory = fieldBuilderFactory;
+            InstanceFactory = ReflectionHelper.CreateConstructor(TargetType);
         }
 
         protected virtual void ProcessProperty<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TBuilder> configure)
@@ -31,6 +33,8 @@ namespace FluentFiles.Core.Base
         }
 
         public override Type TargetType { get { return typeof (TTarget); } }
+
+        public override Func<object> InstanceFactory { get; }
 
         public abstract TLayout WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TBuilder> configure = null);
 

@@ -26,6 +26,7 @@ S,Test Description,00044";
         {
             layout = A.Fake<IDelimitedLayoutDescriptor>();
             A.CallTo(() => layout.TargetType).Returns(typeof(Record));
+            A.CallTo(() => layout.InstanceFactory).Returns(() => new Record());
 
             lineParserFactory = A.Fake<IDelimitedLineParserFactory>();
             A.CallTo(() => lineParserFactory.GetParser(A<IDelimitedLayoutDescriptor>.Ignored))

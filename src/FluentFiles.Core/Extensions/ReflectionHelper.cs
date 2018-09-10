@@ -82,6 +82,20 @@ namespace FluentFiles.Core.Extensions
             return hasArguments ? ctor.DynamicInvoke(parameters) : ctor.DynamicInvoke();
         }
 
+        /// <summary>
+        /// Creates a delegate that instantiates a type using its parameterless constructor.
+        /// </summary>
+        /// <param name="targetType">The type to instantiate.</param>
+        public static Func<object> CreateConstructor(Type targetType)
+        {
+            var constructor = targetType.GetConstructor(Type.EmptyTypes);
+            if (constructor == null)
+                throw new ArgumentException("A parameterless constructor is required.", nameof(targetType));
+
+            var newExpression = Expression.Lambda<Func<object>>(Expression.New(constructor));
+            return newExpression.Compile();
+        }
+
         static void CacheCtor(ConstructorInfo key, Delegate ctor) { if (!Cache.ContainsKey(key)) Cache.Add(key, ctor); }
 
         /// <summary>

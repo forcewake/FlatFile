@@ -20,6 +20,7 @@ namespace FluentFiles.Core.Base
             TargetType = existing.TargetType;
             Fields = existing.Fields.ToList();
             HasHeader = existing.HasHeader;
+            InstanceFactory = existing.InstanceFactory;
         }
 
         public Type TargetType { get; }
@@ -27,5 +28,7 @@ namespace FluentFiles.Core.Base
         public IEnumerable<TFieldSettings> Fields { get; }
 
         public bool HasHeader { get; }
+
+        public Func<object> InstanceFactory { get; }
     }
 }

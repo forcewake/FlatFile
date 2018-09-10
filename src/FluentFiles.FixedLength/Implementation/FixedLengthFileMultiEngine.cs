@@ -6,7 +6,6 @@ using System.Linq;
 using FluentFiles.Core;
 using FluentFiles.Core.Base;
 using FluentFiles.Core.Exceptions;
-using FluentFiles.Core.Extensions;
 
 namespace FluentFiles.FixedLength.Implementation
 {
@@ -22,7 +21,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// <summary>
         /// The layout descriptors for this engine
         /// </summary>
-        readonly List<ILayoutDescriptor<IFixedFieldSettingsContainer>> layoutDescriptors;
+        readonly Dictionary<Type, ILayoutDescriptor<IFixedFieldSettingsContainer>> layoutDescriptors;
         /// <summary>
         /// The line builder factory
         /// </summary>
@@ -65,11 +64,11 @@ namespace FluentFiles.FixedLength.Implementation
             if (typeSelectorFunc == null) throw new ArgumentNullException("typeSelectorFunc");
             this.layoutDescriptors = layoutDescriptors.Select(ld => new FixedLengthImmutableLayoutDescriptor(ld))
                                                       .Cast<ILayoutDescriptor<IFixedFieldSettingsContainer>>()
-                                                      .ToList();
+                                                      .ToDictionary(ld => ld.TargetType, ld => ld);
             results = new Dictionary<Type, ArrayList>(this.layoutDescriptors.Count());
             foreach (var descriptor in this.layoutDescriptors)
             {
-                results[descriptor.TargetType] = new ArrayList();
+                results[descriptor.Value.TargetType] = new ArrayList();
             }
             this.typeSelectorFunc = typeSelectorFunc;
             this.lineBuilderFactory = lineBuilderFactory;
@@ -129,7 +128,7 @@ namespace FluentFiles.FixedLength.Implementation
         protected override bool TryParseLine<TEntity>(string line, int lineNumber, ref TEntity entity)
         {
             var type = entity.GetType();
-            var lineParser = lineParserFactory.GetParser(layoutDescriptors.FirstOrDefault(l => l.TargetType == type));
+            var lineParser = lineParserFactory.GetParser(layoutDescriptors[type]);
             lineParser.ParseLine(line, entity);
 
             return true;
@@ -180,7 +179,7 @@ namespace FluentFiles.FixedLength.Implementation
                 // Use selector func to find type for this line, and by effect, its layout
                 var type = typeSelectorFunc(line, lineNumber);
                 if (type == null) continue;
-                var entry = ReflectionHelper.CreateInstance(type, true);
+                var entry = layoutDescriptors[type].InstanceFactory();
 
                 try
                 {

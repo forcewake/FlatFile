@@ -33,6 +33,8 @@ namespace FluentFiles.Delimited.Implementation
 
         public IDelimitedLineParser GetParser(IDelimitedLayoutDescriptor descriptor)
         {
+            if (descriptor == null) throw new ArgumentNullException("descriptor");
+
             return new DelimitedLineParser(descriptor);
         }
 

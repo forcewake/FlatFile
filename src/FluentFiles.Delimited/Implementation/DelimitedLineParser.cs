@@ -7,17 +7,14 @@ namespace FluentFiles.Delimited.Implementation
     public class DelimitedLineParser :
         LineParserBase<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>,
         IDelimitedLineParser
-
     {
         public DelimitedLineParser(IDelimitedLayoutDescriptor layout)
             : base(layout)
         {
         }
 
-
         public override TEntity ParseLine<TEntity>(string line, TEntity entity)
         {
-
             int linePosition = 0;
             int delimiterSize = Layout.Delimiter.Length;
             foreach (var field in Layout.Fields)
