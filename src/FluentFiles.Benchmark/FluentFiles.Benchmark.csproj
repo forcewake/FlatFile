@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <OutputType>exe</OutputType>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoFixture" Version="4.5.0" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.11.0" />
+    <PackageReference Include="CsvHelper" Version="7.1.1" />
+    <PackageReference Include="FileHelpers" Version="3.3.0" />
+    <PackageReference Include="Newtonsoft.Json" Version=" 11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FluentFiles.Core\FluentFiles.Core.csproj" />
+    <ProjectReference Include="..\FluentFiles.Delimited\FluentFiles.Delimited.csproj" />
+    <ProjectReference Include="..\FluentFiles.FixedLength\FluentFiles.FixedLength.csproj" />
+  </ItemGroup>
+
+</Project>

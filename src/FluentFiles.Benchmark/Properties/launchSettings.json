@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FluentFiles.Benchmark": {
+      "commandName": "Project",
+      "commandLineArgs": "--filter *FluentFilesVsFileHelpersRead*"
+    }
+  }
+}
