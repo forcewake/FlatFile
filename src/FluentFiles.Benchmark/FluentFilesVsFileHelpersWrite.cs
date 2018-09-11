@@ -6,12 +6,16 @@ using FluentFiles.Benchmark.Mapping;
 using FluentFiles.FixedLength.Implementation;
 using AutoFixture;
 using BenchmarkDotNet.Attributes;
+using FluentFiles.Core;
 
 namespace FluentFiles.Benchmark
 {
     public class FluentFilesVsFileHelpersWrite
     {
-        FixedSampleRecord[] _records;
+        private FileHelperEngine<FixedSampleRecord> _helperEngine;
+        private IFlatFileEngine _fluentEngine;
+
+        private FixedSampleRecord[] _records;
 
         [Params(10, 100, 1000, 10000, 100000)]
         public int N;
@@ -21,28 +25,30 @@ namespace FluentFiles.Benchmark
         {
             var fixture = new Fixture();
             _records = fixture.CreateMany<FixedSampleRecord>(N).ToArray();
+
+            _helperEngine = new FileHelperEngine<FixedSampleRecord>();
+
+            var factory = new FixedLengthFileEngineFactory();
+            _fluentEngine = factory.GetEngine(new FixedSampleRecordLayout());
         }
 
         [Benchmark(Baseline = true)]
         public void FileHelpers()
         {
-            var engine = new FileHelperEngine<FixedSampleRecord>();
             using (var stream = new MemoryStream())
             using (var streamWriter = new StreamWriter(stream))
             {
-                engine.WriteStream(streamWriter, _records);
+                _helperEngine.WriteStream(streamWriter, _records);
             }
         }
 
         [Benchmark]
         public void FluentFiles()
         {
-            var factory = new FixedLengthFileEngineFactory();
-            var engine = factory.GetEngine(new FixedSampleRecordLayout());
             using (var stream = new MemoryStream())
             using (var streamWriter = new StreamWriter(stream))
             {
-                engine.Write(streamWriter, _records);
+                _fluentEngine.Write(streamWriter, _records);
             }
         }
     }

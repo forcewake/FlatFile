@@ -1,57 +1,84 @@
-using System.IO;
-using System.Linq;
+using AutoFixture;
+using BenchmarkDotNet.Attributes;
 using FileHelpers;
 using FluentFiles.Benchmark.Entities;
 using FluentFiles.Benchmark.Mapping;
+using FluentFiles.Core;
 using FluentFiles.FixedLength.Implementation;
-using BenchmarkDotNet.Attributes;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace FluentFiles.Benchmark
 {
+    [InProcess]
     public class FluentFilesVsFileHelpersRead
     {
-        private const string Content =
-@"20000000109PANIAGUA JOSE                                                                                                                                                   0     
-20000000125ACOSTA MARCOS                                                                                                                                                   0     
-20000000141GONZALEZ DOMINGO                                                                                                                                                0     
-20000000168SENA RAUL                                                                                                                                                       0     
-20000000192BITTAR RUSTON MUSA                                                                                                                                              0     
-20000000206CORDON SERGIO ALFREDO                                                                                                                                           0     
-20000000222CAVAGNARO ERNESTO RODAS GUILLERMO Y RIV                                                                                                                         0     
-20000000338BRUCE LUIS                                                                                                                                                      0     
-20000000354CHAVEZ DAMIAN JOSE                                                                                                                                              0     
-20000000389ZINGARETTI SANTIAGO ENRIQUE ARDUINO                                                                                                                             0     
-20000000400PEREYRA ARNOTI LEONARDO ANDRES                                                                                                                                  0     
-20000000516VELAZQUEZ ANIBAL ARISTOBU                                                                                                                                       0     
-20000000532GONZALEZ DOMINGO                                                                                                                                                0     
-20000000613CANALE S A CTA RECAUDADORA                                                                                                                                      0     
-20000000656MU#OZ FERNANDEZ ALEJANDRO                                                                                                                                       0     
-20000000745FERNANDEZ MONTOYA CHARLES JAIME                                                                                                                                 0     
-20000000869MOSCHION DANILO JUAN                                                                                                                                            602290
-20000000885CHOQUE RAMON FELIX                                                                                                                                              0     
-20000000923AQUINO VILLASANTI NICASIO                                                                                                                                       0     
-";
+        private FileHelperEngine<FixedSampleRecord> _helperEngine;
+        private IFlatFileEngine _fluentEngine;
+
+        private string _records;
+
+        [Params(10, 100, 1000, 10000, 100000)]
+        public int N;
+
+        [GlobalSetup]
+        public void Setup()
+        {
+            _helperEngine = new FileHelperEngine<FixedSampleRecord>();
+
+            _fluentEngine = new FixedLengthFileEngineFactory()
+                .GetEngine(new FixedSampleRecordLayout());
+
+            var records = new StringBuilder(N * 185);
+            var random = new Random();
+            var fixture = new Fixture().Customize(new RandomStringCustomization(160));
+            for (int i = 0; i < N; i++)
+            {
+                records.AppendLine($"{20000000000L + i}{fixture.Create<string>()}{random.Next(0, 999999).ToString().PadRight(6)}");
+            }
+
+            _records = records.ToString();
+        }
 
         [Benchmark(Baseline = true)]
         public IEnumerable<FixedSampleRecord> FileHelpers()
         {
-            var engine = new FileHelperEngine<FixedSampleRecord>();
-            using (var stream = new StringReader(Content))
+            using (var stream = new StringReader(_records))
             {
-                return engine.ReadStream(stream);
+                return _helperEngine.ReadStream(stream);
             }
         }
 
         [Benchmark]
         public IEnumerable<FixedSampleRecord> FluentFiles()
         {
-            var factory = new FixedLengthFileEngineFactory();
-            var engine = factory.GetEngine(new FixedSampleRecordLayout());
-            using (var stream = new StringReader(Content))
+            using (var stream = new StringReader(_records))
             {
-                return engine.Read<FixedSampleRecord>(stream).ToArray();
+                return _fluentEngine.Read<FixedSampleRecord>(stream).ToArray();
             }
+        }
+    }
+
+    class RandomStringCustomization : ICustomization
+    {
+        private readonly Random _random = new Random();
+        private readonly int _maxLength;
+
+        public RandomStringCustomization(int maxLength)
+        {
+            _maxLength = maxLength;
+        }
+
+        public void Customize(IFixture fixture)
+        {
+            fixture.RepeatCount = _maxLength;
+            fixture.Customize<string>(c => c.FromFactory(() => 
+                new string(fixture.CreateMany<char>()
+                                  .Take(_random.Next(1, _maxLength + 1))
+                                  .ToArray()).PadRight(_maxLength)));
         }
     }
 }
