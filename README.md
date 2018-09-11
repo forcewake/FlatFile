@@ -2,7 +2,7 @@ FluentFiles
 ========
 [![Build status](https://ci.appveyor.com/api/projects/status/s52n84t6o4nr92c3?svg=true)](https://ci.appveyor.com/project/mthamil/fluentfiles)
 
-FluentFiles is a fork of the [FlatFile](https://github.com/forcewake/FlatFile) project. It is library for working with flat files (up to 100 times faster then [FileHelpers](https://www.nuget.org/packages/FileHelpers/2.0.0))
+FluentFiles is a fork of the [FlatFile](https://github.com/forcewake/FlatFile) project. It is a library for working with flat files.
 
 ### Installing FluentFiles
 
@@ -43,44 +43,6 @@ Install-Package FluentFiles.FixedLength.Attributes
 
 These commands from Package Manager Console will download and install FluentFiles and all required dependencies.
 
-
-### Benchmarks
-#### Simple write
-| Name                         | Milliseconds | Percent  |
-|------------------------------|--------------|----------|
-| FileHelperEngine.WriteStream | 5175         | 11266.8% |
-| FlatFileEngine.Write         | 45           | 100%     |
-
-#### Simple read
-| Name                        | Milliseconds | Percent |
-|-----------------------------|--------------|---------|
-| FileHelperEngine.ReadStream | 7636         | 2764.4% |
-| FlatFileEngine.Read         | 276          | 100%    |
-
-#### Big (100000 entities) write
-| Name                         | Milliseconds | Percent |
-|------------------------------|--------------|---------|
-| FileHelperEngine.WriteStream | 17246        | 838.4%  |
-| FlatFileEngine.Write         | 2057         | 100%    |
-
-#### Big (100000 entities) write with reflection magic
-| Name                         | Milliseconds | Percent |
-|------------------------------|--------------|---------|
-| FileHelperEngine.WriteStream | 17778        | 1052.5% |
-| FlatFileEngine.Write         | 1689         | 100%    |
-
-#### FlatFile vs CsvHelper
-##### Write all records with class mapping
-| Name                   | Milliseconds | Percent |
-|------------------------|--------------|---------|
-| CsvWriter.WriteRecords | 26578        | 7988.8% |
-| FlatFileEngine.Write   | 332          | 100%    |  
-
-##### Read all records with class mapping
-| Name                   | Milliseconds | Percent |
-|------------------------|--------------|---------|
-| CsvWriter.ReadRecords | 18795        | 3190.5% |
-| FlatFileEngine.Read   | 589          | 100%    |  
 
 ### Usage
 #### Class mapping 

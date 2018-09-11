@@ -20,25 +20,19 @@ namespace FluentFiles.FixedLength
 
     public class FixedFieldSettings : FieldSettingsBase, IFixedFieldSettingsContainer
     {
-        public FixedFieldSettings(PropertyInfo propertyInfo) : base(propertyInfo)
+        public FixedFieldSettings(PropertyInfo propertyInfo)
+            : base(propertyInfo)
         {
         }
 
-        public FixedFieldSettings(IFixedFieldSettings settings)
-            : base(settings)
+        public FixedFieldSettings(PropertyInfo propertyInfo, IFixedFieldSettings settings)
+            : base(propertyInfo, settings)
         {
             Length = settings.Length;
             PadLeft = settings.PadLeft;
             PaddingChar = settings.PaddingChar;
-            TypeConverter = settings.TypeConverter;
             TruncateIfExceedFieldLength = settings.TruncateIfExceedFieldLength;
             StringNormalizer = settings.StringNormalizer;
-        }
-
-        public FixedFieldSettings(PropertyInfo propertyInfo, IFixedFieldSettings settings)
-            : this(settings)
-        {
-            PropertyInfo = propertyInfo;
         }
 
         public int Length { get; set; }

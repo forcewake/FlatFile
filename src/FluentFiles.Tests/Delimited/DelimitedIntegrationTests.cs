@@ -5,13 +5,14 @@ namespace FluentFiles.Tests.Delimited
     using FluentFiles.Delimited.Implementation;
     using FluentFiles.Tests.Base;
     using FluentFiles.Tests.Base.Entities;
+    using System;
 
     public class DelimitedIntegrationTests :
-        IntegrationTests<IDelimitedFieldSettingsContainer, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TestObject>>
+        IntegrationTests<IDelimitedFieldSettingsContainer, IDelimitedFieldSettingsBuilder, IDelimitedLayout<TestObject>>
     {
-        private readonly IDelimitedLayout<TestObject> _layout;
+        protected IDelimitedLayout<TestObject> _layout;
 
-        private readonly IFlatFileEngine _engine;
+        private readonly Lazy<IFlatFileEngine> _engine;
 
         private const string _testSource = "\"1\";\"Description 1\";\"3\"\r\n" +
                                            "\"2\";\"Description 2\";\"3\"\r\n" +
@@ -33,10 +34,10 @@ namespace FluentFiles.Tests.Delimited
                 .WithMember(o => o.Description)
                 .WithMember(o => o.NullableInt, set => set.AllowNull("=Null"));
 
-            _engine = new DelimitedFileEngine(
+            _engine = new Lazy<IFlatFileEngine>(() => new DelimitedFileEngine(
                 Layout,
                 new DelimitedLineBuilderFactory(),
-                new DelimitedLineParserFactory());
+                new DelimitedLineParserFactory()));
         }
 
         protected override IDelimitedLayout<TestObject> Layout
@@ -46,7 +47,7 @@ namespace FluentFiles.Tests.Delimited
 
         protected override IFlatFileEngine Engine
         {
-            get { return _engine; }
+            get { return _engine.Value; }
         }
 
         public override string TestSource

@@ -6,20 +6,19 @@ namespace FluentFiles.Delimited.Implementation
     using FluentFiles.Core.Base;
 
     public class DelimitedLayout<TTarget> :
-        LayoutBase<TTarget, IDelimitedFieldSettingsContainer, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TTarget>>,
+        LayoutBase<TTarget, IDelimitedFieldSettingsContainer, IDelimitedFieldSettingsBuilder, IDelimitedLayout<TTarget>>,
         IDelimitedLayout<TTarget>
     {
         public DelimitedLayout()
-            : this(
-                new DelimitedFieldSettingsFactory(),
-                new FieldsContainer<IDelimitedFieldSettingsContainer>())
+            : this(new DelimitedFieldSettingsBuilderFactory(),
+                   new FieldsContainer<IDelimitedFieldSettingsContainer>())
         {
         }
 
         public DelimitedLayout(
-            IFieldSettingsFactory<IDelimitedFieldSettingsConstructor> fieldSettingsFactory,
+            IFieldSettingsBuilderFactory<IDelimitedFieldSettingsBuilder, IDelimitedFieldSettingsContainer> fieldSettingsFactory,
             IFieldsContainer<IDelimitedFieldSettingsContainer> fieldsContainer)
-            : base(fieldSettingsFactory, fieldsContainer)
+                : base(fieldSettingsFactory, fieldsContainer)
         {
             Quotes = string.Empty;
             Delimiter = ",";
@@ -45,7 +44,7 @@ namespace FluentFiles.Delimited.Implementation
 
         public override IDelimitedLayout<TTarget> WithMember<TProperty>(
             Expression<Func<TTarget, TProperty>> expression,
-            Action<IDelimitedFieldSettingsConstructor> settings = null)
+            Action<IDelimitedFieldSettingsBuilder> settings = null)
         {
             ProcessProperty(expression, settings);
 

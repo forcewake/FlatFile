@@ -22,7 +22,7 @@ namespace FluentFiles.Delimited.Implementation
         /// <summary>
         /// The layout descriptors for this engine
         /// </summary>
-        readonly List<IDelimitedLayoutDescriptor> layoutDescriptors;
+        readonly Dictionary<Type, IDelimitedLayoutDescriptor> layoutDescriptors;
         /// <summary>
         /// The line builder factory
         /// </summary>
@@ -45,12 +45,13 @@ namespace FluentFiles.Delimited.Implementation
         readonly IMasterDetailTracker masterDetailTracker;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DelimetedFileMultiEngine"/> class.
+        /// Initializes a new instance of the <see cref="DelimitedFileMultiEngine"/> class.
         /// </summary>
         /// <param name="layoutDescriptors">The layout descriptors.</param>
         /// <param name="typeSelectorFunc">The type selector function.</param>
         /// <param name="lineBuilderFactory">The line builder factory.</param>
         /// <param name="lineParserFactory">The line parser factory.</param>
+        /// <param name="masterDetailTracker">Determines how master-detail record relationships are handled.</param>
         /// <param name="handleEntryReadError">The handle entry read error.</param>
         /// <exception cref="System.ArgumentNullException">typeSelectorFunc</exception>
         internal DelimitedFileMultiEngine(
@@ -62,11 +63,13 @@ namespace FluentFiles.Delimited.Implementation
             Func<FlatFileErrorContext, bool> handleEntryReadError = null)
         {
             if (typeSelectorFunc == null) throw new ArgumentNullException("typeSelectorFunc");
-            this.layoutDescriptors = layoutDescriptors.ToList();
+            this.layoutDescriptors = layoutDescriptors.Select(ld => new DelimitedImmutableLayoutDescriptor(ld))
+                                                      .Cast<IDelimitedLayoutDescriptor>()
+                                                      .ToDictionary(ld => ld.TargetType, ld => ld);
             results = new Dictionary<Type, ArrayList>(this.layoutDescriptors.Count());
             foreach (var descriptor in this.layoutDescriptors)
             {
-                results[descriptor.TargetType] = new ArrayList();
+                results[descriptor.Value.TargetType] = new ArrayList();
             }
             this.typeSelectorFunc = typeSelectorFunc;
             this.lineBuilderFactory = lineBuilderFactory;
@@ -126,7 +129,7 @@ namespace FluentFiles.Delimited.Implementation
         protected override bool TryParseLine<TEntity>(string line, int lineNumber, ref TEntity entity)
         {
             var type = entity.GetType();
-            var lineParser = lineParserFactory.GetParser(layoutDescriptors.FirstOrDefault(l => l.TargetType == type));
+            var lineParser = lineParserFactory.GetParser(layoutDescriptors[type]);
             lineParser.ParseLine(line, entity);
 
             return true;
@@ -165,7 +168,7 @@ namespace FluentFiles.Delimited.Implementation
                 // Use selector func to find type for this line, and by effect, its layout
                 var type = typeSelectorFunc(line);
                 if (type == null) continue;
-                var entry = ReflectionHelper.CreateInstance(type, true);
+                var entry = layoutDescriptors[type].InstanceFactory();
 
                 try
                 {

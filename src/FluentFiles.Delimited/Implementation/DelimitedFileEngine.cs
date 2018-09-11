@@ -39,11 +39,11 @@ namespace FluentFiles.Delimited.Implementation
             IDelimitedLineBuilderFactory builderFactory,
             IDelimitedLineParserFactory parserFactory, 
             Func<FlatFileErrorContext, bool> handleEntryReadError = null)
-            : base(handleEntryReadError)
+                : base(handleEntryReadError)
         {
             _builderFactory = builderFactory;
             _parserFactory = parserFactory;
-            _layoutDescriptor = layoutDescriptor;
+            _layoutDescriptor = new DelimitedImmutableLayoutDescriptor(layoutDescriptor);
         }
 
         /// <summary>

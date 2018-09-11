@@ -27,10 +27,11 @@ STest Description    00044";
         {
             layout = A.Fake<ILayoutDescriptor<IFixedFieldSettingsContainer>>();
             A.CallTo(() => layout.TargetType).Returns(typeof(Record));
+            A.CallTo(() => layout.InstanceFactory).Returns(() => new Record());
 
             lineParserFactory = new FixedLengthLineParserFactory(new Dictionary<Type, Type>
             {
-                { typeof(Record),  typeof(FakeLineParser) }
+                { typeof(Record), typeof(FakeLineParser) }
             });
         }
 

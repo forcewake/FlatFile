@@ -22,10 +22,16 @@ namespace FluentFiles.Core.Base
 
         public bool CanConvertFrom(Type type) => _converter.CanConvertFrom(type);
 
-        public bool CanConvertTo(Type type) => _converter.CanConvertTo(type);
+        public bool CanConvertTo(Type type) => OverrideCanConvertTo || _converter.CanConvertTo(type);
 
         public object ConvertFromString(string source, PropertyInfo targetProperty) => _converter.ConvertFromString(source);
 
         public string ConvertToString(object source, PropertyInfo sourceProperty) => _converter.ConvertToString(source);
+
+        /// <summary>
+        /// Some built-in <see cref="TypeConverter"/>s don't return as expected for <see cref="TypeConverter.CanConvertTo(Type)"/>.
+        /// Setting this to true makes sure that call succeeds.
+        /// </summary>
+        public bool OverrideCanConvertTo { get; set; }
     }
 }

@@ -4,7 +4,7 @@ namespace FluentFiles.Delimited
 
     public interface IDelimitedLayout<TTarget> :
         IDelimitedLayoutDescriptor,
-        ILayout<TTarget, IDelimitedFieldSettingsContainer, IDelimitedFieldSettingsConstructor, IDelimitedLayout<TTarget>>
+        ILayout<TTarget, IDelimitedFieldSettingsContainer, IDelimitedFieldSettingsBuilder, IDelimitedLayout<TTarget>>
     {
         IDelimitedLayout<TTarget> WithQuote(string quote);
         IDelimitedLayout<TTarget> WithDelimiter(string delimiter);

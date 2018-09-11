@@ -40,7 +40,7 @@ namespace FluentFiles.Tests.FixedLength
             var container = new FieldsContainer<IFixedFieldSettingsContainer>();
             container.AddOrUpdate(properties["Foo"], new FixedFieldSettings(properties["Foo"], attribute));
 
-            var descriptor = new LayoutDescriptorBase<IFixedFieldSettingsContainer>(container) {HasHeader = false};
+            var descriptor = new LayoutDescriptorBase<IFixedFieldSettingsContainer>(container, typeof(ConverterTestObject)) {HasHeader = false};
 
             var engine = fileEngineFactory.GetEngine(descriptor);
 

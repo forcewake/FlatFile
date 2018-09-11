@@ -13,5 +13,7 @@ namespace FluentFiles.Core
         IEnumerable<TFieldSettings> Fields { get; }
 
         bool HasHeader { get; }
+
+        Func<object> InstanceFactory { get; }
     }
 }

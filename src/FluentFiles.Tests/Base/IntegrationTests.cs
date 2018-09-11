@@ -14,7 +14,7 @@ namespace FluentFiles.Tests.Base
     public abstract class IntegrationTests<TFieldSettings, TConstructor, TLayout>
         where TLayout : ILayout<TestObject, TFieldSettings, TConstructor, TLayout>
         where TFieldSettings : IFieldSettingsContainer
-        where TConstructor : IFieldSettingsConstructor<TConstructor> 
+        where TConstructor : IFieldSettingsBuilder<TConstructor, TFieldSettings> 
     {
         protected abstract TLayout Layout { get; }
 
@@ -40,7 +40,7 @@ namespace FluentFiles.Tests.Base
         }
 
         [Fact]
-        public virtual void CoundOfTheObjectsAfterWriteReadShouldBeTheSame()
+        public virtual void CountOfTheObjectsAfterWriteReadShouldBeTheSame()
         {
             InvokeWriteTest((engine, stream) =>
             {

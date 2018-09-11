@@ -4,12 +4,12 @@ namespace FluentFiles.Core
     using System.Linq.Expressions;
     using FluentFiles.Core.Base;
 
-    public interface ILayout<TTarget, TFieldSettings, TConstructor, out TLayout> : ILayoutDescriptor<TFieldSettings>
+    public interface ILayout<TTarget, TFieldSettings, TBuilder, out TLayout> : ILayoutDescriptor<TFieldSettings>
         where TFieldSettings : IFieldSettings
-        where TConstructor : IFieldSettingsConstructor<TConstructor>
-        where TLayout : ILayout<TTarget, TFieldSettings, TConstructor, TLayout>
+        where TBuilder : IFieldSettingsBuilder<TBuilder, TFieldSettings>
+        where TLayout : ILayout<TTarget, TFieldSettings, TBuilder, TLayout>
     {
-        TLayout WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TConstructor> settings = null);
+        TLayout WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TBuilder> settings = null);
 
         TLayout WithHeader();
     }
