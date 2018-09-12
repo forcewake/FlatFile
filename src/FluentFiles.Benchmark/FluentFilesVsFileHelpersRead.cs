@@ -13,7 +13,6 @@ using System.Text;
 
 namespace FluentFiles.Benchmark
 {
-    [InProcess]
     public class FluentFilesVsFileHelpersRead
     {
         private FileHelperEngine<FixedSampleRecord> _helperEngine;
