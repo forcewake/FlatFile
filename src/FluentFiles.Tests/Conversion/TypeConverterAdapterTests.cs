@@ -1,4 +1,4 @@
-﻿using FluentFiles.Core.Base;
+﻿using FluentFiles.Core.Conversion;
 using System.ComponentModel;
 using Xunit;
 

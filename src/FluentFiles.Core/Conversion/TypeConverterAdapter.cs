@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace FluentFiles.Core.Base
+namespace FluentFiles.Core.Conversion
 {
     /// <summary>
     /// Adapts a <see cref="TypeConverter"/> to an <see cref="ITypeConverter"/>.

@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-namespace FluentFiles.Core.Base
+namespace FluentFiles.Core.Conversion
 {
     class DefaultValueTypeConverter : ITypeConverter
     {

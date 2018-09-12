@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace FluentFiles.Core.Base
+namespace FluentFiles.Core.Conversion
 {
     /// <summary>
     /// A generic base class for converting between strings and a given type.

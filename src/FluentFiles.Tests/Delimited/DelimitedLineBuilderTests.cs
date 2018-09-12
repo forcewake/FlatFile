@@ -1,6 +1,6 @@
 namespace FluentFiles.Tests.Delimited
 {
-    using FluentFiles.Core.Base;
+    using FluentFiles.Core.Conversion;
     using FluentFiles.Delimited;
     using FluentFiles.Delimited.Implementation;
     using FluentFiles.Tests.Base.Entities;

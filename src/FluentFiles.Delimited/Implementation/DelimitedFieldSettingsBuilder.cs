@@ -3,6 +3,7 @@
     using System;
     using System.Reflection;
     using FluentFiles.Core;
+    using FluentFiles.Core.Conversion;
     using FluentFiles.Core.Extensions;
 
     public class DelimitedFieldSettingsBuilder : IDelimitedFieldSettingsBuilder

@@ -1,6 +1,6 @@
 namespace FluentFiles.Core.Extensions
 {
-    using FluentFiles.Core.Base;
+    using FluentFiles.Core.Conversion;
     using System;
     using System.ComponentModel;
     using System.Linq.Expressions;

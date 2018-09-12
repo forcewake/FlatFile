@@ -1,6 +1,6 @@
 namespace FluentFiles.Tests.FixedLength
 {
-    using FluentFiles.Core.Base;
+    using FluentFiles.Core.Conversion;
     using FluentFiles.FixedLength;
     using FluentFiles.FixedLength.Implementation;
     using FluentFiles.Tests.Base.Entities;

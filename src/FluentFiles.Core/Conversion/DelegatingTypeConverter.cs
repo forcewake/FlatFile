@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace FluentFiles.Core
+namespace FluentFiles.Core.Conversion
 {
     /// <summary>
     /// An implementation of <see cref="ITypeConverter"/> that uses delegates for conversion.

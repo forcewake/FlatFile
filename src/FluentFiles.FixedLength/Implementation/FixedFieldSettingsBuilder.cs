@@ -4,6 +4,7 @@ namespace FluentFiles.FixedLength.Implementation
 {
     using System.Reflection;
     using FluentFiles.Core;
+    using FluentFiles.Core.Conversion;
     using FluentFiles.Core.Extensions;
 
     public class FixedFieldSettingsBuilder : IFixedFieldSettingsBuilder
