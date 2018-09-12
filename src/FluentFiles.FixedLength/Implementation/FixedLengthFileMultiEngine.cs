@@ -129,7 +129,7 @@ namespace FluentFiles.FixedLength.Implementation
         {
             var type = entity.GetType();
             var lineParser = lineParserFactory.GetParser(layoutDescriptors[type]);
-            lineParser.ParseLine(line, entity);
+            lineParser.ParseLine(line.AsSpan(), entity);
 
             return true;
         }

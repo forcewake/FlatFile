@@ -131,7 +131,7 @@ namespace FluentFiles.Core.Base
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         protected virtual bool TryParseLine<TEntity>(string line, int lineNumber, ref TEntity entity) where TEntity : class, new()
         {
-            LineParser.ParseLine(line, entity);
+            LineParser.ParseLine(line.AsSpan(), entity);
 
             return true;
         }

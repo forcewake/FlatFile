@@ -23,6 +23,22 @@ namespace FluentFiles.Tests.Delimited
         }
 
         [Fact]
+        public void ParserShouldParseAllFields()
+        {
+            layout.WithQuote("\"")
+                  .WithMember(o => o.Id)
+                  .WithMember(o => o.Description)
+                  .WithMember(o => o.NullableInt);
+
+            var entry = new TestObject();
+            var parsedEntity = parser.ParseLine("\"1\",\"Description 1\",\"3\"", entry);
+
+            parsedEntity.Id.Should().Be(1);
+            parsedEntity.Description.Should().Be("Description 1");
+            parsedEntity.NullableInt.Should().Be(3);
+        }
+
+        [Fact]
         public void ParserShouldUseTypeConverter()
         {
             layout.WithMember(o => o.Id, set => set.WithTypeConverter<IdHexConverter>());

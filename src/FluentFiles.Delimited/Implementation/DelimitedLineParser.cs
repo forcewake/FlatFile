@@ -1,8 +1,8 @@
 namespace FluentFiles.Delimited.Implementation
 {
     using System;
-    using FluentFiles.Core;
     using FluentFiles.Core.Base;
+    using FluentFiles.Core.Extensions;
 
     public class DelimitedLineParser :
         LineParserBase<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>,
@@ -13,29 +13,33 @@ namespace FluentFiles.Delimited.Implementation
         {
         }
 
-        public override TEntity ParseLine<TEntity>(string line, TEntity entity)
+        public override TEntity ParseLine<TEntity>(in ReadOnlySpan<char> line, TEntity entity)
         {
+            var quotesSpan = Layout.Quotes.AsSpan();
+            var delimiterSpan = Layout.Delimiter.AsSpan();
+
             int linePosition = 0;
-            int delimiterSize = Layout.Delimiter.Length;
+            int delimiterSize = delimiterSpan.Length;
             foreach (var field in Layout.Fields)
             {
                 int nextDelimiterIndex = -1;
                 if (line.Length > linePosition + delimiterSize)
                 {
-                    if (!String.IsNullOrEmpty(Layout.Quotes)) {
-                        if (Layout.Quotes.Equals(line.Substring(linePosition, Layout.Quotes.Length)))
+                    if (!String.IsNullOrEmpty(Layout.Quotes))
+                    {
+                        if (quotesSpan.Equals(line.Slice(linePosition, quotesSpan.Length), StringComparison.OrdinalIgnoreCase))
                         {
-                            nextDelimiterIndex = line.IndexOf(Layout.Quotes, linePosition + 1, StringComparison.InvariantCultureIgnoreCase);
+                            nextDelimiterIndex = line.IndexOf(quotesSpan, linePosition + 1, StringComparison.OrdinalIgnoreCase);
                             if (line.Length > nextDelimiterIndex)
                             {
-                                nextDelimiterIndex = line.IndexOf(Layout.Delimiter, nextDelimiterIndex, StringComparison.InvariantCultureIgnoreCase);
+                                nextDelimiterIndex = line.IndexOf(delimiterSpan, nextDelimiterIndex, StringComparison.OrdinalIgnoreCase);
                             }
                         }
                     }
 
                     if (nextDelimiterIndex == -1)
                     {
-                        nextDelimiterIndex = line.IndexOf(Layout.Delimiter, linePosition, StringComparison.InvariantCultureIgnoreCase);
+                        nextDelimiterIndex = line.IndexOf(delimiterSpan, linePosition, StringComparison.OrdinalIgnoreCase);
                     }
                 }
                 int fieldLength;
@@ -47,7 +51,7 @@ namespace FluentFiles.Delimited.Implementation
                 {
                     fieldLength = line.Length - linePosition;
                 }
-                string fieldValueFromLine = line.Substring(linePosition, fieldLength);
+                var fieldValueFromLine = line.Slice(linePosition, fieldLength);
                 var convertedFieldValue = GetFieldValueFromString(field, fieldValueFromLine);
                 field.SetValueOf(entity, convertedFieldValue);
                 linePosition += fieldLength + (nextDelimiterIndex > -1 ? delimiterSize : 0);
@@ -55,14 +59,14 @@ namespace FluentFiles.Delimited.Implementation
             return entity;
         }
 
-        protected override string PreprocessFieldValue(IDelimitedFieldSettingsContainer fieldSettingsBuilder, string memberValue)
+        protected override ReadOnlySpan<char> PreprocessFieldValue(IDelimitedFieldSettingsContainer fieldSettingsBuilder, in ReadOnlySpan<char> memberValue)
         {
             if (string.IsNullOrEmpty(Layout.Quotes))
             {
                 return memberValue;
             }
 
-            var value = memberValue.Replace(Layout.Quotes, String.Empty);
+            var value = memberValue.Trim(Layout.Quotes.AsSpan());
             return value;
         }
     }
