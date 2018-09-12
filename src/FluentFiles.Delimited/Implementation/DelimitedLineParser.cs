@@ -20,12 +20,13 @@ namespace FluentFiles.Delimited.Implementation
 
             int linePosition = 0;
             int delimiterSize = delimiterSpan.Length;
+            var hasQuotes = !quotesSpan.IsEmpty;
             foreach (var field in Layout.Fields)
             {
                 int nextDelimiterIndex = -1;
                 if (line.Length > linePosition + delimiterSize)
                 {
-                    if (!String.IsNullOrEmpty(Layout.Quotes))
+                    if (hasQuotes)
                     {
                         if (quotesSpan.Equals(line.Slice(linePosition, quotesSpan.Length), StringComparison.OrdinalIgnoreCase))
                         {
@@ -61,13 +62,8 @@ namespace FluentFiles.Delimited.Implementation
 
         protected override ReadOnlySpan<char> PreprocessFieldValue(IDelimitedFieldSettingsContainer fieldSettingsBuilder, in ReadOnlySpan<char> memberValue)
         {
-            if (string.IsNullOrEmpty(Layout.Quotes))
-            {
-                return memberValue;
-            }
-
-            var value = memberValue.Trim(Layout.Quotes.AsSpan());
-            return value;
+            var quotesSpan = Layout.Quotes.AsSpan();
+            return quotesSpan.IsEmpty ? memberValue : memberValue.Trim(quotesSpan);
         }
     }
 }
