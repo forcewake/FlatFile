@@ -63,7 +63,7 @@ namespace FluentFiles.Tests.Conversion
             var actual = adapter.ConvertToString(1, null);
 
             // Assert.
-            Assert.Equal("1", actual);
+            Assert.Equal("1", actual.ToString());
         }
     }
 }

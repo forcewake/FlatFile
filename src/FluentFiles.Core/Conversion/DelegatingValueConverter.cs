@@ -4,13 +4,13 @@ using System.Reflection;
 namespace FluentFiles.Core.Conversion
 {
     /// <summary>
-    /// An implementation of <see cref="ITypeConverter"/> that uses delegates for conversion.
+    /// An implementation of <see cref="IValueConverter"/> that uses delegates for conversion.
     /// </summary>
-    class DelegatingTypeConverter<TProperty> : ITypeConverter
+    class DelegatingValueConverter<TProperty> : IValueConverter
     {
-        internal Func<string, TProperty> ConversionFromString { get; set; }
+        internal ConvertFromString<TProperty> ConversionFromString { get; set; }
 
-        internal Func<TProperty, string> ConversionToString { get; set; }
+        internal ConvertToString<TProperty> ConversionToString { get; set; }
 
         public bool CanConvertFrom(Type type)
         {
@@ -24,12 +24,12 @@ namespace FluentFiles.Core.Conversion
                    (type == typeof(TProperty) && ConversionFromString != null);
         }
 
-        public object ConvertFromString(string source, PropertyInfo targetProperty)
+        public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty)
         {
             return ConversionFromString(source);
         }
 
-        public string ConvertToString(object source, PropertyInfo sourceProperty)
+        public ReadOnlySpan<char> ConvertToString(object source, PropertyInfo sourceProperty)
         {
             return ConversionToString((TProperty)source);
         }

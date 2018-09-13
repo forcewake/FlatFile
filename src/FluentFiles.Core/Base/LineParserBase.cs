@@ -2,6 +2,7 @@ namespace FluentFiles.Core.Base
 {
     using System;
     using System.Reflection;
+    using FluentFiles.Core.Conversion;
     using FluentFiles.Core.Extensions;
 
     public abstract class LineParserBase<TLayoutDescriptor, TFieldSettings> : ILineParser
@@ -32,11 +33,11 @@ namespace FluentFiles.Core.Base
 
         protected virtual ReadOnlySpan<char> PreprocessFieldValue(TFieldSettings fieldSettingsBuilder, in ReadOnlySpan<char> memberValue) => memberValue;
 
-        private static object ConvertFromStringTo(ITypeConverter converter, in ReadOnlySpan<char> source, Type targetType, PropertyInfo targetProperty)
+        private static object ConvertFromStringTo(IValueConverter converter, in ReadOnlySpan<char> source, Type targetType, PropertyInfo targetProperty)
         {
             if (converter != null && converter.CanConvertFrom(typeof(string)) && converter.CanConvertTo(targetType))
             {
-                return converter.ConvertFromString(source.ToString(), targetProperty);
+                return converter.ConvertFromString(source, targetProperty);
             }
 
             return null;

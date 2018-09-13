@@ -1,6 +1,7 @@
 ﻿namespace FluentFiles.Core
 {
     using FluentFiles.Core.Base;
+    using FluentFiles.Core.Conversion;
     using System;
 
     public interface IFieldSettingsBuilder<out TBuilder, out TSettings>
@@ -26,22 +27,38 @@
         TBuilder WithTypeConverter(ITypeConverter converter);
 
         /// <summary>
+        /// Specifies that a field's value should be converted using a new instance of the type <typeparamref name="TConverter"/>.
+        /// </summary>
+        /// <typeparam name="TConverter">The type of <see cref="IValueConverter"/> to use for conversion.</typeparam>
+        TBuilder WithConverter<TConverter>() where TConverter : IValueConverter, new();
+
+        /// <summary>
+        ///  Specifies that a field's value should be converted using the provided <see cref="IValueConverter"/> implementation.
+        /// </summary>
+        /// <param name="converter">The converter to use.</param>
+        TBuilder WithConverter(IValueConverter converter);
+
+        /// <summary>
         /// Specifies that a field's value should be converted from a string to its destination type using the provided conversion function.
         /// </summary>
         /// <typeparam name="TProperty">The type of the destination property.</typeparam>
         /// <param name="conversion">A lambda function converting from a string.</param>
-        TBuilder WithConversionFromString<TProperty>(Func<string, TProperty> conversion);
+        TBuilder WithConversionFromString<TProperty>(ConvertFromString<TProperty> conversion);
 
         /// <summary>
         /// Specifies that a field's value should be converted to a string from its destination type using the provided conversion function.
         /// </summary>
         /// <typeparam name="TProperty">The type of the source property.</typeparam>
         /// <param name="conversion">A lambda function converting to a string.</param>
-        TBuilder WithConversionToString<TProperty>(Func<TProperty, string> conversion);
+        TBuilder WithConversionToString<TProperty>(ConvertToString<TProperty> conversion);
 
         /// <summary>
         /// Constructs a field's settings.
         /// </summary>
         TSettings Build();
     }
+
+    public delegate TResult ConvertFromString<out TResult>(ReadOnlySpan<char> s);
+
+    public delegate ReadOnlySpan<char> ConvertToString<in TValue>(TValue v);
 }

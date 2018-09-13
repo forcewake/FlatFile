@@ -1,5 +1,6 @@
 namespace FluentFiles.Core.Base
 {
+    using FluentFiles.Core.Conversion;
     using FluentFiles.Core.Extensions;
     using System;
     using System.Reflection;
@@ -9,7 +10,7 @@ namespace FluentFiles.Core.Base
         int? Index { get; set; }
         bool IsNullable { get; }
         string NullValue { get; }
-        ITypeConverter TypeConverter { get; }
+        IValueConverter TypeConverter { get; }
     }
 
     public interface IFieldSettingsContainer : IFieldSettings
@@ -37,11 +38,11 @@ namespace FluentFiles.Core.Base
 
     public abstract class FieldSettingsBase : IFieldSettingsContainer
     {
-        private ITypeConverter _converter;
+        private IValueConverter _converter;
         private Func<object, object> _getValue;
         private Action<object, object> _setValue;
 
-        protected readonly ITypeConverter DefaultConverter;
+        protected readonly IValueConverter DefaultConverter;
 
         protected FieldSettingsBase(PropertyInfo propertyInfo)
         {
@@ -64,7 +65,7 @@ namespace FluentFiles.Core.Base
         public bool IsNullable { get; set; }
         public string NullValue { get; set; }
 
-        public ITypeConverter TypeConverter
+        public IValueConverter TypeConverter
         {
             get => _converter ?? DefaultConverter;
             set => _converter = value;

@@ -5,6 +5,7 @@
     <OutputType>exe</OutputType>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

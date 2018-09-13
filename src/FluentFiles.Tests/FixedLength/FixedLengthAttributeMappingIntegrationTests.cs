@@ -1,9 +1,12 @@
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using FakeItEasy;
+using FluentAssertions;
 using FluentFiles.Core;
 using FluentFiles.Core.Base;
+using FluentFiles.Core.Conversion;
 using FluentFiles.FixedLength;
 using FluentFiles.FixedLength.Attributes;
 using FluentFiles.FixedLength.Implementation;
@@ -21,14 +24,23 @@ namespace FluentFiles.Tests.FixedLength
             public string Foo { get; set; }
         }
 
-        public FixedLengthAttributeMappingIntegrationTests() { fileEngineFactory = new FixedLengthFileEngineFactory(); }
+        class StubConverter : IValueConverter
+        {
+            public bool CanConvertFrom(Type type) => true;
+            public bool CanConvertTo(Type type) => true;
+            public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty) => "foo";
+            public ReadOnlySpan<char> ConvertToString(object source, PropertyInfo sourceProperty) => source.ToString();
+        }
+
+        public FixedLengthAttributeMappingIntegrationTests()
+        {
+            fileEngineFactory = new FixedLengthFileEngineFactory();
+        }
 
         [Fact]
         public void EngineShouldCallTypeConverterWhenConverterAttributeIsPresent()
         {
-            var converter = A.Fake<ITypeConverter>();
-            A.CallTo(converter).WithReturnType<object>().Returns("foo");
-            A.CallTo(converter).WithReturnType<bool>().Returns(true);
+            var converter = new StubConverter();
 
             var attribute = A.Fake<IFixedFieldSettings>();
             A.CallTo(() => attribute.Index).Returns(1);
@@ -50,11 +62,12 @@ namespace FluentFiles.Tests.FixedLength
                 writer.WriteLine("A");
                 writer.Flush();
                 stream.Seek(0, SeekOrigin.Begin);
+
                 // Capture first result to force enumerable to be iterated
                 var result = engine.Read<ConverterTestObject>(stream).FirstOrDefault();
-            }
 
-            A.CallTo(converter).WithReturnType<object>().MustHaveHappened();
+                result.Foo.Should().Be("foo");
+            }
         }
 
         protected override IFlatFileEngine Engine { get { return fileEngineFactory.GetEngine<TestObject>(); } }

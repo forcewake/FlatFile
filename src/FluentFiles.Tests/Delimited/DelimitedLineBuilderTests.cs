@@ -25,7 +25,7 @@ namespace FluentFiles.Tests.Delimited
         [Fact]
         public void BuilderShouldDelimitFields()
         {
-            layout.WithMember(o => o.Id, set => set.WithTypeConverter<IdHexConverter>())
+            layout.WithMember(o => o.Id, set => set.WithConverter<IdHexConverter>())
                   .WithMember(o => o.Description);
 
             var entry = new TestObject
@@ -40,9 +40,9 @@ namespace FluentFiles.Tests.Delimited
         }
 
         [Fact]
-        public void BuilderShouldUseTypeConverter()
+        public void BuilderShouldUseConverter()
         {
-            layout.WithMember(o => o.Id, set => set.WithTypeConverter<IdHexConverter>());
+            layout.WithMember(o => o.Id, set => set.WithConverter<IdHexConverter>());
 
             var entry = new TestObject
             {
@@ -69,14 +69,14 @@ namespace FluentFiles.Tests.Delimited
             line.Should().Be("BEEF");
         }
 
-        class IdHexConverter : TypeConverterBase<int>
+        class IdHexConverter : ValueConverterBase<int>
         {
-            protected override int ConvertFrom(string source, PropertyInfo targetProperty)
+            protected override int ConvertFrom(ReadOnlySpan<char> source, PropertyInfo targetProperty)
             {
                 return Int32.Parse(source, NumberStyles.AllowHexSpecifier);
             }
 
-            protected override string ConvertTo(int source, PropertyInfo sourceProperty)
+            protected override ReadOnlySpan<char> ConvertTo(int source, PropertyInfo sourceProperty)
             {
                 return source.ToString("X");
             }

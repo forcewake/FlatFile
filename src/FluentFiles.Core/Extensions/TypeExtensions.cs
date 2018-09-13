@@ -7,12 +7,12 @@ namespace FluentFiles.Core.Extensions
 
     public static class TypeExtensions
     {
-        public static ITypeConverter GetConverter(this Type type)
+        public static IValueConverter GetConverter(this Type type)
         {
             var converter = TypeDescriptor.GetConverter(type.Unwrap());
             return converter != null 
-                ? new TypeConverterAdapter(converter) { OverrideCanConvertTo = true } 
-                : DefaultValueTypeConverter.Instance;
+                ? new TypeConverterAdapter(converter) { OverrideCanConvertTo = true }
+                : DefaultValueConverter.Instance;
         }
 
         public static bool IsNullable(this Type type)
