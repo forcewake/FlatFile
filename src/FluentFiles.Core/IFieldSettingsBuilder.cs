@@ -46,7 +46,7 @@
         TBuilder WithConversionFromString<TProperty>(ConvertFromString<TProperty> conversion);
 
         /// <summary>
-        /// Specifies that a field's value should be converted to a string from its destination type using the provided conversion function.
+        /// Specifies that a field's value should be converted to a string from its source type using the provided conversion function.
         /// </summary>
         /// <typeparam name="TProperty">The type of the source property.</typeparam>
         /// <param name="conversion">A lambda function converting to a string.</param>
@@ -58,7 +58,19 @@
         TSettings Build();
     }
 
-    public delegate TResult ConvertFromString<out TResult>(ReadOnlySpan<char> s);
+    /// <summary>
+    /// Represents a function that converts from a string to a value.
+    /// </summary>
+    /// <typeparam name="TResult">The type of value to convert to.</typeparam>
+    /// <param name="source">The string to convert from.</param>
+    /// <returns>A <typeparamref name="TResult"/> value.</returns>
+    public delegate TResult ConvertFromString<out TResult>(ReadOnlySpan<char> source);
 
-    public delegate ReadOnlySpan<char> ConvertToString<in TValue>(TValue v);
+    /// <summary>
+    /// Represents a function that converts from a value to a string.
+    /// </summary>
+    /// <typeparam name="TValue">The type of value to convert from.</typeparam>
+    /// <param name="source">The value to convert from.</param>
+    /// <returns>A string representation of <typeparamref name="TValue"/>.</returns>
+    public delegate ReadOnlySpan<char> ConvertToString<in TValue>(TValue source);
 }
