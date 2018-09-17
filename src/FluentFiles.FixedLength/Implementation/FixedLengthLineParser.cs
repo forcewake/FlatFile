@@ -52,8 +52,8 @@ namespace FluentFiles.FixedLength.Implementation
         protected override ReadOnlySpan<char> PreprocessFieldValue(IFixedFieldSettingsContainer fieldSettingsBuilder, in ReadOnlySpan<char> memberValue)
         {
             return fieldSettingsBuilder.PadLeft
-                ? memberValue.TrimStart(new[] {fieldSettingsBuilder.PaddingChar})
-                : memberValue.TrimEnd(new[] {fieldSettingsBuilder.PaddingChar});
+                ? memberValue.TrimStart(fieldSettingsBuilder.PaddingChar)
+                : memberValue.TrimEnd(fieldSettingsBuilder.PaddingChar);
         }
     }
 }
