@@ -4,7 +4,7 @@
     using FluentFiles.Core.Conversion;
     using System;
 
-    public interface IFieldSettingsBuilder<out TBuilder, out TSettings>
+    public interface IFieldSettingsBuilder<out TBuilder, out TSettings> : IBuildable<TSettings>
         where TBuilder : IFieldSettingsBuilder<TBuilder, TSettings>
         where TSettings : IFieldSettings
     {
@@ -51,11 +51,6 @@
         /// <typeparam name="TProperty">The type of the source property.</typeparam>
         /// <param name="conversion">A lambda function converting to a string.</param>
         TBuilder WithConversionToString<TProperty>(ConvertToString<TProperty> conversion);
-
-        /// <summary>
-        /// Constructs a field's settings.
-        /// </summary>
-        TSettings Build();
     }
 
     /// <summary>
