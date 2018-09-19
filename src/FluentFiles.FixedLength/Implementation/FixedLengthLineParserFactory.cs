@@ -13,18 +13,24 @@ namespace FluentFiles.FixedLength.Implementation
     /// </summary>
     public class FixedLengthLineParserFactory : IFixedLengthLineParserFactory
     {
-        readonly Dictionary<Type, Type> lineParserRegistry;
+        private readonly Dictionary<Type, Type> lineParserRegistry;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FixedLengthLineParserFactory"/> class.
         /// </summary>
-        public FixedLengthLineParserFactory() { lineParserRegistry = new Dictionary<Type, Type>(); }
+        public FixedLengthLineParserFactory()
+        {
+            lineParserRegistry = new Dictionary<Type, Type>();
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FixedLengthLineParserFactory"/> class.
         /// </summary>
         /// <param name="lineParserRegistry">The line parser registry.</param>
-        public FixedLengthLineParserFactory(IDictionary<Type, Type> lineParserRegistry) { this.lineParserRegistry = new Dictionary<Type, Type>(lineParserRegistry); }
+        public FixedLengthLineParserFactory(IDictionary<Type, Type> lineParserRegistry)
+        {
+            this.lineParserRegistry = new Dictionary<Type, Type>(lineParserRegistry);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FixedLengthLineParserFactory"/> class.
@@ -42,10 +48,10 @@ namespace FluentFiles.FixedLength.Implementation
         /// <returns>IFixedLengthLineParser.</returns>
         public IFixedLengthLineParser GetParser(ILayoutDescriptor<IFixedFieldSettingsContainer> descriptor)
         {
-            if (descriptor == null) throw new ArgumentNullException("descriptor");
+            if (descriptor == null) throw new ArgumentNullException(nameof(descriptor));
 
-            return descriptor.TargetType != null && lineParserRegistry.ContainsKey(descriptor.TargetType)
-                       ? (IFixedLengthLineParser) ReflectionHelper.CreateInstance(lineParserRegistry[descriptor.TargetType], true, descriptor)
+            return descriptor.TargetType != null && lineParserRegistry.TryGetValue(descriptor.TargetType, out var parserType)
+                       ? (IFixedLengthLineParser)ReflectionHelper.CreateInstance(parserType, true, descriptor)
                        : new FixedLengthLineParser(descriptor);
         }
 
@@ -56,7 +62,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// <param name="targetType">The target record type.</param>
         public void RegisterLineParser<TParser>(Type targetType) where TParser : IFixedLengthLineParser
         {
-            lineParserRegistry[targetType] = typeof (TParser);
+            lineParserRegistry[targetType] = typeof(TParser);
         }
 
         /// <summary>
@@ -66,7 +72,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// <param name="targetLayout">The target layout.</param>
         public void RegisterLineParser<TParser>(ILayoutDescriptor<IFieldSettings> targetLayout) where TParser : IFixedLengthLineParser
         {
-            lineParserRegistry[targetLayout.TargetType] = typeof (TParser);
+            lineParserRegistry[targetLayout.TargetType] = typeof(TParser);
         }
     }
 }
