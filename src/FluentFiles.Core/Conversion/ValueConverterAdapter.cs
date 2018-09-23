@@ -19,12 +19,10 @@ namespace FluentFiles.Core.Conversion
             _converter = converter ?? throw new ArgumentNullException(nameof(converter));
         }
 
-        public bool CanConvertFrom(Type type) => _converter.CanConvertFrom(type);
+        public bool CanConvert(Type from, Type to) => _converter.CanConvertFrom(from) && _converter.CanConvertTo(to);
 
-        public bool CanConvertTo(Type type) => _converter.CanConvertTo(type);
+        public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty) => _converter.ConvertFromString(source.ToString());
 
-        public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty) => _converter.ConvertFromString(source.ToString(), targetProperty);
-
-        public ReadOnlySpan<char> ConvertToString(object source, PropertyInfo sourceProperty) => _converter.ConvertToString(source, sourceProperty).AsSpan();
+        public ReadOnlySpan<char> ConvertToString(object source, PropertyInfo sourceProperty) => _converter.ConvertToString(source).AsSpan();
     }
 }

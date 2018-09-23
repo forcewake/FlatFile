@@ -49,11 +49,11 @@ namespace FluentFiles.FixedLength.Implementation
             return line.Slice(linePosition, field.Length);
         }
 
-        protected override ReadOnlySpan<char> PreprocessFieldValue(IFixedFieldSettingsContainer fieldSettingsBuilder, in ReadOnlySpan<char> memberValue)
+        protected override ReadOnlySpan<char> PreprocessFieldValue(IFixedFieldSettingsContainer field, in ReadOnlySpan<char> memberValue)
         {
-            return fieldSettingsBuilder.PadLeft
-                ? memberValue.TrimStart(fieldSettingsBuilder.PaddingChar)
-                : memberValue.TrimEnd(fieldSettingsBuilder.PaddingChar);
+            return field.PadLeft
+                ? memberValue.TrimStart(field.PaddingChar)
+                : memberValue.TrimEnd(field.PaddingChar);
         }
     }
 }

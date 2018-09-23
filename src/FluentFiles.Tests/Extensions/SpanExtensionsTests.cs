@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentFiles.Core.Extensions;
 using Xunit;
 
@@ -19,6 +20,28 @@ namespace FluentFiles.Tests.Extensions
 
             // Assert.
             Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("", ',')]
+        [InlineData(",", ',')]
+        [InlineData(",,,,", ',')]
+        [InlineData(",a,a,a,a", ',')]
+        [InlineData("b,b,b,b,", ',')]
+        [InlineData(",,,,,a", ',')]
+        [InlineData("a,,,,,", ',')]
+        [InlineData("11111,2222,3333,444", ',')]
+        public void Test_Split(string source, char separator)
+        {
+            // Act.
+            var items = source.AsSpan().Split(separator);
+
+            var parts = new List<string>();
+            foreach (var item in items)
+                parts.Add(item.ToString());
+
+            // Assert.
+            Assert.Equal(source.Split(separator), parts);
         }
     }
 }

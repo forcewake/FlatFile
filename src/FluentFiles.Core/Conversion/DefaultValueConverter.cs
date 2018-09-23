@@ -8,9 +8,7 @@ namespace FluentFiles.Core.Conversion
     {
         public static IValueConverter Instance = new DefaultValueConverter();
 
-        public bool CanConvertFrom(Type type) => type == typeof(string);
-
-        public bool CanConvertTo(Type type) => false;
+        public bool CanConvert(Type from, Type to) => from == typeof(string);
 
         public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty) => targetProperty.PropertyType.GetDefaultValue();
 

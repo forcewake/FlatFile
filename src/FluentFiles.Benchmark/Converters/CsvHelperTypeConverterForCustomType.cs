@@ -7,16 +7,16 @@ namespace FluentFiles.Benchmark.Converters
 
     public class CsvHelperTypeConverterForCustomType : CsvHelperTypeConversion.ITypeConverter
     {
-        private readonly FlatFileTypeConverterForCustomType converter;
+        private readonly FlatFileConverterForCustomType converter;
 
         public CsvHelperTypeConverterForCustomType()
         {
-            converter = new FlatFileTypeConverterForCustomType();
+            converter = new FlatFileConverterForCustomType();
         }
 
         public string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
         {
-            return converter.ConvertToString(value, (PropertyInfo)memberMapData.Member);
+            return converter.ConvertToString(value, (PropertyInfo)memberMapData.Member).ToString();
         }
 
         public object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)

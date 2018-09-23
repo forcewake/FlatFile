@@ -9,16 +9,12 @@ namespace FluentFiles.Core.Conversion
     public interface IValueConverter
     {
         /// <summary>
-        /// Whether a string can be deserialized to a given type.
+        /// Whether a value of a given type can be converted to another type.
         /// </summary>
-        /// <param name="type">The type to deserialize.</param>
-        bool CanConvertFrom(Type type);
-
-        /// <summary>
-        /// Whether a given type can be serialized to a string.
-        /// </summary>
-        /// <param name="type">The type to serialize.</param>
-        bool CanConvertTo(Type type);
+        /// <param name="from">The type to convert from.</param>
+        /// <param name="to">The type t oconvert to.</param>
+        /// <returns>Whether a conversion can be performed between the two types.</returns>
+        bool CanConvert(Type from, Type to);
 
         /// <summary>
         /// Converts an object to a string.

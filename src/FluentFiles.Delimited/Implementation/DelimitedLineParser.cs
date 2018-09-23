@@ -60,7 +60,7 @@ namespace FluentFiles.Delimited.Implementation
             return entity;
         }
 
-        protected override ReadOnlySpan<char> PreprocessFieldValue(IDelimitedFieldSettingsContainer fieldSettingsBuilder, in ReadOnlySpan<char> memberValue)
+        protected override ReadOnlySpan<char> PreprocessFieldValue(IDelimitedFieldSettingsContainer field, in ReadOnlySpan<char> memberValue)
         {
             var quotesSpan = Layout.Quotes.AsSpan();
             return quotesSpan.IsEmpty ? memberValue : memberValue.Trim(quotesSpan);

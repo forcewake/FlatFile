@@ -9,7 +9,7 @@
         IDelimitedLineBuilder
     {
         public DelimitedLineBuilder(IDelimitedLayoutDescriptor descriptor)
-            : base(descriptor, (f, v) => TransformFieldValue(descriptor, f, v))
+            : base(descriptor)
         {
         }
 
@@ -22,14 +22,14 @@
             return line.ToString();
         }
 
-        private static string TransformFieldValue(IDelimitedLayoutDescriptor descriptor, IDelimitedFieldSettingsContainer field, string lineValue)
+        protected override string PostprocessFieldValue(IDelimitedFieldSettingsContainer field, string value)
         {
-            var quotes = descriptor.Quotes;
+            var quotes = Descriptor.Quotes;
             if (!string.IsNullOrEmpty(quotes))
             {
-                lineValue = string.Format("{0}{1}{0}", quotes, lineValue);
+                value = string.Format("{0}{1}{0}", quotes, value);
             }
-            return lineValue;
+            return value;
         }
     }
 }

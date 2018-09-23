@@ -1,8 +1,6 @@
 namespace FluentFiles.Core.Base
 {
     using System;
-    using System.Reflection;
-    using FluentFiles.Core.Conversion;
     using FluentFiles.Core.Extensions;
 
     public abstract class LineParserBase<TLayoutDescriptor, TFieldSettings> : ILineParser
@@ -11,7 +9,7 @@ namespace FluentFiles.Core.Base
     {
         protected LineParserBase(TLayoutDescriptor layout)
         {
-            this.Layout = layout;
+            Layout = layout;
         }
 
         protected TLayoutDescriptor Layout { get; }
@@ -27,18 +25,17 @@ namespace FluentFiles.Core.Base
 
             var preprocessed = PreprocessFieldValue(fieldSettings, memberValue);
 
-            var value = ConvertFromStringTo(fieldSettings.TypeConverter, preprocessed, fieldSettings.Type.Unwrap(), fieldSettings.PropertyInfo);
+            var value = ConvertFromString(fieldSettings, preprocessed);
             return value;
         }
 
-        protected virtual ReadOnlySpan<char> PreprocessFieldValue(TFieldSettings fieldSettingsBuilder, in ReadOnlySpan<char> memberValue) => memberValue;
+        protected virtual ReadOnlySpan<char> PreprocessFieldValue(TFieldSettings field, in ReadOnlySpan<char> memberValue) => memberValue;
 
-        private static object ConvertFromStringTo(IValueConverter converter, in ReadOnlySpan<char> source, Type targetType, PropertyInfo targetProperty)
+        private static object ConvertFromString(TFieldSettings field, in ReadOnlySpan<char> source)
         {
-            if (converter != null && converter.CanConvertFrom(typeof(string)) && converter.CanConvertTo(targetType))
-            {
-                return converter.ConvertFromString(source, targetProperty);
-            }
+            var converter = field.TypeConverter;
+            if (converter != null && converter.CanConvert(from: typeof(string), to: field.Type.Unwrap()))
+                return converter.ConvertFromString(source, field.PropertyInfo);
 
             return null;
         }

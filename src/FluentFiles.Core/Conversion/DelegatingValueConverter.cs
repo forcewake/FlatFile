@@ -12,17 +12,9 @@ namespace FluentFiles.Core.Conversion
 
         internal ConvertToString<TProperty> ConversionToString { get; set; }
 
-        public bool CanConvertFrom(Type type)
-        {
-            return (type == typeof(string) && ConversionFromString != null) ||
-                   (type == typeof(TProperty) && ConversionToString != null);
-        }
-
-        public bool CanConvertTo(Type type)
-        {
-            return (type == typeof(string) && ConversionToString != null) ||
-                   (type == typeof(TProperty) && ConversionFromString != null);
-        }
+        public bool CanConvert(Type from, Type to) =>
+            (from == typeof(string) && to == typeof(TProperty) && ConversionFromString != null) ||
+            (from == typeof(TProperty) && to == typeof(string) && ConversionToString != null);
 
         public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty)
         {

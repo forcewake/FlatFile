@@ -9,9 +9,9 @@ namespace FluentFiles.Core.Conversion
     /// <typeparam name="TValue">The type to convert to and from a string.</typeparam>
     public abstract class ValueConverterBase<TValue> : IValueConverter
     {
-        public virtual bool CanConvertFrom(Type type) => type == typeof(string) || type == typeof(TValue);
-
-        public virtual bool CanConvertTo(Type type) => type == typeof(string) || type == typeof(TValue);
+        public virtual bool CanConvert(Type from, Type to) => 
+            (from == typeof(string) && to == typeof(TValue)) || 
+            (from == typeof(TValue) && to == typeof(string));
 
         public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty) => ConvertFrom(source, targetProperty);
 

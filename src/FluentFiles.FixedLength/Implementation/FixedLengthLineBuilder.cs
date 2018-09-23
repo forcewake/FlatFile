@@ -12,7 +12,7 @@ namespace FluentFiles.FixedLength.Implementation
         private readonly Lazy<int> _totalLength;
 
         public FixedLengthLineBuilder(ILayoutDescriptor<IFixedFieldSettingsContainer> descriptor)
-            : base(descriptor, TransformFieldValue)
+            : base(descriptor)
         {
             _totalLength = new Lazy<int>(() => descriptor.Fields.Sum(f => f.Length));
         }
@@ -26,23 +26,23 @@ namespace FluentFiles.FixedLength.Implementation
             return line.ToString();
         }
 
-        private static string TransformFieldValue(IFixedFieldSettingsContainer field, string lineValue)
+        protected override string PostprocessFieldValue(IFixedFieldSettingsContainer field, string value)
         {
             if (field.StringNormalizer != null)
             {
-                lineValue = field.StringNormalizer(lineValue);
+                value = field.StringNormalizer(value);
             }
 
-            if (lineValue.Length >= field.Length)
+            if (value.Length >= field.Length)
             {
-                return field.TruncateIfExceedFieldLength ? lineValue.Substring(0, field.Length) : lineValue;
+                return field.TruncateIfExceedFieldLength ? value.Substring(0, field.Length) : value;
             }
 
-            lineValue = field.PadLeft
-                ? lineValue.PadLeft(field.Length, field.PaddingChar)
-                : lineValue.PadRight(field.Length, field.PaddingChar);
+            value = field.PadLeft
+                ? value.PadLeft(field.Length, field.PaddingChar)
+                : value.PadRight(field.Length, field.PaddingChar);
 
-            return lineValue;
+            return value;
         }
     }
 }
