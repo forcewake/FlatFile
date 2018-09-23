@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FluentFiles.Converters\FluentFiles.Converters.csproj" />
     <ProjectReference Include="..\FluentFiles.Core\FluentFiles.Core.csproj" />
     <ProjectReference Include="..\FluentFiles.Delimited\FluentFiles.Delimited.csproj" />
     <ProjectReference Include="..\FluentFiles.FixedLength\FluentFiles.FixedLength.csproj" />

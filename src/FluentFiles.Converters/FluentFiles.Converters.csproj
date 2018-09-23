@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <IncludeSymbols>True</IncludeSymbols>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Description>Provides additional field converters for FluentFiles.</Description>
+    <Owners>mthamil</Owners>
+    <Authors>mthamil;forcewake</Authors>
+    <Copyright>Copyright 2018</Copyright>
+    <PackageProjectUrl>https://github.com/mthamil/FluentFiles</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mthamil/FluentFiles</RepositoryUrl>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/mthamil/FluentFiles/master/LICENSE</PackageLicenseUrl>
+    <PackageTags>FluentFiles;plain;reader;parser;schema;flat;csv;parse;read;fixed;fixedLength;delimited</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FluentFiles.Core\FluentFiles.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FluentFiles.Converters\FluentFiles.Converters.csproj" />
     <ProjectReference Include="..\FluentFiles.Core.Attributes\FluentFiles.Core.Attributes.csproj" />
     <ProjectReference Include="..\FluentFiles.Core\FluentFiles.Core.csproj" />
     <ProjectReference Include="..\FluentFiles.Delimited.Attributes\FluentFiles.Delimited.Attributes.csproj" />
