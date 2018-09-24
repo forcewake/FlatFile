@@ -47,6 +47,7 @@ namespace FluentFiles.Core.Base
         protected FieldSettingsBase(PropertyInfo propertyInfo)
         {
             PropertyInfo = propertyInfo;
+            Type = PropertyInfo.PropertyType;
             DefaultConverter = propertyInfo.PropertyType.GetConverter();
             _getValue = ReflectionHelper.CreatePropertyGetter(propertyInfo);
             _setValue = ReflectionHelper.CreatePropertySetter(propertyInfo);
@@ -71,9 +72,9 @@ namespace FluentFiles.Core.Base
             set => _converter = value;
         }
 
-        public PropertyInfo PropertyInfo { get; set; }
+        public PropertyInfo PropertyInfo { get; }
 
-        public Type Type => PropertyInfo.PropertyType;
+        public Type Type { get; }
 
         public object GetValueOf(object instance)
         {
