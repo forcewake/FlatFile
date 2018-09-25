@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace FluentFiles.Converters
 {
-    public class ByteConverter : NumberConverterBase<byte>
+    public sealed class ByteConverter : NumberConverterBase<byte>
     {
         protected override byte ConvertFromString(ReadOnlySpan<char> source, NumberFormatInfo format) =>
             byte.Parse(source, provider: format);

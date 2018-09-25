@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace FluentFiles.Converters
 {
-    public class Int16Converter : NumberConverterBase<short>
+    public sealed class Int16Converter : NumberConverterBase<short>
     {
         protected override short ConvertFromString(ReadOnlySpan<char> source, NumberFormatInfo format) =>
             short.Parse(source, provider: format);

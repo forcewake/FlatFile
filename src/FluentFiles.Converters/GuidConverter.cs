@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace FluentFiles.Converters
 {
-    public class GuidConverter : ValueConverterBase<Guid>
+    public sealed class GuidConverter : ValueConverterBase<Guid>
     {
         protected override Guid ConvertFrom(ReadOnlySpan<char> source, PropertyInfo targetProperty) =>
             Guid.Parse(source.Trim());

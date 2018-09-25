@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace FluentFiles.Converters
 {
-    public class DecimalConverter : NumberConverterBase<decimal>
+    public sealed class DecimalConverter : NumberConverterBase<decimal>
     {
         protected override decimal ConvertFromString(ReadOnlySpan<char> source, NumberFormatInfo format) =>
             decimal.Parse(source, NumberStyles.Float, provider: format);

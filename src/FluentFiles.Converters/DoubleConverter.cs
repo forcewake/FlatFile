@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace FluentFiles.Converters
 {
-    public class DoubleConverter : NumberConverterBase<double>
+    public sealed class DoubleConverter : NumberConverterBase<double>
     {
         protected override double ConvertFromString(ReadOnlySpan<char> source, NumberFormatInfo format) =>
             double.Parse(source, provider: format);

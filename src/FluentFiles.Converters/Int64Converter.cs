@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace FluentFiles.Converters
 {
-    public class Int64Converter : NumberConverterBase<long>
+    public sealed class Int64Converter : NumberConverterBase<long>
     {
         protected override long ConvertFromString(ReadOnlySpan<char> source, NumberFormatInfo format) =>
             long.Parse(source, provider: format);

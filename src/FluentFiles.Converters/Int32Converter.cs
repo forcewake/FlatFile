@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace FluentFiles.Converters
 {
-    public class Int32Converter : NumberConverterBase<int>
+    public sealed class Int32Converter : NumberConverterBase<int>
     {
         protected override int ConvertFromString(ReadOnlySpan<char> source, NumberFormatInfo format) => 
             int.Parse(source, provider: format);
