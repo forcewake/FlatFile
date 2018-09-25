@@ -6,12 +6,9 @@ namespace FluentFiles.Core.Base
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
         where TFieldSettings : IFieldSettingsContainer 
     {
-        private readonly Func<TFieldSettings, string, string> _valueTransformer;
-
-        protected LineBuilderBase(TLayoutDescriptor descriptor, Func<TFieldSettings, string, string> valueTransformer = null)
+        protected LineBuilderBase(TLayoutDescriptor descriptor)
         {
             Descriptor = descriptor;
-            _valueTransformer = valueTransformer;
         }
 
         protected TLayoutDescriptor Descriptor { get; }
@@ -24,16 +21,18 @@ namespace FluentFiles.Core.Base
                 ? ConvertToString(field, fieldValue)
                 : field.NullValue ?? string.Empty;
 
-            lineValue = _valueTransformer?.Invoke(field, lineValue) ?? lineValue;
+            lineValue = PostprocessFieldValue(field, lineValue);
 
             return lineValue;
         }
 
+        protected virtual string PostprocessFieldValue(TFieldSettings field, string value) => value;
+
         private static string ConvertToString(TFieldSettings field, object fieldValue)
         {
             var converter = field.TypeConverter;
-            if (converter != null && converter.CanConvertTo(typeof(string)) && converter.CanConvertFrom(field.Type))
-                return field.TypeConverter.ConvertToString(fieldValue, field.PropertyInfo);
+            if (converter != null && converter.CanConvert(from: field.Type, to: typeof(string)))
+                return converter.ConvertToString(fieldValue, field.PropertyInfo).ToString();
 
             return fieldValue.ToString();
         }

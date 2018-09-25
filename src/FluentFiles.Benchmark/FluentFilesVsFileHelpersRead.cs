@@ -3,7 +3,9 @@ using BenchmarkDotNet.Attributes;
 using FileHelpers;
 using FluentFiles.Benchmark.Entities;
 using FluentFiles.Benchmark.Mapping;
+using FluentFiles.Converters;
 using FluentFiles.Core;
+using FluentFiles.Core.Conversion;
 using FluentFiles.FixedLength.Implementation;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,6 @@ using System.Text;
 
 namespace FluentFiles.Benchmark
 {
-    [InProcess]
     public class FluentFilesVsFileHelpersRead
     {
         private FileHelperEngine<FixedSampleRecord> _helperEngine;
@@ -31,6 +32,8 @@ namespace FluentFiles.Benchmark
 
             _fluentEngine = new FixedLengthFileEngineFactory()
                 .GetEngine(new FixedSampleRecordLayout());
+
+            Registry.Converters.UseOptimizedConverters();
 
             var records = new StringBuilder(N * 185);
             var random = new Random();

@@ -1,7 +1,6 @@
 namespace FluentFiles.Core.Base
 {
     using System;
-    using System.Reflection;
     using FluentFiles.Core.Extensions;
 
     public abstract class LineParserBase<TLayoutDescriptor, TFieldSettings> : ILineParser
@@ -10,34 +9,33 @@ namespace FluentFiles.Core.Base
     {
         protected LineParserBase(TLayoutDescriptor layout)
         {
-            this.Layout = layout;
+            Layout = layout;
         }
 
         protected TLayoutDescriptor Layout { get; }
 
-        public abstract TEntity ParseLine<TEntity>(string line, TEntity entity) where TEntity : new();
+        public abstract TEntity ParseLine<TEntity>(in ReadOnlySpan<char> line, TEntity entity) where TEntity : new();
 
-        protected virtual object GetFieldValueFromString(TFieldSettings fieldSettings, string memberValue)
+        protected virtual object GetFieldValueFromString(TFieldSettings fieldSettings, in ReadOnlySpan<char> memberValue)
         {
-            if (fieldSettings.IsNullable && memberValue.Trim('"').Equals(fieldSettings.NullValue, StringComparison.OrdinalIgnoreCase))
+            if (fieldSettings.IsNullable && memberValue.Trim('"').Equals(fieldSettings.NullValue.AsSpan(), StringComparison.OrdinalIgnoreCase))
             {
                 return null;
             }
 
-            memberValue = PreprocessFieldValue(fieldSettings, memberValue);
+            var preprocessed = PreprocessFieldValue(fieldSettings, memberValue);
 
-            var value = ConvertFromStringTo(fieldSettings.TypeConverter, memberValue, fieldSettings.Type.Unwrap(), fieldSettings.PropertyInfo);
+            var value = ConvertFromString(fieldSettings, preprocessed);
             return value;
         }
 
-        protected virtual string PreprocessFieldValue(TFieldSettings fieldSettingsBuilder, string memberValue) => memberValue;
+        protected virtual ReadOnlySpan<char> PreprocessFieldValue(TFieldSettings field, in ReadOnlySpan<char> memberValue) => memberValue;
 
-        private static object ConvertFromStringTo(ITypeConverter converter, string source, Type targetType, PropertyInfo targetProperty)
+        private static object ConvertFromString(TFieldSettings field, in ReadOnlySpan<char> source)
         {
-            if (converter != null && converter.CanConvertFrom(typeof(string)) && converter.CanConvertTo(targetType))
-            {
-                return converter.ConvertFromString(source, targetProperty);
-            }
+            var converter = field.TypeConverter;
+            if (converter != null && converter.CanConvert(from: typeof(string), to: field.Type))
+                return converter.ConvertFromString(source, field.PropertyInfo);
 
             return null;
         }

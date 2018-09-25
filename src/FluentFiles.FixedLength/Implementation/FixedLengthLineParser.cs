@@ -14,12 +14,12 @@ namespace FluentFiles.FixedLength.Implementation
         {
         }
 
-        public override TEntity ParseLine<TEntity>(string line, TEntity entity)
+        public override TEntity ParseLine<TEntity>(in ReadOnlySpan<char> line, TEntity entity)
         {
             int linePosition = 0;
             foreach (var field in Layout.Fields)
             {
-                string fieldValueFromLine = GetValueFromLine(line, linePosition, field);
+                var fieldValueFromLine = GetValueFromLine(line, linePosition, field);
                 object convertedFieldValue = GetFieldValueFromString(field, fieldValueFromLine);
                 field.SetValueOf(entity, convertedFieldValue);
                 linePosition += field.Length;
@@ -27,18 +27,18 @@ namespace FluentFiles.FixedLength.Implementation
             return entity;
         }
 
-        private static string GetValueFromLine(string line, int linePosition, IFixedFieldSettingsContainer field)
+        private static ReadOnlySpan<char> GetValueFromLine(in ReadOnlySpan<char> line, int linePosition, IFixedFieldSettingsContainer field)
         {
             if (linePosition + field.Length > line.Length)
             {
                 if ((linePosition + field.Length) - line.Length != field.Length && linePosition <= line.Length)
                 {
-                    return line.Substring(linePosition);
+                    return line.Slice(linePosition);
                 }
 
                 if (field.IsNullable)
                 {
-                    return field.NullValue;
+                    return field.NullValue.AsSpan();
                 }
 
                 throw new IndexOutOfRangeException(
@@ -46,16 +46,14 @@ namespace FluentFiles.FixedLength.Implementation
                     "Setting a NullValue for this field will allow the line to be parsed and this field to be null.", field.Index, field.Length));
             }
 
-            return line.Substring(linePosition, field.Length);
+            return line.Slice(linePosition, field.Length);
         }
 
-        protected override string PreprocessFieldValue(IFixedFieldSettingsContainer fieldSettingsBuilder, string memberValue)
+        protected override ReadOnlySpan<char> PreprocessFieldValue(IFixedFieldSettingsContainer field, in ReadOnlySpan<char> memberValue)
         {
-            memberValue = fieldSettingsBuilder.PadLeft
-                ? memberValue.TrimStart(new[] {fieldSettingsBuilder.PaddingChar})
-                : memberValue.TrimEnd(new[] {fieldSettingsBuilder.PaddingChar});
-
-            return memberValue;
+            return field.PadLeft
+                ? memberValue.TrimStart(field.PaddingChar)
+                : memberValue.TrimEnd(field.PaddingChar);
         }
     }
 }

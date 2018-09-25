@@ -2,6 +2,7 @@ namespace FluentFiles.Core.Attributes.Base
 {
     using System;
     using FluentFiles.Core.Base;
+    using FluentFiles.Core.Conversion;
     using FluentFiles.Core.Extensions;
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
@@ -18,9 +19,15 @@ namespace FluentFiles.Core.Attributes.Base
 
         public Type Converter { get; set; }
 
-        public ITypeConverter TypeConverter
+        public IValueConverter TypeConverter
         {
-            get { return (ITypeConverter) ReflectionHelper.CreateInstance(Converter, true); }
+            get
+            {
+                if (typeof(ITypeConverter).IsAssignableFrom(Converter))
+                    return new ValueConverterAdapter((ITypeConverter)ReflectionHelper.CreateInstance(Converter, true));
+
+                return (IValueConverter)ReflectionHelper.CreateInstance(Converter, true);
+            }
         }
 
         protected FieldSettingsBaseAttribute(int index)

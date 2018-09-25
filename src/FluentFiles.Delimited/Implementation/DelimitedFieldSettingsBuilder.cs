@@ -3,6 +3,7 @@
     using System;
     using System.Reflection;
     using FluentFiles.Core;
+    using FluentFiles.Core.Conversion;
     using FluentFiles.Core.Extensions;
 
     public class DelimitedFieldSettingsBuilder : IDelimitedFieldSettingsBuilder
@@ -11,7 +12,7 @@
         private bool _isNullable;
         private string _nullValue;
         private string _name;
-        private ITypeConverter _typeConverter;
+        private IValueConverter _converter;
 
         public DelimitedFieldSettingsBuilder(PropertyInfo property)
         {
@@ -32,32 +33,43 @@
 
         public IDelimitedFieldSettingsBuilder WithTypeConverter(ITypeConverter converter)
         {
-            _typeConverter = converter ?? throw new ArgumentNullException(nameof(converter));
+            var typeConverter = converter ?? throw new ArgumentNullException(nameof(converter));
+            return WithConverter(new ValueConverterAdapter(typeConverter));
+        }
+
+        public IDelimitedFieldSettingsBuilder WithConverter<TConverter>() where TConverter : IValueConverter, new()
+        {
+            return WithConverter(ReflectionHelper.CreateInstance<TConverter>(true));
+        }
+
+        public IDelimitedFieldSettingsBuilder WithConverter(IValueConverter converter)
+        {
+            _converter = converter ?? throw new ArgumentNullException(nameof(converter));
             return this;
         }
 
-        public IDelimitedFieldSettingsBuilder WithConversionFromString<TProperty>(Func<string, TProperty> conversion)
+        public IDelimitedFieldSettingsBuilder WithConversionFromString<TProperty>(ConvertFromString<TProperty> conversion)
         {
-            if (_typeConverter == null)
-                _typeConverter = new DelegatingTypeConverter<TProperty>();
+            if (_converter == null)
+                _converter = new DelegatingValueConverter<TProperty>();
 
-            if (_typeConverter is DelegatingTypeConverter<TProperty>)
-                ((DelegatingTypeConverter<TProperty>)_typeConverter).ConversionFromString = conversion;
+            if (_converter is DelegatingValueConverter<TProperty> delegatingConverter)
+                delegatingConverter.ConversionFromString = conversion;
             else
-                throw new InvalidOperationException("A type converter has already been explicitly set.");
+                throw new InvalidOperationException("A converter has already been explicitly set.");
 
             return this;
         }
 
-        public IDelimitedFieldSettingsBuilder WithConversionToString<TProperty>(Func<TProperty, string> conversion)
+        public IDelimitedFieldSettingsBuilder WithConversionToString<TProperty>(ConvertToString<TProperty> conversion)
         {
-            if (_typeConverter == null)
-                _typeConverter = new DelegatingTypeConverter<TProperty>();
+            if (_converter == null)
+                _converter = new DelegatingValueConverter<TProperty>();
 
-            if (_typeConverter is DelegatingTypeConverter<TProperty>)
-                ((DelegatingTypeConverter<TProperty>)_typeConverter).ConversionToString = conversion;
+            if (_converter is DelegatingValueConverter<TProperty> delegatingConverter)
+                delegatingConverter.ConversionToString = conversion;
             else
-                throw new InvalidOperationException("A type converter has already been explicitly set.");
+                throw new InvalidOperationException("A converter has already been explicitly set.");
 
             return this;
         }
@@ -74,7 +86,7 @@
             {
                 IsNullable = _isNullable,
                 NullValue = _nullValue,
-                TypeConverter = _typeConverter
+                TypeConverter = _converter
             };
         }
     }

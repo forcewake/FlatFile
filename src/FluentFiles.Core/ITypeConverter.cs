@@ -1,7 +1,6 @@
 ﻿namespace FluentFiles.Core
 {
     using System;
-    using System.Reflection;
 
     public interface ITypeConverter
     {
@@ -9,8 +8,8 @@
 
         bool CanConvertTo(Type type);
 
-        string ConvertToString(object source, PropertyInfo sourceProperty);
+        string ConvertToString(object source);
 
-        object ConvertFromString(string source, PropertyInfo targetProperty);
+        object ConvertFromString(string source);
     }
 }

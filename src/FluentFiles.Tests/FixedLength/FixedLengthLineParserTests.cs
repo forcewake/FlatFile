@@ -2,7 +2,7 @@ using Xunit;
 
 namespace FluentFiles.Tests.FixedLength
 {
-    using FluentFiles.Core.Base;
+    using FluentFiles.Core.Conversion;
     using FluentFiles.FixedLength;
     using FluentFiles.FixedLength.Implementation;
     using FluentFiles.Tests.Base.Entities;
@@ -56,9 +56,9 @@ namespace FluentFiles.Tests.FixedLength
         }
 
         [Fact]
-        public void ParserShouldUseTypeConverter()
+        public void ParserShouldUseConverter()
         {
-            layout.WithMember(o => o.Id, set => set.WithLength(4).WithTypeConverter<IdHexConverter>())
+            layout.WithMember(o => o.Id, set => set.WithLength(4).WithConverter<IdHexConverter>())
                   .WithMember(o => o.Description, set => set.WithLength(25).AllowNull(string.Empty))
                   .WithMember(o => o.NullableInt, set => set.WithLength(5).AllowNull(string.Empty));
 
@@ -81,14 +81,14 @@ namespace FluentFiles.Tests.FixedLength
             parsedEntity.Id.Should().Be(48879);
         }
 
-        class IdHexConverter : TypeConverterBase<int>
+        class IdHexConverter : ValueConverterBase<int>
         {
-            protected override int ConvertFrom(string source, PropertyInfo targetProperty)
+            protected override int ConvertFrom(ReadOnlySpan<char> source, PropertyInfo targetProperty)
             {
                 return Int32.Parse(source, NumberStyles.AllowHexSpecifier);
             }
 
-            protected override string ConvertTo(int source, PropertyInfo sourceProperty)
+            protected override ReadOnlySpan<char> ConvertTo(int source, PropertyInfo sourceProperty)
             {
                 return source.ToString("X");
             }

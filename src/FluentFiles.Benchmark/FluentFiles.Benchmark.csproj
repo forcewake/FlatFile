@@ -5,6 +5,7 @@
     <OutputType>exe</OutputType>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FluentFiles.Converters\FluentFiles.Converters.csproj" />
     <ProjectReference Include="..\FluentFiles.Core\FluentFiles.Core.csproj" />
     <ProjectReference Include="..\FluentFiles.Delimited\FluentFiles.Delimited.csproj" />
     <ProjectReference Include="..\FluentFiles.FixedLength\FluentFiles.FixedLength.csproj" />

@@ -13,7 +13,7 @@ namespace FluentFiles.Benchmark.Mapping
                 .WithMember(m => m.StringColumn, c => c.WithName("String Column"))
                 .WithMember(m => m.IntColumn, c => c.WithName("Int Column"))
                 .WithMember(m => m.GuidColumn, c => c.WithName("Guid Column"))
-                .WithMember(m => m.CustomTypeColumn, c => c.WithName("Custom Type Column").WithTypeConverter<FlatFileTypeConverterForCustomType>());
+                .WithMember(m => m.CustomTypeColumn, c => c.WithName("Custom Type Column").WithConverter<FlatFileConverterForCustomType>());
         }
     }
 }

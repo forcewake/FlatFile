@@ -1,13 +1,13 @@
-﻿using FluentFiles.Core.Base;
-using System.ComponentModel;
+﻿using FluentFiles.Core.Conversion;
 using Xunit;
+using Int32Converter = System.ComponentModel.Int32Converter;
 
 namespace FluentFiles.Tests.Conversion
 {
     public class TypeConverterAdapterTests
     {
         [Fact]
-        public void CanConvertFromShouldPassThrough()
+        public void CanConvert()
         {
             // Arrange.
             var adapted = new Int32Converter();
@@ -15,22 +15,7 @@ namespace FluentFiles.Tests.Conversion
             var adapter = new TypeConverterAdapter(adapted);
 
             // Act.
-            var actual = adapter.CanConvertFrom(typeof(string));
-
-            // Assert.
-            Assert.True(actual);
-        }
-
-        [Fact]
-        public void CanConvertToShouldPassThrough()
-        {
-            // Arrange.
-            var adapted = new Int32Converter();
-
-            var adapter = new TypeConverterAdapter(adapted);
-
-            // Act.
-            var actual = adapter.CanConvertTo(typeof(string));
+            var actual = adapter.CanConvert(from: typeof(string), to: typeof(int));
 
             // Assert.
             Assert.True(actual);
@@ -63,7 +48,7 @@ namespace FluentFiles.Tests.Conversion
             var actual = adapter.ConvertToString(1, null);
 
             // Assert.
-            Assert.Equal("1", actual);
+            Assert.Equal("1", actual.ToString());
         }
     }
 }

@@ -9,6 +9,8 @@ using FluentFiles.Delimited.Attributes;
 using FluentFiles.Delimited.Implementation;
 using FluentFiles.Tests.Base.Entities;
 using Xunit;
+using System;
+using FluentFiles.Core.Conversion;
 
 namespace FluentFiles.Tests.Delimited
 {
@@ -16,7 +18,7 @@ namespace FluentFiles.Tests.Delimited
     {
         private readonly IFlatFileEngineFactory<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer> _fileEngineFactory;
 
-		public DelimitedAttributeMappingIntegrationTests()
+        public DelimitedAttributeMappingIntegrationTests()
         {
             _fileEngineFactory = new DelimitedFileEngineFactory();
         }
@@ -26,46 +28,50 @@ namespace FluentFiles.Tests.Delimited
             get { return _fileEngineFactory.GetEngine<TestObject>(); }
         }
 
-		class ConverterTestObject
-		{
-			public string Foo { get; set; }
-		}
+        class ConverterTestObject
+        {
+            public string Foo { get; set; }
+        }
 
-		[Fact]
-		public void EngineShouldCallTypeConverterWhenConverterAttributeIsPresent()
-		{
-			// a converter to convert "A" to "foo"
-			var converter = A.Fake<ITypeConverter>();
-			A.CallTo(() => converter.ConvertFromString("A", A<PropertyInfo>.Ignored)).Returns("foo");
-			A.CallTo(() => converter.CanConvertFrom(typeof(string))).Returns(true);
-			A.CallTo(() => converter.CanConvertTo(typeof(string))).Returns(true);
+        class StubConverter : IValueConverter
+        {
+            public bool CanConvert(Type from, Type to) => true;
+            public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty) => "foo";
+            public ReadOnlySpan<char> ConvertToString(object source, PropertyInfo sourceProperty) => source.ToString();
+        }
 
-			// an attribute to assign the property
-			var attribute = A.Fake<IDelimitedFieldSettings>();
-		    A.CallTo(() => attribute.Index).Returns(1);
-		    A.CallTo(() => attribute.TypeConverter).Returns(converter);
+        [Fact]
+        public void EngineShouldCallTypeConverterWhenConverterAttributeIsPresent()
+        {
+            // a converter to convert "A" to "foo"
+            var converter = new StubConverter();
 
-			// the properties of the class
-			var properties = typeof(ConverterTestObject).GetProperties(BindingFlags.Instance | BindingFlags.Public).ToDictionary(info => info.Name);
+            // an attribute to assign the property
+            var attribute = A.Fake<IDelimitedFieldSettings>();
+            A.CallTo(() => attribute.Index).Returns(1);
+            A.CallTo(() => attribute.TypeConverter).Returns(converter);
 
-			// assign the attribute to the Foo property
-			var container = new FieldsContainer<IDelimitedFieldSettingsContainer>();
-			container.AddOrUpdate(properties["Foo"], new DelimitedFieldSettings(properties["Foo"], attribute));
+            // the properties of the class
+            var properties = typeof(ConverterTestObject).GetProperties(BindingFlags.Instance | BindingFlags.Public).ToDictionary(info => info.Name);
 
-			var layout = new DelimitedLayout<ConverterTestObject>(new DelimitedFieldSettingsBuilderFactory(), container);
-			var engine = _fileEngineFactory.GetEngine(layout);
+            // assign the attribute to the Foo property
+            var container = new FieldsContainer<IDelimitedFieldSettingsContainer>();
+            container.AddOrUpdate(properties["Foo"], new DelimitedFieldSettings(properties["Foo"], attribute));
 
-			// write "A" to the stream and verify it is converted to "foo"
-			using (var stream = new MemoryStream())
-			using (var writer = new StreamWriter(stream))
-			{
-				writer.WriteLine("A");
-				writer.Flush();
-				stream.Seek(0, SeekOrigin.Begin);
-				// Capture first result to force enumerable to be iterated
-				var result = engine.Read<ConverterTestObject>(stream).FirstOrDefault();
-				Assert.Equal("foo", result.Foo);
-			}
-		}
+            var layout = new DelimitedLayout<ConverterTestObject>(new DelimitedFieldSettingsBuilderFactory(), container);
+            var engine = _fileEngineFactory.GetEngine(layout);
+
+            // write "A" to the stream and verify it is converted to "foo"
+            using (var stream = new MemoryStream())
+            using (var writer = new StreamWriter(stream))
+            {
+                writer.WriteLine("A");
+                writer.Flush();
+                stream.Seek(0, SeekOrigin.Begin);
+                // Capture first result to force enumerable to be iterated
+                var result = engine.Read<ConverterTestObject>(stream).FirstOrDefault();
+                Assert.Equal("foo", result.Foo);
+            }
+        }
     }
 }

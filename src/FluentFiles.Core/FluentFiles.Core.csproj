@@ -20,5 +20,9 @@
     <PackageLicenseUrl>https://raw.githubusercontent.com/mthamil/FluentFiles/master/LICENSE</PackageLicenseUrl>
     <PackageTags>FluentFiles;plain;reader;parser;schema;flat;csv;parse;read;fixed;fixedLength;delimited</PackageTags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Memory" Version="4.5.1" />
+  </ItemGroup>
   
 </Project>
