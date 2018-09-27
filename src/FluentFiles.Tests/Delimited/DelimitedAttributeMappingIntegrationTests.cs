@@ -56,7 +56,7 @@ namespace FluentFiles.Tests.Delimited
 
             // assign the attribute to the Foo property
             var container = new FieldsContainer<IDelimitedFieldSettingsContainer>();
-            container.AddOrUpdate(properties["Foo"], new DelimitedFieldSettings(properties["Foo"], attribute));
+            container.AddOrUpdate(new DelimitedFieldSettings(properties["Foo"], attribute));
 
             var layout = new DelimitedLayout<ConverterTestObject>(new DelimitedFieldSettingsBuilderFactory(), container);
             var engine = _fileEngineFactory.GetEngine(layout);

@@ -34,6 +34,11 @@ namespace FluentFiles.Core.Base
         /// The property underlying a field.
         /// </summary>
         PropertyInfo PropertyInfo { get; }
+
+        /// <summary>
+        /// A string that uniquely identifies a field within a layout.
+        /// </summary>
+        string UniqueKey { get; }
     }
 
     public abstract class FieldSettingsBase : IFieldSettingsContainer
@@ -48,6 +53,7 @@ namespace FluentFiles.Core.Base
         {
             PropertyInfo = propertyInfo;
             Type = PropertyInfo.PropertyType.Unwrap();
+            UniqueKey = $"[{propertyInfo.DeclaringType.AssemblyQualifiedName}]:{propertyInfo.Name}";
             DefaultConverter = propertyInfo.PropertyType.GetConverter();
             _getValue = ReflectionHelper.CreatePropertyGetter(propertyInfo);
             _setValue = ReflectionHelper.CreatePropertySetter(propertyInfo);
@@ -62,6 +68,7 @@ namespace FluentFiles.Core.Base
             TypeConverter = settings.TypeConverter;
         }
 
+        public string UniqueKey { get; }
         public int? Index { get; set; }
         public bool IsNullable { get; set; }
         public string NullValue { get; set; }

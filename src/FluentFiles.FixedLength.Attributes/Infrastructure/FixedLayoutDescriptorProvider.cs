@@ -37,7 +37,7 @@ namespace FluentFiles.FixedLength.Attributes.Infrastructure
 
                 if (attribute != null)
                 {
-                    container.AddOrUpdate(p.Property, new FixedFieldSettings(p.Property, attribute));
+                    container.AddOrUpdate(new FixedFieldSettings(p.Property, attribute));
                 }
             }
 

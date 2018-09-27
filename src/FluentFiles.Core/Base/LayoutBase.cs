@@ -29,7 +29,7 @@ namespace FluentFiles.Core.Base
 
             var fieldSettings = builder.Build();
 
-            FieldsContainer.AddOrUpdate(property, fieldSettings);
+            FieldsContainer.AddOrUpdate(fieldSettings);
         }
 
         public override Type TargetType { get { return typeof (TTarget); } }

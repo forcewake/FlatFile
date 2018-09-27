@@ -18,10 +18,7 @@ namespace FluentFiles.Tests.FixedLength
 
         public FixedLengthLineParserTests()
         {
-            layout = new FixedLayout<TestObject>()
-                    .WithMember(o => o.Id, set => set.WithLength(5).WithLeftPadding('0'))
-                    .WithMember(o => o.Description, set => set.WithLength(25).WithRightPadding(' '))
-                    .WithMember(o => o.NullableInt, set => set.WithLength(5).AllowNull("=Null").WithLeftPadding('0'));
+            layout = new FixedLayout<TestObject>();
 
             parser = new FixedLengthLineParser(layout);
         }
@@ -31,6 +28,10 @@ namespace FluentFiles.Tests.FixedLength
         [InlineData("00005Description 5            =Null", 5, "Description 5", null)]
         public void ParserShouldReadAnyValidString(string inputString, int id, string description, int? nullableInt)
         {
+            layout.WithMember(o => o.Id, set => set.WithLength(5).WithLeftPadding('0'))
+                  .WithMember(o => o.Description, set => set.WithLength(25).WithRightPadding(' '))
+                  .WithMember(o => o.NullableInt, set => set.WithLength(5).AllowNull("=Null").WithLeftPadding('0'));
+
             var entry = new TestObject();
 
             var parsedEntity = parser.ParseLine(inputString, entry);
@@ -46,6 +47,10 @@ namespace FluentFiles.Tests.FixedLength
         [InlineData("00005Description 5            3", 5, "Description 5", 3)]
         public void ParserShouldSetValueNullValueIfStringIsToShort(string inputString, int id, string description, int? nullableInt)
         {
+            layout.WithMember(o => o.Id, set => set.WithLength(5).WithLeftPadding('0'))
+                  .WithMember(o => o.Description, set => set.WithLength(25).WithRightPadding(' '))
+                  .WithMember(o => o.NullableInt, set => set.WithLength(5).AllowNull("=Null").WithLeftPadding('0'));
+
             var entry = new TestObject();
 
             var parsedEntity = parser.ParseLine(inputString, entry);
@@ -53,6 +58,41 @@ namespace FluentFiles.Tests.FixedLength
             parsedEntity.Id.Should().Be(id);
             parsedEntity.Description.Should().Be(description);
             parsedEntity.NullableInt.Should().Be(nullableInt);
+        }
+
+        [Fact]
+        public void ShouldIgnoreSections()
+        {
+            layout.WithMember(o => o.Id, set => set.WithLength(3).WithLeftPadding('0'))
+                  .WithMember(o => o.Description, set => set.WithLength(6).WithRightPadding(' '))
+                  .Ignore(7)
+                  .WithMember(o => o.NullableInt, set => set.WithLength(5).WithLeftPadding('0'));
+
+            var entry = new TestObject();
+
+            var parsedEntity = parser.ParseLine("001Descr 123456700003", entry);
+
+            parsedEntity.Id.Should().Be(1);
+            parsedEntity.Description.Should().Be("Descr");
+            parsedEntity.NullableInt.Should().Be(3);
+        }
+
+        [Fact]
+        public void ShouldIgnoreMultipleSections()
+        {
+            layout.WithMember(o => o.Id, set => set.WithLength(3).WithLeftPadding('0'))
+                  .Ignore(3)
+                  .WithMember(o => o.Description, set => set.WithLength(6).WithRightPadding(' '))
+                  .Ignore(7)
+                  .WithMember(o => o.NullableInt, set => set.WithLength(5).WithLeftPadding('0'));
+
+            var entry = new TestObject();
+
+            var parsedEntity = parser.ParseLine("001aaaDescr 123456700003", entry);
+
+            parsedEntity.Id.Should().Be(1);
+            parsedEntity.Description.Should().Be("Descr");
+            parsedEntity.NullableInt.Should().Be(3);
         }
 
         [Fact]
@@ -91,6 +131,37 @@ namespace FluentFiles.Tests.FixedLength
             protected override ReadOnlySpan<char> ConvertTo(int source, PropertyInfo sourceProperty)
             {
                 return source.ToString("X");
+            }
+        }
+
+        class TestObject : IEquatable<TestObject>
+        {
+            public int Id { get; set; }
+            public string Description { get; set; }
+            public int? NullableInt { get; set; }
+
+            public int GetHashCode(TestObject obj)
+            {
+                var idHash = Id.GetHashCode();
+                var descriptionHash = Object.ReferenceEquals(Description, null) ? 0 : Description.GetHashCode();
+                var nullableIntHash = !NullableInt.HasValue ? 0 : NullableInt.Value.GetHashCode();
+                return idHash ^ descriptionHash ^ nullableIntHash;
+            }
+
+            public bool Equals(TestObject other)
+            {
+                if (ReferenceEquals(other, null))
+                {
+                    return false;
+                }
+
+                if (ReferenceEquals(other, this))
+                {
+                    return true;
+                }
+
+                return Equals(Id, other.Id) && Equals(Description, other.Description) &&
+                       Equals(NullableInt, other.NullableInt);
             }
         }
     }
