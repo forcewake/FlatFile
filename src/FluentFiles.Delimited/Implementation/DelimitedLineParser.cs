@@ -24,7 +24,7 @@ namespace FluentFiles.Delimited.Implementation
             foreach (var field in Layout.Fields)
             {
                 int nextDelimiterIndex = -1;
-                if (line.Length > linePosition + delimiterSize)
+                if (linePosition + delimiterSize <= line.Length)
                 {
                     if (hasQuotes)
                     {
