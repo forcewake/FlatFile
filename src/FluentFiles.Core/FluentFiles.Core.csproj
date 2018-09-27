@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <IncludeSymbols>True</IncludeSymbols>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Description>The core library for FluentFiles assemblies.</Description>
+    <Owners>mthamil</Owners>
+    <Authors>mthamil;forcewake</Authors>
+    <Copyright>Copyright 2018</Copyright>
+    <PackageProjectUrl>https://github.com/mthamil/FluentFiles</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mthamil/FluentFiles</RepositoryUrl>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/mthamil/FluentFiles/master/LICENSE</PackageLicenseUrl>
+    <PackageTags>FluentFiles;plain;reader;parser;schema;flat;csv;parse;read;fixed;fixedLength;delimited</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Memory" Version="4.5.1" />
+  </ItemGroup>
+  
+</Project>

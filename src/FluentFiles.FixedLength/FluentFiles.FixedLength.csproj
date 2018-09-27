@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <IncludeSymbols>True</IncludeSymbols>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Description>A library for working with fixed-width field text files.</Description>
+    <Owners>mthamil</Owners>
+    <Authors>mthamil;forcewake</Authors>
+    <Copyright>Copyright 2018</Copyright>
+    <PackageProjectUrl>https://github.com/mthamil/FluentFiles</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mthamil/FluentFiles</RepositoryUrl>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/mthamil/FluentFiles/master/LICENSE</PackageLicenseUrl>
+    <PackageTags>FluentFiles;plain;reader;parser;schema;flat;parse;read;fixed;fixedLength</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FluentFiles.Core\FluentFiles.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Memory" Version="4.5.1" />
+  </ItemGroup>
+
+</Project>
