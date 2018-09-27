@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentFiles.Delimited.Attri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentFiles.FixedLength.Attributes", "FluentFiles.FixedLength.Attributes\FluentFiles.FixedLength.Attributes.csproj", "{65154587-18F2-45DC-8E86-B2177309A479}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentFiles.Converters", "FluentFiles.Converters\FluentFiles.Converters.csproj", "{25AFB2CB-37E5-4E2F-904C-1657D2FD4AB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentFiles.Converters", "FluentFiles.Converters\FluentFiles.Converters.csproj", "{25AFB2CB-37E5-4E2F-904C-1657D2FD4AB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,8 +85,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CDB73F9-C29E-473D-96C3-D0FA67CCCF42}
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal
