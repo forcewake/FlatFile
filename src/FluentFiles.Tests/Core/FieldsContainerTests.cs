@@ -37,7 +37,7 @@ namespace FluentFiles.Tests.Core
         [Fact]
         public void OrderedFieldsShouldContainsOneItemAfterAdd()
         {
-            _fieldsContainer.AddOrUpdate(_propertyInfo, _fieldSettings);
+            _fieldsContainer.AddOrUpdate(_fieldSettings);
 
             _fieldsContainer.OrderedFields.Should().HaveCount(1);
         }
@@ -45,7 +45,7 @@ namespace FluentFiles.Tests.Core
         [Fact]
         public void AddOrUpdateShouldAssingRightId()
         {
-            _fieldsContainer.AddOrUpdate(_propertyInfo, _fieldSettings);
+            _fieldsContainer.AddOrUpdate(_fieldSettings);
 
             _fieldsContainer.OrderedFields.First().Index.Should().Be(0);
         }
@@ -53,11 +53,11 @@ namespace FluentFiles.Tests.Core
         [Fact]
         public void OrderedFieldsShouldContainsOneItemAfterUpdate()
         {
-            _fieldsContainer.AddOrUpdate(_propertyInfo, _fieldSettings);
+            _fieldsContainer.AddOrUpdate(_fieldSettings);
 
             _fieldSettings.IsNullable = true;
 
-            _fieldsContainer.AddOrUpdate(_propertyInfo, _fieldSettings);
+            _fieldsContainer.AddOrUpdate(_fieldSettings);
 
             _fieldsContainer.OrderedFields.Should().HaveCount(1);
         }
@@ -67,7 +67,7 @@ namespace FluentFiles.Tests.Core
         {
             foreach (var property in _properties)
             {
-                _fieldsContainer.AddOrUpdate(property, new FixedFieldSettings(property));
+                _fieldsContainer.AddOrUpdate(new FixedFieldSettings(property));
             }
 
             _fieldsContainer.OrderedFields.Should().HaveCount(_properties.Length);
@@ -78,7 +78,7 @@ namespace FluentFiles.Tests.Core
         {
             foreach (var property in _properties)
             {
-                _fieldsContainer.AddOrUpdate(property, new FixedFieldSettings(property));
+                _fieldsContainer.AddOrUpdate(new FixedFieldSettings(property));
             }
 
             int id = 0;

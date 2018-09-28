@@ -37,5 +37,11 @@ namespace FluentFiles.FixedLength.Implementation
 
             return this;
         }
+
+        public IFixedLayout<TTarget> Ignore(int length)
+        {
+            FieldsContainer.AddOrUpdate(new IgnoredFixedFieldSettings(length));
+            return this;
+        }
     }
 }
