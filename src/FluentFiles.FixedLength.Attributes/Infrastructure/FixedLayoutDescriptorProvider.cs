@@ -29,6 +29,11 @@ namespace FluentFiles.FixedLength.Attributes.Infrastructure
                     typeof(FixedLengthFileAttribute).Name));
             }
 
+            foreach (var ignored in fileMappingType.GetAttributes<IgnoreFixedLengthFieldAttribute>())
+            {
+                container.AddOrUpdate(new IgnoredFixedFieldSettings(ignored.Length) { Index = ignored.Index });
+            }
+
             var properties = fileMappingType.GetTypeDescription<FixedLengthFieldAttribute>();
 
             foreach (var p in properties)
