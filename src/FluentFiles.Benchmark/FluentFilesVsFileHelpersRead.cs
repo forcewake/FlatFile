@@ -15,7 +15,6 @@ using System.Text;
 
 namespace FluentFiles.Benchmark
 {
-    [InProcess]
     public class FluentFilesVsFileHelpersRead
     {
         private FileHelperEngine<FixedSampleRecord> _helperEngine;
@@ -23,7 +22,7 @@ namespace FluentFiles.Benchmark
 
         private string _records;
 
-        [Params(10, 100, 1000, 10000)]//, 100000)]
+        [Params(10, 100, 1000, 10000, 100000)]
         public int N;
 
         [GlobalSetup]
