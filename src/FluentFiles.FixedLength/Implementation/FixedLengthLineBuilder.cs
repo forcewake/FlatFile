@@ -11,7 +11,7 @@ namespace FluentFiles.FixedLength.Implementation
     {
         private readonly Lazy<int> _totalLength;
 
-        public FixedLengthLineBuilder(ILayoutDescriptor<IFixedFieldSettingsContainer> descriptor)
+        public FixedLengthLineBuilder(IFixedLengthLayoutDescriptor descriptor)
             : base(descriptor)
         {
             _totalLength = new Lazy<int>(() => descriptor.Fields.Sum(f => f.Length));

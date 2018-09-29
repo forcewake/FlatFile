@@ -1,11 +1,10 @@
-﻿using FluentFiles.Core;
-using FluentFiles.Core.Base;
+﻿using FluentFiles.Core.Base;
 
 namespace FluentFiles.FixedLength.Implementation
 {
-    public sealed class FixedLengthImmutableLayoutDescriptor : ImmutableLayoutDescriptor<IFixedFieldSettingsContainer>
+    public sealed class FixedLengthImmutableLayoutDescriptor : ImmutableLayoutDescriptor<IFixedFieldSettingsContainer>, IFixedLengthLayoutDescriptor
     {
-        public FixedLengthImmutableLayoutDescriptor(ILayoutDescriptor<IFixedFieldSettingsContainer> existing)
+        public FixedLengthImmutableLayoutDescriptor(IFixedLengthLayoutDescriptor existing)
             : base(existing)
         {
         }

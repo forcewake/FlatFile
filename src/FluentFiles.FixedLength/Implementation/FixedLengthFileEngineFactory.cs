@@ -9,7 +9,7 @@ namespace FluentFiles.FixedLength.Implementation
     /// <summary>
     /// Class FixedLengthFileEngineFactory.
     /// </summary>
-    public class FixedLengthFileEngineFactory : IFlatFileEngineFactory<ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer>
+    public class FixedLengthFileEngineFactory : IFlatFileEngineFactory<IFixedLengthLayoutDescriptor, IFixedFieldSettingsContainer>
     {
         readonly FixedLengthLineParserFactory lineParserFactory = new FixedLengthLineParserFactory();
 
@@ -42,7 +42,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// <param name="handleEntryReadError">The handle entry read error func.</param>
         /// <returns>IFlatFileEngine.</returns>
         public IFlatFileEngine GetEngine(
-            ILayoutDescriptor<IFixedFieldSettingsContainer> descriptor,
+            IFixedLengthLayoutDescriptor descriptor,
             Func<string, Exception, bool> handleEntryReadError = null)
         {
             return new FixedLengthFileEngine(
@@ -61,7 +61,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// <param name="handleEntryReadError">The handle entry read error func.</param>
         /// <returns>IFlatFileEngine.</returns>
         public IFlatFileEngine GetEngine(
-            ILayoutDescriptor<IFixedFieldSettingsContainer> descriptor,
+            IFixedLengthLayoutDescriptor descriptor,
             Func<FlatFileErrorContext, bool> handleEntryReadError)
         {
             return new FixedLengthFileEngine(
@@ -80,7 +80,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// <param name="masterDetailTracker">Determines how master-detail record relationships are handled.</param>
         /// <returns>IFlatFileMultiEngine.</returns>
         public IFlatFileMultiEngine GetEngine(
-            IEnumerable<ILayoutDescriptor<IFixedFieldSettingsContainer>> layoutDescriptors,
+            IEnumerable<IFixedLengthLayoutDescriptor> layoutDescriptors,
             Func<string, int, Type> typeSelectorFunc,
             Func<string, Exception, bool> handleEntryReadError = null,
             IMasterDetailTracker masterDetailTracker = null)
@@ -105,7 +105,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// <param name="masterDetailTracker">Determines how master-detail record relationships are handled.</param>
         /// <returns>IFlatFileMultiEngine.</returns>
         public IFlatFileMultiEngine GetEngine(
-            IEnumerable<ILayoutDescriptor<IFixedFieldSettingsContainer>> layoutDescriptors,
+            IEnumerable<IFixedLengthLayoutDescriptor> layoutDescriptors,
             Func<string, int, Type> typeSelectorFunc,
             Func<FlatFileErrorContext, bool> handleEntryReadError,
             IMasterDetailTracker masterDetailTracker = null)
