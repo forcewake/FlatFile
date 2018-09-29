@@ -6,7 +6,7 @@
     public interface IFieldsContainer<TFieldSettings>
         where TFieldSettings : IFieldSettings
     {
-        void AddOrUpdate<TKey>(TKey key, TFieldSettings settings);
+        void AddOrUpdate(TFieldSettings settings);
 
         IEnumerable<TFieldSettings> OrderedFields { get; }
     }

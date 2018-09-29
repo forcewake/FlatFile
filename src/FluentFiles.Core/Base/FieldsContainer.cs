@@ -8,25 +8,25 @@ namespace FluentFiles.Core.Base
     {
         private int _currentPropertyId = 0;
 
-        public override void AddOrUpdate<TKey>(TKey key, TFieldSettings settings)
+        public override void AddOrUpdate(TFieldSettings settings)
         {
             settings.Index = _currentPropertyId++;
 
-            base.AddOrUpdate(key, settings);
+            base.AddOrUpdate(settings);
         }
     }
 
     public class FieldsContainer<TFieldSettings> : IFieldsContainer<TFieldSettings>
-        where TFieldSettings : IFieldSettings
+        where TFieldSettings : IFieldSettingsContainer
     {
-        protected Dictionary<object, PropertySettingsContainer<TFieldSettings>> Fields { get; private set; }
+        protected Dictionary<string, PropertySettingsContainer<TFieldSettings>> Fields { get; private set; }
 
         public FieldsContainer()
         {
-            Fields = new Dictionary<object, PropertySettingsContainer<TFieldSettings>>();
+            Fields = new Dictionary<string, PropertySettingsContainer<TFieldSettings>>();
         }
 
-        public virtual void AddOrUpdate<TKey>(TKey key, TFieldSettings settings)
+        public virtual void AddOrUpdate(TFieldSettings settings)
         {
             var propertySettings = new PropertySettingsContainer<TFieldSettings>
             {
@@ -34,7 +34,7 @@ namespace FluentFiles.Core.Base
                 Index = settings.Index.GetValueOrDefault()
             };
 
-            Fields[key] = propertySettings;
+            Fields[settings.UniqueKey] = propertySettings;
         }
 
         public virtual IEnumerable<TFieldSettings> OrderedFields

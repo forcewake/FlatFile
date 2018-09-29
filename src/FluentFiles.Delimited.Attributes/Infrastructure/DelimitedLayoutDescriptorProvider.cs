@@ -31,7 +31,7 @@
                 var settings = p.Attributes.FirstOrDefault() as IDelimitedFieldSettings;
                 if (settings != null)
                 {
-                    container.AddOrUpdate(p.Property, new DelimitedFieldSettings(p.Property, settings));
+                    container.AddOrUpdate(new DelimitedFieldSettings(p.Property, settings));
                 }
             }
             
