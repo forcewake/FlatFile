@@ -99,7 +99,7 @@ D20150512Standalone                     ";
 
         public FixedLengthMasterDetailTests()
         {
-            var layouts = new List<ILayoutDescriptor<IFixedFieldSettingsContainer>>
+            var layouts = new List<IFixedLengthLayoutDescriptor>
             {
                 new HeaderLayout(),
                 new HeaderContinuationLayout(),

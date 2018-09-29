@@ -17,7 +17,7 @@ namespace FluentFiles.Tests.FixedLength
 {
     public class FixedLengthAttributeMappingIntegrationTests : FixedLengthIntegrationTests
     {
-        readonly IFlatFileEngineFactory<ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer> fileEngineFactory;
+        readonly IFlatFileEngineFactory<IFixedLengthLayoutDescriptor, IFixedFieldSettingsContainer> fileEngineFactory;
 
         class ConverterTestObject
         {
@@ -51,7 +51,7 @@ namespace FluentFiles.Tests.FixedLength
             var container = new FieldsContainer<IFixedFieldSettingsContainer>();
             container.AddOrUpdate(new FixedFieldSettings(properties["Foo"], attribute));
 
-            var descriptor = new LayoutDescriptorBase<IFixedFieldSettingsContainer>(container, typeof(ConverterTestObject)) {HasHeader = false};
+            var descriptor = new FixedLayout<ConverterTestObject>(new FixedFieldSettingsBuilderFactory(), container) {HasHeader = false};
 
             var engine = fileEngineFactory.GetEngine(descriptor);
 

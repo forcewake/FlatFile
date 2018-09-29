@@ -14,7 +14,7 @@ namespace FluentFiles.Tests.FixedLength
 {
     public class FixedLengthErrorHandlingTests
     {
-        private ILayoutDescriptor<IFixedFieldSettingsContainer> layout;
+        private IFixedLengthLayoutDescriptor layout;
         readonly IFixedLengthLineParserFactory lineParserFactory;
         readonly IList<FlatFileErrorContext> errorContexts = new List<FlatFileErrorContext>();
 
@@ -25,7 +25,7 @@ STest Description    00044";
 
         public FixedLengthErrorHandlingTests()
         {
-            layout = A.Fake<ILayoutDescriptor<IFixedFieldSettingsContainer>>();
+            layout = A.Fake<IFixedLengthLayoutDescriptor>();
             A.CallTo(() => layout.TargetType).Returns(typeof(Record));
             A.CallTo(() => layout.InstanceFactory).Returns(() => new Record());
 

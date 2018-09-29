@@ -7,7 +7,7 @@ namespace FluentFiles.FixedLength.Implementation
     /// <summary>
     /// Class FixedLengthFileEngine.
     /// </summary>
-    public class FixedLengthFileEngine : FlatFileEngine<IFixedFieldSettingsContainer, ILayoutDescriptor<IFixedFieldSettingsContainer>>
+    public class FixedLengthFileEngine : FlatFileEngine<IFixedFieldSettingsContainer, IFixedLengthLayoutDescriptor>
     {
         /// <summary>
         /// The line builder factory
@@ -20,7 +20,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// <summary>
         /// The layout descriptor
         /// </summary>
-        private readonly ILayoutDescriptor<IFixedFieldSettingsContainer> layoutDescriptor;
+        private readonly IFixedLengthLayoutDescriptor layoutDescriptor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FixedLengthFileEngine"/> class.
@@ -30,7 +30,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// <param name="lineParserFactory">The line parser factory.</param>
         /// <param name="handleEntryReadError">The handle entry read error.</param>
         internal FixedLengthFileEngine(
-            ILayoutDescriptor<IFixedFieldSettingsContainer> layoutDescriptor,
+            IFixedLengthLayoutDescriptor layoutDescriptor,
             IFixedLengthLineBuilderFactory lineBuilderFactory,
             IFixedLengthLineParserFactory lineParserFactory,
             Func<FlatFileErrorContext, bool> handleEntryReadError = null) : base(handleEntryReadError)
@@ -62,7 +62,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// Gets the layout descriptor.
         /// </summary>
         /// <value>The layout descriptor.</value>
-        protected override ILayoutDescriptor<IFixedFieldSettingsContainer> LayoutDescriptor
+        protected override IFixedLengthLayoutDescriptor LayoutDescriptor
         {
             get { return layoutDescriptor; }
         }

@@ -7,21 +7,17 @@ namespace FluentFiles.FixedLength.Attributes.Infrastructure
     using FluentFiles.Core.Attributes.Infrastructure;
     using FluentFiles.Core.Base;
 
-    public class FixedLayoutDescriptorProvider : ILayoutDescriptorProvider<IFixedFieldSettingsContainer, ILayoutDescriptor<IFixedFieldSettingsContainer>>
+    public class FixedLayoutDescriptorProvider : ILayoutDescriptorProvider<IFixedFieldSettingsContainer, IFixedLengthLayoutDescriptor>
     {
-        public ILayoutDescriptor<IFixedFieldSettingsContainer> GetDescriptor<T>()
-        {
-            return GetDescriptor(typeof(T));
-        }
+        public IFixedLengthLayoutDescriptor GetDescriptor<T>() => GetDescriptor(typeof(T));
 
-        public ILayoutDescriptor<IFixedFieldSettingsContainer> GetDescriptor(Type t)
+        public IFixedLengthLayoutDescriptor GetDescriptor(Type t)
         {
             var container = new FieldsContainer<IFixedFieldSettingsContainer>();
 
             var fileMappingType = t;
 
             var fileAttribute = fileMappingType.GetAttribute<FixedLengthFileAttribute>();
-
             if (fileAttribute == null)
             {
                 throw new NotSupportedException(string.Format("Mapping type {0} should be marked with {1} attribute",
@@ -35,20 +31,29 @@ namespace FluentFiles.FixedLength.Attributes.Infrastructure
             }
 
             var properties = fileMappingType.GetTypeDescription<FixedLengthFieldAttribute>();
-
             foreach (var p in properties)
             {
-                var attribute = p.Attributes.FirstOrDefault() as IFixedFieldSettings;
-
-                if (attribute != null)
+                var settings = p.Attributes.FirstOrDefault() as IFixedFieldSettings;
+                if (settings != null)
                 {
-                    container.AddOrUpdate(new FixedFieldSettings(p.Property, attribute));
+                    container.AddOrUpdate(new FixedFieldSettings(p.Property, settings));
                 }
             }
 
-            var descriptor = new LayoutDescriptorBase<IFixedFieldSettingsContainer>(container, t) {HasHeader = false};
-
+            var descriptor = new FixedLengthLayoutDescriptor(container, t, fileAttribute);
             return descriptor;
+        }
+
+        private sealed class FixedLengthLayoutDescriptor : LayoutDescriptorBase<IFixedFieldSettingsContainer>, IFixedLengthLayoutDescriptor
+        {
+            public FixedLengthLayoutDescriptor(
+                IFieldsContainer<IFixedFieldSettingsContainer> fieldsContainer,
+                Type targetType,
+                FixedLengthFileAttribute fileAttribute)
+                    : base(fieldsContainer, targetType)
+            {
+                HasHeader = fileAttribute.HasHeader;
+            }
         }
     }
 }

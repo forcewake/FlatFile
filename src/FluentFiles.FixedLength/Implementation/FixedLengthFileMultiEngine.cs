@@ -21,7 +21,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// <summary>
         /// The layout descriptors for this engine
         /// </summary>
-        readonly Dictionary<Type, ILayoutDescriptor<IFixedFieldSettingsContainer>> layoutDescriptors;
+        readonly Dictionary<Type, IFixedLengthLayoutDescriptor> layoutDescriptors;
         /// <summary>
         /// The line builder factory
         /// </summary>
@@ -54,7 +54,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// <param name="handleEntryReadError">The handle entry read error.</param>
         /// <exception cref="System.ArgumentNullException">typeSelectorFunc</exception>
         internal FixedLengthFileMultiEngine(
-            IEnumerable<ILayoutDescriptor<IFixedFieldSettingsContainer>> layoutDescriptors,
+            IEnumerable<IFixedLengthLayoutDescriptor> layoutDescriptors,
             Func<string, int, Type> typeSelectorFunc,
             IFixedLengthLineBuilderFactory lineBuilderFactory,
             IFixedLengthLineParserFactory lineParserFactory,
@@ -63,7 +63,7 @@ namespace FluentFiles.FixedLength.Implementation
         {
             if (typeSelectorFunc == null) throw new ArgumentNullException("typeSelectorFunc");
             this.layoutDescriptors = layoutDescriptors.Select(ld => new FixedLengthImmutableLayoutDescriptor(ld))
-                                                      .Cast<ILayoutDescriptor<IFixedFieldSettingsContainer>>()
+                                                      .Cast<IFixedLengthLayoutDescriptor>()
                                                       .ToDictionary(ld => ld.TargetType, ld => ld);
             results = new Dictionary<Type, ArrayList>(this.layoutDescriptors.Count());
             foreach (var descriptor in this.layoutDescriptors)

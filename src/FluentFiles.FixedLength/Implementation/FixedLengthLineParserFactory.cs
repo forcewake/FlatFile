@@ -36,7 +36,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// Initializes a new instance of the <see cref="FixedLengthLineParserFactory"/> class.
         /// </summary>
         /// <param name="lineParserRegistry">The line parser registry.</param>
-        public FixedLengthLineParserFactory(IDictionary<Type, ILayoutDescriptor<IFixedFieldSettingsContainer>> lineParserRegistry)
+        public FixedLengthLineParserFactory(IDictionary<Type, IFixedLengthLayoutDescriptor> lineParserRegistry)
         {
             this.lineParserRegistry = lineParserRegistry.ToDictionary(descriptor => descriptor.Key, descriptor => descriptor.Value.TargetType);
         }
@@ -46,7 +46,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// </summary>
         /// <param name="descriptor">The descriptor.</param>
         /// <returns>IFixedLengthLineParser.</returns>
-        public IFixedLengthLineParser GetParser(ILayoutDescriptor<IFixedFieldSettingsContainer> descriptor)
+        public IFixedLengthLineParser GetParser(IFixedLengthLayoutDescriptor descriptor)
         {
             if (descriptor == null) throw new ArgumentNullException(nameof(descriptor));
 

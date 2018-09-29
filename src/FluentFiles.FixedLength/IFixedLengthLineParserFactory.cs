@@ -9,7 +9,7 @@ namespace FluentFiles.FixedLength
     /// Interface IFixedLengthLineParserFactory
     /// </summary>
     public interface IFixedLengthLineParserFactory :
-        ILineParserFactory<IFixedLengthLineParser, ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer>
+        ILineParserFactory<IFixedLengthLineParser, IFixedLengthLayoutDescriptor, IFixedFieldSettingsContainer>
     {
         /// <summary>
         /// Registers the line parser <typeparamref name="TParser" /> for lines matching <paramref name="targetType" />.

@@ -21,7 +21,7 @@ namespace FluentFiles.FixedLength.Attributes
         /// <param name="handleEntryReadError">The handle entry read error.</param>
         /// <returns>IFlatFileEngine.</returns>
         public static IFlatFileEngine GetEngine<TEntity>(
-            this IFlatFileEngineFactory<ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer> engineFactory,
+            this IFlatFileEngineFactory<IFixedLengthLayoutDescriptor, IFixedFieldSettingsContainer> engineFactory,
             Func<string, Exception, bool> handleEntryReadError = null)
             where TEntity : class, new()
         {

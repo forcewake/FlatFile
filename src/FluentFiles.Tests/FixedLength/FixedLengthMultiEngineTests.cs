@@ -98,7 +98,7 @@ D20150323Another Description ";
 
         public FixedLengthMultiEngineTests()
         {
-            var layouts = new List<ILayoutDescriptor<IFixedFieldSettingsContainer>> {new Record1Layout(), new Record2Layout()};
+            var layouts = new List<IFixedLengthLayoutDescriptor> {new Record1Layout(), new Record2Layout()};
             engine = new FixedLengthFileMultiEngine(layouts,
                                                     (s, i) =>
                                                     {
