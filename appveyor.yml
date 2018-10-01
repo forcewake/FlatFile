@@ -49,7 +49,7 @@ nuget:
 #---------------------------------#
 
 test_script:
-  - ps: Get-ChildItem *.Tests | % { cd $_; dotnet xunit --configuration $Env:CONFIGURATION --no-build; cd ..; }
+  - ps: Get-ChildItem *.Tests | % { cd $_; dotnet test --configuration $Env:CONFIGURATION --no-build; cd ..; }
 
 
 #---------------------------------#
