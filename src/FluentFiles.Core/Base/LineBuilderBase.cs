@@ -1,10 +1,8 @@
-using System;
-
 namespace FluentFiles.Core.Base
 {
     public abstract class LineBuilderBase<TLayoutDescriptor, TFieldSettings> : ILineBuilder
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
-        where TFieldSettings : IFieldSettingsContainer 
+        where TFieldSettings : IFieldSettingsContainer
     {
         protected LineBuilderBase(TLayoutDescriptor descriptor)
         {
