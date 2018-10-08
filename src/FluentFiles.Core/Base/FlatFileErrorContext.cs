@@ -5,7 +5,7 @@ namespace FluentFiles.Core.Base
     /// <summary>
     /// Provides information about a file parsing error.
     /// </summary>
-    public readonly struct FlatFileErrorContext
+    public class FlatFileErrorContext
     {
         /// <summary>
         /// Initializes a new instance of <see cref="FlatFileErrorContext"/>.
