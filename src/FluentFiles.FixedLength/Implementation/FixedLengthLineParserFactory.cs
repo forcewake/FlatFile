@@ -13,14 +13,23 @@ namespace FluentFiles.FixedLength.Implementation
     /// </summary>
     public class FixedLengthLineParserFactory : IFixedLengthLineParserFactory
     {
-        private readonly Dictionary<Type, Type> lineParserRegistry;
+        private readonly Dictionary<Type, Type> _parserRegistry;
+        private readonly IDictionary<Type, IFixedLengthLineParser> _parsers = new Dictionary<Type, IFixedLengthLineParser>();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FixedLengthLineParserFactory"/> class.
+        /// </summary>
+        private FixedLengthLineParserFactory(Dictionary<Type, Type> parserRegistry)
+        {
+            _parserRegistry = parserRegistry;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FixedLengthLineParserFactory"/> class.
         /// </summary>
         public FixedLengthLineParserFactory()
+            : this(new Dictionary<Type, Type>())
         {
-            lineParserRegistry = new Dictionary<Type, Type>();
         }
 
         /// <summary>
@@ -28,8 +37,8 @@ namespace FluentFiles.FixedLength.Implementation
         /// </summary>
         /// <param name="lineParserRegistry">The line parser registry.</param>
         public FixedLengthLineParserFactory(IDictionary<Type, Type> lineParserRegistry)
+            : this(new Dictionary<Type, Type>(lineParserRegistry))
         {
-            this.lineParserRegistry = new Dictionary<Type, Type>(lineParserRegistry);
         }
 
         /// <summary>
@@ -37,8 +46,8 @@ namespace FluentFiles.FixedLength.Implementation
         /// </summary>
         /// <param name="lineParserRegistry">The line parser registry.</param>
         public FixedLengthLineParserFactory(IDictionary<Type, IFixedLengthLayoutDescriptor> lineParserRegistry)
+            : this(lineParserRegistry.ToDictionary(descriptor => descriptor.Key, descriptor => descriptor.Value.TargetType))
         {
-            this.lineParserRegistry = lineParserRegistry.ToDictionary(descriptor => descriptor.Key, descriptor => descriptor.Value.TargetType);
         }
 
         /// <summary>
@@ -50,9 +59,16 @@ namespace FluentFiles.FixedLength.Implementation
         {
             if (descriptor == null) throw new ArgumentNullException(nameof(descriptor));
 
-            return descriptor.TargetType != null && lineParserRegistry.TryGetValue(descriptor.TargetType, out var parserType)
-                       ? (IFixedLengthLineParser)ReflectionHelper.CreateInstance(parserType, true, descriptor)
-                       : new FixedLengthLineParser(descriptor);
+            if (!_parsers.TryGetValue(descriptor.TargetType, out var parser))
+            {
+                parser = descriptor.TargetType != null && _parserRegistry.TryGetValue(descriptor.TargetType, out var parserType)
+                    ? (IFixedLengthLineParser)ReflectionHelper.CreateInstance(parserType, true, descriptor)
+                    : new FixedLengthLineParser(descriptor);
+
+                _parsers[descriptor.TargetType] = parser;
+            }
+
+            return parser;
         }
 
         /// <summary>
@@ -62,7 +78,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// <param name="targetType">The target record type.</param>
         public void RegisterLineParser<TParser>(Type targetType) where TParser : IFixedLengthLineParser
         {
-            lineParserRegistry[targetType] = typeof(TParser);
+            _parserRegistry[targetType] = typeof(TParser);
         }
 
         /// <summary>
@@ -72,7 +88,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// <param name="targetLayout">The target layout.</param>
         public void RegisterLineParser<TParser>(ILayoutDescriptor<IFieldSettings> targetLayout) where TParser : IFixedLengthLineParser
         {
-            lineParserRegistry[targetLayout.TargetType] = typeof(TParser);
+            _parserRegistry[targetLayout.TargetType] = typeof(TParser);
         }
     }
 }
