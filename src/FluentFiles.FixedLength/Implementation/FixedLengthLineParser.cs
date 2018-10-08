@@ -5,7 +5,7 @@ namespace FluentFiles.FixedLength.Implementation
     using FluentFiles.Core;
     using FluentFiles.Core.Base;
 
-    public class FixedLengthLineParser :
+    public sealed class FixedLengthLineParser :
         LineParserBase<ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer>,
         IFixedLengthLineParser
     {
@@ -14,7 +14,7 @@ namespace FluentFiles.FixedLength.Implementation
         {
         }
 
-        public override TEntity ParseLine<TEntity>(in ReadOnlySpan<char> line, TEntity entity)
+        public override TEntity ParseLine<TEntity>(ReadOnlySpan<char> line, TEntity entity)
         {
             int linePosition = 0;
             foreach (var field in Layout.Fields)
@@ -27,7 +27,7 @@ namespace FluentFiles.FixedLength.Implementation
             return entity;
         }
 
-        private static ReadOnlySpan<char> GetValueFromLine(in ReadOnlySpan<char> line, int linePosition, IFixedFieldSettingsContainer field)
+        private static ReadOnlySpan<char> GetValueFromLine(ReadOnlySpan<char> line, int linePosition, IFixedFieldSettingsContainer field)
         {
             if (linePosition + field.Length > line.Length)
             {
@@ -49,7 +49,7 @@ namespace FluentFiles.FixedLength.Implementation
             return line.Slice(linePosition, field.Length);
         }
 
-        protected override ReadOnlySpan<char> PreprocessFieldValue(IFixedFieldSettingsContainer field, in ReadOnlySpan<char> memberValue)
+        protected override ReadOnlySpan<char> PreprocessFieldValue(IFixedFieldSettingsContainer field, ReadOnlySpan<char> memberValue)
         {
             return field.PadLeft
                 ? memberValue.TrimStart(field.PaddingChar)
