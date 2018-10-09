@@ -4,7 +4,7 @@ namespace FluentFiles.Delimited.Implementation
     using FluentFiles.Core.Base;
     using FluentFiles.Core.Extensions;
 
-    public class DelimitedLineParser :
+    public sealed class DelimitedLineParser :
         LineParserBase<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>,
         IDelimitedLineParser
     {
@@ -13,7 +13,7 @@ namespace FluentFiles.Delimited.Implementation
         {
         }
 
-        public override TEntity ParseLine<TEntity>(in ReadOnlySpan<char> line, TEntity entity)
+        public override TEntity ParseLine<TEntity>(ReadOnlySpan<char> line, TEntity entity)
         {
             var quotesSpan = Layout.Quotes.AsSpan();
             var delimiterSpan = Layout.Delimiter.AsSpan();
@@ -60,7 +60,7 @@ namespace FluentFiles.Delimited.Implementation
             return entity;
         }
 
-        protected override ReadOnlySpan<char> PreprocessFieldValue(IDelimitedFieldSettingsContainer field, in ReadOnlySpan<char> memberValue)
+        protected override ReadOnlySpan<char> PreprocessFieldValue(IDelimitedFieldSettingsContainer field, ReadOnlySpan<char> memberValue)
         {
             var quotesSpan = Layout.Quotes.AsSpan();
             return quotesSpan.IsEmpty ? memberValue : memberValue.Trim(quotesSpan);

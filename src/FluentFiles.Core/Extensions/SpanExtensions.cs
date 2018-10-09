@@ -15,7 +15,7 @@ namespace FluentFiles.Core.Extensions
         /// <param name="startIndex">The index in <paramref name="span"/> from which to start searching.</param>
         /// <param name="comparisonType">The type of string comparison to use.</param>
         /// <returns>The first index in <paramref name="span"/> at which <paramref name="value"/> can be found, or -1 if it does not occur.</returns>
-        public static int IndexOf(in this ReadOnlySpan<char> span, in ReadOnlySpan<char> value, int startIndex, StringComparison comparisonType)
+        public static int IndexOf(this ReadOnlySpan<char> span, in ReadOnlySpan<char> value, int startIndex, StringComparison comparisonType)
         {
             var index = span.Slice(startIndex).IndexOf(value, comparisonType);
             if (index > -1)
