@@ -4,6 +4,6 @@ namespace FluentFiles.Core
 {
     public interface ILineParser
     {
-        TEntity ParseLine<TEntity>(in ReadOnlySpan<char> line, TEntity entity) where TEntity : new();
+        TEntity ParseLine<TEntity>(ReadOnlySpan<char> line, TEntity entity) where TEntity : new();
     }
 }

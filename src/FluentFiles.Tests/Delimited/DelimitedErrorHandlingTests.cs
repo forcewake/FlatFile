@@ -84,7 +84,7 @@ S,Test Description,00044";
 
         private class FakeLineParser : IDelimitedLineParser
         {
-            public TEntity ParseLine<TEntity>(in ReadOnlySpan<char> line, TEntity entity) where TEntity : new()
+            public TEntity ParseLine<TEntity>(ReadOnlySpan<char> line, TEntity entity) where TEntity : new()
             {
                 throw new Exception("Parsing failed!");
             }

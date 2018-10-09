@@ -9,33 +9,38 @@ namespace FluentFiles.Delimited.Implementation
 {
     public class DelimitedLineParserFactory : IDelimitedLineParserFactory
     {
-        readonly Dictionary<Type, Type> lineParserRegistry;
+        private readonly Dictionary<Type, Type> _parserRegistry;
+        private readonly IDictionary<Type, IDelimitedLineParser> _parsers = new Dictionary<Type, IDelimitedLineParser>();
+
+        private DelimitedLineParserFactory(Dictionary<Type, Type> parserRegistry)
+        {
+            _parserRegistry = parserRegistry;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DelimitedLineParserFactory"/> class.
         /// </summary>
-        public DelimitedLineParserFactory() { lineParserRegistry = new Dictionary<Type, Type>(); }
+        public DelimitedLineParserFactory()
+            : this(new Dictionary<Type, Type>())
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DelimitedLineParserFactory"/> class.
         /// </summary>
         /// <param name="lineParserRegistry">The line parser registry.</param>
-        public DelimitedLineParserFactory(IDictionary<Type, Type> lineParserRegistry) { this.lineParserRegistry = new Dictionary<Type, Type>(lineParserRegistry); }
+        public DelimitedLineParserFactory(IDictionary<Type, Type> lineParserRegistry)
+            : this(new Dictionary<Type, Type>(lineParserRegistry))
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DelimitedLineParserFactory"/> class.
         /// </summary>
         /// <param name="lineParserRegistry">The line parser registry.</param>
         public DelimitedLineParserFactory(IDictionary<Type, ILayoutDescriptor<IDelimitedFieldSettingsContainer>> lineParserRegistry)
+            : this(lineParserRegistry.ToDictionary(descriptor => descriptor.Key, descriptor => descriptor.Value.TargetType))
         {
-            this.lineParserRegistry = lineParserRegistry.ToDictionary(descriptor => descriptor.Key, descriptor => descriptor.Value.TargetType);
-        }
-
-        public IDelimitedLineParser GetParser(IDelimitedLayoutDescriptor descriptor)
-        {
-            if (descriptor == null) throw new ArgumentNullException("descriptor");
-
-            return new DelimitedLineParser(descriptor);
         }
 
         /// <summary>
@@ -43,15 +48,20 @@ namespace FluentFiles.Delimited.Implementation
         /// </summary>
         /// <param name="descriptor">The descriptor.</param>
         /// <returns>IFixedLengthLineParser.</returns>
-        public IDelimitedLineParser GetParser(ILayoutDescriptor<IDelimitedFieldSettingsContainer> descriptor)
+        public IDelimitedLineParser GetParser(IDelimitedLayoutDescriptor descriptor)
         {
-            if (descriptor == null) throw new ArgumentNullException("descriptor");
+            if (descriptor == null) throw new ArgumentNullException(nameof(descriptor));
 
-            if (!(descriptor is IDelimitedLayoutDescriptor)) throw new ArgumentException("descriptor must be IDelimitedLayoutDescriptor");
-            
-            return descriptor.TargetType != null && lineParserRegistry.ContainsKey(descriptor.TargetType)
-                       ? (IDelimitedLineParser)ReflectionHelper.CreateInstance(lineParserRegistry[descriptor.TargetType], true, descriptor)
-                       : new DelimitedLineParser((IDelimitedLayoutDescriptor)descriptor);
+            if (!_parsers.TryGetValue(descriptor.TargetType, out var parser))
+            {
+                parser = descriptor.TargetType != null && _parserRegistry.ContainsKey(descriptor.TargetType)
+                    ? (IDelimitedLineParser)ReflectionHelper.CreateInstance(_parserRegistry[descriptor.TargetType], true, descriptor)
+                    : new DelimitedLineParser(descriptor);
+
+                _parsers[descriptor.TargetType] = parser;
+            }
+
+            return parser;
         }
         
         /// <summary>
@@ -61,7 +71,7 @@ namespace FluentFiles.Delimited.Implementation
         /// <param name="targetType">The target record type.</param>
         public void RegisterLineParser<TParser>(Type targetType) where TParser : IDelimitedLineParser
         {
-            lineParserRegistry[targetType] = typeof(TParser);
+            _parserRegistry[targetType] = typeof(TParser);
         }
 
         /// <summary>
@@ -71,7 +81,7 @@ namespace FluentFiles.Delimited.Implementation
         /// <param name="targetLayout">The target layout.</param>
         public void RegisterLineParser<TParser>(ILayoutDescriptor<IFieldSettings> targetLayout) where TParser : IDelimitedLineParser
         {
-            lineParserRegistry[targetLayout.TargetType] = typeof(TParser);
+            _parserRegistry[targetLayout.TargetType] = typeof(TParser);
         }
 
     }

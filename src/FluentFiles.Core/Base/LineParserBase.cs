@@ -1,7 +1,6 @@
 namespace FluentFiles.Core.Base
 {
     using System;
-    using FluentFiles.Core.Extensions;
 
     public abstract class LineParserBase<TLayoutDescriptor, TFieldSettings> : ILineParser
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
@@ -14,9 +13,9 @@ namespace FluentFiles.Core.Base
 
         protected TLayoutDescriptor Layout { get; }
 
-        public abstract TEntity ParseLine<TEntity>(in ReadOnlySpan<char> line, TEntity entity) where TEntity : new();
+        public abstract TEntity ParseLine<TEntity>(ReadOnlySpan<char> line, TEntity entity) where TEntity : new();
 
-        protected virtual object GetFieldValueFromString(TFieldSettings fieldSettings, in ReadOnlySpan<char> memberValue)
+        protected virtual object GetFieldValueFromString(TFieldSettings fieldSettings, ReadOnlySpan<char> memberValue)
         {
             if (fieldSettings.IsNullable && memberValue.Trim('"').Equals(fieldSettings.NullValue.AsSpan(), StringComparison.OrdinalIgnoreCase))
             {
@@ -29,9 +28,9 @@ namespace FluentFiles.Core.Base
             return value;
         }
 
-        protected virtual ReadOnlySpan<char> PreprocessFieldValue(TFieldSettings field, in ReadOnlySpan<char> memberValue) => memberValue;
+        protected virtual ReadOnlySpan<char> PreprocessFieldValue(TFieldSettings field, ReadOnlySpan<char> memberValue) => memberValue;
 
-        private static object ConvertFromString(TFieldSettings field, in ReadOnlySpan<char> source)
+        private static object ConvertFromString(TFieldSettings field, ReadOnlySpan<char> source)
         {
             var converter = field.TypeConverter;
             if (converter != null && converter.CanConvert(from: typeof(string), to: field.Type))
