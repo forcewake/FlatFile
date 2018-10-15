@@ -12,6 +12,6 @@ namespace FluentFiles.Core.Conversion
 
         public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty) => targetProperty.PropertyType.GetDefaultValue();
 
-        public ReadOnlySpan<char> ConvertToString(object source, PropertyInfo sourceProperty) => default;
+        public string ConvertToString(object source, PropertyInfo sourceProperty) => source.ToString();
     }
 }

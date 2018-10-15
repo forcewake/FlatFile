@@ -16,7 +16,7 @@ namespace FluentFiles.Benchmark.Converters
 
         public string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
         {
-            return converter.ConvertToString(value, (PropertyInfo)memberMapData.Member).ToString();
+            return converter.ConvertToString(value, (PropertyInfo)memberMapData.Member);
         }
 
         public object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)

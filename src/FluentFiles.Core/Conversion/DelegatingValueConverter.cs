@@ -21,7 +21,7 @@ namespace FluentFiles.Core.Conversion
             return ConversionFromString(source);
         }
 
-        public ReadOnlySpan<char> ConvertToString(object source, PropertyInfo sourceProperty)
+        public string ConvertToString(object source, PropertyInfo sourceProperty)
         {
             return ConversionToString((TProperty)source);
         }

@@ -10,6 +10,6 @@ namespace FluentFiles.Converters
 
         public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty) => source.Length == 0 ? string.Empty : source.ToString();
 
-        public ReadOnlySpan<char> ConvertToString(object source, PropertyInfo sourceProperty) => ((string)source).AsSpan();
+        public string ConvertToString(object source, PropertyInfo sourceProperty) => ((string)source);
     }
 }

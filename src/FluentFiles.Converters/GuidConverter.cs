@@ -9,7 +9,7 @@ namespace FluentFiles.Converters
         protected override Guid ConvertFrom(ReadOnlySpan<char> source, PropertyInfo targetProperty) =>
             Guid.Parse(source.Trim());
 
-        protected override ReadOnlySpan<char> ConvertTo(Guid source, PropertyInfo sourceProperty) =>
+        protected override string ConvertTo(Guid source, PropertyInfo sourceProperty) =>
             source.ToString();
     }
 }

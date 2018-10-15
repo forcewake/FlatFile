@@ -9,7 +9,7 @@ namespace FluentFiles.Converters
         protected override decimal ConvertFromString(ReadOnlySpan<char> source, NumberFormatInfo format) =>
             decimal.Parse(source, NumberStyles.Float, provider: format);
 
-        protected override ReadOnlySpan<char> ConvertToString(decimal value, NumberFormatInfo format) =>
+        protected override string ConvertToString(decimal value, NumberFormatInfo format) =>
             value.ToString("G", format);
     }
 }

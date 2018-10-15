@@ -23,6 +23,6 @@ namespace FluentFiles.Core.Conversion
 
         public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty) => _converter.ConvertFromString(source.ToString());
 
-        public ReadOnlySpan<char> ConvertToString(object source, PropertyInfo sourceProperty) => _converter.ConvertToString(source).AsSpan();
+        public string ConvertToString(object source, PropertyInfo sourceProperty) => _converter.ConvertToString(source);
     }
 }
