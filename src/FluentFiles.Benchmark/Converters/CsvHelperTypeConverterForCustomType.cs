@@ -1,5 +1,6 @@
 namespace FluentFiles.Benchmark.Converters
 {
+    using System;
     using CsvHelper;
     using CsvHelper.Configuration;
     using System.Reflection;
@@ -21,7 +22,7 @@ namespace FluentFiles.Benchmark.Converters
 
         public object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
         {
-            return converter.ConvertFromString(text, (PropertyInfo)memberMapData.Member);
+            return converter.ConvertFromString(text.AsSpan(), (PropertyInfo)memberMapData.Member);
         }
     }
 }

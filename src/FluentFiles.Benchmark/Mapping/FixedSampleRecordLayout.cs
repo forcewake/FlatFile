@@ -7,9 +7,10 @@ namespace FluentFiles.Benchmark.Mapping
     {
         public FixedSampleRecordLayout()
         {
-            this.WithMember(x => x.Cuit, c => c.WithLength(11))
-                .WithMember(x => x.Nombre, c => c.WithLength(160))
-                .WithMember(x => x.Actividad, c => c.WithLength(6));
+            this.WithMember(x => x.Id, c => c.WithLength(11))
+                .WithMember(x => x.FirstName, c => c.WithLength(80))
+                .WithMember(x => x.LastName, c => c.WithLength(80))
+                .WithMember(x => x.Activity, c => c.WithLength(6));
         }
     }
 }

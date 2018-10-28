@@ -37,10 +37,14 @@ namespace FluentFiles.Benchmark
 
             var records = new StringBuilder(N * 185);
             var random = new Random();
-            var fixture = new Fixture().Customize(new RandomStringCustomization(160));
+            var fixture = new Fixture().Customize(new RandomFixedStringCustomization(80));
             for (int i = 0; i < N; i++)
             {
-                records.AppendLine($"{20000000000L + i}{fixture.Create<string>()}{random.Next(0, 999999).ToString().PadRight(6)}");
+                records.Append(20000000000L + i)
+                       .Append(fixture.Create<string>())
+                       .Append(fixture.Create<string>())
+                       .Append(random.Next(0, 999999).ToString().PadRight(6))
+                       .AppendLine();
             }
 
             _records = records.ToString();
@@ -65,12 +69,12 @@ namespace FluentFiles.Benchmark
         }
     }
 
-    class RandomStringCustomization : ICustomization
+    class RandomFixedStringCustomization : ICustomization
     {
         private readonly Random _random = new Random();
         private readonly int _maxLength;
 
-        public RandomStringCustomization(int maxLength)
+        public RandomFixedStringCustomization(int maxLength)
         {
             _maxLength = maxLength;
         }
