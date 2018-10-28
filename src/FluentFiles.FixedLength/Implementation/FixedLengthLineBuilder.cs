@@ -5,7 +5,6 @@ namespace FluentFiles.FixedLength.Implementation
     using FluentFiles.Core;
     using FluentFiles.Core.Base;
     using FluentFiles.Core.Extensions;
-    using Microsoft.Extensions.ObjectPool;
 
     public class FixedLengthLineBuilder : LineBuilderBase<ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer>,
         IFixedLengthLineBuilder
