@@ -30,7 +30,7 @@ namespace FluentFiles.Core.Base
         {
             var converter = field.TypeConverter;
             if (converter != null && converter.CanConvert(from: field.Type, to: typeof(string)))
-                return converter.ConvertToString(fieldValue, field.PropertyInfo).ToString();
+                return converter.ConvertToString(fieldValue, field.PropertyInfo);
 
             return fieldValue.ToString();
         }
