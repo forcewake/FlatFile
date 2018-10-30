@@ -17,12 +17,12 @@ namespace FluentFiles.Converters
             return char.MinValue;
         }
 
-        protected override ReadOnlySpan<char> ConvertTo(char source, PropertyInfo sourceProperty)
+        protected override string ConvertTo(char source, PropertyInfo sourceProperty)
         {
             if (source == char.MinValue)
-                return ReadOnlySpan<char>.Empty;
+                return string.Empty;
 
-            return new ReadOnlySpan<char>(new[] { source });    // blech, array allocation defeats the purpose
+            return new string(source, 1);
         }
     }
 }

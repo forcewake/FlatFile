@@ -22,7 +22,7 @@ namespace FluentFiles.Core.Conversion
         /// <param name="source">The object to serialize.</param>
         /// <param name="sourceProperty">The property the object value is from.</param>
         /// <returns>A serialized version of <paramref name="source"/>.</returns>
-        ReadOnlySpan<char> ConvertToString(object source, PropertyInfo sourceProperty);
+        string ConvertToString(object source, PropertyInfo sourceProperty);
 
         /// <summary>
         /// Converts a string to an object instance.

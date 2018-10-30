@@ -76,7 +76,7 @@ namespace FluentFiles.Tests.Delimited
                 return Int32.Parse(source, NumberStyles.AllowHexSpecifier);
             }
 
-            protected override ReadOnlySpan<char> ConvertTo(int source, PropertyInfo sourceProperty)
+            protected override string ConvertTo(int source, PropertyInfo sourceProperty)
             {
                 return source.ToString("X");
             }

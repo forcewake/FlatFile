@@ -9,9 +9,10 @@ namespace FluentFiles.Benchmark.Mapping
         {
             this.WithDelimiter(";")
                 .WithQuote("\"")
-                .WithMember(x => x.Cuit)
-                .WithMember(x => x.Nombre)
-                .WithMember(x => x.Actividad, c => c.WithName("AnotherName"));
+                .WithMember(x => x.Id)
+                .WithMember(x => x.FirstName)
+                .WithMember(x => x.LastName)
+                .WithMember(x => x.Activity, c => c.WithName("AnotherName"));
         }
     }
 }

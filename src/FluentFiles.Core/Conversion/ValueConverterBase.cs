@@ -15,10 +15,10 @@ namespace FluentFiles.Core.Conversion
 
         public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty) => ConvertFrom(source, targetProperty);
 
-        public ReadOnlySpan<char> ConvertToString(object source, PropertyInfo sourceProperty) => ConvertTo((TValue)source, sourceProperty);
+        public string ConvertToString(object source, PropertyInfo sourceProperty) => ConvertTo((TValue)source, sourceProperty);
 
         protected abstract TValue ConvertFrom(ReadOnlySpan<char> source, PropertyInfo targetProperty);
 
-        protected abstract ReadOnlySpan<char> ConvertTo(TValue source, PropertyInfo sourceProperty);
+        protected abstract string ConvertTo(TValue source, PropertyInfo sourceProperty);
     }
 }

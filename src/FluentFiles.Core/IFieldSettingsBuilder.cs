@@ -67,5 +67,5 @@
     /// <typeparam name="TValue">The type of value to convert from.</typeparam>
     /// <param name="source">The value to convert from.</param>
     /// <returns>A string representation of <typeparamref name="TValue"/>.</returns>
-    public delegate ReadOnlySpan<char> ConvertToString<in TValue>(TValue source);
+    public delegate string ConvertToString<in TValue>(TValue source);
 }

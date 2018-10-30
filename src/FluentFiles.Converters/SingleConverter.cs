@@ -9,7 +9,7 @@ namespace FluentFiles.Converters
         protected override float ConvertFromString(ReadOnlySpan<char> source, NumberFormatInfo format) =>
             float.Parse(source, provider: format);
 
-        protected override ReadOnlySpan<char> ConvertToString(float value, NumberFormatInfo format) =>
+        protected override string ConvertToString(float value, NumberFormatInfo format) =>
             value.ToString("R", format);
     }
 }

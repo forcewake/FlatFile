@@ -6,42 +6,52 @@ namespace FluentFiles.Benchmark.Entities
     /// <summary>
     /// Sample fixed length record for testing
     /// </summary>
-    [FixedLengthRecord()]
+    [FixedLengthRecord]
     public class FixedSampleRecord : IEquatable<FixedSampleRecord>
     {
-        [FieldFixedLength(11)] 
-        private long _cuit;
+        [FieldFixedLength(11)]
+        private long _id;
 
-        [FieldFixedLength(160)] 
-        [FieldTrim(TrimMode.Both)] 
-        private string _nombre;
+        [FieldFixedLength(80)]
+        [FieldTrim(TrimMode.Both)]
+        private string _firstName;
 
-        [FieldFixedLength(6)] 
-        private int _actividad;
+        [FieldFixedLength(80)]
+        [FieldTrim(TrimMode.Both)]
+        private string _lastName;
 
-        public long Cuit
+        [FieldFixedLength(6)]
+        private int _activity;
+
+        public long Id
         {
-            get { return _cuit; }
-            set { _cuit = value; }
+            get => _id;
+            set => _id = value;
         }
 
-        public string Nombre
+        public string FirstName
         {
-            get { return _nombre; }
-            set { _nombre = value; }
+            get => _firstName;
+            set => _firstName = value;
         }
 
-        public int Actividad
+        public string LastName
         {
-            get { return _actividad; }
-            set { _actividad = value; }
+            get => _lastName;
+            set => _lastName = value;
+        }
+
+        public int Activity
+        {
+            get => _activity;
+            set => _activity = value;
         }
 
         public bool Equals(FixedSampleRecord other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return _cuit == other._cuit && string.Equals(_nombre, other._nombre) && _actividad == other._actividad;
+            return _id == other._id && string.Equals(_firstName, other._firstName) && string.Equals(_lastName, other._lastName) && _activity == other._activity;
         }
 
         public override bool Equals(object obj)
@@ -49,16 +59,17 @@ namespace FluentFiles.Benchmark.Entities
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((FixedSampleRecord) obj);
+            return Equals((FixedSampleRecord)obj);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                int hashCode = _cuit.GetHashCode();
-                hashCode = (hashCode*397) ^ (_nombre != null ? _nombre.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ _actividad;
+                int hashCode = _id.GetHashCode();
+                hashCode = (hashCode * 397) ^ (_firstName != null ? _firstName.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (_lastName != null ? _lastName.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ _activity;
                 return hashCode;
             }
         }

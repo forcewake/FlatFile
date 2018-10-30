@@ -15,7 +15,7 @@ namespace FluentFiles.Core.Conversion
 
         protected abstract T ConvertFromString(ReadOnlySpan<char> source, NumberFormatInfo format);
 
-        protected abstract ReadOnlySpan<char> ConvertToString(T value, NumberFormatInfo format);
+        protected abstract string ConvertToString(T value, NumberFormatInfo format);
 
         public bool CanConvert(Type from, Type to) =>
             (from == typeof(string) && to == TargetType) ||
@@ -28,7 +28,7 @@ namespace FluentFiles.Core.Conversion
             return ConvertFromString(source.Trim(), numberFormat);
         }
 
-        public ReadOnlySpan<char> ConvertToString(object source, PropertyInfo sourceProperty)
+        public string ConvertToString(object source, PropertyInfo sourceProperty)
         {
             var culture = CultureInfo.CurrentCulture;
             var numberFormat = (NumberFormatInfo)culture.GetFormat(typeof(NumberFormatInfo));

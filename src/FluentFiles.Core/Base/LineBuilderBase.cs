@@ -1,10 +1,8 @@
-using System;
-
 namespace FluentFiles.Core.Base
 {
     public abstract class LineBuilderBase<TLayoutDescriptor, TFieldSettings> : ILineBuilder
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
-        where TFieldSettings : IFieldSettingsContainer 
+        where TFieldSettings : IFieldSettingsContainer
     {
         protected LineBuilderBase(TLayoutDescriptor descriptor)
         {
@@ -32,7 +30,7 @@ namespace FluentFiles.Core.Base
         {
             var converter = field.TypeConverter;
             if (converter != null && converter.CanConvert(from: field.Type, to: typeof(string)))
-                return converter.ConvertToString(fieldValue, field.PropertyInfo).ToString();
+                return converter.ConvertToString(fieldValue, field.PropertyInfo);
 
             return fieldValue.ToString();
         }

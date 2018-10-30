@@ -25,7 +25,7 @@ namespace FluentFiles.Benchmark.Converters
             return obj;
         }
 
-        protected override ReadOnlySpan<char> ConvertTo(CustomType source, PropertyInfo sourceProperty)
+        protected override string ConvertTo(CustomType source, PropertyInfo sourceProperty)
         {
             return string.Format("{0}|{1}|{2}", source.First, source.Second, source.Third);
         }

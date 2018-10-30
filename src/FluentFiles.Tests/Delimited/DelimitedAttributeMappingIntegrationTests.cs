@@ -37,7 +37,7 @@ namespace FluentFiles.Tests.Delimited
         {
             public bool CanConvert(Type from, Type to) => true;
             public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty) => "foo";
-            public ReadOnlySpan<char> ConvertToString(object source, PropertyInfo sourceProperty) => source.ToString();
+            public string ConvertToString(object source, PropertyInfo sourceProperty) => source.ToString();
         }
 
         [Fact]
