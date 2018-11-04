@@ -6,6 +6,7 @@ namespace FluentFiles.FixedLength.Attributes
 {
     using System;
     using FluentFiles.Core;
+    using FluentFiles.Core.Base;
     using FluentFiles.FixedLength.Attributes.Infrastructure;
 
     /// <summary>
@@ -22,7 +23,7 @@ namespace FluentFiles.FixedLength.Attributes
         /// <returns>IFlatFileEngine.</returns>
         public static IFlatFileEngine GetEngine<TEntity>(
             this IFlatFileEngineFactory<IFixedLengthLayoutDescriptor, IFixedFieldSettingsContainer> engineFactory,
-            Func<string, Exception, bool> handleEntryReadError = null)
+            FileReadErrorHandler handleEntryReadError = null)
             where TEntity : class, new()
         {
             var descriptorProvider = new FixedLayoutDescriptorProvider();
@@ -44,7 +45,7 @@ namespace FluentFiles.FixedLength.Attributes
             this FixedLengthFileEngineFactory engineFactory,
             IEnumerable<Type> recordTypes,
             Func<string, int, Type> typeSelectorFunc,
-            Func<string, Exception, bool> handleEntryReadError = null)
+            FileReadErrorHandler handleEntryReadError = null)
         {
             var descriptorProvider = new FixedLayoutDescriptorProvider();
             var descriptors = recordTypes.Select(type => descriptorProvider.GetDescriptor(type)).ToList();

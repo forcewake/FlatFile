@@ -15,10 +15,6 @@ namespace FluentFiles.FixedLength.Implementation
     public class FixedLengthFileMultiEngine : FlatFileEngine<IFixedFieldSettingsContainer, ILayoutDescriptor<IFixedFieldSettingsContainer>>, IFlatFileMultiEngine
     {
         /// <summary>
-        /// The handle entry read error func
-        /// </summary>
-        readonly Func<FlatFileErrorContext, bool> handleEntryReadError;
-        /// <summary>
         /// The layout descriptors for this engine
         /// </summary>
         readonly Dictionary<Type, IFixedLengthLayoutDescriptor> layoutDescriptors;
@@ -59,9 +55,11 @@ namespace FluentFiles.FixedLength.Implementation
             IFixedLengthLineBuilderFactory lineBuilderFactory,
             IFixedLengthLineParserFactory lineParserFactory,
             IMasterDetailTracker masterDetailTracker,
-            Func<FlatFileErrorContext, bool> handleEntryReadError = null)
+            FileReadErrorHandler handleEntryReadError = null)
+                : base(handleEntryReadError)
         {
-            if (typeSelectorFunc == null) throw new ArgumentNullException("typeSelectorFunc");
+            if (typeSelectorFunc == null) throw new ArgumentNullException(nameof(typeSelectorFunc));
+
             this.layoutDescriptors = layoutDescriptors.Select(ld => new FixedLengthImmutableLayoutDescriptor(ld))
                                                       .Cast<IFixedLengthLayoutDescriptor>()
                                                       .ToDictionary(ld => ld.TargetType, ld => ld);
@@ -74,7 +72,6 @@ namespace FluentFiles.FixedLength.Implementation
             this.lineBuilderFactory = lineBuilderFactory;
             this.lineParserFactory = lineParserFactory;
             this.masterDetailTracker = masterDetailTracker;
-            this.handleEntryReadError = handleEntryReadError;
         }
 
         /// <summary>
@@ -190,12 +187,12 @@ namespace FluentFiles.FixedLength.Implementation
                 }
                 catch (Exception ex)
                 {
-                    if (handleEntryReadError == null)
+                    if (HandleEntryReadError == null)
                     {
                         throw;
                     }
 
-                    if (!handleEntryReadError(new FlatFileErrorContext(line, lineNumber, ex)))
+                    if (!HandleEntryReadError(new FlatFileErrorContext(line, lineNumber, ex)))
                     {
                         throw;
                     }
