@@ -45,26 +45,7 @@ namespace FluentFiles.Delimited.Implementation
         /// <returns>IFlatFileEngine.</returns>
         public IFlatFileEngine GetEngine(
             IDelimitedLayoutDescriptor descriptor,
-            Func<string, Exception, bool> handleEntryReadError = null)
-        {
-            return new DelimitedFileEngine(
-                descriptor,
-                new DelimitedLineBuilderFactory(),
-                new DelimitedLineParserFactory(),
-                handleEntryReadError == null 
-                    ? (Func<FlatFileErrorContext, bool>)null
-                    : ctx => handleEntryReadError(ctx.Line, ctx.Exception));
-        }
-
-        /// <summary>
-        /// Gets the <see cref="IFlatFileEngine" />.
-        /// </summary>
-        /// <param name="descriptor">The descriptor.</param>
-        /// <param name="handleEntryReadError">The handle entry read error func.</param>
-        /// <returns>IFlatFileEngine.</returns>
-        public IFlatFileEngine GetEngine(
-            IDelimitedLayoutDescriptor descriptor,
-            Func<FlatFileErrorContext, bool> handleEntryReadError)
+            FileReadErrorHandler handleEntryReadError = null)
         {
             return new DelimitedFileEngine(
                 descriptor,
@@ -84,32 +65,7 @@ namespace FluentFiles.Delimited.Implementation
         public IFlatFileMultiEngine GetEngine(
             IEnumerable<IDelimitedLayoutDescriptor> layoutDescriptors,
             Func<string, Type> typeSelectorFunc,
-            Func<string, Exception, bool> handleEntryReadError = null,
-            IMasterDetailTracker masterDetailTracker = null)
-        {
-            return new DelimitedFileMultiEngine(
-                layoutDescriptors,
-                typeSelectorFunc,
-                new DelimitedLineBuilderFactory(),
-                lineParserFactory,
-                masterDetailTracker ?? new DelimitedMasterDetailTracker(),
-                handleEntryReadError == null
-                    ? (Func<FlatFileErrorContext, bool>)null
-                    : ctx => handleEntryReadError(ctx.Line, ctx.Exception));
-        }
-
-        /// <summary>
-        /// Gets the <see cref="IFlatFileMultiEngine"/>.
-        /// </summary>
-        /// <param name="layoutDescriptors">The layout descriptors.</param>
-        /// <param name="typeSelectorFunc">The type selector function.</param>
-        /// <param name="handleEntryReadError">The handle entry read error func.</param>
-        /// <param name="masterDetailTracker">Determines how master-detail record relationships are handled.</param>
-        /// <returns>IFlatFileMultiEngine.</returns>
-        public IFlatFileMultiEngine GetEngine(
-            IEnumerable<IDelimitedLayoutDescriptor> layoutDescriptors,
-            Func<string, Type> typeSelectorFunc,
-            Func<FlatFileErrorContext, bool> handleEntryReadError,
+            FileReadErrorHandler handleEntryReadError = null,
             IMasterDetailTracker masterDetailTracker = null)
         {
             return new DelimitedFileMultiEngine(

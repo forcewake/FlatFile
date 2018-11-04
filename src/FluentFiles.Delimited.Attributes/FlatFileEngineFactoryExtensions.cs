@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using FluentFiles.Core;
+using FluentFiles.Core.Base;
+using FluentFiles.Delimited.Attributes.Infrastructure;
 using FluentFiles.Delimited.Implementation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FluentFiles.Delimited.Attributes
 {
-    using System;
-    using FluentFiles.Core;
-    using FluentFiles.Delimited;
-    using FluentFiles.Delimited.Attributes.Infrastructure;
-
     public static class FlatFileEngineFactoryExtensions
     {
         /// <summary>
@@ -20,13 +19,11 @@ namespace FluentFiles.Delimited.Attributes
         /// <returns>IFlatFileEngine.</returns>
         public static IFlatFileEngine GetEngine<TEntity>(
             this IFlatFileEngineFactory<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer> engineFactory,
-            Func<string, Exception, bool> handleEntryReadError = null)
+            FileReadErrorHandler handleEntryReadError = null)
             where TEntity : class, new()
         {
             var descriptorProvider = new DelimitedLayoutDescriptorProvider();
-
             var descriptor = descriptorProvider.GetDescriptor<TEntity>();
-
             return engineFactory.GetEngine(descriptor, handleEntryReadError);
         }
 
@@ -43,7 +40,7 @@ namespace FluentFiles.Delimited.Attributes
             this DelimitedFileEngineFactory engineFactory,
             IEnumerable<Type> recordTypes,
             Func<string, Type> typeSelectorFunc,
-            Func<string, Exception, bool> handleEntryReadError = null,
+            FileReadErrorHandler handleEntryReadError = null,
             IMasterDetailTracker masterDetailTracker = null)
         {
             var descriptorProvider = new DelimitedLayoutDescriptorProvider();

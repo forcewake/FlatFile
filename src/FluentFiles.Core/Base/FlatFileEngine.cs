@@ -16,11 +16,6 @@ namespace FluentFiles.Core.Base
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
     {
         /// <summary>
-        /// The handle entry read error func
-        /// </summary>
-        private readonly Func<FlatFileErrorContext, bool> _handleEntryReadError;
-
-        /// <summary>
         /// Gets the line builder.
         /// </summary>
         /// <value>The line builder.</value>
@@ -39,12 +34,17 @@ namespace FluentFiles.Core.Base
         protected abstract TLayoutDescriptor LayoutDescriptor { get; }
 
         /// <summary>
+        /// Handles file read errors.
+        /// </summary>
+        protected FileReadErrorHandler HandleEntryReadError { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="FlatFileEngine{TFieldSettings, TLayoutDescriptor}"/> class.
         /// </summary>
         /// <param name="handleEntryReadError">The handle entry read error.</param>
-        protected FlatFileEngine(Func<FlatFileErrorContext, bool> handleEntryReadError = null)
+        protected FlatFileEngine(FileReadErrorHandler handleEntryReadError = null)
         {
-            _handleEntryReadError = handleEntryReadError;
+            HandleEntryReadError = handleEntryReadError;
         }
 
         /// <summary>
@@ -92,12 +92,12 @@ namespace FluentFiles.Core.Base
                 }
                 catch (Exception ex)
                 {
-                    if (_handleEntryReadError == null)
+                    if (HandleEntryReadError == null)
                     {
                         throw;
                     }
 
-                    if (!_handleEntryReadError(new FlatFileErrorContext(line, lineNumber, ex)))
+                    if (!HandleEntryReadError(new FlatFileErrorContext(line, lineNumber, ex)))
                     {
                         throw;
                     }
