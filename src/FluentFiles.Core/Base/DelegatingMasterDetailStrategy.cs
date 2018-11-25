@@ -6,64 +6,67 @@ namespace FluentFiles.Core.Base
     /// Uses records that implement <see cref="IMasterRecord"/> and <see cref="IDetailRecord"/> to handle
     /// master-detail record relationships.
     /// </summary>
-    public class MasterDetailTrackerBase : IMasterDetailTracker
+    public class DelegatingMasterDetailStrategy : IMasterDetailStrategy
     {
         /// <summary>
         /// Determines whether a record is a master record.
         /// </summary>
-        readonly Func<object, bool> checkIsMasterRecord;
+        private readonly Func<object, bool> _checkIsMasterRecord;
+
         /// <summary>
         /// Determines whether a record is a detail record.
         /// </summary>
-        readonly Func<object, bool> checkIsDetailRecord;
+        private readonly Func<object, bool> _checkIsDetailRecord;
+
         /// <summary>
         /// Handles confirmed detail records.
         /// </summary>
-        readonly Action<object, object> handleDetailRecord;
-        /// <summary>
-        /// The last record parsed that implements <see cref="IMasterRecord"/>
-        /// </summary>
-        object lastMasterRecord;
+        private readonly Action<object, object> _handleDetailRecord;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MasterDetailTracker"/> class.
+        /// The last record parsed that was determined to be a master record.
+        /// </summary>
+        private object _lastMasterRecord;
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="DelegatingMasterDetailStrategy"/>.
         /// </summary>
         /// <param name="checkIsMasterRecord">Determines whether a record is a master record.</param>
         /// <param name="checkIsDetailRecord">Determines whether a record is a detail record.</param>
         /// <param name="handleDetailRecord">Handles confirmed detail records.</param>
-        public MasterDetailTrackerBase(
+        public DelegatingMasterDetailStrategy(
             Func<object, bool> checkIsMasterRecord,
             Func<object, bool> checkIsDetailRecord,
             Action<object, object> handleDetailRecord)
         {
-            this.checkIsMasterRecord = checkIsMasterRecord;
-            this.checkIsDetailRecord = checkIsDetailRecord;
-            this.handleDetailRecord = handleDetailRecord;
+            _checkIsMasterRecord = checkIsMasterRecord ?? throw new ArgumentNullException(nameof(checkIsMasterRecord));
+            _checkIsDetailRecord = checkIsDetailRecord ?? throw new ArgumentNullException(nameof(checkIsDetailRecord));
+            _handleDetailRecord = handleDetailRecord ?? throw new ArgumentNullException(nameof(handleDetailRecord));
         }
 
-        public void HandleMasterDetail(object entry, out bool isDetailRecord)
+        public void HandleMasterDetail(object record, out bool isDetailRecord)
         {
             isDetailRecord = false;
 
-            if (checkIsMasterRecord(entry))
+            if (_checkIsMasterRecord(record))
             {
                 // Found new master record
-                lastMasterRecord = entry;
+                _lastMasterRecord = record;
                 return;
             }
 
             // Record is standalone or unassociated detail record
-            if (lastMasterRecord == null) return;
+            if (_lastMasterRecord == null) return;
 
-            if (!checkIsDetailRecord(entry))
+            if (!_checkIsDetailRecord(record))
             {
                 // Record is standalone, reset master
-                lastMasterRecord = null;
+                _lastMasterRecord = null;
                 return;
             }
 
             // Add detail record and indicate that it should not be added to the results dictionary
-            handleDetailRecord(lastMasterRecord, entry);
+            _handleDetailRecord(_lastMasterRecord, record);
             isDetailRecord = true;
         }
     }

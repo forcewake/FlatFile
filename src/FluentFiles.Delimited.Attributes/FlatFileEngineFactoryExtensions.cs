@@ -41,7 +41,7 @@ namespace FluentFiles.Delimited.Attributes
             IEnumerable<Type> recordTypes,
             Func<string, Type> typeSelectorFunc,
             FileReadErrorHandler handleEntryReadError = null,
-            IMasterDetailTracker masterDetailTracker = null)
+            IMasterDetailStrategy masterDetailTracker = null)
         {
             var descriptorProvider = new DelimitedLayoutDescriptorProvider();
             var descriptors = recordTypes.Select(type => descriptorProvider.GetDescriptor(type)).ToList();

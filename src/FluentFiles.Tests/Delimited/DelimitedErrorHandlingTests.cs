@@ -64,7 +64,7 @@ S,Test Description,00044";
                 l => typeof(Record),
                 A.Fake<IDelimitedLineBuilderFactory>(),
                 lineParserFactory,
-                new DelimitedMasterDetailTracker(),
+                new DefaultDelimitedMasterDetailStrategy(),
                 HandleError);
 
             using (var stream = new MemoryStream(Encoding.Default.GetBytes(TestData)))
