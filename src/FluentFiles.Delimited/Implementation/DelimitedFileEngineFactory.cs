@@ -60,20 +60,20 @@ namespace FluentFiles.Delimited.Implementation
         /// <param name="layoutDescriptors">The layout descriptors.</param>
         /// <param name="typeSelectorFunc">The type selector function.</param>
         /// <param name="handleEntryReadError">The handle entry read error func.</param>
-        /// <param name="masterDetailTracker">Determines how master-detail record relationships are handled.</param>
+        /// <param name="masterDetailStrategy">Determines how master-detail record relationships are handled.</param>
         /// <returns>IFlatFileMultiEngine.</returns>
         public IFlatFileMultiEngine GetEngine(
             IEnumerable<IDelimitedLayoutDescriptor> layoutDescriptors,
             Func<string, Type> typeSelectorFunc,
             FileReadErrorHandler handleEntryReadError = null,
-            IMasterDetailTracker masterDetailTracker = null)
+            IMasterDetailStrategy masterDetailStrategy = null)
         {
             return new DelimitedFileMultiEngine(
                 layoutDescriptors,
                 typeSelectorFunc,
                 new DelimitedLineBuilderFactory(),
                 lineParserFactory,
-                masterDetailTracker ?? new DelimitedMasterDetailTracker(),
+                masterDetailStrategy ?? new DefaultDelimitedMasterDetailStrategy(),
                 handleEntryReadError);
         }
     }

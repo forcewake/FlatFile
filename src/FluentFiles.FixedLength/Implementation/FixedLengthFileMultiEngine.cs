@@ -37,7 +37,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// <summary>
         /// Determines how master-detail record relationships are handled.
         /// </summary>
-        readonly IMasterDetailTracker masterDetailTracker;
+        readonly IMasterDetailStrategy masterDetailStrategy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FixedLengthFileMultiEngine"/> class.
@@ -46,7 +46,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// <param name="typeSelectorFunc">The type selector function.</param>
         /// <param name="lineBuilderFactory">The line builder factory.</param>
         /// <param name="lineParserFactory">The line parser factory.</param>
-        /// <param name="masterDetailTracker">Determines how master-detail record relationships are handled.</param>
+        /// <param name="masterDetailStrategy">Determines how master-detail record relationships are handled.</param>
         /// <param name="handleEntryReadError">The handle entry read error.</param>
         /// <exception cref="System.ArgumentNullException">typeSelectorFunc</exception>
         internal FixedLengthFileMultiEngine(
@@ -54,7 +54,7 @@ namespace FluentFiles.FixedLength.Implementation
             Func<string, int, Type> typeSelectorFunc,
             IFixedLengthLineBuilderFactory lineBuilderFactory,
             IFixedLengthLineParserFactory lineParserFactory,
-            IMasterDetailTracker masterDetailTracker,
+            IMasterDetailStrategy masterDetailStrategy,
             FileReadErrorHandler handleEntryReadError = null)
                 : base(handleEntryReadError)
         {
@@ -71,7 +71,7 @@ namespace FluentFiles.FixedLength.Implementation
             this.typeSelectorFunc = typeSelectorFunc;
             this.lineBuilderFactory = lineBuilderFactory;
             this.lineParserFactory = lineParserFactory;
-            this.masterDetailTracker = masterDetailTracker;
+            this.masterDetailStrategy = masterDetailStrategy;
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace FluentFiles.FixedLength.Implementation
                 if (ignoreEntry) continue;
 
                 bool isDetailRecord;
-                masterDetailTracker.HandleMasterDetail(entry, out isDetailRecord);
+                masterDetailStrategy.HandleMasterDetail(entry, out isDetailRecord);
 
                 if (isDetailRecord) continue;
 

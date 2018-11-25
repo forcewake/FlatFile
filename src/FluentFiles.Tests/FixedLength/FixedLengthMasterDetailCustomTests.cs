@@ -137,7 +137,7 @@ D20150512Standalone                     ";
                                                     },
                                                     new FixedLengthLineBuilderFactory(),
                                                     new FixedLengthLineParserFactory(),
-                                                    new MasterDetailTrackerBase(
+                                                    new DelegatingMasterDetailStrategy(
                                                         x => x.GetType().GetCustomAttribute<MasterAttribute>(true) != null,
                                                         x => x.GetType().GetCustomAttribute<DetailAttribute>(true) != null,
                                                         (master, detail) => ((HeaderRecord)master).DetailRecords.Add((DetailRecord)detail)));

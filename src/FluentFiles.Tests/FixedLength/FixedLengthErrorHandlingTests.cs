@@ -61,7 +61,7 @@ STest Description    00044";
                 (l, i) => typeof(Record),
                 A.Fake<IFixedLengthLineBuilderFactory>(),
                 lineParserFactory,
-                new FixedLengthMasterDetailTracker(),
+                new DefaultFixedLengthMasterDetailStrategy(),
                 HandleError);
 
             using (var stream = new MemoryStream(Encoding.Default.GetBytes(TestData)))
