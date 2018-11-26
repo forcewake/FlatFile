@@ -12,7 +12,7 @@
         private bool _isNullable;
         private string _nullValue;
         private string _name;
-        private IValueConverter _converter;
+        private IFieldValueConverter _converter;
 
         public DelimitedFieldSettingsBuilder(PropertyInfo property)
         {
@@ -34,15 +34,15 @@
         public IDelimitedFieldSettingsBuilder WithTypeConverter(ITypeConverter converter)
         {
             var typeConverter = converter ?? throw new ArgumentNullException(nameof(converter));
-            return WithConverter(new ValueConverterAdapter(typeConverter));
+            return WithConverter(new FieldValueConverterAdapter(typeConverter));
         }
 
-        public IDelimitedFieldSettingsBuilder WithConverter<TConverter>() where TConverter : IValueConverter, new()
+        public IDelimitedFieldSettingsBuilder WithConverter<TConverter>() where TConverter : IFieldValueConverter, new()
         {
             return WithConverter(ReflectionHelper.CreateInstance<TConverter>(true));
         }
 
-        public IDelimitedFieldSettingsBuilder WithConverter(IValueConverter converter)
+        public IDelimitedFieldSettingsBuilder WithConverter(IFieldValueConverter converter)
         {
             _converter = converter ?? throw new ArgumentNullException(nameof(converter));
             return this;
@@ -51,9 +51,9 @@
         public IDelimitedFieldSettingsBuilder WithConversionFromString<TProperty>(ConvertFromString<TProperty> conversion)
         {
             if (_converter == null)
-                _converter = new DelegatingValueConverter<TProperty>();
+                _converter = new DelegatingConverter<TProperty>();
 
-            if (_converter is DelegatingValueConverter<TProperty> delegatingConverter)
+            if (_converter is DelegatingConverter<TProperty> delegatingConverter)
                 delegatingConverter.ConversionFromString = conversion;
             else
                 throw new InvalidOperationException("A converter has already been explicitly set.");
@@ -64,9 +64,9 @@
         public IDelimitedFieldSettingsBuilder WithConversionToString<TProperty>(ConvertToString<TProperty> conversion)
         {
             if (_converter == null)
-                _converter = new DelegatingValueConverter<TProperty>();
+                _converter = new DelegatingConverter<TProperty>();
 
-            if (_converter is DelegatingValueConverter<TProperty> delegatingConverter)
+            if (_converter is DelegatingConverter<TProperty> delegatingConverter)
                 delegatingConverter.ConversionToString = conversion;
             else
                 throw new InvalidOperationException("A converter has already been explicitly set.");
@@ -86,7 +86,7 @@
             {
                 IsNullable = _isNullable,
                 NullValue = _nullValue,
-                TypeConverter = _converter
+                Converter = _converter
             };
         }
     }

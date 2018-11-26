@@ -4,17 +4,17 @@ using System.Reflection;
 namespace FluentFiles.Core.Conversion
 {
     /// <summary>
-    /// Adapts an <see cref="ITypeConverter"/> to an <see cref="IValueConverter"/>.
+    /// Adapts an <see cref="ITypeConverter"/> to an <see cref="IFieldValueConverter"/>.
     /// </summary>
-    public class ValueConverterAdapter : IValueConverter
+    public class FieldValueConverterAdapter : IFieldValueConverter
     {
         private readonly ITypeConverter _converter;
 
         /// <summary>
-        /// Intializes a new instance of <see cref="ValueConverterAdapter"/> with an <see cref="ITypeConverter"/>.
+        /// Intializes a new instance of <see cref="FieldValueConverterAdapter"/> with an <see cref="ITypeConverter"/>.
         /// </summary>
         /// <param name="converter">The <see cref="ITypeConverter"/> to wrap.</param>
-        public ValueConverterAdapter(ITypeConverter converter)
+        public FieldValueConverterAdapter(ITypeConverter converter)
         {
             _converter = converter ?? throw new ArgumentNullException(nameof(converter));
         }

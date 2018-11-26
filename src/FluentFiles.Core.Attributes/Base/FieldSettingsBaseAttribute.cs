@@ -17,16 +17,16 @@ namespace FluentFiles.Core.Attributes.Base
 
         public string NullValue { get; set; }
 
-        public Type Converter { get; set; }
+        public Type ConverterType { get; set; }
 
-        public IValueConverter TypeConverter
+        public IFieldValueConverter Converter
         {
             get
             {
-                if (typeof(ITypeConverter).IsAssignableFrom(Converter))
-                    return new ValueConverterAdapter((ITypeConverter)ReflectionHelper.CreateInstance(Converter, true));
+                if (typeof(ITypeConverter).IsAssignableFrom(ConverterType))
+                    return new FieldValueConverterAdapter((ITypeConverter)ReflectionHelper.CreateInstance(ConverterType, true));
 
-                return (IValueConverter)ReflectionHelper.CreateInstance(Converter, true);
+                return (IFieldValueConverter)ReflectionHelper.CreateInstance(ConverterType, true);
             }
         }
 

@@ -7,7 +7,6 @@ using FluentFiles.FixedLength.Implementation;
 using AutoFixture;
 using BenchmarkDotNet.Attributes;
 using FluentFiles.Core;
-using FluentFiles.Core.Conversion;
 using FluentFiles.Converters;
 
 namespace FluentFiles.Benchmark
@@ -30,7 +29,7 @@ namespace FluentFiles.Benchmark
             var factory = new FixedLengthFileEngineFactory();
             _fluentEngine = factory.GetEngine(new FixedSampleRecordLayout());
 
-            Registry.Converters.UseOptimizedConverters();
+            Configuration.Converters.UseOptimizedConverters();
 
             var fixture = new Fixture();
             _records = fixture.CreateMany<FixedSampleRecord>(N).ToArray();

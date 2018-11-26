@@ -57,7 +57,7 @@ namespace FluentFiles.FixedLength
         public string UniqueKey { get; }
         public bool IsNullable { get; } = false;
         public string NullValue { get; } = null;
-        public IValueConverter TypeConverter { get; } = null;
+        public IFieldValueConverter Converter { get; } = null;
         public bool PadLeft { get; } = false;
         public char PaddingChar { get; } = default;
         public bool TruncateIfExceedFieldLength { get; } = false;

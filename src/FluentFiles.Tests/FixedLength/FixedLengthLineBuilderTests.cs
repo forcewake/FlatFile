@@ -69,7 +69,7 @@ namespace FluentFiles.Tests.FixedLength
             line.Should().Be("BEEF");
         }
 
-        class IdHexConverter : ValueConverterBase<int>
+        class IdHexConverter : ConverterBase<int>
         {
             protected override int ConvertFrom(ReadOnlySpan<char> source, PropertyInfo targetProperty)
             {

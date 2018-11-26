@@ -17,7 +17,7 @@ namespace FluentFiles.FixedLength.Implementation
         private int _length;
         private char _paddingChar;
         private bool _padLeft;
-        private IValueConverter _converter;
+        private IFieldValueConverter _converter;
 
         public FixedFieldSettingsBuilder(PropertyInfo property)
         {
@@ -71,15 +71,15 @@ namespace FluentFiles.FixedLength.Implementation
         public IFixedFieldSettingsBuilder WithTypeConverter(ITypeConverter converter)
         {
             var typeConverter = converter ?? throw new ArgumentNullException(nameof(converter));
-            return WithConverter(new ValueConverterAdapter(typeConverter));
+            return WithConverter(new FieldValueConverterAdapter(typeConverter));
         }
 
-        public IFixedFieldSettingsBuilder WithConverter<TConverter>() where TConverter : IValueConverter, new()
+        public IFixedFieldSettingsBuilder WithConverter<TConverter>() where TConverter : IFieldValueConverter, new()
         {
             return WithConverter(ReflectionHelper.CreateInstance<TConverter>(true));
         }
 
-        public IFixedFieldSettingsBuilder WithConverter(IValueConverter converter)
+        public IFixedFieldSettingsBuilder WithConverter(IFieldValueConverter converter)
         {
             _converter = converter ?? throw new ArgumentNullException(nameof(converter));
             return this;
@@ -88,9 +88,9 @@ namespace FluentFiles.FixedLength.Implementation
         public IFixedFieldSettingsBuilder WithConversionFromString<TProperty>(ConvertFromString<TProperty> conversion)
         {
             if (_converter == null)
-                _converter = new DelegatingValueConverter<TProperty>();
+                _converter = new DelegatingConverter<TProperty>();
 
-            if (_converter is DelegatingValueConverter<TProperty> delegatingConverter)
+            if (_converter is DelegatingConverter<TProperty> delegatingConverter)
                 delegatingConverter.ConversionFromString = conversion;
             else
                 throw new InvalidOperationException("A converter has already been explicitly set.");
@@ -101,9 +101,9 @@ namespace FluentFiles.FixedLength.Implementation
         public IFixedFieldSettingsBuilder WithConversionToString<TProperty>(ConvertToString<TProperty> conversion)
         {
             if (_converter == null)
-                _converter = new DelegatingValueConverter<TProperty>();
+                _converter = new DelegatingConverter<TProperty>();
 
-            if (_converter is DelegatingValueConverter<TProperty> delegatingConverter)
+            if (_converter is DelegatingConverter<TProperty> delegatingConverter)
                 delegatingConverter.ConversionToString = conversion;
             else
                 throw new InvalidOperationException("A converter has already been explicitly set.");
@@ -122,7 +122,7 @@ namespace FluentFiles.FixedLength.Implementation
                 Length = _length,
                 StringNormalizer = _stringNormalizer,
                 TruncateIfExceedFieldLength = _truncateIfExceedFieldLength,
-                TypeConverter = _converter
+                Converter = _converter
             };
         }
     }

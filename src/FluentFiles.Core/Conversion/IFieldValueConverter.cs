@@ -6,7 +6,7 @@ namespace FluentFiles.Core.Conversion
     /// <summary>
     /// Defines a way to convert a field's string value to and from a custom type.
     /// </summary>
-    public interface IValueConverter
+    public interface IFieldValueConverter
     {
         /// <summary>
         /// Whether a value of a given type can be converted to another type.

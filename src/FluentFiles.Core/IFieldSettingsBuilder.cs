@@ -29,14 +29,14 @@
         /// <summary>
         /// Specifies that a field's value should be converted using a new instance of the type <typeparamref name="TConverter"/>.
         /// </summary>
-        /// <typeparam name="TConverter">The type of <see cref="IValueConverter"/> to use for conversion.</typeparam>
-        TBuilder WithConverter<TConverter>() where TConverter : IValueConverter, new();
+        /// <typeparam name="TConverter">The type of <see cref="IFieldValueConverter"/> to use for conversion.</typeparam>
+        TBuilder WithConverter<TConverter>() where TConverter : IFieldValueConverter, new();
 
         /// <summary>
-        ///  Specifies that a field's value should be converted using the provided <see cref="IValueConverter"/> implementation.
+        ///  Specifies that a field's value should be converted using the provided <see cref="IFieldValueConverter"/> implementation.
         /// </summary>
         /// <param name="converter">The converter to use.</param>
-        TBuilder WithConverter(IValueConverter converter);
+        TBuilder WithConverter(IFieldValueConverter converter);
 
         /// <summary>
         /// Specifies that a field's value should be converted from a string to its destination type using the provided conversion function.

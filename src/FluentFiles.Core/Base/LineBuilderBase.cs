@@ -28,7 +28,7 @@ namespace FluentFiles.Core.Base
 
         private static string ConvertToString(TFieldSettings field, object fieldValue)
         {
-            var converter = field.TypeConverter;
+            var converter = field.Converter;
             if (converter != null && converter.CanConvert(from: field.Type, to: typeof(string)))
                 return converter.ConvertToString(fieldValue, field.PropertyInfo);
 
