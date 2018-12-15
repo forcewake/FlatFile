@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace FluentFiles.Converters
 {
-    public sealed class CharConverter : ValueConverterBase<char>
+    public sealed class CharConverter : ConverterBase<char>
     {
         protected override char ConvertFrom(ReadOnlySpan<char> source, PropertyInfo targetProperty)
         {

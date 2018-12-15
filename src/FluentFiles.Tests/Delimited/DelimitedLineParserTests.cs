@@ -79,7 +79,7 @@ namespace FluentFiles.Tests.Delimited
             parsedEntity.Id.Should().Be(48879);
         }
 
-        class IdHexConverter : ValueConverterBase<int>
+        class IdHexConverter : ConverterBase<int>
         {
             protected override int ConvertFrom(ReadOnlySpan<char> source, PropertyInfo targetProperty)
             {

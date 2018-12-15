@@ -33,7 +33,7 @@ namespace FluentFiles.Tests.Delimited
             public string Foo { get; set; }
         }
 
-        class StubConverter : IValueConverter
+        class StubConverter : IFieldValueConverter
         {
             public bool CanConvert(Type from, Type to) => true;
             public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty) => "foo";
@@ -49,7 +49,7 @@ namespace FluentFiles.Tests.Delimited
             // an attribute to assign the property
             var attribute = A.Fake<IDelimitedFieldSettings>();
             A.CallTo(() => attribute.Index).Returns(1);
-            A.CallTo(() => attribute.TypeConverter).Returns(converter);
+            A.CallTo(() => attribute.Converter).Returns(converter);
 
             // the properties of the class
             var properties = typeof(ConverterTestObject).GetProperties(BindingFlags.Instance | BindingFlags.Public).ToDictionary(info => info.Name);

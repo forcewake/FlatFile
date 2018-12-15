@@ -19,14 +19,14 @@ namespace FluentFiles.Core.Attributes.Base
 
         public Type Converter { get; set; }
 
-        public IValueConverter TypeConverter
+        IFieldValueConverter IFieldSettings.Converter
         {
             get
             {
                 if (typeof(ITypeConverter).IsAssignableFrom(Converter))
-                    return new ValueConverterAdapter((ITypeConverter)ReflectionHelper.CreateInstance(Converter, true));
+                    return new FieldValueConverterAdapter((ITypeConverter)ReflectionHelper.CreateInstance(Converter, true));
 
-                return (IValueConverter)ReflectionHelper.CreateInstance(Converter, true);
+                return (IFieldValueConverter)ReflectionHelper.CreateInstance(Converter, true);
             }
         }
 

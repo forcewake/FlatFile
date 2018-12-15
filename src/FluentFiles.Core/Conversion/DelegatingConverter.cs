@@ -4,9 +4,9 @@ using System.Reflection;
 namespace FluentFiles.Core.Conversion
 {
     /// <summary>
-    /// An implementation of <see cref="IValueConverter"/> that uses delegates for conversion.
+    /// An implementation of <see cref="IFieldValueConverter"/> that uses delegates for conversion.
     /// </summary>
-    class DelegatingValueConverter<TProperty> : IValueConverter
+    class DelegatingConverter<TProperty> : IFieldValueConverter
     {
         internal ConvertFromString<TProperty> ConversionFromString { get; set; }
 

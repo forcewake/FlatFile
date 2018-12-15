@@ -8,6 +8,7 @@ using FluentFiles.Benchmark.Entities;
 using FluentFiles.Benchmark.Mapping;
 using FluentFiles.Core;
 using FluentFiles.Delimited.Implementation;
+using Configuration = CsvHelper.Configuration.Configuration;
 
 namespace FluentFiles.Benchmark
 {

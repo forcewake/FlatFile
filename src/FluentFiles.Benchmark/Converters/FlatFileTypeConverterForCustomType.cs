@@ -6,7 +6,7 @@ namespace FluentFiles.Benchmark.Converters
     using FluentFiles.Core.Conversion;
     using FluentFiles.Core.Extensions;
 
-    public class FlatFileConverterForCustomType : ValueConverterBase<CustomType>
+    public class FlatFileConverterForCustomType : ConverterBase<CustomType>
     {
         protected override CustomType ConvertFrom(ReadOnlySpan<char> source, PropertyInfo targetProperty)
         {

@@ -32,7 +32,7 @@ namespace FluentFiles.Core.Base
 
         private static object ConvertFromString(TFieldSettings field, ReadOnlySpan<char> source)
         {
-            var converter = field.TypeConverter;
+            var converter = field.Converter;
             if (converter != null && converter.CanConvert(from: typeof(string), to: field.Type))
                 return converter.ConvertFromString(source, field.PropertyInfo);
 

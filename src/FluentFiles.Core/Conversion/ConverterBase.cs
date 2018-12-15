@@ -7,7 +7,7 @@ namespace FluentFiles.Core.Conversion
     /// A generic base class for converting between strings and a given type.
     /// </summary>
     /// <typeparam name="TValue">The type to convert to and from a string.</typeparam>
-    public abstract class ValueConverterBase<TValue> : IValueConverter
+    public abstract class ConverterBase<TValue> : IFieldValueConverter
     {
         public virtual bool CanConvert(Type from, Type to) => 
             (from == typeof(string) && to == typeof(TValue)) || 

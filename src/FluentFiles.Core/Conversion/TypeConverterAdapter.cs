@@ -5,9 +5,9 @@ using System.Reflection;
 namespace FluentFiles.Core.Conversion
 {
     /// <summary>
-    /// Adapts a <see cref="TypeConverter"/> to an <see cref="IValueConverter"/>.
+    /// Adapts a <see cref="TypeConverter"/> to an <see cref="IFieldValueConverter"/>.
     /// </summary>
-    public class TypeConverterAdapter : IValueConverter
+    public class TypeConverterAdapter : IFieldValueConverter
     {
         private readonly TypeConverter _converter;
 

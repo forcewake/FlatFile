@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace FluentFiles.Converters
 {
-    public sealed class StringConverter : IValueConverter
+    public sealed class StringConverter : IFieldValueConverter
     {
         public bool CanConvert(Type from, Type to) => from == typeof(string) && to == typeof(string);
 

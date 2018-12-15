@@ -9,7 +9,7 @@ namespace FluentFiles.Converters
         /// <summary>
         /// Registers converters optimized for .NET Core.
         /// </summary>
-        public static IDictionary<Type, IValueConverter> UseOptimizedConverters(this IDictionary<Type, IValueConverter> registry)
+        public static IDictionary<Type, IFieldValueConverter> UseOptimizedConverters(this IDictionary<Type, IFieldValueConverter> registry)
         {
             registry[typeof(char)] = new CharConverter();
             registry[typeof(byte)] = new ByteConverter();

@@ -9,7 +9,7 @@ namespace FluentFiles.Core.Conversion
     /// It is partially based on <see cref="System.ComponentModel.BaseNumberConverter"/> located at 
     /// https://github.com/dotnet/corefx/blob/master/src/System.ComponentModel.TypeConverter/src/System/ComponentModel/BaseNumberConverter.cs.
     /// </summary>
-    public abstract class NumberConverterBase<T> : IValueConverter
+    public abstract class NumberConverterBase<T> : IFieldValueConverter
     {
         protected Type TargetType { get; } = typeof(T);
 

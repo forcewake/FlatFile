@@ -4,9 +4,9 @@ using System.Reflection;
 
 namespace FluentFiles.Core.Conversion
 {
-    class DefaultValueConverter : IValueConverter
+    class DefaultConverter : IFieldValueConverter
     {
-        public static IValueConverter Instance = new DefaultValueConverter();
+        public static IFieldValueConverter Instance = new DefaultConverter();
 
         public bool CanConvert(Type from, Type to) => from == typeof(string);
 

@@ -24,7 +24,7 @@ namespace FluentFiles.Tests.FixedLength
             public string Foo { get; set; }
         }
 
-        class StubConverter : IValueConverter
+        class StubConverter : IFieldValueConverter
         {
             public bool CanConvert(Type from, Type to) => true;
             public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty) => "foo";
@@ -44,7 +44,7 @@ namespace FluentFiles.Tests.FixedLength
             var attribute = A.Fake<IFixedFieldSettings>();
             A.CallTo(() => attribute.Index).Returns(1);
             A.CallTo(() => attribute.Length).Returns(1);
-            A.CallTo(() => attribute.TypeConverter).Returns(converter);
+            A.CallTo(() => attribute.Converter).Returns(converter);
 
             var properties = typeof (ConverterTestObject).GetProperties(BindingFlags.Instance | BindingFlags.Public).ToDictionary(info => info.Name);
 
