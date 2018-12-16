@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Description>A library for working with fixed-width field text files.</Description>
+    <Description>A library for reading and writing fixed-width field text files.</Description>
     <Owners>mthamil</Owners>
     <Authors>mthamil;forcewake</Authors>
     <Copyright>Copyright 2018</Copyright>
@@ -18,7 +18,8 @@
     <RepositoryUrl>https://github.com/mthamil/FluentFiles</RepositoryUrl>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <PackageLicenseUrl>https://raw.githubusercontent.com/mthamil/FluentFiles/master/LICENSE</PackageLicenseUrl>
-    <PackageTags>FluentFiles;plain;reader;parser;schema;flat;parse;read;fixed;fixedLength</PackageTags>
+    <PackageIconUrl>https://raw.githubusercontent.com/mthamil/FluentFiles/master/nuspecs/icon.png</PackageIconUrl>
+    <PackageTags>FluentFiles;plain;file;text;read;reader;parse;parser;schema;flat;fixed;fixedLength;fixedWidth;fluent</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

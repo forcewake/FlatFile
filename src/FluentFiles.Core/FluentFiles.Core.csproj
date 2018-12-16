@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Description>The core library for FluentFiles assemblies.</Description>
+    <Description>The core library for FluentFiles. FluentFiles is a library for reading and writing fixed-width or delimited text files.</Description>
     <Owners>mthamil</Owners>
     <Authors>mthamil;forcewake</Authors>
     <Copyright>Copyright 2018</Copyright>
@@ -18,7 +18,8 @@
     <RepositoryUrl>https://github.com/mthamil/FluentFiles</RepositoryUrl>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <PackageLicenseUrl>https://raw.githubusercontent.com/mthamil/FluentFiles/master/LICENSE</PackageLicenseUrl>
-    <PackageTags>FluentFiles;plain;reader;parser;schema;flat;csv;parse;read;fixed;fixedLength;delimited</PackageTags>
+    <PackageIconUrl>https://raw.githubusercontent.com/mthamil/FluentFiles/master/nuspecs/icon.png</PackageIconUrl>
+    <PackageTags>FluentFiles;file;text;read;reader;parse;parser;schema;flat;csv;fixed;fixedLength;fixedWidth;delimited;fluent</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
