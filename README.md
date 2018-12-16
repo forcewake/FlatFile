@@ -2,7 +2,8 @@ FluentFiles
 ========
 [![Build status](https://ci.appveyor.com/api/projects/status/s52n84t6o4nr92c3?svg=true)](https://ci.appveyor.com/project/mthamil/fluentfiles)
 
-FluentFiles is a fork of the [FlatFile](https://github.com/forcewake/FlatFile) project. It is a library for working with flat files.
+FluentFiles is a fork of the [FlatFile](https://github.com/forcewake/FlatFile) project. 
+It is a library for reading and writing fixed-width and delimited text files.
 
 ### Installing FluentFiles
 
@@ -10,38 +11,38 @@ FluentFiles is a fork of the [FlatFile](https://github.com/forcewake/FlatFile) p
 You should install [FluentFiles with NuGet](https://www.nuget.org/packages/FluentFiles):
 
 ```sh
-Install-Package FluentFiles
+dotnet add package FluentFiles
 ```
 
 #### Installing FluentFiles.Delimited
 You should install [FluentFiles.Delimited with NuGet](https://www.nuget.org/packages/FluentFiles.Delimited):
 
 ```sh
-Install-Package FluentFiles.Delimited
+dotnet add package FluentFiles.Delimited
 ```
 
 ##### Add attribute-mapping extensions
 You should install [FluentFiles.Delimited.Attributes with NuGet](https://www.nuget.org/packages/FluentFiles.Delimited.Attributes):
 
 ```sh
-Install-Package FluentFiles.Delimited.Attributes
+dotnet add package FluentFiles.Delimited.Attributes
 ```
 
 #### Installing FluentFiles.FixedLength
 You should install [FluentFiles.FixedLength with NuGet](https://www.nuget.org/packages/FluentFiles.FixedLength):
 
 ```sh
-Install-Package FluentFiles.FixedLength
+dotnet add packageFluentFiles.FixedLength
 ```
 
 ##### Add attribute-mapping extensions
 You should install [FluentFiles.FixedLength.Attributes with NuGet](https://www.nuget.org/packages/FluentFiles.FixedLength.Attributes):
 
 ```sh
-Install-Package FluentFiles.FixedLength.Attributes
+dotnet add package FluentFiles.FixedLength.Attributes
 ```
 
-These commands from Package Manager Console will download and install FluentFiles and all required dependencies.
+These commands will download and install FluentFiles and all required dependencies.
 
 
 ### Usage
@@ -54,9 +55,9 @@ public sealed class DelimitedSampleRecordLayout : DelimitedLayout<FixedSampleRec
     {
         this.WithDelimiter(";")
             .WithQuote("\"")
-            .WithMember(x => x.Cuit)
-            .WithMember(x => x.Nombre)
-            .WithMember(x => x.Actividad, c => c.WithName("AnotherName"));
+            .WithMember(x => x.Id)
+            .WithMember(x => x.Name)
+            .WithMember(x => x.Description, c => c.WithName("AnotherName"));
     }
 }
 ```
@@ -66,9 +67,9 @@ public sealed class FixedSampleRecordLayout : FixedLayout<FixedSampleRecord>
 {
     public FixedSampleRecordLayout()
     {
-        this.WithMember(x => x.Cuit, c => c.WithLength(11))
-            .WithMember(x => x.Nombre, c => c.WithLength(160))
-            .WithMember(x => x.Actividad, c => c.WithLength(6));
+        this.WithMember(x => x.Id, c => c.WithLength(11))
+            .WithMember(x => x.Name, c => c.WithLength(160))
+            .WithMember(x => x.Description, c => c.WithLength(6));
     }
 }
 ```
@@ -83,9 +84,9 @@ public class LayoutFactory
         IDelimitedLayout<TestObject> layout = new DelimitedLayout<TestObject>()
             .WithDelimiter(";")
             .WithQuote("\"")
-            .WithMember(o => o.Id)
-            .WithMember(o => o.Description)
-            .WithMember(o => o.NullableInt, set => set.AllowNull("=Null"));
+            .WithMember(x => x.Id)
+            .WithMember(x => x.Description)
+            .WithMember(x => x.NullableInt, c => c.AllowNull("=Null"));
 
         return layout;
     } 
@@ -98,13 +99,13 @@ public class LayoutFactory
     public IFixedLayout<TestObject> GetLayout()
     {
         IFixedLayout<TestObject> layout = new FixedLayout<TestObject>()
-            .WithMember(o => o.Id, set => set
+            .WithMember(x => x.Id, c => c
                 .WithLength(5)
                 .WithLeftPadding('0'))
-            .WithMember(o => o.Description, set => set
+            .WithMember(x => x.Description, c => c
                 .WithLength(25)
                 .WithRightPadding(' '))
-            .WithMember(o => o.NullableInt, set => set
+            .WithMember(x => x.NullableInt, c => c
                 .WithLength(5)
                 .AllowNull("=Null")
                 .WithLeftPadding('0'));
@@ -112,26 +113,26 @@ public class LayoutFactory
         return layout;
     }
 
-    // you can also register a StringNormalizer function to convert input into the FixedLengthLineBuilder
-    // to a string compatible with the specifications for your target File. 
+    // You can also register a StringNormalizer function to convert input into the FixedLengthLineBuilder
+    // to a string compatible with the specifications for your target file. 
     //
-    // Note that the StringNormalizer function is only used when creating/building files. Not when reading/parsing files.
+    // Note that the StringNormalizer function is only used when writing files, not when reading files.
     //
-    // example:
+    // Example:
     public IFixedLayout<TestObject> GetLayout()
     {
         IFixedLayout<TestObject> layout = new FixedLayout<TestObject>()
-            .WithMember(o => o.Description, set => set
+            .WithMember(x => x.Description, c => c
                 .WithLength(25)
                 .WithRightPadding(' ')
-                .WithStringNormalizer((input) => {
+                .WithStringNormalizer(input => {
                      // the normalization to FormD splits accented letters in accents+letters,
                      // the rest aftet that removes those accents (and other non-spacing characters) from the ouput
                      // So unicode L'été becomes L'ete
                      return new string(
                         input.Normalize(System.Text.NormalizationForm.FormD)
                              .ToCharArray()
-                             .Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+                             .Where(ch => CharUnicodeInfo.GetUnicodeCategory(ch) != UnicodeCategory.NonSpacingMark)
                              .ToArray());
                 }))
 
