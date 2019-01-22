@@ -5,7 +5,6 @@ namespace FluentFiles.Tests.FixedLength
     using FluentFiles.Core.Conversion;
     using FluentFiles.FixedLength;
     using FluentFiles.FixedLength.Implementation;
-    using FluentFiles.Tests.Base.Entities;
     using FluentAssertions;
     using System;
     using System.Globalization;
@@ -32,9 +31,7 @@ namespace FluentFiles.Tests.FixedLength
                   .WithMember(o => o.Description, set => set.WithLength(25).WithRightPadding(' '))
                   .WithMember(o => o.NullableInt, set => set.WithLength(5).AllowNull("=Null").WithLeftPadding('0'));
 
-            var entry = new TestObject();
-
-            var parsedEntity = parser.ParseLine(inputString, entry);
+            var parsedEntity = parser.ParseLine(inputString, new TestObject());
 
             parsedEntity.Id.Should().Be(id);
             parsedEntity.Description.Should().Be(description);
@@ -51,9 +48,7 @@ namespace FluentFiles.Tests.FixedLength
                   .WithMember(o => o.Description, set => set.WithLength(25).WithRightPadding(' '))
                   .WithMember(o => o.NullableInt, set => set.WithLength(5).AllowNull("=Null").WithLeftPadding('0'));
 
-            var entry = new TestObject();
-
-            var parsedEntity = parser.ParseLine(inputString, entry);
+            var parsedEntity = parser.ParseLine(inputString, new TestObject());
 
             parsedEntity.Id.Should().Be(id);
             parsedEntity.Description.Should().Be(description);
@@ -68,9 +63,7 @@ namespace FluentFiles.Tests.FixedLength
                   .Ignore(7)
                   .WithMember(o => o.NullableInt, set => set.WithLength(5).WithLeftPadding('0'));
 
-            var entry = new TestObject();
-
-            var parsedEntity = parser.ParseLine("001Descr 123456700003", entry);
+            var parsedEntity = parser.ParseLine("001Descr 123456700003", new TestObject());
 
             parsedEntity.Id.Should().Be(1);
             parsedEntity.Description.Should().Be("Descr");
@@ -86,9 +79,7 @@ namespace FluentFiles.Tests.FixedLength
                   .Ignore(7)
                   .WithMember(o => o.NullableInt, set => set.WithLength(5).WithLeftPadding('0'));
 
-            var entry = new TestObject();
-
-            var parsedEntity = parser.ParseLine("001aaaDescr 123456700003", entry);
+            var parsedEntity = parser.ParseLine("001aaaDescr 123456700003", new TestObject());
 
             parsedEntity.Id.Should().Be(1);
             parsedEntity.Description.Should().Be("Descr");
@@ -102,8 +93,7 @@ namespace FluentFiles.Tests.FixedLength
                   .WithMember(o => o.Description, set => set.WithLength(25).AllowNull(string.Empty))
                   .WithMember(o => o.NullableInt, set => set.WithLength(5).AllowNull(string.Empty));
 
-            var entry = new TestObject();
-            var parsedEntity = parser.ParseLine("BEEF", entry);
+            var parsedEntity = parser.ParseLine("BEEF", new TestObject());
 
             parsedEntity.Id.Should().Be(48879);
         }
@@ -115,10 +105,78 @@ namespace FluentFiles.Tests.FixedLength
                   .WithMember(o => o.Description, set => set.WithLength(25).AllowNull(string.Empty))
                   .WithMember(o => o.NullableInt, set => set.WithLength(5).AllowNull(string.Empty));
 
-            var entry = new TestObject();
-            var parsedEntity = parser.ParseLine("BEEF", entry);
+            var parsedEntity = parser.ParseLine("BEEF", new TestObject());
 
             parsedEntity.Id.Should().Be(48879);
+        }
+
+        [Theory]
+        [InlineData("12345", 12345, '0')]
+        [InlineData("01234", 1234, '0')]
+        [InlineData("00123", 123, '0')]
+        [InlineData("00012", 12, '0')]
+        [InlineData("00001", 1, '0')]
+        [InlineData("bbbb1", 1, 'b')]
+        public void ShouldRespectLeftPadding(string input, int expected, char padding)
+        {
+            layout.WithMember(o => o.Id, set => set.WithLength(5).WithLeftPadding(padding));
+
+            var parsedEntity = parser.ParseLine(input, new TestObject());
+
+            parsedEntity.Id.Should().Be(expected);
+        }
+
+        [Theory]
+        [InlineData("12345", 12345, '0')]
+        [InlineData("12340", 1234, '0')]
+        [InlineData("12300", 123, '0')]
+        [InlineData("12000", 12, '0')]
+        [InlineData("10000", 1, '0')]
+        [InlineData("1aaaa", 1, 'a')]
+        public void ShouldRespectRightPadding(string input, int expected, char padding)
+        {
+            layout.WithMember(o => o.Id, set => set.WithLength(5).WithRightPadding(padding));
+
+            var parsedEntity = parser.ParseLine(input, new TestObject());
+
+            parsedEntity.Id.Should().Be(expected);
+        }
+
+        [Theory]
+        [InlineData("12345", 12345, 0)]
+        [InlineData("01234", 1234, 1)]
+        [InlineData("00123", 123, 2)]
+        [InlineData("00012", 12, 3)]
+        [InlineData("00001", 1, 4)]
+        [InlineData("11111", 1, 4)]
+        [InlineData("11111", 11, 3)]
+        [InlineData("11111", 111, 2)]
+        [InlineData("11111", 1111, 1)]
+        public void ShouldRespectStartIndex(string input, int expected, ushort start)
+        {
+            layout.WithMember(o => o.Id, set => set.WithLength(5).StartsAt(start));
+
+            var parsedEntity = parser.ParseLine(input, new TestObject());
+
+            parsedEntity.Id.Should().Be(expected);
+        }
+
+        [Theory]
+        [InlineData("12345", 12345, 4)]
+        [InlineData("12340", 1234, 3)]
+        [InlineData("12300", 123, 2)]
+        [InlineData("12000", 12, 1)]
+        [InlineData("10000", 1, 0)]
+        [InlineData("10000", 10, 1)]
+        [InlineData("10000", 100, 2)]
+        [InlineData("10000", 1000, 3)]
+        public void ShouldRespectEndIndex(string input, int expected, ushort end)
+        {
+            layout.WithMember(o => o.Id, set => set.WithLength(5).EndsAt(end));
+
+            var parsedEntity = parser.ParseLine(input, new TestObject());
+
+            parsedEntity.Id.Should().Be(expected);
         }
 
         class IdHexConverter : ConverterBase<int>

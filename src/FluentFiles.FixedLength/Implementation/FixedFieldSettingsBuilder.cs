@@ -17,6 +17,8 @@ namespace FluentFiles.FixedLength.Implementation
         private int _length;
         private char _paddingChar;
         private bool _padLeft;
+        private Func<char, int, bool> _skipWhile;
+        private Func<char, int, bool> _takeUntil;
         private IFieldValueConverter _converter;
 
         public FixedFieldSettingsBuilder(PropertyInfo property)
@@ -53,6 +55,18 @@ namespace FluentFiles.FixedLength.Implementation
         {
             _paddingChar = paddingChar;
             _padLeft = false;
+            return this;
+        }
+
+        public IFixedFieldSettingsBuilder SkipWhile(Func<char, int, bool> predicate)
+        {
+            _skipWhile = predicate ?? throw new ArgumentNullException(nameof(predicate));
+            return this;
+        }
+
+        public IFixedFieldSettingsBuilder TakeUntil(Func<char, int, bool> predicate)
+        {
+            _takeUntil = predicate ?? throw new ArgumentNullException(nameof(predicate));
             return this;
         }
 
@@ -118,6 +132,8 @@ namespace FluentFiles.FixedLength.Implementation
                 IsNullable = _isNullable,
                 NullValue = _nullValue,
                 PaddingChar = _paddingChar,
+                SkipWhile = _skipWhile,
+                TakeUntil = _takeUntil,
                 PadLeft = _padLeft,
                 Length = _length,
                 StringNormalizer = _stringNormalizer,
