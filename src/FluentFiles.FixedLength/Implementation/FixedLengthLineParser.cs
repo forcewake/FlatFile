@@ -51,9 +51,43 @@ namespace FluentFiles.FixedLength.Implementation
 
         protected override ReadOnlySpan<char> PreprocessFieldValue(IFixedFieldSettingsContainer field, ReadOnlySpan<char> memberValue)
         {
-            return field.PadLeft
+            var trimmed = field.PadLeft
                 ? memberValue.TrimStart(field.PaddingChar)
                 : memberValue.TrimEnd(field.PaddingChar);
+
+            var skipped = Skip(field, trimmed);
+            var taken = Take(field, skipped);
+            return taken;
+        }
+
+        private ReadOnlySpan<char> Skip(IFixedFieldSettingsContainer field, in ReadOnlySpan<char> value)
+        {
+            if (field.SkipWhile != null)
+            {
+                for (int i = 0; i < value.Length; i++)
+                {
+                    var stop = field.SkipWhile(value[i], i);
+                    if (!stop)
+                        return value.Slice(i);
+                }
+            }
+
+            return value;
+        }
+
+        private ReadOnlySpan<char> Take(IFixedFieldSettingsContainer field, in ReadOnlySpan<char> value)
+        {
+            if (field.TakeUntil != null)
+            {
+                for (int i = 0; i < value.Length; i++)
+                {
+                    var stop = field.TakeUntil(value[i], i);
+                    if (stop)
+                        return value.Slice(0, i);
+                }
+            }
+
+            return value;
         }
     }
 }

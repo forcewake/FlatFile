@@ -8,7 +8,7 @@ namespace FluentFiles.Delimited.Attributes.Infrastructure
     public class DelimitedMultiLayoutDescriptor<TFieldSettings> : ILayoutDescriptorProvider<TFieldSettings, ILayoutDescriptor<TFieldSettings>>
         where TFieldSettings : IDelimitedFieldSettingsContainer
     {
-        protected IFieldsContainer<TFieldSettings> FieldsContainer { get; private set; }
+        protected IFieldsContainer<TFieldSettings> FieldsContainer { get; }
 
         public DelimitedMultiLayoutDescriptor(IFieldsContainer<TFieldSettings> fieldsContainer)
         {
@@ -22,7 +22,7 @@ namespace FluentFiles.Delimited.Attributes.Infrastructure
             throw new NotImplementedException();
         }
 
-        public virtual Type TargetType { get; private set; }
+        public virtual Type TargetType { get; }
 
         public IEnumerable<TFieldSettings> Fields
         {
@@ -31,7 +31,6 @@ namespace FluentFiles.Delimited.Attributes.Infrastructure
 
         public bool HasHeader { get; protected internal set; }
 
-
         public string Delimiter { get; private set; }
 
         public string Quotes { get; private set; }
@@ -39,17 +38,13 @@ namespace FluentFiles.Delimited.Attributes.Infrastructure
         public DelimitedMultiLayoutDescriptor<TFieldSettings> WithQuote(string quote)
         {
             Quotes = quote;
-
             return this;
         }
 
         public DelimitedMultiLayoutDescriptor<TFieldSettings> WithDelimiter(string delimiter)
         {
             Delimiter = delimiter;
-
             return this;
         }
-
- 
     }
 }

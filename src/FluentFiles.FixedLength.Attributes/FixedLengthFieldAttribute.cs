@@ -20,6 +20,10 @@
 
         public Func<string, string> StringNormalizer { get; set; }
 
+        public Func<char, int, bool> SkipWhile { get; set; }
+
+        public Func<char, int, bool> TakeUntil { get; set; }
+
         public FixedLengthFieldAttribute(int index, int length, bool truncateIfExceed = false)
             : base(index)
         {
