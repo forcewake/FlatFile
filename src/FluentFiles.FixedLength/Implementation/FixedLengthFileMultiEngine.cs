@@ -10,7 +10,7 @@ using FluentFiles.Core.Exceptions;
 namespace FluentFiles.FixedLength.Implementation
 {
     /// <summary>
-    /// Class FixedLengthFileMultiEngine.
+    /// A fixed length file engine capable of handling files with multiple types of records.
     /// </summary>
     public class FixedLengthFileMultiEngine : FlatFileEngine<IFixedFieldSettingsContainer, ILayoutDescriptor<IFixedFieldSettingsContainer>>, IFlatFileMultiEngine
     {
