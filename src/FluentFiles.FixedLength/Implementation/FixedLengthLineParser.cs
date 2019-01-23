@@ -66,8 +66,8 @@ namespace FluentFiles.FixedLength.Implementation
             {
                 for (int i = 0; i < value.Length; i++)
                 {
-                    var stop = field.SkipWhile(value[i], i);
-                    if (!stop)
+                    var canContinue = field.SkipWhile(value[i], i);
+                    if (!canContinue)
                         return value.Slice(i);
                 }
             }
@@ -81,8 +81,8 @@ namespace FluentFiles.FixedLength.Implementation
             {
                 for (int i = 0; i < value.Length; i++)
                 {
-                    var stop = field.TakeUntil(value[i], i);
-                    if (stop)
+                    var canStop = field.TakeUntil(value[i], i);
+                    if (canStop)
                         return value.Slice(0, i);
                 }
             }
