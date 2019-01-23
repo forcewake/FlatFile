@@ -8,11 +8,12 @@ It is a library for reading and writing fixed-width and delimited text files.
 ### Installing FluentFiles
 
 #### Installing all packages
-You should install [FluentFiles with NuGet](https://www.nuget.org/packages/FluentFiles):
+The following installs the [FluentFiles](https://www.nuget.org/packages/FluentFiles) metapackage that pulls in all other packages:
 
 ```sh
 dotnet add package FluentFiles
 ```
+
 
 #### Installing FluentFiles.Delimited
 You should install [FluentFiles.Delimited with NuGet](https://www.nuget.org/packages/FluentFiles.Delimited):
