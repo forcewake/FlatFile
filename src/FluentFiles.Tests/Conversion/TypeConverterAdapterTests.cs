@@ -30,7 +30,7 @@ namespace FluentFiles.Tests.Conversion
             var adapter = new TypeConverterAdapter(adapted);
 
             // Act.
-            var actual = adapter.ConvertFromString("1", null);
+            var actual = adapter.ConvertFromString(new FieldDeserializationContext("1", null));
 
             // Assert.
             Assert.Equal(1, actual);
@@ -45,10 +45,10 @@ namespace FluentFiles.Tests.Conversion
             var adapter = new TypeConverterAdapter(adapted);
 
             // Act.
-            var actual = adapter.ConvertToString(1, null);
+            var actual = adapter.ConvertToString(new FieldSerializationContext(1, null));
 
             // Assert.
-            Assert.Equal("1", actual.ToString());
+            Assert.Equal("1", actual);
         }
     }
 }

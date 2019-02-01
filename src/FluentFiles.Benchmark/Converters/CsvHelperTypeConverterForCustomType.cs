@@ -5,6 +5,7 @@ namespace FluentFiles.Benchmark.Converters
     using CsvHelper.Configuration;
     using System.Reflection;
     using CsvHelperTypeConversion = CsvHelper.TypeConversion;
+    using FluentFiles.Core.Conversion;
 
     public class CsvHelperTypeConverterForCustomType : CsvHelperTypeConversion.ITypeConverter
     {
@@ -17,12 +18,12 @@ namespace FluentFiles.Benchmark.Converters
 
         public string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
         {
-            return converter.ConvertToString(value, (PropertyInfo)memberMapData.Member);
+            return converter.ConvertToString(new FieldSerializationContext(value, (PropertyInfo)memberMapData.Member));
         }
 
         public object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
         {
-            return converter.ConvertFromString(text.AsSpan(), (PropertyInfo)memberMapData.Member);
+            return converter.ConvertFromString(new FieldDeserializationContext(text.AsSpan(), (PropertyInfo)memberMapData.Member));
         }
     }
 }

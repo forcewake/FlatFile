@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Reflection;
 
 namespace FluentFiles.Core.Conversion
 {
@@ -11,9 +10,11 @@ namespace FluentFiles.Core.Conversion
     /// </summary>
     public abstract class NumberConverterBase<T> : IFieldValueConverter
     {
+        internal NumberConverterBase() { }
+
         protected Type TargetType { get; } = typeof(T);
 
-        protected abstract T ConvertFromString(ReadOnlySpan<char> source, NumberFormatInfo format);
+        protected abstract T ConvertFromString(in ReadOnlySpan<char> source, NumberFormatInfo format);
 
         protected abstract string ConvertToString(T value, NumberFormatInfo format);
 
@@ -21,18 +22,18 @@ namespace FluentFiles.Core.Conversion
             (from == typeof(string) && to == TargetType) ||
             (from == TargetType && to == typeof(string));
 
-        public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty)
+        public object ConvertFromString(in FieldDeserializationContext context)
         {
             var culture = CultureInfo.CurrentCulture;
             var numberFormat = (NumberFormatInfo)culture.GetFormat(typeof(NumberFormatInfo));
-            return ConvertFromString(source.Trim(), numberFormat);
+            return ConvertFromString(context.Source.Trim(), numberFormat);
         }
 
-        public string ConvertToString(object source, PropertyInfo sourceProperty)
+        public string ConvertToString(in FieldSerializationContext context)
         {
             var culture = CultureInfo.CurrentCulture;
             var numberFormat = (NumberFormatInfo)culture.GetFormat(typeof(NumberFormatInfo));
-            return ConvertToString((T)source, numberFormat);
+            return ConvertToString((T)context.Source, numberFormat);
         }
     }
 }

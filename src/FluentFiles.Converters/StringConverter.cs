@@ -1,6 +1,5 @@
 ﻿using FluentFiles.Core.Conversion;
 using System;
-using System.Reflection;
 
 namespace FluentFiles.Converters
 {
@@ -8,8 +7,8 @@ namespace FluentFiles.Converters
     {
         public bool CanConvert(Type from, Type to) => from == typeof(string) && to == typeof(string);
 
-        public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty) => source.Length == 0 ? string.Empty : source.ToString();
+        public object ConvertFromString(in FieldDeserializationContext context) => context.Source.Length == 0 ? string.Empty : context.Source.ToString();
 
-        public string ConvertToString(object source, PropertyInfo sourceProperty) => ((string)source);
+        public string ConvertToString(in FieldSerializationContext context) => (string)context.Source;
     }
 }

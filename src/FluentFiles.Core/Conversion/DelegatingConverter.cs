@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Reflection;
 
 namespace FluentFiles.Core.Conversion
 {
     /// <summary>
     /// An implementation of <see cref="IFieldValueConverter"/> that uses delegates for conversion.
     /// </summary>
-    class DelegatingConverter<TProperty> : IFieldValueConverter
+    internal class DelegatingConverter<TProperty> : IFieldValueConverter
     {
         internal ConvertFromString<TProperty> ConversionFromString { get; set; }
 
@@ -16,14 +15,14 @@ namespace FluentFiles.Core.Conversion
             (from == typeof(string) && to == typeof(TProperty) && ConversionFromString != null) ||
             (from == typeof(TProperty) && to == typeof(string) && ConversionToString != null);
 
-        public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty)
+        public object ConvertFromString(in FieldDeserializationContext context)
         {
-            return ConversionFromString(source);
+            return ConversionFromString(context.Source);
         }
 
-        public string ConvertToString(object source, PropertyInfo sourceProperty)
+        public string ConvertToString(in FieldSerializationContext context)
         {
-            return ConversionToString((TProperty)source);
+            return ConversionToString((TProperty)context.Source);
         }
     }
 }

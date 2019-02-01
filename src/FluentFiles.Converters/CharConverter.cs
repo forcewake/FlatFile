@@ -1,28 +1,28 @@
 ﻿using FluentFiles.Core.Conversion;
 using System;
-using System.Reflection;
 
 namespace FluentFiles.Converters
 {
     public sealed class CharConverter : ConverterBase<char>
     {
-        protected override char ConvertFrom(ReadOnlySpan<char> source, PropertyInfo targetProperty)
+        protected override char ConvertFrom(in FieldDeserializationContext context)
         {
-            if (source.Length > 1)
-                source = source.Trim();
+            var trimmed = context.Source;
+            if (trimmed.Length > 1)
+                trimmed = trimmed.Trim();
 
-            if (source.Length > 0)
-                return source[0];
+            if (trimmed.Length > 0)
+                return trimmed[0];
 
             return char.MinValue;
         }
 
-        protected override string ConvertTo(char source, PropertyInfo sourceProperty)
+        protected override string ConvertTo(in FieldSerializationContext<char> context)
         {
-            if (source == char.MinValue)
+            if (context.Source == char.MinValue)
                 return string.Empty;
 
-            return new string(source, 1);
+            return new string(context.Source, 1);
         }
     }
 }

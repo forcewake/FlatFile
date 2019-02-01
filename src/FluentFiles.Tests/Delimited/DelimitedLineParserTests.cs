@@ -81,14 +81,14 @@ namespace FluentFiles.Tests.Delimited
 
         class IdHexConverter : ConverterBase<int>
         {
-            protected override int ConvertFrom(ReadOnlySpan<char> source, PropertyInfo targetProperty)
+            protected override int ConvertFrom(in FieldDeserializationContext context)
             {
-                return Int32.Parse(source, NumberStyles.AllowHexSpecifier);
+                return Int32.Parse(context.Source, NumberStyles.AllowHexSpecifier);
             }
 
-            protected override string ConvertTo(int source, PropertyInfo sourceProperty)
+            protected override string ConvertTo(in FieldSerializationContext<int> context)
             {
-                return source.ToString("X");
+                return context.Source.ToString("X");
             }
         }
 
