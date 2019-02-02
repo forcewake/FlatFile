@@ -6,7 +6,7 @@ namespace FluentFiles.Converters
 {
     public sealed class ByteConverter : NumberConverterBase<byte>
     {
-        protected override byte ConvertFromString(ReadOnlySpan<char> source, NumberFormatInfo format) =>
+        protected override byte ConvertFromString(in ReadOnlySpan<char> source, NumberFormatInfo format) =>
             byte.Parse(source, provider: format);
 
         protected override string ConvertToString(byte value, NumberFormatInfo format) =>

@@ -1,4 +1,5 @@
 ﻿using FluentFiles.Converters;
+using FluentFiles.Core.Conversion;
 using System;
 using Xunit;
 
@@ -18,7 +19,7 @@ namespace FluentFiles.Tests.Conversion
             var expected = Guid.Parse(input);
 
             // Act.
-            var actual = _converter.ConvertFromString(input, null);
+            var actual = _converter.ConvertFromString(new FieldDeserializationContext(input, null));
 
             // Assert.
             Assert.Equal(expected, actual);
@@ -34,10 +35,10 @@ namespace FluentFiles.Tests.Conversion
             var guid = Guid.Parse(input);
 
             // Act.
-            var actual = _converter.ConvertToString(guid, null);
+            var actual = _converter.ConvertToString(new FieldSerializationContext(guid, null));
 
             // Assert.
-            Assert.Equal(expected, actual.ToString());
+            Assert.Equal(expected, actual);
         }
     }
 }

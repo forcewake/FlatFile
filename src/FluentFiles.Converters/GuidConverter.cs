@@ -1,15 +1,14 @@
 ﻿using FluentFiles.Core.Conversion;
 using System;
-using System.Reflection;
 
 namespace FluentFiles.Converters
 {
     public sealed class GuidConverter : ConverterBase<Guid>
     {
-        protected override Guid ConvertFrom(ReadOnlySpan<char> source, PropertyInfo targetProperty) =>
-            Guid.Parse(source.Trim());
+        protected override Guid ConvertFrom(in FieldDeserializationContext context) =>
+            Guid.Parse(context.Source.Trim());
 
-        protected override string ConvertTo(Guid source, PropertyInfo sourceProperty) =>
-            source.ToString();
+        protected override string ConvertTo(in FieldSerializationContext<Guid> context) =>
+            context.Source.ToString();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FluentFiles.Converters;
+using FluentFiles.Core.Conversion;
 using Xunit;
 
 namespace FluentFiles.Tests.Conversion
@@ -18,7 +19,7 @@ namespace FluentFiles.Tests.Conversion
         public void Test_ConvertFromString(string input, char expected)
         {
             // Act.
-            var actual = _converter.ConvertFromString(input, null);
+            var actual = _converter.ConvertFromString(new FieldDeserializationContext(input, null));
 
             // Assert.
             Assert.Equal(expected, actual);
@@ -32,10 +33,10 @@ namespace FluentFiles.Tests.Conversion
         public void Test_ConvertToString(char input, string expected)
         {
             // Act.
-            var actual = _converter.ConvertToString(input, null);
+            var actual = _converter.ConvertToString(new FieldSerializationContext(input, null));
 
             // Assert.
-            Assert.Equal(expected, actual.ToString());
+            Assert.Equal(expected, actual);
         }
     }
 }

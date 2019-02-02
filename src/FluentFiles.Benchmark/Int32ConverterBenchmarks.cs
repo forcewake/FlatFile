@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using BenchmarkDotNet.Attributes;
+using FluentFiles.Core.Conversion;
 
 namespace FluentFiles.Benchmark
 {
@@ -28,7 +29,7 @@ namespace FluentFiles.Benchmark
         [Benchmark]
         public int[] Spannified()
         {
-            return items.Select(i => _spannifiedConverter.ConvertFromString(i, null)).Cast<int>().ToArray();
+            return items.Select(i => _spannifiedConverter.ConvertFromString(new FieldDeserializationContext(i, null))).Cast<int>().ToArray();
         }
     }
 }

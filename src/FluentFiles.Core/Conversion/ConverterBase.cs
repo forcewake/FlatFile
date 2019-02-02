@@ -13,12 +13,41 @@ namespace FluentFiles.Core.Conversion
             (from == typeof(string) && to == typeof(TValue)) || 
             (from == typeof(TValue) && to == typeof(string));
 
-        public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty) => ConvertFrom(source, targetProperty);
+        public object ConvertFromString(in FieldDeserializationContext context) =>
+            ConvertFrom(context);
 
-        public string ConvertToString(object source, PropertyInfo sourceProperty) => ConvertTo((TValue)source, sourceProperty);
+        public string ConvertToString(in FieldSerializationContext context) =>
+            ConvertTo(new FieldSerializationContext<TValue>((TValue)context.Source, context.SourceProperty));
 
-        protected abstract TValue ConvertFrom(ReadOnlySpan<char> source, PropertyInfo targetProperty);
+        protected abstract TValue ConvertFrom(in FieldDeserializationContext context);
 
-        protected abstract string ConvertTo(TValue source, PropertyInfo sourceProperty);
+        protected abstract string ConvertTo(in FieldSerializationContext<TValue> context);
+    }
+
+    /// <summary>
+    /// Provides information about a field serialization operation.
+    /// </summary>
+    public readonly ref struct FieldSerializationContext<TValue>
+    {
+        /// <summary>
+        /// Initializes a new <see cref="FieldSerializationContext"/>.
+        /// </summary>
+        /// <param name="source">The object to serialize.</param>
+        /// <param name="sourceProperty">The property the source value is from.</param>
+        public FieldSerializationContext(TValue source, PropertyInfo sourceProperty)
+        {
+            Source = source;
+            SourceProperty = sourceProperty;
+        }
+
+        /// <summary>
+        /// The object to serialize.
+        /// </summary>
+        public TValue Source { get; }
+
+        /// <summary>
+        /// The property the source value is from.
+        /// </summary>
+        public PropertyInfo SourceProperty { get; }
     }
 }

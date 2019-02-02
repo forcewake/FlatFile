@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Reflection;
 
 namespace FluentFiles.Core.Conversion
 {
@@ -22,9 +21,9 @@ namespace FluentFiles.Core.Conversion
 
         public bool CanConvert(Type from, Type to) => _converter.CanConvertFrom(from) && (OverrideCanConvertTo || _converter.CanConvertTo(to));
 
-        public object ConvertFromString(ReadOnlySpan<char> source, PropertyInfo targetProperty) => _converter.ConvertFromString(source.ToString());
+        public object ConvertFromString(in FieldDeserializationContext context) => _converter.ConvertFromString(context.Source.ToString());
 
-        public string ConvertToString(object source, PropertyInfo sourceProperty) => _converter.ConvertToString(source);
+        public string ConvertToString(in FieldSerializationContext context) => _converter.ConvertToString(context.Source);
 
         /// <summary>
         /// Some built-in <see cref="TypeConverter"/>s don't return as expected for <see cref="TypeConverter.CanConvertTo(Type)"/>.

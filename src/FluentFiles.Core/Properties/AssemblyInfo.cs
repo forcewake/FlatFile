@@ -6,3 +6,4 @@
 [assembly: InternalsVisibleTo("FluentFiles.Delimited.Attributes")]
 [assembly: InternalsVisibleTo("FluentFiles.Delimited")]
 [assembly: InternalsVisibleTo("FluentFiles.Core.Attributes")]
+[assembly: InternalsVisibleTo("FluentFiles.Converters")]

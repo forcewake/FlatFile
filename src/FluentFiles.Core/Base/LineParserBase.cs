@@ -1,5 +1,6 @@
 namespace FluentFiles.Core.Base
 {
+    using FluentFiles.Core.Conversion;
     using System;
 
     public abstract class LineParserBase<TLayoutDescriptor, TFieldSettings> : ILineParser
@@ -34,7 +35,7 @@ namespace FluentFiles.Core.Base
         {
             var converter = field.Converter;
             if (converter != null && converter.CanConvert(from: typeof(string), to: field.Type))
-                return converter.ConvertFromString(source, field.PropertyInfo);
+                return converter.ConvertFromString(new FieldDeserializationContext(source, field.PropertyInfo));
 
             return null;
         }
