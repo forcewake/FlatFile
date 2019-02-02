@@ -38,7 +38,7 @@ build:
   verbosity: minimal               # MSBuild verbosity level
 
 after_build:
-  - ps: nuget pack $Env:APPVEYOR_BUILD_FOLDER\nuspecs\FluentFiles.nuspec -Properties version=$Env:APPVEYOR_BUILD_VERSION   # meta package
+  - ps: nuget pack $Env:APPVEYOR_BUILD_FOLDER\nuspecs\FluentFiles.nuspec -Properties "version=$($Env:APPVEYOR_BUILD_VERSION);year=$(Get-Date –f yyyy)"   # meta package
 
 nuget:
   project_feed: true
