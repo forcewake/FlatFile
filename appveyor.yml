@@ -26,6 +26,9 @@ init:
 #       build configuration       #
 #---------------------------------#
 
+install:
+  - ps: choco update nuget
+
 # build Configuration, i.e. Debug, Release, etc.
 configuration: Release
 
