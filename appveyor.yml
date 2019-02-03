@@ -27,7 +27,7 @@ init:
 #---------------------------------#
 
 install:
-  - ps: cinst nuget
+  - ps: cinst NuGet.CommandLine
 
 # build Configuration, i.e. Debug, Release, etc.
 configuration: Release
