@@ -29,6 +29,10 @@ init:
 install:
   - ps: cinst NuGet.CommandLine
 
+cache:
+  - C:\ProgramData\chocolatey\lib\nuget.commandline\tools
+
+
 # build Configuration, i.e. Debug, Release, etc.
 configuration: Release
 
