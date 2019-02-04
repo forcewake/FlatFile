@@ -17,7 +17,7 @@
     <PackageProjectUrl>https://github.com/mthamil/FluentFiles</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mthamil/FluentFiles</RepositoryUrl>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/mthamil/FluentFiles/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIconUrl>https://raw.githubusercontent.com/mthamil/FluentFiles/master/nuspecs/icon.png</PackageIconUrl>
     <PackageTags>FluentFiles;file;text;read;reader;parse;parser;schema;flat;csv;fixed;fixedLength;fixedWidth;delimited;fluent</PackageTags>
   </PropertyGroup>
