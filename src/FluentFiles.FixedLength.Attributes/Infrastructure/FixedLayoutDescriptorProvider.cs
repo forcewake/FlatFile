@@ -6,8 +6,9 @@ namespace FluentFiles.FixedLength.Attributes.Infrastructure
     using FluentFiles.Core.Attributes.Extensions;
     using FluentFiles.Core.Attributes.Infrastructure;
     using FluentFiles.Core.Base;
+    using FluentFiles.FixedLength.Implementation;
 
-    public class FixedLayoutDescriptorProvider : ILayoutDescriptorProvider<IFixedFieldSettingsContainer, IFixedLengthLayoutDescriptor>
+    internal class FixedLayoutDescriptorProvider : ILayoutDescriptorProvider<IFixedFieldSettingsContainer, IFixedLengthLayoutDescriptor>
     {
         public IFixedLengthLayoutDescriptor GetDescriptor<T>() => GetDescriptor(typeof(T));
 

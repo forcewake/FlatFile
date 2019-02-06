@@ -2,11 +2,11 @@ namespace FluentFiles.Tests.Core
 {
     using System.Linq;
     using System.Reflection;
+    using FluentAssertions;
     using FluentFiles.Core.Base;
     using FluentFiles.Core.Extensions;
-    using FluentFiles.FixedLength;
+    using FluentFiles.FixedLength.Implementation;
     using FluentFiles.Tests.Base.Entities;
-    using FluentAssertions;
     using Xunit;
 
     public class FieldsContainerTests

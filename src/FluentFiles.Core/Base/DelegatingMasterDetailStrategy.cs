@@ -3,8 +3,8 @@ using System;
 namespace FluentFiles.Core.Base
 {
     /// <summary>
-    /// Uses records that implement <see cref="IMasterRecord"/> and <see cref="IDetailRecord"/> to handle
-    /// master-detail record relationships.
+    /// An <see cref="IMasterDetailStrategy"/> that delegates its implementation checks to
+    /// functions provided at creation time.
     /// </summary>
     public class DelegatingMasterDetailStrategy : IMasterDetailStrategy
     {

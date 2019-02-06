@@ -6,8 +6,9 @@
     using FluentFiles.Core.Attributes.Extensions;
     using FluentFiles.Core.Attributes.Infrastructure;
     using FluentFiles.Core.Base;
+    using FluentFiles.Delimited.Implementation;
 
-    public class DelimitedLayoutDescriptorProvider : ILayoutDescriptorProvider<IDelimitedFieldSettingsContainer, IDelimitedLayoutDescriptor>
+    internal class DelimitedLayoutDescriptorProvider : ILayoutDescriptorProvider<IDelimitedFieldSettingsContainer, IDelimitedLayoutDescriptor>
     {
         public IDelimitedLayoutDescriptor GetDescriptor<T>() => GetDescriptor(typeof(T));
 
