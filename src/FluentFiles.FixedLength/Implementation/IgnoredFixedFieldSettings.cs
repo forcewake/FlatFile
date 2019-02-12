@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace FluentFiles.FixedLength
+﻿namespace FluentFiles.FixedLength
 {
+    using System;
     using System.Reflection;
-    using FluentFiles.Core.Base;
     using FluentFiles.Core.Conversion;
 
     internal class IgnoredFixedFieldSettings : IFixedFieldSettingsContainer

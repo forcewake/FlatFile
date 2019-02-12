@@ -1,32 +1,60 @@
-using FluentFiles.Core.Extensions;
-using System;
-using System.Collections.Generic;
-
 namespace FluentFiles.Core.Base
 {
+    using System;
+    using System.Collections.Generic;
+    using FluentFiles.Core.Extensions;
+
+    /// <summary>
+    /// Base class for layout descriptors.
+    /// </summary>
+    /// <typeparam name="TFieldSettings"></typeparam>
     public class LayoutDescriptorBase<TFieldSettings> : ILayoutDescriptor<TFieldSettings>
         where TFieldSettings : IFieldSettings
     {
-        protected IFieldsContainer<TFieldSettings> FieldsContainer { get; private set; }
+        /// <summary>
+        /// The mapping configurations for the fields of a record.
+        /// </summary>
+        protected IFieldCollection<TFieldSettings> FieldCollection { get; }
 
-        protected LayoutDescriptorBase(IFieldsContainer<TFieldSettings> fieldsContainer)
+        /// <summary>
+        /// Initializes a new instance of <see cref="LayoutDescriptorBase{TFieldSettings}"/>.
+        /// </summary>
+        /// <param name="fieldCollection">The mapping configurations for the fields of a record.</param>
+        protected LayoutDescriptorBase(IFieldCollection<TFieldSettings> fieldCollection)
         {
-            FieldsContainer = fieldsContainer;
+            FieldCollection = fieldCollection;
         }
 
-        public LayoutDescriptorBase(IFieldsContainer<TFieldSettings> fieldsContainer, Type targetType) 
-            : this(fieldsContainer)
+        /// <summary>
+        /// Initializes a new instance of <see cref="LayoutDescriptorBase{TFieldSettings}"/>.
+        /// </summary>
+        /// <param name="fieldCollection">The mapping configurations for the fields of a record.</param>
+        /// <param name="targetType">The type a file record maps to.</param>
+        public LayoutDescriptorBase(IFieldCollection<TFieldSettings> fieldCollection, Type targetType)
+            : this(fieldCollection)
         {
             TargetType = targetType;
             InstanceFactory = ReflectionHelper.CreateConstructor(targetType);
         }
 
-        public virtual Type TargetType { get; private set; }
+        /// <summary>
+        /// The type a file record maps to.
+        /// </summary>
+        public virtual Type TargetType { get; }
 
-        public IEnumerable<TFieldSettings> Fields => FieldsContainer.OrderedFields;
+        /// <summary>
+        /// The mapping configurations for the fields of a record.
+        /// </summary>
+        public IEnumerable<TFieldSettings> Fields => FieldCollection;
 
+        /// <summary>
+        /// Whether or not a record has a header.
+        /// </summary>
         public bool HasHeader { get; protected internal set; }
 
+        /// <summary>
+        /// Creates instances of <see cref="TargetType"/>.
+        /// </summary>
         public virtual Func<object> InstanceFactory { get; }
     }
 }

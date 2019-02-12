@@ -7,6 +7,9 @@ namespace FluentFiles.FixedLength.Implementation
     using FluentFiles.Core.Conversion;
     using FluentFiles.Core.Extensions;
 
+    /// <summary>
+    /// Configures a fixed-length file field.
+    /// </summary>
     public class FixedFieldSettingsBuilder : IFixedFieldSettingsBuilder
     {
         private readonly PropertyInfo _property;
@@ -21,11 +24,18 @@ namespace FluentFiles.FixedLength.Implementation
         private Func<char, int, bool> _takeUntil;
         private IFieldValueConverter _converter;
 
+        /// <summary>
+        /// Initializes a new <see cref="FixedFieldSettingsBuilder"/>,
+        /// </summary>
+        /// <param name="property">The property a field maps to.</param>
         public FixedFieldSettingsBuilder(PropertyInfo property)
         {
             _property = property;
         }
 
+        /// <summary>
+        /// Determines whether a field's contents should be truncated if it exceeds the configured length when writing to a file.
+        /// </summary>
         public IFixedFieldSettingsBuilder TruncateFieldContentIfExceedLength()
         {
             _truncateIfExceedFieldLength = true;
@@ -38,12 +48,20 @@ namespace FluentFiles.FixedLength.Implementation
             return this;
         }
 
+        /// <summary>
+        /// Specifies the expected length of a field.
+        /// </summary>
+        /// <param name="length">The length of the field.</param>
         public IFixedFieldSettingsBuilder WithLength(int length)
         {
             _length = length;
             return this;
         }
 
+        /// <summary>
+        /// Specifies that a field begins with padding that should be removed.
+        /// </summary>
+        /// <param name="paddingChar">The padding character.</param>
         public IFixedFieldSettingsBuilder WithLeftPadding(char paddingChar)
         {
             _paddingChar = paddingChar;
@@ -51,6 +69,10 @@ namespace FluentFiles.FixedLength.Implementation
             return this;
         }
 
+        /// <summary>
+        /// Specifies that a field ends with padding that should be removed.
+        /// </summary>
+        /// <param name="paddingChar">The padding character.</param>
         public IFixedFieldSettingsBuilder WithRightPadding(char paddingChar)
         {
             _paddingChar = paddingChar;
@@ -58,18 +80,34 @@ namespace FluentFiles.FixedLength.Implementation
             return this;
         }
 
+        /// <summary>
+        /// Provides a condition that, when true, indicates that the character at the given index
+        /// should not be included in the field's value. Application of the predicate will stop at
+        /// the first false evaluation.
+        /// </summary>
+        /// <param name="predicate">The predicate to apply to each character.</param>
         public IFixedFieldSettingsBuilder SkipWhile(Func<char, int, bool> predicate)
         {
             _skipWhile = predicate ?? throw new ArgumentNullException(nameof(predicate));
             return this;
         }
 
+        /// <summary>
+        /// Provides a condition that, when true, indicates that the character at the given index
+        /// should be included in the field's value. Application of the predicate will stop at
+        /// the first true evaluation.
+        /// </summary>
+        /// <param name="predicate">The predicate to apply to each character.</param>
         public IFixedFieldSettingsBuilder TakeUntil(Func<char, int, bool> predicate)
         {
             _takeUntil = predicate ?? throw new ArgumentNullException(nameof(predicate));
             return this;
         }
 
+        /// <summary>
+        /// Specifies that a field can be null and provides the string value that indicates null data.
+        /// </summary>
+        /// <param name="nullValue">The string that indicates a null valued field.</param>
         public IFixedFieldSettingsBuilder AllowNull(string nullValue)
         {
             _isNullable = true;
@@ -77,28 +115,49 @@ namespace FluentFiles.FixedLength.Implementation
             return this;
         }
 
+        /// <summary>
+        /// Specifies that a field's value should be converted using a new instance of the type <typeparamref name="TConverter"/>.
+        /// </summary>
+        /// <typeparam name="TConverter">The type of <see cref="ITypeConverter"/> to use for conversion.</typeparam>
         public IFixedFieldSettingsBuilder WithTypeConverter<TConverter>() where TConverter : ITypeConverter, new()
         {
             return WithTypeConverter(ReflectionHelper.CreateInstance<TConverter>(true));
         }
 
+        /// <summary>
+        ///  Specifies that a field's value should be converted using the provided <see cref="ITypeConverter"/> implementation.
+        /// </summary>
+        /// <param name="converter">The converter to use.</param>
         public IFixedFieldSettingsBuilder WithTypeConverter(ITypeConverter converter)
         {
             var typeConverter = converter ?? throw new ArgumentNullException(nameof(converter));
             return WithConverter(new FieldValueConverterAdapter(typeConverter));
         }
 
+        /// <summary>
+        /// Specifies that a field's value should be converted using a new instance of the type <typeparamref name="TConverter"/>.
+        /// </summary>
+        /// <typeparam name="TConverter">The type of <see cref="IFieldValueConverter"/> to use for conversion.</typeparam>
         public IFixedFieldSettingsBuilder WithConverter<TConverter>() where TConverter : IFieldValueConverter, new()
         {
             return WithConverter(ReflectionHelper.CreateInstance<TConverter>(true));
         }
 
+        /// <summary>
+        ///  Specifies that a field's value should be converted using the provided <see cref="IFieldValueConverter"/> implementation.
+        /// </summary>
+        /// <param name="converter">The converter to use.</param>
         public IFixedFieldSettingsBuilder WithConverter(IFieldValueConverter converter)
         {
             _converter = converter ?? throw new ArgumentNullException(nameof(converter));
             return this;
         }
 
+        /// <summary>
+        /// Specifies that a field's value should be converted from a string to its destination type using the provided conversion function.
+        /// </summary>
+        /// <typeparam name="TProperty">The type of the destination property.</typeparam>
+        /// <param name="conversion">A lambda function converting from a string.</param>
         public IFixedFieldSettingsBuilder WithConversionFromString<TProperty>(ConvertFromString<TProperty> conversion)
         {
             if (_converter == null)
@@ -112,6 +171,11 @@ namespace FluentFiles.FixedLength.Implementation
             return this;
         }
 
+        /// <summary>
+        /// Specifies that a field's value should be converted to a string from its source type using the provided conversion function.
+        /// </summary>
+        /// <typeparam name="TProperty">The type of the source property.</typeparam>
+        /// <param name="conversion">A lambda function converting to a string.</param>
         public IFixedFieldSettingsBuilder WithConversionToString<TProperty>(ConvertToString<TProperty> conversion)
         {
             if (_converter == null)
@@ -125,6 +189,9 @@ namespace FluentFiles.FixedLength.Implementation
             return this;
         }
 
+        /// <summary>
+        /// Creates the field configuration.
+        /// </summary>
         public IFixedFieldSettingsContainer Build()
         {
             return new FixedFieldSettings(_property)

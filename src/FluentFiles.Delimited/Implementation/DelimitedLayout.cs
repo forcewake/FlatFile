@@ -11,17 +11,33 @@ namespace FluentFiles.Delimited.Implementation
     {
         public DelimitedLayout()
             : this(new DelimitedFieldSettingsBuilderFactory(),
-                   new FieldsContainer<IDelimitedFieldSettingsContainer>())
+                   new FieldCollection<IDelimitedFieldSettingsContainer>())
         {
         }
 
         public DelimitedLayout(
             IFieldSettingsBuilderFactory<IDelimitedFieldSettingsBuilder, IDelimitedFieldSettingsContainer> fieldSettingsFactory,
-            IFieldsContainer<IDelimitedFieldSettingsContainer> fieldsContainer)
+            IFieldCollection<IDelimitedFieldSettingsContainer> fieldsContainer)
                 : base(fieldSettingsFactory, fieldsContainer)
         {
             Quotes = string.Empty;
             Delimiter = ",";
+        }
+
+        public override IDelimitedLayout<TTarget> WithMember<TProperty>(
+            Expression<Func<TTarget, TProperty>> expression,
+            Action<IDelimitedFieldSettingsBuilder> configure = null)
+        {
+            ProcessProperty(expression, configure);
+
+            return this;
+        }
+
+        public override IDelimitedLayout<TTarget> WithHeader()
+        {
+            HasHeader = true;
+
+            return this;
         }
 
         public string Delimiter { get; private set; }
@@ -38,22 +54,6 @@ namespace FluentFiles.Delimited.Implementation
         public IDelimitedLayout<TTarget> WithDelimiter(string delimiter)
         {
             Delimiter = delimiter;
-
-            return this;
-        }
-
-        public override IDelimitedLayout<TTarget> WithMember<TProperty>(
-            Expression<Func<TTarget, TProperty>> expression,
-            Action<IDelimitedFieldSettingsBuilder> settings = null)
-        {
-            ProcessProperty(expression, settings);
-
-            return this;
-        }
-
-        public override IDelimitedLayout<TTarget> WithHeader()
-        {
-            HasHeader = true;
 
             return this;
         }

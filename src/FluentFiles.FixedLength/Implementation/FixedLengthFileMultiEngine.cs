@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using FluentFiles.Core;
-using FluentFiles.Core.Base;
-using FluentFiles.Core.Exceptions;
-
-namespace FluentFiles.FixedLength.Implementation
+﻿namespace FluentFiles.FixedLength.Implementation
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using FluentFiles.Core;
+    using FluentFiles.Core.Base;
+    using FluentFiles.Core.Exceptions;
+
     /// <summary>
     /// A fixed length file engine capable of handling files with multiple types of records.
     /// </summary>
@@ -31,7 +31,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// </summary>
         readonly Func<string, int, Type> typeSelectorFunc;
         /// <summary>
-        /// The results of a call to <see cref="Read"/> are stored in this Dictionary by type
+        /// The results of a call to <see cref="Read(Stream)"/> or <see cref="Read(TextReader)"/> are stored in this Dictionary by type
         /// </summary>
         readonly Dictionary<Type, ArrayList> results;
         /// <summary>
@@ -99,10 +99,10 @@ namespace FluentFiles.FixedLength.Implementation
         protected override ILayoutDescriptor<IFixedFieldSettingsContainer> LayoutDescriptor { get { throw new NotImplementedException(); } }
 
         /// <summary>
-        /// Gets any records of type <typeparamref name="T" /> read by <see cref="Read" />.
+        /// Gets any records of type <typeparamref name="T" /> read by <see cref="Read(Stream)"/> or <see cref="Read(TextReader)"/>.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns>IEnumerable&lt;T&gt;.</returns>
+        /// <typeparam name="T">The type of record to retrieve.</typeparam>
+        /// <returns>Any records of type <typeparamref name="T"/> that were parsed.</returns>
         public IEnumerable<T> GetRecords<T>() where T : class, new()
         {
             return !results.ContainsKey(typeof (T)) ? new List<T>() : results[typeof(T)].Cast<T>();

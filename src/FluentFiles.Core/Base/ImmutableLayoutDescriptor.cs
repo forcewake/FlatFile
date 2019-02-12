@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace FluentFiles.Core.Base
+﻿namespace FluentFiles.Core.Base
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     /// <summary>
     /// A layout descriptor that has been finalized and cannot be changed.
     /// </summary>
@@ -23,12 +23,24 @@ namespace FluentFiles.Core.Base
             InstanceFactory = existing.InstanceFactory;
         }
 
+        /// <summary>
+        /// The type a file record maps to.
+        /// </summary>
         public Type TargetType { get; }
 
+        /// <summary>
+        /// The mapping configurations for the fields of a record.
+        /// </summary>
         public IEnumerable<TFieldSettings> Fields { get; }
 
+        /// <summary>
+        /// Whether or not a record has a header.
+        /// </summary>
         public bool HasHeader { get; }
 
+        /// <summary>
+        /// Creates instances of <see cref="TargetType"/>.
+        /// </summary>
         public Func<object> InstanceFactory { get; }
     }
 }

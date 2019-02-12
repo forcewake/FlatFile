@@ -55,10 +55,10 @@ namespace FluentFiles.Tests.Delimited
             var properties = typeof(ConverterTestObject).GetProperties(BindingFlags.Instance | BindingFlags.Public).ToDictionary(info => info.Name);
 
             // assign the attribute to the Foo property
-            var container = new FieldsContainer<IDelimitedFieldSettingsContainer>();
-            container.AddOrUpdate(new DelimitedFieldSettings(properties["Foo"], attribute));
+            var fields = new FieldCollection<IDelimitedFieldSettingsContainer>();
+            fields.AddOrUpdate(new DelimitedFieldSettings(properties["Foo"], attribute));
 
-            var layout = new DelimitedLayout<ConverterTestObject>(new DelimitedFieldSettingsBuilderFactory(), container);
+            var layout = new DelimitedLayout<ConverterTestObject>(new DelimitedFieldSettingsBuilderFactory(), fields);
             var engine = _fileEngineFactory.GetEngine(layout);
 
             // write "A" to the stream and verify it is converted to "foo"

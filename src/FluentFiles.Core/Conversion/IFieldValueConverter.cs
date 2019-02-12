@@ -12,7 +12,7 @@ namespace FluentFiles.Core.Conversion
         /// Whether a value of a given type can be converted to another type.
         /// </summary>
         /// <param name="from">The type to convert from.</param>
-        /// <param name="to">The type t oconvert to.</param>
+        /// <param name="to">The type to convert to.</param>
         /// <returns>Whether a conversion can be performed between the two types.</returns>
         bool CanConvert(Type from, Type to);
     }

@@ -1,11 +1,11 @@
 namespace FluentFiles.Core
 {
-    using FluentFiles.Core.Conversion;
     using System;
     using System.Reflection;
+    using FluentFiles.Core.Conversion;
 
     /// <summary>
-    /// Represents the configuration of a field.
+    /// A field mapping configuration.
     /// </summary>
     public interface IFieldSettings
     {

@@ -48,10 +48,10 @@ namespace FluentFiles.Tests.FixedLength
 
             var properties = typeof (ConverterTestObject).GetProperties(BindingFlags.Instance | BindingFlags.Public).ToDictionary(info => info.Name);
 
-            var container = new FieldsContainer<IFixedFieldSettingsContainer>();
-            container.AddOrUpdate(new FixedFieldSettings(properties["Foo"], attribute));
+            var fields = new FieldCollection<IFixedFieldSettingsContainer>();
+            fields.AddOrUpdate(new FixedFieldSettings(properties["Foo"], attribute));
 
-            var descriptor = new FixedLayout<ConverterTestObject>(new FixedFieldSettingsBuilderFactory(), container) {HasHeader = false};
+            var descriptor = new FixedLayout<ConverterTestObject>(new FixedFieldSettingsBuilderFactory(), fields) {HasHeader = false};
 
             var engine = fileEngineFactory.GetEngine(descriptor);
 

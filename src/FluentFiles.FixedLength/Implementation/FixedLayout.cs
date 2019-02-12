@@ -11,14 +11,14 @@ namespace FluentFiles.FixedLength.Implementation
     {
         public FixedLayout()
             : this(new FixedFieldSettingsBuilderFactory(),
-                   new FieldsContainer<IFixedFieldSettingsContainer>())
+                   new FieldCollection<IFixedFieldSettingsContainer>())
         {
         }
 
         public FixedLayout(
             IFieldSettingsBuilderFactory<IFixedFieldSettingsBuilder, IFixedFieldSettingsContainer> fieldSettingsFactory,
-            IFieldsContainer<IFixedFieldSettingsContainer> fieldsContainer)
-                : base(fieldSettingsFactory, fieldsContainer)
+            IFieldCollection<IFixedFieldSettingsContainer> fieldCollection)
+                : base(fieldSettingsFactory, fieldCollection)
         {
         }
 
@@ -40,7 +40,7 @@ namespace FluentFiles.FixedLength.Implementation
 
         public IFixedLayout<TTarget> Ignore(int length)
         {
-            FieldsContainer.AddOrUpdate(new IgnoredFixedFieldSettings(length));
+            FieldCollection.AddOrUpdate(new IgnoredFixedFieldSettings(length));
             return this;
         }
     }

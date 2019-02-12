@@ -1,9 +1,16 @@
 namespace FluentFiles.Core.Base
 {
-    using FluentFiles.Core.Extensions;
     using System;
     using System.Linq.Expressions;
+    using FluentFiles.Core.Extensions;
 
+    /// <summary>
+    /// Base class for record layouts.
+    /// </summary>
+    /// <typeparam name="TTarget">The type a file record maps to.</typeparam>
+    /// <typeparam name="TFieldSettings">The type of individual field mapping within a layout.</typeparam>
+    /// <typeparam name="TBuilder">The field builder type.</typeparam>
+    /// <typeparam name="TLayout">The type of layout.</typeparam>
     public abstract class LayoutBase<TTarget, TFieldSettings, TBuilder, TLayout> : LayoutDescriptorBase<TFieldSettings>, ILayout<TTarget, TFieldSettings, TBuilder, TLayout>
         where TFieldSettings : class, IFieldSettings
         where TBuilder : IFieldSettingsBuilder<TBuilder, TFieldSettings> 
@@ -11,10 +18,15 @@ namespace FluentFiles.Core.Base
     {
         private readonly IFieldSettingsBuilderFactory<TBuilder, TFieldSettings> _fieldBuilderFactory;
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="LayoutBase{TTarget, TFieldSettings, TBuilder, TLayout}"/>.
+        /// </summary>
+        /// <param name="fieldBuilderFactory">Creates field builders.</param>
+        /// <param name="fieldCollection">Stores field mappings.</param>
         protected LayoutBase(
-            IFieldSettingsBuilderFactory<TBuilder, TFieldSettings> fieldBuilderFactory, 
-            IFieldsContainer<TFieldSettings> fieldsContainer)
-                : base(fieldsContainer)
+            IFieldSettingsBuilderFactory<TBuilder, TFieldSettings> fieldBuilderFactory,
+            IFieldCollection<TFieldSettings> fieldCollection)
+                : base(fieldCollection)
         {
             _fieldBuilderFactory = fieldBuilderFactory;
             InstanceFactory = ReflectionHelper.CreateConstructor(TargetType);
@@ -29,11 +41,17 @@ namespace FluentFiles.Core.Base
 
             var fieldSettings = builder.Build();
 
-            FieldsContainer.AddOrUpdate(fieldSettings);
+            FieldCollection.AddOrUpdate(fieldSettings);
         }
 
-        public override Type TargetType { get { return typeof (TTarget); } }
+        /// <summary>
+        /// The type a file record maps to.
+        /// </summary>
+        public override Type TargetType { get; } = typeof(TTarget);
 
+        /// <summary>
+        /// Creates instances of <see cref="TargetType"/>.
+        /// </summary>
         public override Func<object> InstanceFactory { get; }
 
         public abstract TLayout WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TBuilder> configure = null);

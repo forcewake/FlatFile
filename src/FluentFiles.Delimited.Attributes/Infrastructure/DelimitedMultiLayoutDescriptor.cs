@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using FluentFiles.Core;
-using FluentFiles.Core.Attributes.Infrastructure;
-
-namespace FluentFiles.Delimited.Attributes.Infrastructure
+﻿namespace FluentFiles.Delimited.Attributes.Infrastructure
 {
+    using System;
+    using System.Collections.Generic;
+    using FluentFiles.Core;
+    using FluentFiles.Core.Attributes.Infrastructure;
+
     public class DelimitedMultiLayoutDescriptor<TFieldSettings> : ILayoutDescriptorProvider<TFieldSettings, ILayoutDescriptor<TFieldSettings>>
         where TFieldSettings : IDelimitedFieldSettingsContainer
     {
-        protected IFieldsContainer<TFieldSettings> FieldsContainer { get; }
+        protected IFieldCollection<TFieldSettings> FieldCollection { get; }
 
-        public DelimitedMultiLayoutDescriptor(IFieldsContainer<TFieldSettings> fieldsContainer)
+        public DelimitedMultiLayoutDescriptor(IFieldCollection<TFieldSettings> fieldCollection)
         {
-            FieldsContainer = fieldsContainer;
+            FieldCollection = fieldCollection;
         }
 
-        public DelimitedMultiLayoutDescriptor(IFieldsContainer<TFieldSettings> fieldsContainer, Type targetType) : this(fieldsContainer) { TargetType = targetType; }
+        public DelimitedMultiLayoutDescriptor(IFieldCollection<TFieldSettings> fieldsContainer, Type targetType) : this(fieldsContainer) { TargetType = targetType; }
 
         ILayoutDescriptor<TFieldSettings> ILayoutDescriptorProvider<TFieldSettings, ILayoutDescriptor<TFieldSettings>>.GetDescriptor<T>()
         {
@@ -24,10 +24,7 @@ namespace FluentFiles.Delimited.Attributes.Infrastructure
 
         public virtual Type TargetType { get; }
 
-        public IEnumerable<TFieldSettings> Fields
-        {
-            get { return FieldsContainer.OrderedFields; }
-        }
+        public IEnumerable<TFieldSettings> Fields => FieldCollection;
 
         public bool HasHeader { get; protected internal set; }
 

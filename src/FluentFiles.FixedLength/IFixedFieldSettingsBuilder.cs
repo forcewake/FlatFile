@@ -4,7 +4,7 @@ namespace FluentFiles.FixedLength
     using FluentFiles.Core;
 
     /// <summary>
-    /// Configures a fixed-length field.
+    /// Configures a fixed-length file field.
     /// </summary>
     public interface IFixedFieldSettingsBuilder : IFieldSettingsBuilder<IFixedFieldSettingsBuilder, IFixedFieldSettingsContainer>
     {
