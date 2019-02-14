@@ -59,7 +59,7 @@
             IDelimitedLineBuilderFactory lineBuilderFactory,
             IDelimitedLineParserFactory lineParserFactory,
             IMasterDetailStrategy masterDetailStrategy,
-            FileReadErrorHandler handleEntryReadError = null) 
+            FileReadErrorHandler handleEntryReadError = null)
                 : base(handleEntryReadError)
         {
             _layoutDescriptors = layoutDescriptors.Select(ld => new DelimitedImmutableLayoutDescriptor(ld))

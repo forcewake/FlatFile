@@ -1,9 +1,12 @@
-﻿using FluentFiles.Core.Conversion;
-using System;
-using System.Collections.Generic;
-
-namespace FluentFiles.Converters
+﻿namespace FluentFiles.Converters
 {
+    using FluentFiles.Core.Conversion;
+    using System;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Provides methods for customizing field value conversion.
+    /// </summary>
     public static class ConfigurationExtensions
     {
         /// <summary>

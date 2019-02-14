@@ -3,13 +3,20 @@
     using System;
     using FluentFiles.Core.Attributes.Base;
 
+    /// <summary>
+    /// Configures a member as the mapping target of a fixed-length field.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class FixedLengthFieldAttribute : FieldSettingsBaseAttribute, IFixedFieldSettings
     {
         /// <summary>
         /// The length of a field.
         /// </summary>
         public int Length { get; protected set; }
-        
+
+        /// <summary>
+        /// The type of padding a field has.
+        /// </summary>
         public Padding Padding { get; set; }
 
         /// <summary>

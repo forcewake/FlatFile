@@ -1,9 +1,8 @@
-﻿using FluentFiles.Core.Base;
-using FluentFiles.Core.Conversion;
-using System.ComponentModel;
-
-namespace FluentFiles.Core
+﻿namespace FluentFiles.Core
 {
+    using FluentFiles.Core.Conversion;
+    using System.ComponentModel;
+
     /// <summary>
     /// Provides extensions for <see cref="IFieldSettingsBuilder{TBuilder, TSettings}"/>.
     /// </summary>
