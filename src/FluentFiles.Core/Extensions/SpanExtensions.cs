@@ -46,8 +46,17 @@ namespace FluentFiles.Core.Extensions
         public static SplitEnumerable<T> Split<T>(this ReadOnlySpan<T> span, ReadOnlySpan<T> separators) where T : IEquatable<T> => 
             new SplitEnumerable<T>(span, separators);
 
+        /// <summary>
+        /// Provides an enumerable for a <see cref="ReadOnlySpan{T}"/>'s items grouped by one or more separators.
+        /// </summary>
+        /// <typeparam name="T">The type of items in the span.</typeparam>
         public readonly ref struct SplitEnumerable<T> where T : IEquatable<T>
         {
+            /// <summary>
+            /// Initializes a new <see cref="SplitEnumerable{T}"/>.
+            /// </summary>
+            /// <param name="span">The span to iterate over.</param>
+            /// <param name="separators">The items separating the groupings in the span.</param>
             public SplitEnumerable(ReadOnlySpan<T> span, ReadOnlySpan<T> separators)
             {
                 Span = span;
@@ -57,11 +66,24 @@ namespace FluentFiles.Core.Extensions
             ReadOnlySpan<T> Span { get; }
             ReadOnlySpan<T> Separators { get; }
 
+            /// <summary>
+            /// Gets a <see cref="SplitEnumerator{T}"/> for the span.
+            /// </summary>
+            /// <returns>A new <see cref="SplitEnumerator{T}"/>.</returns>
             public SplitEnumerator<T> GetEnumerator() => new SplitEnumerator<T>(Span, Separators);
         }
 
+        /// <summary>
+        /// Iterates over a <see cref="ReadOnlySpan{T}"/>'s items grouped by one or more separators.
+        /// </summary>
+        /// <typeparam name="T">The type of items in the span.</typeparam>
         public ref struct SplitEnumerator<T> where T : IEquatable<T>
         {
+            /// <summary>
+            /// Initializes a new <see cref="SplitEnumerator{T}"/>.
+            /// </summary>
+            /// <param name="span">The span to iterate over.</param>
+            /// <param name="separators">The items separating the groupings in the span.</param>
             public SplitEnumerator(ReadOnlySpan<T> span, ReadOnlySpan<T> separators)
             {
                 Span = span;
@@ -75,6 +97,10 @@ namespace FluentFiles.Core.Extensions
             int SeparatorLength => 1;
             bool TrailingEmptyItem { get; set; }
 
+            /// <summary>
+            /// Advances to the next delimited grouping.
+            /// </summary>
+            /// <returns>Whether there was another grouping to advance to.</returns>
             public bool MoveNext()
             {
                 if (TrailingEmptyItem)
@@ -107,6 +133,9 @@ namespace FluentFiles.Core.Extensions
                 return true;
             }
 
+            /// <summary>
+            /// The current grouping of items.
+            /// </summary>
             public ReadOnlySpan<T> Current { get; private set; }
         }
     }

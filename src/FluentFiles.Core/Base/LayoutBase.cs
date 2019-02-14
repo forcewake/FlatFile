@@ -10,7 +10,7 @@ namespace FluentFiles.Core.Base
     /// <typeparam name="TTarget">The type a file record maps to.</typeparam>
     /// <typeparam name="TFieldSettings">The type of individual field mapping within a layout.</typeparam>
     /// <typeparam name="TBuilder">The field builder type.</typeparam>
-    /// <typeparam name="TLayout">The type of layout.</typeparam>
+    /// <typeparam name="TLayout">The self-referencing type of layout.</typeparam>
     public abstract class LayoutBase<TTarget, TFieldSettings, TBuilder, TLayout> : LayoutDescriptorBase<TFieldSettings>, ILayout<TTarget, TFieldSettings, TBuilder, TLayout>
         where TFieldSettings : class, IFieldSettings
         where TBuilder : IFieldSettingsBuilder<TBuilder, TFieldSettings> 
@@ -54,8 +54,18 @@ namespace FluentFiles.Core.Base
         /// </summary>
         public override Func<object> InstanceFactory { get; }
 
+        /// <summary>
+        /// Configures a mapping from a record field to a member of a type.
+        /// </summary>
+        /// <typeparam name="TProperty">The type of the member a field maps to.</typeparam>
+        /// <param name="expression">An expression selecting the member to map to.</param>
+        /// <param name="configure">An action that performs configuration of a field mapping.</param>
         public abstract TLayout WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TBuilder> configure = null);
 
+        /// <summary>
+        /// Indicates that a record layout contains a header.
+        /// </summary>
+        /// <returns></returns>
         public abstract TLayout WithHeader();
     }
 }

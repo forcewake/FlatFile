@@ -1,9 +1,13 @@
 ﻿namespace FluentFiles.Core
 {
-    using FluentFiles.Core.Base;
     using FluentFiles.Core.Conversion;
     using System;
 
+    /// <summary>
+    /// A builder that can configure and produce a mapping configuration for a fixed-length field.
+    /// </summary>
+    /// <typeparam name="TBuilder">The self-referencing type of a builder.</typeparam>
+    /// <typeparam name="TSettings">The type of field mapping being configured.</typeparam>
     public interface IFieldSettingsBuilder<out TBuilder, out TSettings> : IBuildable<TSettings>
         where TBuilder : IFieldSettingsBuilder<TBuilder, TSettings>
         where TSettings : IFieldSettings

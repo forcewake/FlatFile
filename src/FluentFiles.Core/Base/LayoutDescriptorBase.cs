@@ -7,7 +7,7 @@ namespace FluentFiles.Core.Base
     /// <summary>
     /// Base class for layout descriptors.
     /// </summary>
-    /// <typeparam name="TFieldSettings"></typeparam>
+    /// <typeparam name="TFieldSettings">The type of individual field mapping.</typeparam>
     public class LayoutDescriptorBase<TFieldSettings> : ILayoutDescriptor<TFieldSettings>
         where TFieldSettings : IFieldSettings
     {
