@@ -15,10 +15,7 @@
         /// <summary>
         /// Whether a field has padding to the left or right.
         /// </summary>
-        public bool PadLeft
-        {
-            get { return Padding == Padding.Left; }
-        }
+        public bool PadLeft => Padding == Padding.Left;
 
         /// <summary>
         /// The character used to pad a field.
