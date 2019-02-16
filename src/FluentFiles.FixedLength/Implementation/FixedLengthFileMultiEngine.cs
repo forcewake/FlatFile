@@ -1,49 +1,53 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using FluentFiles.Core;
-using FluentFiles.Core.Base;
-using FluentFiles.Core.Exceptions;
-
-namespace FluentFiles.FixedLength.Implementation
+﻿namespace FluentFiles.FixedLength.Implementation
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using FluentFiles.Core;
+    using FluentFiles.Core.Base;
+    using FluentFiles.Core.Exceptions;
+
     /// <summary>
     /// A fixed length file engine capable of handling files with multiple types of records.
     /// </summary>
     public class FixedLengthFileMultiEngine : FlatFileEngine<IFixedFieldSettingsContainer, ILayoutDescriptor<IFixedFieldSettingsContainer>>, IFlatFileMultiEngine
     {
         /// <summary>
-        /// The layout descriptors for this engine
+        /// The layout descriptors for this engine.
         /// </summary>
-        readonly Dictionary<Type, IFixedLengthLayoutDescriptor> layoutDescriptors;
+        private readonly Dictionary<Type, IFixedLengthLayoutDescriptor> _layoutDescriptors;
+
         /// <summary>
-        /// The line builder factory
+        /// The line builder factory.
         /// </summary>
-        readonly IFixedLengthLineBuilderFactory lineBuilderFactory;
+        private readonly IFixedLengthLineBuilderFactory _lineBuilderFactory;
+
         /// <summary>
-        /// The line parser factory
+        /// The line parser factory.
         /// </summary>
-        readonly IFixedLengthLineParserFactory lineParserFactory;
+        private readonly IFixedLengthLineParserFactory _lineParserFactory;
+
         /// <summary>
-        /// The type selector function used to determine the layout for a given line
+        /// The type selector function used to determine the layout for a given line.
         /// </summary>
-        readonly Func<string, int, Type> typeSelectorFunc;
+        private readonly Func<string, int, Type> _typeSelector;
+
         /// <summary>
-        /// The results of a call to <see cref="Read"/> are stored in this Dictionary by type
+        /// The results of a call to <see cref="Read(Stream)"/> or <see cref="Read(TextReader)"/> are stored by record type.
         /// </summary>
-        readonly Dictionary<Type, ArrayList> results;
+        private readonly Dictionary<Type, IList<object>> _results;
+
         /// <summary>
         /// Determines how master-detail record relationships are handled.
         /// </summary>
-        readonly IMasterDetailStrategy masterDetailStrategy;
+        private readonly IMasterDetailStrategy _masterDetailStrategy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FixedLengthFileMultiEngine"/> class.
         /// </summary>
         /// <param name="layoutDescriptors">The layout descriptors.</param>
-        /// <param name="typeSelectorFunc">The type selector function.</param>
+        /// <param name="typeSelector">The type selector function.</param>
         /// <param name="lineBuilderFactory">The line builder factory.</param>
         /// <param name="lineParserFactory">The line parser factory.</param>
         /// <param name="masterDetailStrategy">Determines how master-detail record relationships are handled.</param>
@@ -51,27 +55,23 @@ namespace FluentFiles.FixedLength.Implementation
         /// <exception cref="System.ArgumentNullException">typeSelectorFunc</exception>
         internal FixedLengthFileMultiEngine(
             IEnumerable<IFixedLengthLayoutDescriptor> layoutDescriptors,
-            Func<string, int, Type> typeSelectorFunc,
+            Func<string, int, Type> typeSelector,
             IFixedLengthLineBuilderFactory lineBuilderFactory,
             IFixedLengthLineParserFactory lineParserFactory,
             IMasterDetailStrategy masterDetailStrategy,
             FileReadErrorHandler handleEntryReadError = null)
                 : base(handleEntryReadError)
         {
-            if (typeSelectorFunc == null) throw new ArgumentNullException(nameof(typeSelectorFunc));
+            _layoutDescriptors = layoutDescriptors.Select(ld => new FixedLengthImmutableLayoutDescriptor(ld))
+                                                  .Cast<IFixedLengthLayoutDescriptor>()
+                                                  .ToDictionary(ld => ld.TargetType, ld => ld);
 
-            this.layoutDescriptors = layoutDescriptors.Select(ld => new FixedLengthImmutableLayoutDescriptor(ld))
-                                                      .Cast<IFixedLengthLayoutDescriptor>()
-                                                      .ToDictionary(ld => ld.TargetType, ld => ld);
-            results = new Dictionary<Type, ArrayList>(this.layoutDescriptors.Count());
-            foreach (var descriptor in this.layoutDescriptors)
-            {
-                results[descriptor.Value.TargetType] = new ArrayList();
-            }
-            this.typeSelectorFunc = typeSelectorFunc;
-            this.lineBuilderFactory = lineBuilderFactory;
-            this.lineParserFactory = lineParserFactory;
-            this.masterDetailStrategy = masterDetailStrategy;
+            _results = _layoutDescriptors.ToDictionary(ld => ld.Value.TargetType, _ => (IList<object>)new List<object>());
+
+            _typeSelector = typeSelector ?? throw new ArgumentNullException(nameof(typeSelector));
+            _lineBuilderFactory = lineBuilderFactory;
+            _lineParserFactory = lineParserFactory;
+            _masterDetailStrategy = masterDetailStrategy;
         }
 
         /// <summary>
@@ -99,13 +99,13 @@ namespace FluentFiles.FixedLength.Implementation
         protected override ILayoutDescriptor<IFixedFieldSettingsContainer> LayoutDescriptor { get { throw new NotImplementedException(); } }
 
         /// <summary>
-        /// Gets any records of type <typeparamref name="T" /> read by <see cref="Read" />.
+        /// Gets any records of type <typeparamref name="T" /> read by <see cref="Read(Stream)"/> or <see cref="Read(TextReader)"/>.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns>IEnumerable&lt;T&gt;.</returns>
+        /// <typeparam name="T">The type of record to retrieve.</typeparam>
+        /// <returns>Any records of type <typeparamref name="T"/> that were parsed.</returns>
         public IEnumerable<T> GetRecords<T>() where T : class, new()
         {
-            return !results.ContainsKey(typeof (T)) ? new List<T>() : results[typeof(T)].Cast<T>();
+            return _results.TryGetValue(typeof(T), out var results) ? results.Cast<T>() : Enumerable.Empty<T>();
         }
 
         /// <summary>
@@ -115,17 +115,17 @@ namespace FluentFiles.FixedLength.Implementation
         public bool HasHeader { get; set; }
 
         /// <summary>
-        /// Tries to parse the line.
+        /// Tries to parse a line.
         /// </summary>
-        /// <typeparam name="TEntity">The type of the t entity.</typeparam>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
         /// <param name="line">The line.</param>
         /// <param name="lineNumber">The line number.</param>
         /// <param name="entity">The entity.</param>
-        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+        /// <returns><c>true</c> if successful, <c>false</c> otherwise.</returns>
         protected override bool TryParseLine<TEntity>(string line, int lineNumber, ref TEntity entity)
         {
             var type = entity.GetType();
-            var lineParser = lineParserFactory.GetParser(layoutDescriptors[type]);
+            var lineParser = _lineParserFactory.GetParser(_layoutDescriptors[type]);
             lineParser.ParseLine(line.AsSpan(), entity);
 
             return true;
@@ -174,9 +174,9 @@ namespace FluentFiles.FixedLength.Implementation
                 var ignoreEntry = false;
 
                 // Use selector func to find type for this line, and by effect, its layout
-                var type = typeSelectorFunc(line, lineNumber);
+                var type = _typeSelector(line, lineNumber);
                 if (type == null) continue;
-                var entry = layoutDescriptors[type].InstanceFactory();
+                var entry = _layoutDescriptors[type].InstanceFactory();
 
                 try
                 {
@@ -202,12 +202,11 @@ namespace FluentFiles.FixedLength.Implementation
 
                 if (ignoreEntry) continue;
 
-                bool isDetailRecord;
-                masterDetailStrategy.HandleMasterDetail(entry, out isDetailRecord);
+                _masterDetailStrategy.HandleMasterDetail(entry, out var isDetailRecord);
 
                 if (isDetailRecord) continue;
 
-                results[type].Add(entry);
+                _results[type].Add(entry);
             }
         }
     }

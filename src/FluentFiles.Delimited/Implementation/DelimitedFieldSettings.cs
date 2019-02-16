@@ -1,18 +1,9 @@
-namespace FluentFiles.Delimited
+﻿namespace FluentFiles.Delimited.Implementation
 {
     using System.Reflection;
     using FluentFiles.Core.Base;
 
-    public interface IDelimitedFieldSettings : IFieldSettings
-    {
-        string Name { get; set; }
-    }
-
-    public interface IDelimitedFieldSettingsContainer : IDelimitedFieldSettings, IFieldSettingsContainer
-    {
-    }
-
-    public class DelimitedFieldSettings : FieldSettingsBase, IDelimitedFieldSettingsContainer
+    internal class DelimitedFieldSettings : FieldSettingsBase, IDelimitedFieldSettingsContainer
     {
         public DelimitedFieldSettings(PropertyInfo propertyInfo)
             : base(propertyInfo)

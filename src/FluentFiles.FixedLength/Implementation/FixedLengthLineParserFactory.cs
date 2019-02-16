@@ -1,15 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using FluentFiles.Core.Base;
-using FluentFiles.Core.Extensions;
-
 namespace FluentFiles.FixedLength.Implementation
 {
     using Core;
+    using FluentFiles.Core.Extensions;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
-    /// Class FixedLengthLineParserFactory.
+    /// Creates parsers for fixed-length files.
     /// </summary>
     public class FixedLengthLineParserFactory : IFixedLengthLineParserFactory
     {
@@ -17,15 +15,16 @@ namespace FluentFiles.FixedLength.Implementation
         private readonly IDictionary<Type, IFixedLengthLineParser> _parsers = new Dictionary<Type, IFixedLengthLineParser>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FixedLengthLineParserFactory"/> class.
+        /// Initializes a new <see cref="FixedLengthLineParserFactory"/>.
         /// </summary>
+        /// <param name="parserRegistry">The line parser registry.</param>
         private FixedLengthLineParserFactory(Dictionary<Type, Type> parserRegistry)
         {
             _parserRegistry = parserRegistry;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FixedLengthLineParserFactory"/> class.
+        /// Initializes a new <see cref="FixedLengthLineParserFactory"/>.
         /// </summary>
         public FixedLengthLineParserFactory()
             : this(new Dictionary<Type, Type>())
@@ -33,7 +32,7 @@ namespace FluentFiles.FixedLength.Implementation
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FixedLengthLineParserFactory"/> class.
+        /// Initializes a new <see cref="FixedLengthLineParserFactory"/>.
         /// </summary>
         /// <param name="lineParserRegistry">The line parser registry.</param>
         public FixedLengthLineParserFactory(IDictionary<Type, Type> lineParserRegistry)
@@ -42,7 +41,7 @@ namespace FluentFiles.FixedLength.Implementation
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FixedLengthLineParserFactory"/> class.
+        /// Initializes a new <see cref="FixedLengthLineParserFactory"/>.
         /// </summary>
         /// <param name="lineParserRegistry">The line parser registry.</param>
         public FixedLengthLineParserFactory(IDictionary<Type, IFixedLengthLayoutDescriptor> lineParserRegistry)

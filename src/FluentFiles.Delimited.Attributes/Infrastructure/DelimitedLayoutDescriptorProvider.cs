@@ -6,14 +6,15 @@
     using FluentFiles.Core.Attributes.Extensions;
     using FluentFiles.Core.Attributes.Infrastructure;
     using FluentFiles.Core.Base;
+    using FluentFiles.Delimited.Implementation;
 
-    public class DelimitedLayoutDescriptorProvider : ILayoutDescriptorProvider<IDelimitedFieldSettingsContainer, IDelimitedLayoutDescriptor>
+    internal class DelimitedLayoutDescriptorProvider : ILayoutDescriptorProvider<IDelimitedFieldSettingsContainer, IDelimitedLayoutDescriptor>
     {
         public IDelimitedLayoutDescriptor GetDescriptor<T>() => GetDescriptor(typeof(T));
 
         public IDelimitedLayoutDescriptor GetDescriptor(Type t)
         {
-            var container = new FieldsContainer<IDelimitedFieldSettingsContainer>();
+            var container = new FieldCollection<IDelimitedFieldSettingsContainer>();
 
             var fileMappingType = t;
 
@@ -42,7 +43,7 @@
         private sealed class DelimitedLayoutDescriptor : LayoutDescriptorBase<IDelimitedFieldSettingsContainer>, IDelimitedLayoutDescriptor
         {
             public DelimitedLayoutDescriptor(
-                IFieldsContainer<IDelimitedFieldSettingsContainer> fieldsContainer,
+                IFieldCollection<IDelimitedFieldSettingsContainer> fieldsContainer,
                 Type targetType,
                 DelimitedFileAttribute fileAttribute)
                     : base(fieldsContainer, targetType)

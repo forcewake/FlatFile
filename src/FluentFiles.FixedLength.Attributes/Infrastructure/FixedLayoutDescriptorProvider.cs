@@ -6,14 +6,15 @@ namespace FluentFiles.FixedLength.Attributes.Infrastructure
     using FluentFiles.Core.Attributes.Extensions;
     using FluentFiles.Core.Attributes.Infrastructure;
     using FluentFiles.Core.Base;
+    using FluentFiles.FixedLength.Implementation;
 
-    public class FixedLayoutDescriptorProvider : ILayoutDescriptorProvider<IFixedFieldSettingsContainer, IFixedLengthLayoutDescriptor>
+    internal class FixedLayoutDescriptorProvider : ILayoutDescriptorProvider<IFixedFieldSettingsContainer, IFixedLengthLayoutDescriptor>
     {
         public IFixedLengthLayoutDescriptor GetDescriptor<T>() => GetDescriptor(typeof(T));
 
         public IFixedLengthLayoutDescriptor GetDescriptor(Type t)
         {
-            var container = new FieldsContainer<IFixedFieldSettingsContainer>();
+            var container = new FieldCollection<IFixedFieldSettingsContainer>();
 
             var fileMappingType = t;
 
@@ -47,7 +48,7 @@ namespace FluentFiles.FixedLength.Attributes.Infrastructure
         private sealed class FixedLengthLayoutDescriptor : LayoutDescriptorBase<IFixedFieldSettingsContainer>, IFixedLengthLayoutDescriptor
         {
             public FixedLengthLayoutDescriptor(
-                IFieldsContainer<IFixedFieldSettingsContainer> fieldsContainer,
+                IFieldCollection<IFixedFieldSettingsContainer> fieldsContainer,
                 Type targetType,
                 FixedLengthFileAttribute fileAttribute)
                     : base(fieldsContainer, targetType)

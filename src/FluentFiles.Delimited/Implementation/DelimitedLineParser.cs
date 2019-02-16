@@ -4,16 +4,29 @@ namespace FluentFiles.Delimited.Implementation
     using FluentFiles.Core.Base;
     using FluentFiles.Core.Extensions;
 
-    public sealed class DelimitedLineParser :
-        LineParserBase<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>,
-        IDelimitedLineParser
+    /// <summary>
+    /// Converts lines of a delimited file into record instances.
+    /// </summary>
+    public sealed class DelimitedLineParser : LineParserBase<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>,
+                                              IDelimitedLineParser
     {
+        /// <summary>
+        /// Initializes a new instance of <see cref="DelimitedLineParser"/>.
+        /// </summary>
+        /// <param name="layout">Describes how a file record maps to a type.</param>
         public DelimitedLineParser(IDelimitedLayoutDescriptor layout)
             : base(layout)
         {
         }
 
-        public override TEntity ParseLine<TEntity>(ReadOnlySpan<char> line, TEntity entity)
+        /// <summary>
+        /// Maps a line of a delimited file to an instance of <typeparamref name="TRecord" />.
+        /// </summary>
+        /// <typeparam name="TRecord">The type to map to.</typeparam>
+        /// <param name="line">The file line to parse.</param>
+        /// <param name="entity">The instance to populate.</param>
+        /// <returns>An instance of <typeparamref name="TRecord" /> populated with the parsed and transformed data from <paramref name="line" />.</returns>
+        public override TRecord ParseLine<TRecord>(ReadOnlySpan<char> line, TRecord entity)
         {
             var quotesSpan = Layout.Quotes.AsSpan();
             var delimiterSpan = Layout.Delimiter.AsSpan();
@@ -60,6 +73,12 @@ namespace FluentFiles.Delimited.Implementation
             return entity;
         }
 
+        /// <summary>
+        /// Performs delimited file specific string pre-processing, such as removing quotes from around fields when necessary.
+        /// </summary>
+        /// <param name="field">The field mapping.</param>
+        /// <param name="memberValue">The field value.</param>
+        /// <returns>A pre-processed field value.</returns>
         protected override ReadOnlySpan<char> PreprocessFieldValue(IDelimitedFieldSettingsContainer field, ReadOnlySpan<char> memberValue)
         {
             var quotesSpan = Layout.Quotes.AsSpan();

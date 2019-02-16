@@ -1,9 +1,11 @@
-using System;
-
 namespace FluentFiles.FixedLength
 {
+    using System;
     using FluentFiles.Core;
 
+    /// <summary>
+    /// Configures a fixed-length file field.
+    /// </summary>
     public interface IFixedFieldSettingsBuilder : IFieldSettingsBuilder<IFixedFieldSettingsBuilder, IFixedFieldSettingsContainer>
     {
         /// <summary>
@@ -40,8 +42,16 @@ namespace FluentFiles.FixedLength
         /// <param name="predicate">The predicate to apply to each character.</param>
         IFixedFieldSettingsBuilder TakeUntil(Func<char, int, bool> predicate);
 
+        /// <summary>
+        /// Determines whether a field's contents should be truncated if it exceeds the configured length when writing to a file.
+        /// </summary>
         IFixedFieldSettingsBuilder TruncateFieldContentIfExceedLength();
 
+        /// <summary>
+        /// Defines a function that transforms the values of an object's members after they have been converted to a string, but
+        /// before they have been written to a line in a file.
+        /// </summary>
+        /// <param name="stringNormalizer">The normalization function.</param>
         IFixedFieldSettingsBuilder WithStringNormalizer(Func<string, string> stringNormalizer);
     }
 }

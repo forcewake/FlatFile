@@ -93,7 +93,6 @@ namespace FluentFiles.Delimited.Implementation
                 stringBuilder
                     .Append(field.Name)
                     .Append(LayoutDescriptor.Delimiter);
-
             }
 
             stringBuilder.Remove(stringBuilder.Length - 1, 1);

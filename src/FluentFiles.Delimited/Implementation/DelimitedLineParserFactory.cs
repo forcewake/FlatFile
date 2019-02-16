@@ -1,24 +1,30 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using FluentFiles.Core;
-using FluentFiles.Core.Base;
-using FluentFiles.Core.Extensions;
-
 namespace FluentFiles.Delimited.Implementation
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using FluentFiles.Core;
+    using FluentFiles.Core.Extensions;
+
+    /// <summary>
+    /// Creates parsers for delimited files.
+    /// </summary>
     public class DelimitedLineParserFactory : IDelimitedLineParserFactory
     {
         private readonly Dictionary<Type, Type> _parserRegistry;
         private readonly IDictionary<Type, IDelimitedLineParser> _parsers = new Dictionary<Type, IDelimitedLineParser>();
 
+        /// <summary>
+        /// Initializes a new <see cref="DelimitedLineParserFactory"/>.
+        /// </summary>
+        /// <param name="parserRegistry">The line parser registry.</param>
         private DelimitedLineParserFactory(Dictionary<Type, Type> parserRegistry)
         {
             _parserRegistry = parserRegistry;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DelimitedLineParserFactory"/> class.
+        /// Initializes a new <see cref="DelimitedLineParserFactory"/>.
         /// </summary>
         public DelimitedLineParserFactory()
             : this(new Dictionary<Type, Type>())
@@ -26,7 +32,7 @@ namespace FluentFiles.Delimited.Implementation
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DelimitedLineParserFactory"/> class.
+        /// Initializes a new <see cref="DelimitedLineParserFactory"/>.
         /// </summary>
         /// <param name="lineParserRegistry">The line parser registry.</param>
         public DelimitedLineParserFactory(IDictionary<Type, Type> lineParserRegistry)
@@ -35,7 +41,7 @@ namespace FluentFiles.Delimited.Implementation
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DelimitedLineParserFactory"/> class.
+        /// Initializes a new <see cref="DelimitedLineParserFactory"/>.
         /// </summary>
         /// <param name="lineParserRegistry">The line parser registry.</param>
         public DelimitedLineParserFactory(IDictionary<Type, ILayoutDescriptor<IDelimitedFieldSettingsContainer>> lineParserRegistry)

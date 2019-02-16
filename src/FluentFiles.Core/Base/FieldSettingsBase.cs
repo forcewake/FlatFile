@@ -1,47 +1,11 @@
-namespace FluentFiles.Core.Base
+﻿namespace FluentFiles.Core.Base
 {
     using FluentFiles.Core.Conversion;
     using FluentFiles.Core.Extensions;
     using System;
     using System.Reflection;
 
-    public interface IFieldSettings
-    {
-        int? Index { get; set; }
-        bool IsNullable { get; }
-        string NullValue { get; }
-        IFieldValueConverter Converter { get; }
-    }
-
-    public interface IFieldSettingsContainer : IFieldSettings
-    {
-        /// <summary>
-        /// The target type of a field.
-        /// </summary>
-        Type Type { get; }
-
-        /// <summary>
-        /// Gets the value of a field for a record instance.
-        /// </summary>
-        object GetValueOf(object instance);
-
-        /// <summary>
-        /// Sets the value of a field for a record instance.
-        /// </summary>
-        void SetValueOf(object instance, object value);
-
-        /// <summary>
-        /// The property underlying a field.
-        /// </summary>
-        PropertyInfo PropertyInfo { get; }
-
-        /// <summary>
-        /// A string that uniquely identifies a field within a layout.
-        /// </summary>
-        string UniqueKey { get; }
-    }
-
-    public abstract class FieldSettingsBase : IFieldSettingsContainer
+    internal abstract class FieldSettingsBase : IFieldSettingsContainer
     {
         private IFieldValueConverter _converter;
         private Func<object, object> _getValue;

@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.IO;
-
-namespace FluentFiles.Core
+﻿namespace FluentFiles.Core
 {
+    using System.Collections.Generic;
+    using System.IO;
+
     /// <summary>
-    /// Interface IFlatFileMultiEngine
+    /// A file engine capable of handling files with multiple types of records.
     /// </summary>
     public interface IFlatFileMultiEngine : IFlatFileEngine
     {
@@ -17,14 +17,14 @@ namespace FluentFiles.Core
         /// <summary>
         /// Reads the specified text reader.
         /// </summary>
-        /// <param name="stream">The text reader.</param>
+        /// <param name="reader">The text reader.</param>
         void Read(TextReader reader);
 
         /// <summary>
-        /// Gets any records of type <typeparamref name="T"/> read by <see cref="Read"/>.
+        /// Gets any records of type <typeparamref name="T"/> read by <see cref="Read(Stream)"/> or <see cref="Read(TextReader)"/>.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns>IEnumerable&lt;T&gt;.</returns>
+        /// <typeparam name="T">The type of record to retrieve.</typeparam>
+        /// <returns>Any records of type <typeparamref name="T"/> that were parsed.</returns>
         IEnumerable<T> GetRecords<T>() where T : class, new();
 
         /// <summary>

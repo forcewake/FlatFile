@@ -1,20 +1,32 @@
-using System;
-
 namespace FluentFiles.FixedLength.Implementation
 {
+    using System;
     using FluentFiles.Core;
     using FluentFiles.Core.Base;
 
-    public sealed class FixedLengthLineParser :
-        LineParserBase<ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer>,
-        IFixedLengthLineParser
+    /// <summary>
+    /// Converts lines of a fixed-length file into record instances.
+    /// </summary>
+    public sealed class FixedLengthLineParser : LineParserBase<ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer>,
+                                                IFixedLengthLineParser
     {
+        /// <summary>
+        /// Initializes a new instance of <see cref="FixedLengthLineParser"/>.
+        /// </summary>
+        /// <param name="layout">Describes how a file record maps to a type.</param>
         public FixedLengthLineParser(ILayoutDescriptor<IFixedFieldSettingsContainer> layout)
             : base(layout)
         {
         }
 
-        public override TEntity ParseLine<TEntity>(ReadOnlySpan<char> line, TEntity entity)
+        /// <summary>
+        /// Maps a line of a fixed-length file to an instance of <typeparamref name="TRecord" />.
+        /// </summary>
+        /// <typeparam name="TRecord">The type to map to.</typeparam>
+        /// <param name="line">The file line to parse.</param>
+        /// <param name="entity">The instance to populate.</param>
+        /// <returns>An instance of <typeparamref name="TRecord" /> populated with the parsed and transformed data from <paramref name="line" />.</returns>
+        public override TRecord ParseLine<TRecord>(ReadOnlySpan<char> line, TRecord entity)
         {
             int linePosition = 0;
             foreach (var field in Layout.Fields)
@@ -49,6 +61,12 @@ namespace FluentFiles.FixedLength.Implementation
             return line.Slice(linePosition, field.Length);
         }
 
+        /// <summary>
+        /// Performs fixed-length file specific string pre-processing, such as removing padding from a field when necessary.
+        /// </summary>
+        /// <param name="field">The field mapping.</param>
+        /// <param name="memberValue">The field value.</param>
+        /// <returns>A pre-processed field value.</returns>
         protected override ReadOnlySpan<char> PreprocessFieldValue(IFixedFieldSettingsContainer field, ReadOnlySpan<char> memberValue)
         {
             var trimmed = field.PadLeft

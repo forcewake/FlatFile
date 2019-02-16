@@ -1,10 +1,10 @@
-using System;
-
 namespace FluentFiles.Core.Base
 {
+    using System;
+
     /// <summary>
-    /// Uses records that implement <see cref="IMasterRecord"/> and <see cref="IDetailRecord"/> to handle
-    /// master-detail record relationships.
+    /// An <see cref="IMasterDetailStrategy"/> that delegates its implementation checks to
+    /// functions provided at creation time.
     /// </summary>
     public class DelegatingMasterDetailStrategy : IMasterDetailStrategy
     {
@@ -44,6 +44,11 @@ namespace FluentFiles.Core.Base
             _handleDetailRecord = handleDetailRecord ?? throw new ArgumentNullException(nameof(handleDetailRecord));
         }
 
+        /// <summary>
+        /// Handles a record and determines whether it is a master or detail record.
+        /// </summary>
+        /// <param name="record">The record to handle.</param>
+        /// <param name="isDetailRecord">Whether the record is a master or detail record.</param>
         public void HandleMasterDetail(object record, out bool isDetailRecord)
         {
             isDetailRecord = false;

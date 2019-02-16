@@ -1,9 +1,13 @@
 ﻿namespace FluentFiles.Core
 {
-    using FluentFiles.Core.Base;
     using FluentFiles.Core.Conversion;
     using System;
 
+    /// <summary>
+    /// A builder that can configure and produce a mapping configuration for a fixed-length field.
+    /// </summary>
+    /// <typeparam name="TBuilder">The self-referencing type of a builder.</typeparam>
+    /// <typeparam name="TSettings">The type of field mapping being configured.</typeparam>
     public interface IFieldSettingsBuilder<out TBuilder, out TSettings> : IBuildable<TSettings>
         where TBuilder : IFieldSettingsBuilder<TBuilder, TSettings>
         where TSettings : IFieldSettings
@@ -14,6 +18,7 @@
         /// <param name="nullValue">The string that indicates a null valued field.</param>
         TBuilder AllowNull(string nullValue);
 
+#pragma warning disable CS0618 // Type or member is obsolete
         /// <summary>
         /// Specifies that a field's value should be converted using a new instance of the type <typeparamref name="TConverter"/>.
         /// </summary>
@@ -25,6 +30,7 @@
         /// </summary>
         /// <param name="converter">The converter to use.</param>
         TBuilder WithTypeConverter(ITypeConverter converter);
+#pragma warning restore CS0618 // Type or member is obsolete
 
         /// <summary>
         /// Specifies that a field's value should be converted using a new instance of the type <typeparamref name="TConverter"/>.

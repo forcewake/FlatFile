@@ -5,7 +5,13 @@
 
     internal class PropertyDescription
     {
-        public PropertyInfo Property { get; set; }
-        public Attribute[] Attributes { get; set; }
+        public PropertyDescription(PropertyInfo property, Attribute[] attributes)
+        {
+            Property = property;
+            Attributes = attributes;
+        }
+
+        public PropertyInfo Property { get; }
+        public Attribute[] Attributes { get; }
     }
 }

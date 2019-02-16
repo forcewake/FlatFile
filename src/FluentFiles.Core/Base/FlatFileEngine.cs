@@ -7,10 +7,10 @@ namespace FluentFiles.Core.Base
     using FluentFiles.Core.Exceptions;
 
     /// <summary>
-    /// Class FlatFileEngine.
+    /// Reads and writes file records.
     /// </summary>
-    /// <typeparam name="TFieldSettings">The type of the t field settings.</typeparam>
-    /// <typeparam name="TLayoutDescriptor">The type of the t layout descriptor.</typeparam>
+    /// <typeparam name="TFieldSettings">The type of field configuration.</typeparam>
+    /// <typeparam name="TLayoutDescriptor">The type of layout descriptor.</typeparam>
     public abstract class FlatFileEngine<TFieldSettings, TLayoutDescriptor> : IFlatFileEngine
         where TFieldSettings : IFieldSettings
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
@@ -50,9 +50,9 @@ namespace FluentFiles.Core.Base
         /// <summary>
         /// Reads the specified stream.
         /// </summary>
-        /// <typeparam name="TEntity">The type of the t entity.</typeparam>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
         /// <param name="stream">The stream.</param>
-        /// <returns>IEnumerable&lt;TEntity&gt;.</returns>
+        /// <returns>Parsed records of type <typeparamref name="TEntity"/>.</returns>
         /// <exception cref="ParseLineException">Impossible to parse line</exception>
         public virtual IEnumerable<TEntity> Read<TEntity>(Stream stream) where TEntity : class, new()
         {
@@ -63,9 +63,9 @@ namespace FluentFiles.Core.Base
         /// <summary>
         /// Reads the specified text reader.
         /// </summary>
-        /// <typeparam name="TEntity">The type of the t entity.</typeparam>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
         /// <param name="reader">The reader.</param>
-        /// <returns>IEnumerable&lt;TEntity&gt;.</returns>
+        /// <returns>Parsed records of type <typeparamref name="TEntity"/>.</returns>
         /// <exception cref="ParseLineException">Impossible to parse line</exception>
         public virtual IEnumerable<TEntity> Read<TEntity>(TextReader reader) where TEntity : class, new()
         {
@@ -122,9 +122,9 @@ namespace FluentFiles.Core.Base
         }
 
         /// <summary>
-        /// Tries to parse the line.
+        /// Tries to parse a line.
         /// </summary>
-        /// <typeparam name="TEntity">The type of the t entity.</typeparam>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
         /// <param name="line">The line.</param>
         /// <param name="lineNumber">The line number.</param>
         /// <param name="entity">The entity.</param>
@@ -137,9 +137,9 @@ namespace FluentFiles.Core.Base
         }
 
         /// <summary>
-        /// Writes the entry.
+        /// Writes an entry.
         /// </summary>
-        /// <typeparam name="TEntity">The type of the t entity.</typeparam>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
         /// <param name="writer">The writer.</param>
         /// <param name="lineNumber">The line number.</param>
         /// <param name="entity">The entity.</param>
