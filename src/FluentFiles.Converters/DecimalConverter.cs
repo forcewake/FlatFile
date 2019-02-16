@@ -1,15 +1,30 @@
-﻿using FluentFiles.Core.Conversion;
-using System;
-using System.Globalization;
-
-namespace FluentFiles.Converters
+﻿namespace FluentFiles.Converters
 {
+    using FluentFiles.Core.Conversion;
+    using System;
+    using System.Globalization;
+
+    /// <summary>
+    /// Converts between decimal values and strings.
+    /// </summary>
     public sealed class DecimalConverter : NumberConverterBase<decimal>
     {
-        protected override decimal ConvertFromString(in ReadOnlySpan<char> source, NumberFormatInfo format) =>
+        /// <summary>
+        /// Converts a string to a decimal.
+        /// </summary>
+        /// <param name="source">The string to deserialize.</param>
+        /// <param name="format">The number format to use for parsing.</param>
+        /// <returns>A parsed decimal value.</returns>
+        protected override decimal Parse(in ReadOnlySpan<char> source, NumberFormatInfo format) =>
             decimal.Parse(source, NumberStyles.Float, provider: format);
 
-        protected override string ConvertToString(decimal value, NumberFormatInfo format) =>
+        /// <summary>
+        /// Converts a decimal to a string.
+        /// </summary>
+        /// <param name="value">The decimal to serialize.</param>
+        /// <param name="format">The number format to use for formatting.</param>
+        /// <returns>A formatted decimal value.</returns>
+        protected override string Format(decimal value, NumberFormatInfo format) =>
             value.ToString("G", format);
     }
 }

@@ -33,6 +33,7 @@ namespace FluentFiles.Core.Attributes.Base
         /// </summary>
         public Type Converter { get; set; }
 
+#pragma warning disable CS0618 // Type or member is obsolete
         IFieldValueConverter IFieldSettings.Converter
         {
             get
@@ -43,6 +44,7 @@ namespace FluentFiles.Core.Attributes.Base
                 return (IFieldValueConverter)ReflectionHelper.CreateInstance(Converter, true);
             }
         }
+#pragma warning restore CS0618 // Type or member is obsolete
 
         /// <summary>
         /// Initializes a new <see cref="FieldSettingsBaseAttribute"/>.

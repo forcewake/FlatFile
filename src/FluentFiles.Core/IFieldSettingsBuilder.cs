@@ -18,6 +18,7 @@
         /// <param name="nullValue">The string that indicates a null valued field.</param>
         TBuilder AllowNull(string nullValue);
 
+#pragma warning disable CS0618 // Type or member is obsolete
         /// <summary>
         /// Specifies that a field's value should be converted using a new instance of the type <typeparamref name="TConverter"/>.
         /// </summary>
@@ -29,6 +30,7 @@
         /// </summary>
         /// <param name="converter">The converter to use.</param>
         TBuilder WithTypeConverter(ITypeConverter converter);
+#pragma warning restore CS0618 // Type or member is obsolete
 
         /// <summary>
         /// Specifies that a field's value should be converted using a new instance of the type <typeparamref name="TConverter"/>.

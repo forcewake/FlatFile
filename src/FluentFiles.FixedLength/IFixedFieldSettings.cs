@@ -42,9 +42,17 @@ namespace FluentFiles.FixedLength
         /// </summary>
         bool TruncateIfExceedFieldLength { get; }
 
+        /// <summary>
+        /// A function that transforms the values of an object's members after they have been converted to a string, but
+        /// before they have been written to a line in a file.
+        /// </summary>
         Func<string, string> StringNormalizer { get; }
     }
 
+    /// <summary>
+    /// Extends <see cref="IFixedFieldSettings"/> with functionality and data related to its storage in a class property.
+    /// See <see cref="IFieldSettingsContainer"/>.
+    /// </summary>
     public interface IFixedFieldSettingsContainer : IFixedFieldSettings, IFieldSettingsContainer
     {
     }

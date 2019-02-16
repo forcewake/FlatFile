@@ -42,6 +42,11 @@ namespace FluentFiles.FixedLength.Implementation
             return this;
         }
 
+        /// <summary>
+        /// Defines a function that transforms the values of an object's members after they have been converted to a string, but
+        /// before they have been written to a line in a file.
+        /// </summary>
+        /// <param name="stringNormalizer">The normalization function.</param>
         public IFixedFieldSettingsBuilder WithStringNormalizer(Func<string, string> stringNormalizer)
         {
             _stringNormalizer = stringNormalizer;
@@ -115,6 +120,7 @@ namespace FluentFiles.FixedLength.Implementation
             return this;
         }
 
+#pragma warning disable CS0618 // Type or member is obsolete
         /// <summary>
         /// Specifies that a field's value should be converted using a new instance of the type <typeparamref name="TConverter"/>.
         /// </summary>
@@ -133,6 +139,7 @@ namespace FluentFiles.FixedLength.Implementation
             var typeConverter = converter ?? throw new ArgumentNullException(nameof(converter));
             return WithConverter(new FieldValueConverterAdapter(typeConverter));
         }
+#pragma warning restore CS0618 // Type or member is obsolete
 
         /// <summary>
         /// Specifies that a field's value should be converted using a new instance of the type <typeparamref name="TConverter"/>.

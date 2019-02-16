@@ -1,7 +1,7 @@
-using System;
-
 namespace FluentFiles.Core.Base
 {
+    using System;
+
     /// <summary>
     /// An <see cref="IMasterDetailStrategy"/> that delegates its implementation checks to
     /// functions provided at creation time.

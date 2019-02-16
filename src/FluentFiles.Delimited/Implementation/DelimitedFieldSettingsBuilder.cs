@@ -37,6 +37,7 @@
             return this;
         }
 
+#pragma warning disable CS0618 // Type or member is obsolete
         /// <summary>
         /// Specifies that a field's value should be converted using a new instance of the type <typeparamref name="TConverter"/>.
         /// </summary>
@@ -55,6 +56,7 @@
             var typeConverter = converter ?? throw new ArgumentNullException(nameof(converter));
             return WithConverter(new FieldValueConverterAdapter(typeConverter));
         }
+#pragma warning restore CS0618 // Type or member is obsolete
 
         /// <summary>
         /// Specifies that a field's value should be converted using a new instance of the type <typeparamref name="TConverter"/>.

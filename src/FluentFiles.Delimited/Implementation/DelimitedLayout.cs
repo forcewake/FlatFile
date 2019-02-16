@@ -54,7 +54,6 @@ namespace FluentFiles.Delimited.Implementation
         /// <summary>
         /// Indicates that a record layout contains a header.
         /// </summary>
-        /// <returns></returns>
         public override IDelimitedLayout<TTarget> WithHeader()
         {
             HasHeader = true;

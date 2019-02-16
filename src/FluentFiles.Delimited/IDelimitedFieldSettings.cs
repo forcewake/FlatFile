@@ -13,6 +13,10 @@ namespace FluentFiles.Delimited
         string Name { get; set; }
     }
 
+    /// <summary>
+    /// Extends <see cref="IDelimitedFieldSettings"/> with functionality and data related to its storage in a class property.
+    /// See <see cref="IFieldSettingsContainer"/>.
+    /// </summary>
     public interface IDelimitedFieldSettingsContainer : IDelimitedFieldSettings, IFieldSettingsContainer
     {
     }

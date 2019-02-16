@@ -1,8 +1,8 @@
-﻿using System;
-using System.Reflection;
-
-namespace FluentFiles.Core.Conversion
+﻿namespace FluentFiles.Core.Conversion
 {
+    using System;
+    using System.Reflection;
+
     /// <summary>
     /// Defines a way to convert a field's string value to and from a custom type.
     /// </summary>

@@ -45,10 +45,13 @@ namespace FluentFiles.FixedLength
         /// <summary>
         /// Determines whether a field's contents should be truncated if it exceeds the configured length when writing to a file.
         /// </summary>
-        /// <returns></returns>
         IFixedFieldSettingsBuilder TruncateFieldContentIfExceedLength();
 
-
+        /// <summary>
+        /// Defines a function that transforms the values of an object's members after they have been converted to a string, but
+        /// before they have been written to a line in a file.
+        /// </summary>
+        /// <param name="stringNormalizer">The normalization function.</param>
         IFixedFieldSettingsBuilder WithStringNormalizer(Func<string, string> stringNormalizer);
     }
 }
