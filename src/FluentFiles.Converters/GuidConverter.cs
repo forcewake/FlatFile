@@ -11,17 +11,17 @@
         /// <summary>
         /// Converts a string to a GUID.
         /// </summary>
-        /// <param name="context">Provides information about a field deserialization operation.</param>
+        /// <param name="context">Provides information about a field parsing operation.</param>
         /// <returns>A parsed GUID.</returns>
-        protected override Guid ConvertFrom(in FieldDeserializationContext context) =>
+        protected override Guid ParseValue(in FieldParsingContext context) =>
             Guid.Parse(context.Source.Trim());
 
         /// <summary>
         /// Converts a GUID to a string.
         /// </summary>
-        /// <param name="context">Provides information about a field serialization operation.</param>
+        /// <param name="context">Provides information about a field formatting operation.</param>
         /// <returns>A formatted GUID.</returns>
-        protected override string ConvertTo(in FieldSerializationContext<Guid> context) =>
+        protected override string FormatValue(in FieldFormattingContext<Guid> context) =>
             context.Source.ToString();
     }
 }

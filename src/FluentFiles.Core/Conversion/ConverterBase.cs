@@ -10,64 +10,71 @@ namespace FluentFiles.Core.Conversion
     public abstract class ConverterBase<TValue> : IFieldValueConverter
     {
         /// <summary>
-        /// Whether a value of a given type can be converted to another type.
+        /// The type to convert to and from.
+        /// </summary>
+        protected Type TargetType { get; } = typeof(TValue);
+
+        /// <summary>
+        /// Whether a value of a given type can be converted from a string.
+        /// </summary>
+        /// <param name="to">The type to convert to.</param>
+        /// <returns>Whether a type can be converted to a string.</returns>
+        public bool CanParse(Type to) => to == TargetType;
+
+        /// <summary>
+        /// Whether a value of a given type can be converted to a string.
         /// </summary>
         /// <param name="from">The type to convert from.</param>
-        /// <param name="to">The type to convert to.</param>
-        /// <returns>Whether a conversion can be performed between the two types.</returns>
-        public virtual bool CanConvert(Type from, Type to) => 
-            (from == typeof(string) && to == typeof(TValue)) || 
-            (from == typeof(TValue) && to == typeof(string));
+        /// <returns>Whether a type can be converted to a string.</returns>
+        public bool CanFormat(Type from) => from == TargetType;
 
         /// <summary>
         /// Converts a string to an object instance.
         /// </summary>
-        /// <param name="context">Provides information about a field deserialization operation.</param>
-        /// <returns>A deserialized value.</returns>
-        public object ConvertFromString(in FieldDeserializationContext context) =>
-            ConvertFrom(context);
+        /// <param name="context">Provides information about a field parsing operation.</param>
+        /// <returns>A parsed value.</returns>
+        public object Parse(in FieldParsingContext context) => ParseValue(context);
 
         /// <summary>
         /// Converts an object to a string.
         /// </summary>
-        /// <param name="context">Provides information about a field serialization operation.</param>
-        /// <returns>A serialized value.</returns>
-        public string ConvertToString(in FieldSerializationContext context) =>
-            ConvertTo(new FieldSerializationContext<TValue>((TValue)context.Source, context.SourceProperty));
+        /// <param name="context">Provides information about a field formatting operation.</param>
+        /// <returns>A formatted value.</returns>
+        public string Format(in FieldFormattingContext context) => FormatValue(context);
 
         /// <summary>
         /// Converts a string to an instance of <typeparamref name="TValue"/>.
         /// </summary>
-        /// <param name="context">Provides information about a field deserialization operation.</param>
-        /// <returns>A deserialized value.</returns>
-        protected abstract TValue ConvertFrom(in FieldDeserializationContext context);
+        /// <param name="context">Provides information about a field parsing operation.</param>
+        /// <returns>A parsed value.</returns>
+        protected abstract TValue ParseValue(in FieldParsingContext context);
 
         /// <summary>
         /// Converts an instance of <typeparamref name="TValue"/> to a string.
         /// </summary>
-        /// <param name="context">Provides information about a field serialization operation.</param>
-        /// <returns>A serialized value.</returns>
-        protected abstract string ConvertTo(in FieldSerializationContext<TValue> context);
+        /// <param name="context">Provides information about a field formatting operation.</param>
+        /// <returns>A formatted value.</returns>
+        protected abstract string FormatValue(in FieldFormattingContext<TValue> context);
     }
 
     /// <summary>
-    /// Provides information about a field serialization operation.
+    /// Provides information about a field formatting operation.
     /// </summary>
-    public readonly ref struct FieldSerializationContext<TValue>
+    public readonly ref struct FieldFormattingContext<TValue>
     {
         /// <summary>
-        /// Initializes a new <see cref="FieldSerializationContext"/>.
+        /// Initializes a new <see cref="FieldFormattingContext"/>.
         /// </summary>
-        /// <param name="source">The object to serialize.</param>
+        /// <param name="source">The object to format as a string.</param>
         /// <param name="sourceProperty">The property the source value is from.</param>
-        public FieldSerializationContext(TValue source, PropertyInfo sourceProperty)
+        public FieldFormattingContext(TValue source, PropertyInfo sourceProperty)
         {
             Source = source;
             SourceProperty = sourceProperty;
         }
 
         /// <summary>
-        /// The object to serialize.
+        /// The object to format as a string.
         /// </summary>
         public TValue Source { get; }
 
@@ -75,5 +82,14 @@ namespace FluentFiles.Core.Conversion
         /// The property the source value is from.
         /// </summary>
         public PropertyInfo SourceProperty { get; }
+
+        /// <summary>
+        /// Converts a <see cref="FieldFormattingContext"/> to a more specifically typed <see cref="FieldFormattingContext{TValue}"/>.
+        /// </summary>
+        /// <param name="context">The formatting context to convert.</param>
+        public static implicit operator FieldFormattingContext<TValue>(FieldFormattingContext context)
+        {
+            return new FieldFormattingContext<TValue>((TValue)context.Source, context.SourceProperty);
+        }
     }
 }

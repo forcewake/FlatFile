@@ -1,13 +1,12 @@
 namespace FluentFiles.Tests.FixedLength
 {
+    using FluentAssertions;
     using FluentFiles.Core.Conversion;
     using FluentFiles.FixedLength;
     using FluentFiles.FixedLength.Implementation;
     using FluentFiles.Tests.Base.Entities;
-    using FluentAssertions;
     using System;
     using System.Globalization;
-    using System.Reflection;
     using Xunit;
 
     public class FixedLengthLineBuilderTests
@@ -71,12 +70,12 @@ namespace FluentFiles.Tests.FixedLength
 
         class IdHexConverter : ConverterBase<int>
         {
-            protected override int ConvertFrom(in FieldDeserializationContext context)
+            protected override int ParseValue(in FieldParsingContext context)
             {
                 return Int32.Parse(context.Source, NumberStyles.AllowHexSpecifier);
             }
 
-            protected override string ConvertTo(in FieldSerializationContext<int> context)
+            protected override string FormatValue(in FieldFormattingContext<int> context)
             {
                 return context.Source.ToString("X");
             }

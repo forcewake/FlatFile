@@ -18,12 +18,12 @@ namespace FluentFiles.Benchmark.Converters
 
         public string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
         {
-            return converter.ConvertToString(new FieldSerializationContext(value, (PropertyInfo)memberMapData.Member));
+            return converter.Format(new FieldFormattingContext(value, (PropertyInfo)memberMapData.Member));
         }
 
         public object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
         {
-            return converter.ConvertFromString(new FieldDeserializationContext(text.AsSpan(), (PropertyInfo)memberMapData.Member));
+            return converter.Parse(new FieldParsingContext(text.AsSpan(), (PropertyInfo)memberMapData.Member));
         }
     }
 }

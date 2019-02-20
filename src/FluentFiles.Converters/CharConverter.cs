@@ -11,9 +11,9 @@
         /// <summary>
         /// Converts a string to a character.
         /// </summary>
-        /// <param name="context">Provides information about a field deserialization operation.</param>
+        /// <param name="context">Provides information about a field parsing operation.</param>
         /// <returns>A string as a single character.</returns>
-        protected override char ConvertFrom(in FieldDeserializationContext context)
+        protected override char ParseValue(in FieldParsingContext context)
         {
             var trimmed = context.Source;
             if (trimmed.Length > 1)
@@ -28,9 +28,9 @@
         /// <summary>
         /// Converts a character to a string.
         /// </summary>
-        /// <param name="context">Provides information about a field serialization operation.</param>
+        /// <param name="context">Provides information about a field formatting operation.</param>
         /// <returns>A character as a full string.</returns>
-        protected override string ConvertTo(in FieldSerializationContext<char> context)
+        protected override string FormatValue(in FieldFormattingContext<char> context)
         {
             if (context.Source == char.MinValue)
                 return string.Empty;

@@ -14,10 +14,10 @@ namespace FluentFiles.Tests.Conversion
         [InlineData("-1", -1)]
         [InlineData("32767", short.MaxValue)]
         [InlineData("-32768", short.MinValue)]
-        public void Test_ConvertFromString(string input, short expected)
+        public void Test_Parse(string input, short expected)
         {
             // Act.
-            var actual = _converter.ConvertFromString(new FieldDeserializationContext(input, null));
+            var actual = _converter.Parse(new FieldParsingContext(input, null));
 
             // Assert.
             Assert.Equal(expected, actual);
@@ -29,10 +29,10 @@ namespace FluentFiles.Tests.Conversion
         [InlineData(-1, "-1")]
         [InlineData(short.MaxValue, "32767")]
         [InlineData(short.MinValue, "-32768")]
-        public void Test_ConvertToString(short input, string expected)
+        public void Test_Format(short input, string expected)
         {
             // Act.
-            var actual = _converter.ConvertToString(new FieldSerializationContext(input, null));
+            var actual = _converter.Format(new FieldFormattingContext(input, null));
 
             // Assert.
             Assert.Equal(expected, actual);

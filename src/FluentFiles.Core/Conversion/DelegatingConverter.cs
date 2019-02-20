@@ -7,16 +7,16 @@
     /// </summary>
     internal class DelegatingConverter<TProperty> : IFieldValueConverter
     {
-        internal ConvertFromString<TProperty> ConversionFromString { get; set; }
+        internal FieldParser<TProperty> ParseValue { get; set; }
 
-        internal ConvertToString<TProperty> ConversionToString { get; set; }
+        internal FieldFormatter<TProperty> FormatValue { get; set; }
 
-        public bool CanConvert(Type from, Type to) =>
-            (from == typeof(string) && to == typeof(TProperty) && ConversionFromString != null) ||
-            (from == typeof(TProperty) && to == typeof(string) && ConversionToString != null);
+        public bool CanParse(Type to) => to == typeof(TProperty) && ParseValue != null;
 
-        public object ConvertFromString(in FieldDeserializationContext context) => ConversionFromString(context.Source);
+        public bool CanFormat(Type from) => from == typeof(TProperty) && FormatValue != null;
 
-        public string ConvertToString(in FieldSerializationContext context) => ConversionToString((TProperty)context.Source);
+        public object Parse(in FieldParsingContext context) => ParseValue(context.Source);
+
+        public string Format(in FieldFormattingContext context) => FormatValue((TProperty)context.Source);
     }
 }

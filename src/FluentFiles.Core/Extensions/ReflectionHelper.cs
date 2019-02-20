@@ -12,8 +12,8 @@ namespace FluentFiles.Core.Extensions
     /// </summary>
     public static class ReflectionHelper
     {
-        static readonly object CacheLock = new object();
-        static readonly Dictionary<ConstructorInfo, Delegate> Cache = new Dictionary<ConstructorInfo, Delegate>();
+        private static readonly object CacheLock = new object();
+        private static readonly Dictionary<ConstructorInfo, Delegate> Cache = new Dictionary<ConstructorInfo, Delegate>();
 
         /// <summary>
         /// Creates an instance of type <typeparamref name="T"/> using the default constructor.
@@ -48,17 +48,17 @@ namespace FluentFiles.Core.Extensions
         public static object CreateInstance(Type targetType, bool cached = false, params object[] parameters)
         {
             if (targetType == null) return null;
-            if (parameters == null || !parameters.Any()) return CreateInstance(targetType, cached);
+            if (parameters == null || parameters.Length == 0) return CreateInstance(targetType, cached);
 
             var ctorInfo = targetType.GetConstructor(parameters.Select(a => a.GetType()).ToArray());
 
             return CreateInstance(ctorInfo, cached, parameters);
         }
 
-        static object CreateInstance(ConstructorInfo ctorInfo, bool cached, object[] parameters = null)
+        private static object CreateInstance(ConstructorInfo ctorInfo, bool cached, object[] parameters = null)
         {
             if (ctorInfo == null) return null;
-            var hasArguments = parameters != null && parameters.Any();
+            var hasArguments = parameters?.Length > 0;
 
             Delegate ctor;
             lock (CacheLock)

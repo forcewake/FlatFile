@@ -29,7 +29,7 @@ namespace FluentFiles.Benchmark
         [Benchmark]
         public int[] Spannified()
         {
-            return items.Select(i => _spannifiedConverter.ConvertFromString(new FieldDeserializationContext(i, null))).Cast<int>().ToArray();
+            return items.Select(i => _spannifiedConverter.Parse(new FieldParsingContext(i, null))).Cast<int>().ToArray();
         }
     }
 }

@@ -3,7 +3,6 @@ namespace FluentFiles.Core.Extensions
     using FluentFiles.Core.Conversion;
     using System;
     using System.ComponentModel;
-    using System.Linq.Expressions;
 
     internal static class TypeExtensions
     {
@@ -14,7 +13,7 @@ namespace FluentFiles.Core.Extensions
 
             var converter = TypeDescriptor.GetConverter(type.Unwrap());
             return converter != null 
-                ? new TypeConverterAdapter(converter) { OverrideCanConvertTo = true }
+                ? new TypeConverterAdapter(converter)
                 : DefaultConverter.Instance;
         }
 
@@ -25,37 +24,12 @@ namespace FluentFiles.Core.Extensions
         public static object GetDefaultValue(this Type type)
         {
             if (type == null)
-            {
-                throw new ArgumentNullException("type");
-            }
+                throw new ArgumentNullException(nameof(type));
 
-            // We want an Func<object> which returns the default.
-            // Create that expression here.
-            Expression<Func<object>> e = Expression.Lambda<Func<object>>(
-                // Have to convert to object.
-                Expression.Convert(
-                    // The default value, always get what the *code* tells us.
-                    type.GetDefaultExpression(), typeof(object)
-                    )
-                );
+            if (type.IsValueType && type != typeof(void))	// Can't create an instance of Void.
+                return Activator.CreateInstance(type);
 
-            // Compile and return the value.
-            return e.Compile()();
-        }
-
-        public static Expression GetDefaultExpression(this Type type)
-        {
-            if (type == null)
-            {
-                throw new ArgumentNullException("type");
-            }
-
-            if (type.IsValueType)
-            {
-                return Expression.Constant(Activator.CreateInstance(type), type);
-            }
-
-            return Expression.Constant(null, type);
+            return null;
         }
     }
 }

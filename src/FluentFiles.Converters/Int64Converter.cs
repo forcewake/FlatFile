@@ -12,7 +12,7 @@
         /// <summary>
         /// Converts a string to a long.
         /// </summary>
-        /// <param name="source">The string to deserialize.</param>
+        /// <param name="source">The string to parse.</param>
         /// <param name="format">The number format to use for parsing.</param>
         /// <returns>A parsed long value.</returns>
         protected override long Parse(in ReadOnlySpan<char> source, NumberFormatInfo format) =>
@@ -21,7 +21,7 @@
         /// <summary>
         /// Converts a long to a string.
         /// </summary>
-        /// <param name="value">The long to serialize.</param>
+        /// <param name="value">The long to format.</param>
         /// <param name="format">The number format to use for formatting.</param>
         /// <returns>A formatted long value.</returns>
         protected override string Format(long value, NumberFormatInfo format) =>

@@ -6,14 +6,16 @@
     /// <summary>
     /// The last fallback for all field conversions.
     /// </summary>
-    class DefaultConverter : IFieldValueConverter
+    internal class DefaultConverter : IFieldValueConverter
     {
         public static IFieldValueConverter Instance = new DefaultConverter();
 
-        public bool CanConvert(Type from, Type to) => from == typeof(string);
+        public bool CanParse(Type to) => true;
 
-        public object ConvertFromString(in FieldDeserializationContext context) => context.TargetProperty.PropertyType.GetDefaultValue();
+        public bool CanFormat(Type from) => true;
 
-        public string ConvertToString(in FieldSerializationContext context) => context.Source.ToString();
+        public object Parse(in FieldParsingContext context) => context.TargetProperty.PropertyType.GetDefaultValue();
+
+        public string Format(in FieldFormattingContext context) => context.Source.ToString();
     }
 }

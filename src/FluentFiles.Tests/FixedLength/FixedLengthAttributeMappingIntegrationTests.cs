@@ -26,9 +26,10 @@ namespace FluentFiles.Tests.FixedLength
 
         class StubConverter : IFieldValueConverter
         {
-            public bool CanConvert(Type from, Type to) => true;
-            public object ConvertFromString(in FieldDeserializationContext context) => "foo";
-            public string ConvertToString(in FieldSerializationContext context) => context.Source.ToString();
+            public bool CanParse(Type to) => true;
+            public bool CanFormat(Type from) => true;
+            public object Parse(in FieldParsingContext context) => "foo";
+            public string Format(in FieldFormattingContext context) => context.Source.ToString();
         }
 
         public FixedLengthAttributeMappingIntegrationTests()

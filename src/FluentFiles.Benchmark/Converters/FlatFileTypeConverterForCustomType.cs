@@ -6,7 +6,7 @@ namespace FluentFiles.Benchmark.Converters
 
     public class FlatFileConverterForCustomType : ConverterBase<CustomType>
     {
-        protected override CustomType ConvertFrom(in FieldDeserializationContext context)
+        protected override CustomType ParseValue(in FieldParsingContext context)
         {
             var obj = new CustomType();
             var values = context.Source.Split('|').GetEnumerator();
@@ -23,7 +23,7 @@ namespace FluentFiles.Benchmark.Converters
             return obj;
         }
 
-        protected override string ConvertTo(in FieldSerializationContext<CustomType> context)
+        protected override string FormatValue(in FieldFormattingContext<CustomType> context)
         {
             return string.Format("{0}|{1}|{2}", context.Source.First, context.Source.Second, context.Source.Third);
         }

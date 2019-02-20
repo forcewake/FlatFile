@@ -14,10 +14,10 @@ namespace FluentFiles.Tests.Conversion
         [InlineData("-1.5", -1.5f)]
         [InlineData("3.40282347E+38", float.MaxValue)]
         [InlineData("-3.40282347E+38", float.MinValue)]
-        public void Test_ConvertFromString(string input, float expected)
+        public void Test_Parse(string input, float expected)
         {
             // Act.
-            var actual = _converter.ConvertFromString(new FieldDeserializationContext(input, null));
+            var actual = _converter.Parse(new FieldParsingContext(input, null));
 
             // Assert.
             Assert.Equal(expected, actual);
@@ -29,10 +29,10 @@ namespace FluentFiles.Tests.Conversion
         [InlineData(-1.5f, "-1.5")]
         [InlineData(float.MaxValue, "3.40282347E+38")]
         [InlineData(float.MinValue, "-3.40282347E+38")]
-        public void Test_ConvertToString(float input, string expected)
+        public void Test_Format(float input, string expected)
         {
             // Act.
-            var actual = _converter.ConvertToString(new FieldSerializationContext(input, null));
+            var actual = _converter.Format(new FieldFormattingContext(input, null));
 
             // Assert.
             Assert.Equal(expected, actual);

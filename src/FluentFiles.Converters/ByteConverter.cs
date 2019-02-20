@@ -12,7 +12,7 @@
         /// <summary>
         /// Converts a string to a byte.
         /// </summary>
-        /// <param name="source">The string to deserialize.</param>
+        /// <param name="source">The string to parse.</param>
         /// <param name="format">The number format to use for parsing.</param>
         /// <returns>A parsed byte value.</returns>
         protected override byte Parse(in ReadOnlySpan<char> source, NumberFormatInfo format) =>
@@ -21,7 +21,7 @@
         /// <summary>
         /// Converts a byte to a string.
         /// </summary>
-        /// <param name="value">The byte to serialize.</param>
+        /// <param name="value">The byte to format.</param>
         /// <param name="format">The number format to use for formatting.</param>
         /// <returns>A formatted byte.</returns>
         protected override string Format(byte value, NumberFormatInfo format) =>

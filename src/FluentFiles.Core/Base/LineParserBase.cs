@@ -2,6 +2,7 @@ namespace FluentFiles.Core.Base
 {
     using System;
     using FluentFiles.Core.Conversion;
+    using FluentFiles.Core.Extensions;
 
     /// <summary>
     /// Base class for converting lines of a file to records.
@@ -50,7 +51,7 @@ namespace FluentFiles.Core.Base
 
             var preprocessed = PreprocessFieldValue(fieldSettings, memberValue);
 
-            var value = ConvertFromString(fieldSettings, preprocessed);
+            var value = ParseField(fieldSettings, preprocessed);
             return value;
         }
 
@@ -62,13 +63,13 @@ namespace FluentFiles.Core.Base
         /// <returns>A pre-processed field value.</returns>
         protected virtual ReadOnlySpan<char> PreprocessFieldValue(TFieldSettings field, ReadOnlySpan<char> memberValue) => memberValue;
 
-        private static object ConvertFromString(TFieldSettings field, ReadOnlySpan<char> source)
+        private static object ParseField(TFieldSettings field, ReadOnlySpan<char> source)
         {
             var converter = field.Converter;
-            if (converter != null && converter.CanConvert(from: typeof(string), to: field.Type))
-                return converter.ConvertFromString(new FieldDeserializationContext(source, field.PropertyInfo));
+            if (converter != null && converter.CanParse(field.Type))
+                return converter.Parse(new FieldParsingContext(source, field.PropertyInfo));
 
-            return null;
+            return field.PropertyInfo?.PropertyType.GetDefaultValue();
         }
     }
 }

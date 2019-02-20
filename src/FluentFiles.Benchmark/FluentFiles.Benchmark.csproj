@@ -9,11 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoFixture" Version="4.5.0" />
-    <PackageReference Include="BenchmarkDotNet" Version="0.11.0" />
-    <PackageReference Include="CsvHelper" Version="7.1.1" />
+    <PackageReference Include="AutoFixture" Version="4.8.0" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.11.4" />
+    <PackageReference Include="CsvHelper" Version="12.1.2" />
     <PackageReference Include="FileHelpers" Version="3.3.0" />
-    <PackageReference Include="Newtonsoft.Json" Version=" 11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
 
   <ItemGroup>

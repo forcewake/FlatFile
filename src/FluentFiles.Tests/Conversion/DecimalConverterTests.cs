@@ -21,10 +21,10 @@ namespace FluentFiles.Tests.Conversion
 
         [Theory]
         [MemberData(nameof(ConvertFromStringData))]
-        public void Test_ConvertFromString(string input, decimal expected)
+        public void Test_Parse(string input, decimal expected)
         {
             // Act.
-            var actual = _converter.ConvertFromString(new FieldDeserializationContext(input, null));
+            var actual = _converter.Parse(new FieldParsingContext(input, null));
 
             // Assert.
             Assert.Equal(expected, actual);
@@ -42,10 +42,10 @@ namespace FluentFiles.Tests.Conversion
 
         [Theory]
         [MemberData(nameof(ConvertToStringData))]
-        public void Test_ConvertToString(decimal input, string expected)
+        public void Test_Format(decimal input, string expected)
         {
             // Act.
-            var actual = _converter.ConvertToString(new FieldSerializationContext(input, null));
+            var actual = _converter.Format(new FieldFormattingContext(input, null));
 
             // Assert.
             Assert.Equal(expected, actual);

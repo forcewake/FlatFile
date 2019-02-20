@@ -37,27 +37,6 @@
             return this;
         }
 
-#pragma warning disable CS0618 // Type or member is obsolete
-        /// <summary>
-        /// Specifies that a field's value should be converted using a new instance of the type <typeparamref name="TConverter"/>.
-        /// </summary>
-        /// <typeparam name="TConverter">The type of <see cref="ITypeConverter"/> to use for conversion.</typeparam>
-        public IDelimitedFieldSettingsBuilder WithTypeConverter<TConverter>() where TConverter : ITypeConverter, new()
-        {
-            return WithTypeConverter(ReflectionHelper.CreateInstance<TConverter>(true));
-        }
-
-        /// <summary>
-        ///  Specifies that a field's value should be converted using the provided <see cref="ITypeConverter"/> implementation.
-        /// </summary>
-        /// <param name="converter">The converter to use.</param>
-        public IDelimitedFieldSettingsBuilder WithTypeConverter(ITypeConverter converter)
-        {
-            var typeConverter = converter ?? throw new ArgumentNullException(nameof(converter));
-            return WithConverter(new FieldValueConverterAdapter(typeConverter));
-        }
-#pragma warning restore CS0618 // Type or member is obsolete
-
         /// <summary>
         /// Specifies that a field's value should be converted using a new instance of the type <typeparamref name="TConverter"/>.
         /// </summary>
@@ -81,14 +60,14 @@
         /// Specifies that a field's value should be converted from a string to its destination type using the provided conversion function.
         /// </summary>
         /// <typeparam name="TProperty">The type of the destination property.</typeparam>
-        /// <param name="conversion">A lambda function converting from a string.</param>
-        public IDelimitedFieldSettingsBuilder WithConversionFromString<TProperty>(ConvertFromString<TProperty> conversion)
+        /// <param name="parser">A lambda function converting from a string.</param>
+        public IDelimitedFieldSettingsBuilder WithConversionFromString<TProperty>(FieldParser<TProperty> parser)
         {
             if (_converter == null)
                 _converter = new DelegatingConverter<TProperty>();
 
             if (_converter is DelegatingConverter<TProperty> delegatingConverter)
-                delegatingConverter.ConversionFromString = conversion;
+                delegatingConverter.ParseValue = parser;
             else
                 throw new InvalidOperationException("A converter has already been explicitly set.");
 
@@ -99,14 +78,14 @@
         /// Specifies that a field's value should be converted to a string from its source type using the provided conversion function.
         /// </summary>
         /// <typeparam name="TProperty">The type of the source property.</typeparam>
-        /// <param name="conversion">A lambda function converting to a string.</param>
-        public IDelimitedFieldSettingsBuilder WithConversionToString<TProperty>(ConvertToString<TProperty> conversion)
+        /// <param name="formatter">A lambda function converting to a string.</param>
+        public IDelimitedFieldSettingsBuilder WithConversionToString<TProperty>(FieldFormatter<TProperty> formatter)
         {
             if (_converter == null)
                 _converter = new DelegatingConverter<TProperty>();
 
             if (_converter is DelegatingConverter<TProperty> delegatingConverter)
-                delegatingConverter.ConversionToString = conversion;
+                delegatingConverter.FormatValue = formatter;
             else
                 throw new InvalidOperationException("A converter has already been explicitly set.");
 

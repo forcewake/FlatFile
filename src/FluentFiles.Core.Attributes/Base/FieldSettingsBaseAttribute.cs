@@ -39,7 +39,7 @@ namespace FluentFiles.Core.Attributes.Base
             get
             {
                 if (typeof(ITypeConverter).IsAssignableFrom(Converter))
-                    return new FieldValueConverterAdapter((ITypeConverter)ReflectionHelper.CreateInstance(Converter, true));
+                    return new ITypeConverterAdapter((ITypeConverter)ReflectionHelper.CreateInstance(Converter, true));
 
                 return (IFieldValueConverter)ReflectionHelper.CreateInstance(Converter, true);
             }

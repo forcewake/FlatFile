@@ -42,7 +42,7 @@ namespace FluentFiles.Core.Base
         protected virtual string GetStringValueFromField(TFieldSettings field, object fieldValue)
         {
             string lineValue = fieldValue != null
-                ? ConvertToString(field, fieldValue)
+                ? FormatField(field, fieldValue)
                 : field.NullValue ?? string.Empty;
 
             lineValue = PostprocessFieldValue(field, lineValue);
@@ -58,11 +58,11 @@ namespace FluentFiles.Core.Base
         /// <returns>A post-processed field value.</returns>
         protected virtual string PostprocessFieldValue(TFieldSettings field, string value) => value;
 
-        private static string ConvertToString(TFieldSettings field, object fieldValue)
+        private static string FormatField(TFieldSettings field, object fieldValue)
         {
             var converter = field.Converter;
-            if (converter != null && converter.CanConvert(from: field.Type, to: typeof(string)))
-                return converter.ConvertToString(new FieldSerializationContext(fieldValue, field.PropertyInfo));
+            if (converter != null && converter.CanFormat(field.Type))
+                return converter.Format(new FieldFormattingContext(fieldValue, field.PropertyInfo));
 
             return fieldValue.ToString();
         }

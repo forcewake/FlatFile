@@ -1,12 +1,13 @@
 namespace FluentFiles.Tests.Delimited
 {
+    using FluentAssertions;
+    using FluentFiles.Core;
     using FluentFiles.Core.Conversion;
     using FluentFiles.Delimited;
     using FluentFiles.Delimited.Implementation;
-    using FluentAssertions;
     using System;
+    using System.ComponentModel;
     using System.Globalization;
-    using System.Reflection;
     using Xunit;
 
     public class DelimitedLineParserTests
@@ -79,18 +80,50 @@ namespace FluentFiles.Tests.Delimited
             parsedEntity.Id.Should().Be(48879);
         }
 
-        class IdHexConverter : ConverterBase<int>
+        [Fact]
+        public void ParserShouldUseTypeConverter()
         {
-            protected override int ConvertFrom(in FieldDeserializationContext context)
+            layout.WithMember(o => o.Id, set => set.WithTypeConverter(new Int32Converter()));
+
+            var entry = new TestObject();
+            var parsedEntity = parser.ParseLine("48879", entry);
+
+            parsedEntity.Id.Should().Be(48879);
+        }
+
+        [Fact]
+        public void ParserShouldUseITypeConverter()
+        {
+            layout.WithMember(o => o.Id, set => set.WithTypeConverter(new IdHexConverter()));
+
+            var entry = new TestObject();
+            var parsedEntity = parser.ParseLine("BEEF", entry);
+
+            parsedEntity.Id.Should().Be(48879);
+        }
+
+#pragma warning disable CS0618 // Type or member is obsolete
+        class IdHexConverter : ConverterBase<int>, ITypeConverter
+        {
+            protected override int ParseValue(in FieldParsingContext context)
             {
                 return Int32.Parse(context.Source, NumberStyles.AllowHexSpecifier);
             }
 
-            protected override string ConvertTo(in FieldSerializationContext<int> context)
+            protected override string FormatValue(in FieldFormattingContext<int> context)
             {
                 return context.Source.ToString("X");
             }
+
+            public bool CanConvertFrom(Type type) => type == typeof(string) || type == typeof(int);
+
+            public bool CanConvertTo(Type type) => type == typeof(string) || type == typeof(int);
+
+            public object ConvertFromString(string source) => Parse(new FieldParsingContext(source.AsSpan(), null));
+
+            public string ConvertToString(object source) => Format(new FieldFormattingContext(source, null));
         }
+#pragma warning restore CS0618 // Type or member is obsolete
 
         class TestObject : IEquatable<TestObject>
         {
