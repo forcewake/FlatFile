@@ -6,7 +6,7 @@
     /// <summary>
     /// Configures a member as the mapping target of a fixed-length field.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
     public class FixedLengthFieldAttribute : FieldSettingsBaseAttribute, IFixedFieldSettings
     {
         /// <summary>

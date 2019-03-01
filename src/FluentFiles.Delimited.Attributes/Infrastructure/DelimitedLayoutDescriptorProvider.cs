@@ -26,17 +26,17 @@
                     typeof(DelimitedFileAttribute).Name));
             }
 
-            var properties = fileMappingType.GetTypeDescription<DelimitedFieldAttribute>();
-            foreach (var p in properties)
+            var members = fileMappingType.GetTypeDescription<DelimitedFieldAttribute>();
+            foreach (var member in members)
             {
-                var settings = p.Attributes.FirstOrDefault() as IDelimitedFieldSettings;
+                var settings = member.Attributes.FirstOrDefault() as IDelimitedFieldSettings;
                 if (settings != null)
                 {
-                    container.AddOrUpdate(new DelimitedFieldSettings(p.Property, settings));
+                    container.AddOrUpdate(new DelimitedFieldSettings(member.Member, settings));
                 }
             }
             
-            var descriptor = new DelimitedLayoutDescriptor(container, fileMappingType, fileAttribute);            
+            var descriptor = new DelimitedLayoutDescriptor(container, fileMappingType, fileAttribute);
             return descriptor;
         }
 

@@ -5,18 +5,18 @@
     /// <summary>
     /// An implementation of <see cref="IFieldValueConverter"/> that uses delegates for conversion.
     /// </summary>
-    internal class DelegatingConverter<TProperty> : IFieldValueConverter
+    internal class DelegatingConverter<TMember> : IFieldValueConverter
     {
-        internal FieldParser<TProperty> ParseValue { get; set; }
+        internal FieldParser<TMember> ParseValue { get; set; }
 
-        internal FieldFormatter<TProperty> FormatValue { get; set; }
+        internal FieldFormatter<TMember> FormatValue { get; set; }
 
-        public bool CanParse(Type to) => to == typeof(TProperty) && ParseValue != null;
+        public bool CanParse(Type to) => to == typeof(TMember) && ParseValue != null;
 
-        public bool CanFormat(Type from) => from == typeof(TProperty) && FormatValue != null;
+        public bool CanFormat(Type from) => from == typeof(TMember) && FormatValue != null;
 
         public object Parse(in FieldParsingContext context) => ParseValue(context.Source);
 
-        public string Format(in FieldFormattingContext context) => FormatValue((TProperty)context.Source);
+        public string Format(in FieldFormattingContext context) => FormatValue((TMember)context.Source);
     }
 }

@@ -15,9 +15,9 @@ namespace FluentFiles.Tests.Base.Entities
 
         [FixedLengthField(2, 25, PaddingChar = ' ', Padding = Padding.Right)]
         [DelimitedField(2)]
-        public string Description { get; set; }
+        public string Description;
 
-        [FixedLengthField(2, 5, PaddingChar = '0', NullValue = "=Null")]
+        [FixedLengthField(3, 5, PaddingChar = '0', NullValue = "=Null")]
         [DelimitedField(3, NullValue = "=Null")]
         public int? NullableInt { get; set; }
 

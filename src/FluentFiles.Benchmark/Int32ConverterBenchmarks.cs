@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BenchmarkDotNet.Attributes;
 using FluentFiles.Core.Conversion;
 
@@ -29,7 +30,9 @@ namespace FluentFiles.Benchmark
         [Benchmark]
         public int[] Spannified()
         {
-            return items.Select(i => _spannifiedConverter.Parse(new FieldParsingContext(i, null))).Cast<int>().ToArray();
+            return items.Select(i => _spannifiedConverter.Parse(new FieldParsingContext(i, null, IntType))).Cast<int>().ToArray();
         }
+
+        private static readonly Type IntType = typeof(int);
     }
 }

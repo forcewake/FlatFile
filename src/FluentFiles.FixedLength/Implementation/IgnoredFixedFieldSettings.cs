@@ -28,7 +28,7 @@
         public bool TruncateIfExceedFieldLength { get; } = false;
         public Func<string, string> StringNormalizer { get; } = null;
         public Type Type { get; } = typeof(string);
-        public PropertyInfo PropertyInfo { get; } = null;
+        public MemberInfo Member { get; } = null;
 
         public object GetValueOf(object instance) => throw new NotSupportedException("Cannot use a fixed width layout with an ignored section for writing.");
         public void SetValueOf(object instance, object value) { /* no-op */ }

@@ -66,10 +66,10 @@ namespace FluentFiles.Core.Base
         private static object ParseField(TFieldSettings field, ReadOnlySpan<char> source)
         {
             var converter = field.Converter;
-            if (converter != null && converter.CanParse(field.Type))
-                return converter.Parse(new FieldParsingContext(source, field.PropertyInfo));
+            if (converter != null && converter.CanParse(field.Type.Unwrap()))
+                return converter.Parse(new FieldParsingContext(source, field.Member, field.Type));
 
-            return field.PropertyInfo?.PropertyType.GetDefaultValue();
+            return field.Type?.GetDefaultValue();
         }
     }
 }

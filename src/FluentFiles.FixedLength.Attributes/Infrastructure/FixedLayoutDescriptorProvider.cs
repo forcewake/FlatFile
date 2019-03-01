@@ -31,13 +31,13 @@ namespace FluentFiles.FixedLength.Attributes.Infrastructure
                 container.AddOrUpdate(new IgnoredFixedFieldSettings(ignored.Length) { Index = ignored.Index });
             }
 
-            var properties = fileMappingType.GetTypeDescription<FixedLengthFieldAttribute>();
-            foreach (var p in properties)
+            var members = fileMappingType.GetTypeDescription<FixedLengthFieldAttribute>();
+            foreach (var member in members)
             {
-                var settings = p.Attributes.FirstOrDefault() as IFixedFieldSettings;
+                var settings = member.Attributes.FirstOrDefault() as IFixedFieldSettings;
                 if (settings != null)
                 {
-                    container.AddOrUpdate(new FixedFieldSettings(p.Property, settings));
+                    container.AddOrUpdate(new FixedFieldSettings(member.Member, settings));
                 }
             }
 

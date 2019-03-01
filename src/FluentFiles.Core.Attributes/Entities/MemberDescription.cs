@@ -3,15 +3,15 @@
     using System;
     using System.Reflection;
 
-    internal class PropertyDescription
+    internal class MemberDescription
     {
-        public PropertyDescription(PropertyInfo property, Attribute[] attributes)
+        public MemberDescription(MemberInfo member, Attribute[] attributes)
         {
-            Property = property;
+            Member = member;
             Attributes = attributes;
         }
 
-        public PropertyInfo Property { get; }
+        public MemberInfo Member { get; }
         public Attribute[] Attributes { get; }
     }
 }

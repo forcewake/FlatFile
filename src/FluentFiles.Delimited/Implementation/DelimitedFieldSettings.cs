@@ -5,13 +5,13 @@
 
     internal class DelimitedFieldSettings : FieldSettingsBase, IDelimitedFieldSettingsContainer
     {
-        public DelimitedFieldSettings(PropertyInfo propertyInfo)
-            : base(propertyInfo)
+        public DelimitedFieldSettings(MemberInfo member)
+            : base(member)
         {
         }
 
-        public DelimitedFieldSettings(PropertyInfo propertyInfo, IDelimitedFieldSettings settings)
-            : base(propertyInfo, settings)
+        public DelimitedFieldSettings(MemberInfo member, IDelimitedFieldSettings settings)
+            : base(member, settings)
         {
             Name = settings.Name;
         }

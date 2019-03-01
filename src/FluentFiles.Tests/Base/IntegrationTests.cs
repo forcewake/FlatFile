@@ -6,7 +6,6 @@ namespace FluentFiles.Tests.Base
     using System.Linq;
     using System.Text;
     using FluentFiles.Core;
-    using FluentFiles.Core.Base;
     using FluentFiles.Tests.Base.Entities;
     using FluentAssertions;
     using Xunit;

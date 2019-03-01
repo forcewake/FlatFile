@@ -66,11 +66,13 @@ namespace FluentFiles.Core.Conversion
         /// Initializes a new <see cref="FieldFormattingContext"/>.
         /// </summary>
         /// <param name="source">The object to format as a string.</param>
-        /// <param name="sourceProperty">The property the source value is from.</param>
-        public FieldFormattingContext(TValue source, PropertyInfo sourceProperty)
+        /// <param name="sourceMember">The member the source value is from.</param>
+        /// <param name="sourceType">The type of the member the source value is from.</param>
+        public FieldFormattingContext(TValue source, MemberInfo sourceMember, Type sourceType)
         {
             Source = source;
-            SourceProperty = sourceProperty;
+            SourceMember = sourceMember;
+            SourceType = sourceType;
         }
 
         /// <summary>
@@ -79,9 +81,14 @@ namespace FluentFiles.Core.Conversion
         public TValue Source { get; }
 
         /// <summary>
-        /// The property the source value is from.
+        /// The member the source value is from.
         /// </summary>
-        public PropertyInfo SourceProperty { get; }
+        public MemberInfo SourceMember { get; }
+
+        /// <summary>
+        /// The type of the member the source value is from.
+        /// </summary>
+        public Type SourceType { get; }
 
         /// <summary>
         /// Converts a <see cref="FieldFormattingContext"/> to a more specifically typed <see cref="FieldFormattingContext{TValue}"/>.
@@ -89,7 +96,7 @@ namespace FluentFiles.Core.Conversion
         /// <param name="context">The formatting context to convert.</param>
         public static implicit operator FieldFormattingContext<TValue>(FieldFormattingContext context)
         {
-            return new FieldFormattingContext<TValue>((TValue)context.Source, context.SourceProperty);
+            return new FieldFormattingContext<TValue>((TValue)context.Source, context.SourceMember, context.SourceType);
         }
     }
 }

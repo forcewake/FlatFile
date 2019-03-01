@@ -8,7 +8,7 @@
     /// It is partially based on <see cref="System.ComponentModel.BaseNumberConverter"/> located at 
     /// https://github.com/dotnet/corefx/blob/master/src/System.ComponentModel.TypeConverter/src/System/ComponentModel/BaseNumberConverter.cs.
     /// </summary>
-    public abstract class NumberConverterBase<T> : IFieldValueConverter
+    public abstract class NumberConverterBase<T> : IFieldValueConverter where T : struct, IEquatable<T>, IComparable<T>
     {
         internal NumberConverterBase() { }
 

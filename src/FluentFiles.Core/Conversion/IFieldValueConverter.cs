@@ -59,11 +59,13 @@
         /// Initializes a new <see cref="FieldFormattingContext"/>.
         /// </summary>
         /// <param name="source">The object to format as a string.</param>
-        /// <param name="sourceProperty">The property the source value is from.</param>
-        public FieldFormattingContext(object source, PropertyInfo sourceProperty)
+        /// <param name="sourceMember">The member the source value is from.</param>
+        /// <param name="sourceType">The type of the member the source value is from.</param>
+        public FieldFormattingContext(object source, MemberInfo sourceMember, Type sourceType)
         {
             Source = source;
-            SourceProperty = sourceProperty;
+            SourceMember = sourceMember;
+            SourceType = sourceType;
         }
 
         /// <summary>
@@ -72,9 +74,14 @@
         public object Source { get; }
 
         /// <summary>
-        /// The property the source value is from.
+        /// The member the source value is from.
         /// </summary>
-        public PropertyInfo SourceProperty { get; }
+        public MemberInfo SourceMember { get; }
+
+        /// <summary>
+        /// The type of the member the source value is from.
+        /// </summary>
+        public Type SourceType { get; }
     }
 
     /// <summary>
@@ -86,11 +93,13 @@
         /// Initializes a new <see cref="FieldParsingContext"/>.
         /// </summary>
         /// <param name="source">The string to parse.</param>
-        /// <param name="targetProperty">The property the parsed source value should be assigned to.</param>
-        public FieldParsingContext(in ReadOnlySpan<char> source, PropertyInfo targetProperty)
+        /// <param name="targetMember">The member the parsed source value should be assigned to.</param>
+        /// <param name="targetType">The type of the member the parsed source value should be assigned to.</param>
+        public FieldParsingContext(in ReadOnlySpan<char> source, MemberInfo targetMember, Type targetType)
         {
             Source = source;
-            TargetProperty = targetProperty;
+            TargetMember = targetMember;
+            TargetType = targetType;
         }
 
         /// <summary>
@@ -99,8 +108,13 @@
         public ReadOnlySpan<char> Source { get; }
 
         /// <summary>
-        /// The property the parsed source value should be assigned to.
+        /// The member the parsed source value should be assigned to.
         /// </summary>
-        public PropertyInfo TargetProperty { get; }
+        public MemberInfo TargetMember { get; }
+
+        /// <summary>
+        /// The type of the member the parsed source value should be assigned to.
+        /// </summary>
+        public Type TargetType { get; }
     }
 }

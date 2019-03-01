@@ -6,13 +6,13 @@
 
     internal class FixedFieldSettings : FieldSettingsBase, IFixedFieldSettingsContainer
     {
-        public FixedFieldSettings(PropertyInfo propertyInfo)
-            : base(propertyInfo)
+        public FixedFieldSettings(MemberInfo member)
+            : base(member)
         {
         }
 
-        public FixedFieldSettings(PropertyInfo propertyInfo, IFixedFieldSettings settings)
-            : base(propertyInfo, settings)
+        public FixedFieldSettings(MemberInfo member, IFixedFieldSettings settings)
+            : base(member, settings)
         {
             Length = settings.Length;
             PadLeft = settings.PadLeft;

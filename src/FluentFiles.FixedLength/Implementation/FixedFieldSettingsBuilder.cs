@@ -12,7 +12,7 @@ namespace FluentFiles.FixedLength.Implementation
     /// </summary>
     public class FixedFieldSettingsBuilder : IFixedFieldSettingsBuilder
     {
-        private readonly PropertyInfo _property;
+        private readonly MemberInfo _member;
         private bool _isNullable;
         private string _nullValue;
         private bool _truncateIfExceedFieldLength;
@@ -27,10 +27,10 @@ namespace FluentFiles.FixedLength.Implementation
         /// <summary>
         /// Initializes a new <see cref="FixedFieldSettingsBuilder"/>,
         /// </summary>
-        /// <param name="property">The property a field maps to.</param>
-        public FixedFieldSettingsBuilder(PropertyInfo property)
+        /// <param name="member">The member a field maps to.</param>
+        public FixedFieldSettingsBuilder(MemberInfo member)
         {
-            _property = property;
+            _member = member ?? throw new ArgumentNullException(nameof(member));
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace FluentFiles.FixedLength.Implementation
         /// </summary>
         public IFixedFieldSettingsContainer Build()
         {
-            return new FixedFieldSettings(_property)
+            return new FixedFieldSettings(_member)
             {
                 IsNullable = _isNullable,
                 NullValue = _nullValue,

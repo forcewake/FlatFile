@@ -1,6 +1,8 @@
 namespace FluentFiles.Tests.Core
 {
+    using System;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Reflection;
     using FluentAssertions;
     using FluentFiles.Core.Base;
@@ -13,26 +15,28 @@ namespace FluentFiles.Tests.Core
     {
         private readonly FieldCollection<FixedFieldSettings> _fieldCollection;
         private readonly TestObject _testObject;
-        private readonly PropertyInfo _propertyInfo;
+        private readonly MemberInfo _member;
         private readonly FixedFieldSettings _fieldSettings;
-        private readonly PropertyInfo[] _properties;
+        private readonly MemberInfo[] _members;
 
         public FieldCollectionTests()
         {
             _fieldCollection = new AutoOrderedFieldsCollection<FixedFieldSettings>();
             _testObject = new TestObject();
 
-            _properties = new[]
+            _members = new[]
             {
-                ExpressionExtensions.GetPropertyInfo(() => _testObject.Id),
-                ExpressionExtensions.GetPropertyInfo(() => _testObject.Description),
-                ExpressionExtensions.GetPropertyInfo(() => _testObject.NullableInt)
+                MemberOf(_testObject, t => t.Id),
+                MemberOf(_testObject, t => t.Description),
+                MemberOf(_testObject, t => t.NullableInt)
             };
 
-            _propertyInfo = ExpressionExtensions.GetPropertyInfo(() => _testObject.Description);
+            _member = MemberOf(_testObject, t => t.Description);
 
-            _fieldSettings = new FixedFieldSettings(_propertyInfo);
+            _fieldSettings = new FixedFieldSettings(_member);
         }
+
+        private MemberInfo MemberOf<T, V>(T instance, Expression<Func<T, V>> memberAccess) => memberAccess.GetMemberInfo();
 
         [Fact]
         public void OrderedFieldsShouldContainsOneItemAfterAdd()
@@ -65,20 +69,20 @@ namespace FluentFiles.Tests.Core
         [Fact]
         public void AllAddedPropertyShouldBeInTheOrderedFields()
         {
-            foreach (var property in _properties)
+            foreach (var member in _members)
             {
-                _fieldCollection.AddOrUpdate(new FixedFieldSettings(property));
+                _fieldCollection.AddOrUpdate(new FixedFieldSettings(member));
             }
 
-            _fieldCollection.Should().HaveCount(_properties.Length);
+            _fieldCollection.Should().HaveCount(_members.Length);
         }
 
         [Fact]
         public void OrderedFieldsShouldContainsOrderedProperties()
         {
-            foreach (var property in _properties)
+            foreach (var member in _members)
             {
-                _fieldCollection.AddOrUpdate(new FixedFieldSettings(property));
+                _fieldCollection.AddOrUpdate(new FixedFieldSettings(member));
             }
 
             int id = 0;

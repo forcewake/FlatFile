@@ -1,11 +1,10 @@
-using System.Linq;
-using System.Reflection;
-
 namespace FluentFiles.Core.Extensions
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Linq.Expressions;
+    using System.Reflection;
 
     /// <summary>
     /// Class ReflectionHelper.
@@ -21,7 +20,7 @@ namespace FluentFiles.Core.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="cached">if set to <c>true</c> [cached].</param>
         /// <returns>T.</returns>
-        public static T CreateInstance<T>(bool cached = false) { return (T) CreateInstance(typeof (T), cached); }
+        public static T CreateInstance<T>(bool cached = false) => (T)CreateInstance(typeof(T), cached);
 
         /// <summary>
         /// Creates an instance of type <paramref name="targetType"/> using the default constructor.
@@ -29,14 +28,10 @@ namespace FluentFiles.Core.Extensions
         /// <param name="targetType">Type of the target.</param>
         /// <param name="cached">if set to <c>true</c> [cached].</param>
         /// <returns>System.Object.</returns>
-        public static object CreateInstance(Type targetType, bool cached = false)
-        {
-            if (targetType == null) return null;
-
-            var ctorInfo = targetType.GetConstructor(Type.EmptyTypes);
-
-            return CreateInstance(ctorInfo, cached);
-        }
+        public static object CreateInstance(Type targetType, bool cached = false) =>
+            targetType == null
+            ? null 
+            : CreateInstance(targetType.GetConstructor(Type.EmptyTypes), cached);
 
         /// <summary>
         /// Creates an instance of type <paramref name="targetType"/> using the specified constructor parameters.
@@ -99,33 +94,33 @@ namespace FluentFiles.Core.Extensions
         static void CacheCtor(ConstructorInfo key, Delegate ctor) { if (!Cache.ContainsKey(key)) Cache.Add(key, ctor); }
 
         /// <summary>
-        /// Creates a delegate for accessing the value of a given property.
+        /// Creates a delegate for accessing the value of a given member.
         /// </summary>
-        /// <param name="property">The property to access.</param>
-        public static Func<object, object> CreatePropertyGetter(PropertyInfo property)
+        /// <param name="member">The member to access.</param>
+        public static Func<object, object> CreateMemberGetter(MemberInfo member)
         {
             var parameter = Expression.Parameter(typeof(object));
-            var propertyExpression = Expression.Property(Expression.Convert(parameter, property.DeclaringType), property);
+            var memberExpression = Expression.PropertyOrField(Expression.Convert(parameter, member.DeclaringType), member.Name);
 
             var getter = Expression.Lambda<Func<object, object>>(
-                property.PropertyType.IsValueType
-                    ? Expression.Convert(propertyExpression, typeof(object))
-                    : (Expression)propertyExpression, parameter);
+                memberExpression.Type.IsValueType
+                    ? Expression.Convert(memberExpression, typeof(object))
+                    : (Expression)memberExpression, parameter);
             return getter.Compile();
         }
 
         /// <summary>
-        /// Creates a delegate for assigning the value of a given property.
+        /// Creates a delegate for assigning the value of a given member.
         /// </summary>
-        /// <param name="property">The property to set.</param>
-        public static Action<object, object> CreatePropertySetter(PropertyInfo property)
+        /// <param name="member">The member to set.</param>
+        public static Action<object, object> CreateMemberSetter(MemberInfo member)
         {
             var targetParam = Expression.Parameter(typeof(object));
             var valueParam = Expression.Parameter(typeof(object), "value");
-            var propertyExpression = Expression.Property(Expression.Convert(targetParam, property.DeclaringType), property);
+            var memberExpression = Expression.PropertyOrField(Expression.Convert(targetParam, member.DeclaringType), member.Name);
 
             var setter = Expression.Lambda<Action<object, object>>(
-                Expression.Assign(propertyExpression, Expression.Convert(valueParam, property.PropertyType)), targetParam, valueParam);
+                Expression.Assign(memberExpression, Expression.Convert(valueParam, memberExpression.Type)), targetParam, valueParam);
             return setter.Compile();
         }
     }

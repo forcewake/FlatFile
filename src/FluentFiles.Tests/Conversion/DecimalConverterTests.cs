@@ -24,7 +24,7 @@ namespace FluentFiles.Tests.Conversion
         public void Test_Parse(string input, decimal expected)
         {
             // Act.
-            var actual = _converter.Parse(new FieldParsingContext(input, null));
+            var actual = _converter.Parse(new FieldParsingContext(input, null, typeof(decimal)));
 
             // Assert.
             Assert.Equal(expected, actual);
@@ -45,7 +45,7 @@ namespace FluentFiles.Tests.Conversion
         public void Test_Format(decimal input, string expected)
         {
             // Act.
-            var actual = _converter.Format(new FieldFormattingContext(input, null));
+            var actual = _converter.Format(new FieldFormattingContext(input, null, typeof(decimal)));
 
             // Assert.
             Assert.Equal(expected, actual);

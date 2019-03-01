@@ -15,9 +15,9 @@ namespace FluentFiles.Core
         /// Creates a field builder.
         /// </summary>
         /// <typeparam name="TTarget">The type a field's target property is a member of.</typeparam>
-        /// <typeparam name="TProperty">The type of property a field maps to.</typeparam>
-        /// <param name="property">The property a field maps to.</param>
+        /// <typeparam name="TMember">The type of member a field maps to.</typeparam>
+        /// <param name="member">The member a field maps to.</param>
         /// <returns>A new field configuration builder.</returns>
-        TBuilder CreateBuilder<TTarget, TProperty>(PropertyInfo property);
+        TBuilder CreateBuilder<TTarget, TMember>(MemberInfo member);
     }
 }

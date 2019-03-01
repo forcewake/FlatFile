@@ -14,7 +14,7 @@
 
         public bool CanFormat(Type from) => true;
 
-        public object Parse(in FieldParsingContext context) => context.TargetProperty.PropertyType.GetDefaultValue();
+        public object Parse(in FieldParsingContext context) => context.TargetType.GetDefaultValue();
 
         public string Format(in FieldFormattingContext context) => context.Source.ToString();
     }

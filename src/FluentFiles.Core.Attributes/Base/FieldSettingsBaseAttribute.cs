@@ -7,7 +7,7 @@ namespace FluentFiles.Core.Attributes.Base
     /// <summary>
     /// Base for field attributes.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
     public abstract class FieldSettingsBaseAttribute : Attribute, IFieldSettings
     {
         /// <summary>

@@ -33,15 +33,15 @@ namespace FluentFiles.Core.Base
         }
 
         /// <summary>
-        /// Handles creation of a field configuration based on a a type member and builder.
+        /// Handles creation of a field configuration based on a type member and builder.
         /// </summary>
-        /// <typeparam name="TProperty">The type of the member a field maps to.</typeparam>
+        /// <typeparam name="TMember">The type of the member a field maps to.</typeparam>
         /// <param name="expression">An expression selecting the member to map to.</param>
         /// <param name="configure">An action that performs configuration of a field mapping.</param>
-        protected virtual void ProcessProperty<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TBuilder> configure)
+        protected virtual void ProcessMember<TMember>(Expression<Func<TTarget, TMember>> expression, Action<TBuilder> configure)
         {
-            var property = expression.GetPropertyInfo();
-            var builder = _fieldBuilderFactory.CreateBuilder<TTarget, TProperty>(property);
+            var member = expression.GetMemberInfo();
+            var builder = _fieldBuilderFactory.CreateBuilder<TTarget, TMember>(member);
 
             configure?.Invoke(builder);
 
@@ -63,10 +63,10 @@ namespace FluentFiles.Core.Base
         /// <summary>
         /// Configures a mapping from a record field to a member of a type.
         /// </summary>
-        /// <typeparam name="TProperty">The type of the member a field maps to.</typeparam>
+        /// <typeparam name="TMember">The type of the member a field maps to.</typeparam>
         /// <param name="expression">An expression selecting the member to map to.</param>
         /// <param name="configure">An action that performs configuration of a field mapping.</param>
-        public abstract TLayout WithMember<TProperty>(Expression<Func<TTarget, TProperty>> expression, Action<TBuilder> configure = null);
+        public abstract TLayout WithMember<TMember>(Expression<Func<TTarget, TMember>> expression, Action<TBuilder> configure = null);
 
         /// <summary>
         /// Indicates that a record layout contains a header.

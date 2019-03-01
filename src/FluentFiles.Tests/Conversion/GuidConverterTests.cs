@@ -19,7 +19,7 @@ namespace FluentFiles.Tests.Conversion
             var expected = Guid.Parse(input);
 
             // Act.
-            var actual = _converter.Parse(new FieldParsingContext(input, null));
+            var actual = _converter.Parse(new FieldParsingContext(input, null, typeof(Guid)));
 
             // Assert.
             Assert.Equal(expected, actual);
@@ -35,7 +35,7 @@ namespace FluentFiles.Tests.Conversion
             var guid = Guid.Parse(input);
 
             // Act.
-            var actual = _converter.Format(new FieldFormattingContext(guid, null));
+            var actual = _converter.Format(new FieldFormattingContext(guid, null, typeof(Guid)));
 
             // Assert.
             Assert.Equal(expected, actual);

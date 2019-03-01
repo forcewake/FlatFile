@@ -11,7 +11,7 @@
     /// </summary>
     public class DelimitedFieldSettingsBuilder : IDelimitedFieldSettingsBuilder
     {
-        private readonly PropertyInfo _property;
+        private readonly MemberInfo _member;
         private bool _isNullable;
         private string _nullValue;
         private string _name;
@@ -20,10 +20,10 @@
         /// <summary>
         /// Initializes a new <see cref="DelimitedFieldSettingsBuilder"/>,
         /// </summary>
-        /// <param name="property">The property a field maps to.</param>
-        public DelimitedFieldSettingsBuilder(PropertyInfo property)
+        /// <param name="member">The member a field maps to.</param>
+        public DelimitedFieldSettingsBuilder(MemberInfo member)
         {
-            _property = property;
+            _member = member ?? throw new ArgumentNullException(nameof(member));
         }
 
         /// <summary>
@@ -107,7 +107,7 @@
         /// </summary>
         public IDelimitedFieldSettingsContainer Build()
         {
-            return new DelimitedFieldSettings(_property)
+            return new DelimitedFieldSettings(_member)
             {
                 IsNullable = _isNullable,
                 NullValue = _nullValue,

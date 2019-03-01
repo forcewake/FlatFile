@@ -52,7 +52,7 @@ namespace FluentFiles.Tests.Conversion
             var adapter = new ITypeConverterAdapter(adapted);
 
             // Act.
-            var actual = adapter.Parse(new FieldParsingContext("1", null));
+            var actual = adapter.Parse(new FieldParsingContext("1", null, typeof(int)));
 
             // Assert.
             Assert.Equal(1, actual);
@@ -68,7 +68,7 @@ namespace FluentFiles.Tests.Conversion
             var adapter = new ITypeConverterAdapter(adapted);
 
             // Act.
-            var actual = adapter.Format(new FieldFormattingContext(1, null));
+            var actual = adapter.Format(new FieldFormattingContext(1, null, typeof(int)));
 
             // Assert.
             Assert.Equal("1", actual);

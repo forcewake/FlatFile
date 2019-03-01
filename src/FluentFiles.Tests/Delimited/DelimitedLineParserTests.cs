@@ -28,12 +28,14 @@ namespace FluentFiles.Tests.Delimited
             layout.WithQuote("\"")
                   .WithMember(o => o.Id)
                   .WithMember(o => o.Description)
+                  .WithMember(o => o.Note)
                   .WithMember(o => o.NullableInt);
 
             var entry = new TestObject();
-            var parsedEntity = parser.ParseLine("\"1\",\"Description 1\",\"3\"", entry);
+            var parsedEntity = parser.ParseLine("\"1\",\"Description 1\",\"test notes\",\"3\"", entry);
 
-            parsedEntity.Should().BeEquivalentTo(new TestObject { Id = 1, Description = "Description 1", NullableInt = 3 });
+            parsedEntity.Should().BeEquivalentTo(
+                new TestObject { Id = 1, Description = "Description 1", Note = "test notes", NullableInt = 3 });
         }
 
         [Theory]
@@ -41,13 +43,13 @@ namespace FluentFiles.Tests.Delimited
         [InlineData("1,,", "", "")]
         [InlineData("1,a,", "a", "")]
         [InlineData("1,,b", "", "b")]
-        public void ShouldHandleEmptyFields(string line, string description, string name)
+        public void ShouldHandleEmptyFields(string line, string description, string note)
         {
             // Arrange.
             layout.WithQuote("\"")
                   .WithMember(x => x.Id)
                   .WithMember(x => x.Description)
-                  .WithMember(x => x.Name);
+                  .WithMember(x => x.Note);
 
             var entry = new TestObject();
 
@@ -55,7 +57,7 @@ namespace FluentFiles.Tests.Delimited
             var parsedEntity = parser.ParseLine(line, entry);
 
             // Assert.
-            parsedEntity.Should().BeEquivalentTo(new TestObject { Id = 1, Description = description, Name = name });
+            parsedEntity.Should().BeEquivalentTo(new TestObject { Id = 1, Description = description, Note = note });
         }
 
         [Fact]
@@ -115,13 +117,13 @@ namespace FluentFiles.Tests.Delimited
                 return context.Source.ToString("X");
             }
 
-            public bool CanConvertFrom(Type type) => type == typeof(string) || type == typeof(int);
+            public bool CanConvertFrom(Type type) => type == typeof(string) || type == TargetType;
 
-            public bool CanConvertTo(Type type) => type == typeof(string) || type == typeof(int);
+            public bool CanConvertTo(Type type) => type == typeof(string) || type == TargetType;
 
-            public object ConvertFromString(string source) => Parse(new FieldParsingContext(source.AsSpan(), null));
+            public object ConvertFromString(string source) => Parse(new FieldParsingContext(source.AsSpan(), null, TargetType));
 
-            public string ConvertToString(object source) => Format(new FieldFormattingContext(source, null));
+            public string ConvertToString(object source) => Format(new FieldFormattingContext(source, null, TargetType));
         }
 #pragma warning restore CS0618 // Type or member is obsolete
 
@@ -132,13 +134,9 @@ namespace FluentFiles.Tests.Delimited
             public string Name { get; set; }
             public int? NullableInt { get; set; }
 
-            public int GetHashCode(TestObject obj)
-            {
-                var idHash = Id.GetHashCode();
-                var descriptionHash = Object.ReferenceEquals(Description, null) ? 0 : Description.GetHashCode();
-                var nullableIntHash = !NullableInt.HasValue ? 0 : NullableInt.Value.GetHashCode();
-                return idHash ^ descriptionHash ^ nullableIntHash;
-            }
+            public string Note;
+
+            public override int GetHashCode() => HashCode.Combine(Id, Description, NullableInt, Note);
 
             public bool Equals(TestObject other)
             {
@@ -153,7 +151,7 @@ namespace FluentFiles.Tests.Delimited
                 }
 
                 return Equals(Id, other.Id) && Equals(Description, other.Description) &&
-                       Equals(NullableInt, other.NullableInt);
+                       Equals(NullableInt, other.NullableInt) && Equals(Note, other.Note);
             }
         }
     }

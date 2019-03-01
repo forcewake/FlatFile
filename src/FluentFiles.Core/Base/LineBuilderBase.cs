@@ -1,6 +1,7 @@
 namespace FluentFiles.Core.Base
 {
     using FluentFiles.Core.Conversion;
+    using FluentFiles.Core.Extensions;
 
     /// <summary>
     /// Base class for converting records to lines of a file.
@@ -61,8 +62,8 @@ namespace FluentFiles.Core.Base
         private static string FormatField(TFieldSettings field, object fieldValue)
         {
             var converter = field.Converter;
-            if (converter != null && converter.CanFormat(field.Type))
-                return converter.Format(new FieldFormattingContext(fieldValue, field.PropertyInfo));
+            if (converter != null && converter.CanFormat(field.Type.Unwrap()))
+                return converter.Format(new FieldFormattingContext(fieldValue, field.Member, field.Type));
 
             return fieldValue.ToString();
         }

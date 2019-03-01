@@ -51,9 +51,9 @@ namespace FluentFiles.Core
         void SetValueOf(object instance, object value);
 
         /// <summary>
-        /// The property underlying a field.
+        /// The member underlying a field.
         /// </summary>
-        PropertyInfo PropertyInfo { get; }
+        MemberInfo Member { get; }
 
         /// <summary>
         /// A string that uniquely identifies a field within a layout.

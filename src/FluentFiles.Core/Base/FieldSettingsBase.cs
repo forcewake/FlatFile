@@ -13,18 +13,18 @@
 
         protected readonly IFieldValueConverter DefaultConverter;
 
-        protected FieldSettingsBase(PropertyInfo propertyInfo)
+        protected FieldSettingsBase(MemberInfo member)
         {
-            PropertyInfo = propertyInfo;
-            Type = PropertyInfo.PropertyType.Unwrap();
-            UniqueKey = $"[{propertyInfo.DeclaringType.AssemblyQualifiedName}]:{propertyInfo.Name}";
-            DefaultConverter = propertyInfo.PropertyType.GetConverter();
-            _getValue = ReflectionHelper.CreatePropertyGetter(propertyInfo);
-            _setValue = ReflectionHelper.CreatePropertySetter(propertyInfo);
+            Type = member.MemberType();
+            Member = member;
+            DefaultConverter = Type.GetConverter();
+            UniqueKey = $"[{member.DeclaringType.AssemblyQualifiedName}]:{member.Name}";
+            _getValue = ReflectionHelper.CreateMemberGetter(member);
+            _setValue = ReflectionHelper.CreateMemberSetter(member);
         }
 
-        protected FieldSettingsBase(PropertyInfo propertyInfo, IFieldSettings settings)
-            : this(propertyInfo)
+        protected FieldSettingsBase(MemberInfo member, IFieldSettings settings)
+            : this(member)
         {
             Index = settings.Index;
             IsNullable = settings.IsNullable;
@@ -43,24 +43,12 @@
             set => _converter = value;
         }
 
-        public PropertyInfo PropertyInfo { get; }
+        public MemberInfo Member { get; }
 
         public Type Type { get; }
 
-        public object GetValueOf(object instance)
-        {
-            if (_getValue != null)
-                return _getValue(instance);
-            else
-                return PropertyInfo.GetValue(instance);
-        }
+        public object GetValueOf(object instance) => _getValue(instance);
 
-        public void SetValueOf(object instance, object value)
-        {
-            if (_setValue != null)
-                _setValue(instance, value);
-            else
-                PropertyInfo.SetValue(instance, value);
-        }
+        public void SetValueOf(object instance, object value) => _setValue(instance, value);
     }
 }

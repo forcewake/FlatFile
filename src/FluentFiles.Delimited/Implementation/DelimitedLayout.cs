@@ -39,14 +39,14 @@ namespace FluentFiles.Delimited.Implementation
         /// <summary>
         /// Configures a mapping from a record field to a member of a type.
         /// </summary>
-        /// <typeparam name="TProperty">The type of the member a field maps to.</typeparam>
+        /// <typeparam name="TMember">The type of the member a field maps to.</typeparam>
         /// <param name="expression">An expression selecting the member to map to.</param>
         /// <param name="configure">An action that performs configuration of a field mapping.</param>
-        public override IDelimitedLayout<TTarget> WithMember<TProperty>(
-            Expression<Func<TTarget, TProperty>> expression,
+        public override IDelimitedLayout<TTarget> WithMember<TMember>(
+            Expression<Func<TTarget, TMember>> expression,
             Action<IDelimitedFieldSettingsBuilder> configure = null)
         {
-            ProcessProperty(expression, configure);
+            ProcessMember(expression, configure);
 
             return this;
         }
