@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using FluentFiles.Core.Base;
-
-namespace FluentFiles.Delimited.Implementation
+﻿namespace FluentFiles.Delimited.Implementation
 {
-    using System;
     using FluentFiles.Core;
+    using FluentFiles.Core.Base;
+    using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Class DelimitedFileEngineFactory.
@@ -64,7 +63,7 @@ namespace FluentFiles.Delimited.Implementation
         /// <returns>IFlatFileMultiEngine.</returns>
         public IFlatFileMultiEngine GetEngine(
             IEnumerable<IDelimitedLayoutDescriptor> layoutDescriptors,
-            Func<string, Type> typeSelectorFunc,
+            Func<string, int, Type> typeSelectorFunc,
             FileReadErrorHandler handleEntryReadError = null,
             IMasterDetailStrategy masterDetailStrategy = null)
         {

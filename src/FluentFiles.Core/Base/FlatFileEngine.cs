@@ -16,36 +16,39 @@ namespace FluentFiles.Core.Base
         where TLayoutDescriptor : ILayoutDescriptor<TFieldSettings>
     {
         /// <summary>
-        /// Gets the line builder.
-        /// </summary>
-        /// <value>The line builder.</value>
-        protected abstract ILineBuilder LineBuilder { get; }
-
-        /// <summary>
-        /// Gets the line parser.
-        /// </summary>
-        /// <value>The line parser.</value>
-        protected abstract ILineParser LineParser { get; }
-
-        /// <summary>
-        /// Gets the layout descriptor.
-        /// </summary>
-        /// <value>The layout descriptor.</value>
-        protected abstract TLayoutDescriptor LayoutDescriptor { get; }
-
-        /// <summary>
         /// Handles file read errors.
         /// </summary>
         protected FileReadErrorHandler HandleEntryReadError { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FlatFileEngine{TFieldSettings, TLayoutDescriptor}"/> class.
+        /// Initializes a new instance of <see cref="FlatFileEngine{TFieldSettings, TLayoutDescriptor}"/>.
         /// </summary>
         /// <param name="handleEntryReadError">The handle entry read error.</param>
         protected FlatFileEngine(FileReadErrorHandler handleEntryReadError = null)
         {
             HandleEntryReadError = handleEntryReadError;
         }
+
+        /// <summary>
+        /// Gets the layout descriptor for a record type.
+        /// </summary>
+        /// <param name="recordType">The record type.</param>
+        /// <returns>The layout descriptor.</returns>
+        protected abstract TLayoutDescriptor GetLayoutDescriptor(Type recordType);
+
+        /// <summary>
+        /// Gets a line builder for a record type.
+        /// </summary>
+        /// <param name="layoutDescriptor">The layout descriptor.</param>
+        /// <returns>The line builder.</returns>
+        protected abstract ILineBuilder GetLineBuilder(TLayoutDescriptor layoutDescriptor);
+
+        /// <summary>
+        /// Gets a line parser for a record type.
+        /// </summary>
+        /// <param name="layoutDescriptor">The layout descriptor.</param>
+        /// <returns>The line parser.</returns>
+        protected abstract ILineParser GetLineParser(TLayoutDescriptor layoutDescriptor);
 
         /// <summary>
         /// Reads the specified stream.
@@ -72,7 +75,8 @@ namespace FluentFiles.Core.Base
             string line;
             int lineNumber = 0;
 
-            if (LayoutDescriptor.HasHeader)
+            var layoutDescriptor = GetLayoutDescriptor(typeof(TEntity));
+            if (layoutDescriptor.HasHeader)
             {
                 ProcessHeader(reader);
             }
@@ -82,7 +86,7 @@ namespace FluentFiles.Core.Base
                 if (string.IsNullOrEmpty(line) || string.IsNullOrEmpty(line.Trim())) continue;
 
                 bool ignoreEntry = false;
-                var entry = (TEntity)LayoutDescriptor.InstanceFactory();
+                var entry = (TEntity)layoutDescriptor.InstanceFactory();
                 try
                 {
                     if (!TryParseLine(line, lineNumber++, ref entry))
@@ -131,7 +135,9 @@ namespace FluentFiles.Core.Base
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         protected virtual bool TryParseLine<TEntity>(string line, int lineNumber, ref TEntity entity) where TEntity : class, new()
         {
-            LineParser.ParseLine(line.AsSpan(), entity);
+            var layoutDescriptor = GetLayoutDescriptor(entity.GetType());
+            var parser = GetLineParser(layoutDescriptor);
+            parser.ParseLine(line.AsSpan(), entity);
 
             return true;
         }
@@ -145,7 +151,9 @@ namespace FluentFiles.Core.Base
         /// <param name="entity">The entity.</param>
         protected virtual void WriteEntry<TEntity>(TextWriter writer, int lineNumber, TEntity entity)
         {
-            var line = LineBuilder.BuildLine(entity);
+            var layoutDescriptor = GetLayoutDescriptor(entity.GetType());
+            var builder = GetLineBuilder(layoutDescriptor);
+            var line = builder.BuildLine(entity);
 
             writer.WriteLine(line);
         }

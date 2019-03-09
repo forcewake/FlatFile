@@ -123,7 +123,7 @@ D,20150323,Another Description";
                 };
 
             engine = factory.GetEngine(types.AsEnumerable<Type>(),
-                                                    s =>
+                                                    (s, n) =>
                                                     {
                                                         if (String.IsNullOrEmpty(s) || s.Length < 1) return null;
 

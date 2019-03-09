@@ -9,7 +9,7 @@ namespace FluentFiles.Delimited.Implementation
     /// <summary>
     /// Class DelimitedFileEngine.
     /// </summary>
-    public class DelimitedFileEngine :
+    public sealed class DelimitedFileEngine :
         FlatFileEngine<IDelimitedFieldSettingsContainer, IDelimitedLayoutDescriptor>
     {
         /// <summary>
@@ -47,31 +47,25 @@ namespace FluentFiles.Delimited.Implementation
         }
 
         /// <summary>
-        /// Gets the line builder.
+        /// Gets the layout descriptor for a record type.
         /// </summary>
-        /// <value>The line builder.</value>
-        protected override ILineBuilder LineBuilder
-        {
-            get { return _builderFactory.GetBuilder(LayoutDescriptor); }
-        }
+        /// <param name="recordType">The record type.</param>
+        /// <returns>The layout descriptor.</returns>
+        protected override IDelimitedLayoutDescriptor GetLayoutDescriptor(Type recordType) => _layoutDescriptor;
 
         /// <summary>
-        /// Gets the line parser.
+        /// Gets a line builder for a record type.
         /// </summary>
-        /// <value>The line parser.</value>
-        protected override ILineParser LineParser
-        {
-            get { return _parserFactory.GetParser(LayoutDescriptor); }
-        }
+        /// <param name="layoutDescriptor">The layout descriptor.</param>
+        /// <returns>The line builder.</returns>
+        protected override ILineBuilder GetLineBuilder(IDelimitedLayoutDescriptor layoutDescriptor) => _builderFactory.GetBuilder(layoutDescriptor);
 
         /// <summary>
-        /// Gets the layout descriptor.
+        /// Gets a line parser for a record type.
         /// </summary>
-        /// <value>The layout descriptor.</value>
-        protected override IDelimitedLayoutDescriptor LayoutDescriptor
-        {
-            get { return _layoutDescriptor; }
-        }
+        /// <param name="layoutDescriptor">The layout descriptor.</param>
+        /// <returns>The line parser.</returns>
+        protected override ILineParser GetLineParser(IDelimitedLayoutDescriptor layoutDescriptor) => _parserFactory.GetParser(layoutDescriptor);
 
         /// <summary>
         /// Writes the header.
@@ -79,12 +73,13 @@ namespace FluentFiles.Delimited.Implementation
         /// <param name="writer">The writer.</param>
         protected override void WriteHeader(TextWriter writer)
         {
-            if (!LayoutDescriptor.HasHeader)
+            var layoutDescriptor = _layoutDescriptor;
+            if (!layoutDescriptor.HasHeader)
             {
                 return;
             }
 
-            var fields = LayoutDescriptor.Fields;
+            var fields = layoutDescriptor.Fields;
 
             var stringBuilder = new StringBuilder();
 
@@ -92,7 +87,7 @@ namespace FluentFiles.Delimited.Implementation
             {
                 stringBuilder
                     .Append(field.Name)
-                    .Append(LayoutDescriptor.Delimiter);
+                    .Append(layoutDescriptor.Delimiter);
             }
 
             stringBuilder.Remove(stringBuilder.Length - 1, 1);

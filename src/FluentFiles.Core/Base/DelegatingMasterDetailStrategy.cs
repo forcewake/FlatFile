@@ -48,31 +48,30 @@ namespace FluentFiles.Core.Base
         /// Handles a record and determines whether it is a master or detail record.
         /// </summary>
         /// <param name="record">The record to handle.</param>
-        /// <param name="isDetailRecord">Whether the record is a master or detail record.</param>
-        public void HandleMasterDetail(object record, out bool isDetailRecord)
+        /// <returns>True if the record is a detail and false if it is a master record.</returns>
+        public bool Handle(object record)
         {
-            isDetailRecord = false;
-
             if (_checkIsMasterRecord(record))
             {
                 // Found new master record
                 _lastMasterRecord = record;
-                return;
+                return false;
             }
 
             // Record is standalone or unassociated detail record
-            if (_lastMasterRecord == null) return;
+            if (_lastMasterRecord == null)
+                return false;
 
             if (!_checkIsDetailRecord(record))
             {
                 // Record is standalone, reset master
                 _lastMasterRecord = null;
-                return;
+                return false;
             }
 
             // Add detail record and indicate that it should not be added to the results dictionary
             _handleDetailRecord(_lastMasterRecord, record);
-            isDetailRecord = true;
+            return true;
         }
     }
 }

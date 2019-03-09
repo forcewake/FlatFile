@@ -7,20 +7,22 @@ namespace FluentFiles.FixedLength.Implementation
     /// <summary>
     /// Class FixedLengthFileEngine.
     /// </summary>
-    public class FixedLengthFileEngine : FlatFileEngine<IFixedFieldSettingsContainer, IFixedLengthLayoutDescriptor>
+    public sealed class FixedLengthFileEngine : FlatFileEngine<IFixedFieldSettingsContainer, IFixedLengthLayoutDescriptor>
     {
         /// <summary>
         /// The line builder factory
         /// </summary>
-        private readonly IFixedLengthLineBuilderFactory lineBuilderFactory;
+        private readonly IFixedLengthLineBuilderFactory _lineBuilderFactory;
+
         /// <summary>
         /// The line parser factory
         /// </summary>
-        private readonly IFixedLengthLineParserFactory lineParserFactory;
+        private readonly IFixedLengthLineParserFactory _lineParserFactory;
+
         /// <summary>
         /// The layout descriptor
         /// </summary>
-        private readonly IFixedLengthLayoutDescriptor layoutDescriptor;
+        private readonly IFixedLengthLayoutDescriptor _layoutDescriptor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FixedLengthFileEngine"/> class.
@@ -35,36 +37,30 @@ namespace FluentFiles.FixedLength.Implementation
             IFixedLengthLineParserFactory lineParserFactory,
             FileReadErrorHandler handleEntryReadError = null) : base(handleEntryReadError)
         {
-            this.lineBuilderFactory = lineBuilderFactory;
-            this.lineParserFactory = lineParserFactory;
-            this.layoutDescriptor = new FixedLengthImmutableLayoutDescriptor(layoutDescriptor);
+            _lineBuilderFactory = lineBuilderFactory;
+            _lineParserFactory = lineParserFactory;
+            _layoutDescriptor = new FixedLengthImmutableLayoutDescriptor(layoutDescriptor);
         }
 
         /// <summary>
-        /// Gets the line builder.
+        /// Gets the layout descriptor for a record type.
         /// </summary>
-        /// <value>The line builder.</value>
-        protected override ILineBuilder LineBuilder
-        {
-            get { return lineBuilderFactory.GetBuilder(LayoutDescriptor); }
-        }
+        /// <param name="recordType">The record type.</param>
+        /// <returns>The layout descriptor.</returns>
+        protected override IFixedLengthLayoutDescriptor GetLayoutDescriptor(Type recordType) => _layoutDescriptor;
 
         /// <summary>
-        /// Gets the line parser.
+        /// Gets a line builder for a record type.
         /// </summary>
-        /// <value>The line parser.</value>
-        protected override ILineParser LineParser
-        {
-            get { return lineParserFactory.GetParser(LayoutDescriptor); }
-        }
+        /// <param name="layoutDescriptor">The layout descriptor.</param>
+        /// <returns>The line builder.</returns>
+        protected override ILineBuilder GetLineBuilder(IFixedLengthLayoutDescriptor layoutDescriptor) => _lineBuilderFactory.GetBuilder(layoutDescriptor);
 
         /// <summary>
-        /// Gets the layout descriptor.
+        /// Gets a line parser for a record type.
         /// </summary>
-        /// <value>The layout descriptor.</value>
-        protected override IFixedLengthLayoutDescriptor LayoutDescriptor
-        {
-            get { return layoutDescriptor; }
-        }
+        /// <param name="layoutDescriptor">The layout descriptor.</param>
+        /// <returns>The line parser.</returns>
+        protected override ILineParser GetLineParser(IFixedLengthLayoutDescriptor layoutDescriptor) => _lineParserFactory.GetParser(layoutDescriptor);
     }
 }

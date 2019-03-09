@@ -42,7 +42,7 @@
         public static IFlatFileMultiEngine GetEngine(
             this DelimitedFileEngineFactory engineFactory,
             IEnumerable<Type> recordTypes,
-            Func<string, Type> typeSelectorFunc,
+            Func<string, int, Type> typeSelectorFunc,
             FileReadErrorHandler handleEntryReadError = null,
             IMasterDetailStrategy masterDetailTracker = null)
         {

@@ -61,7 +61,7 @@ S,Test Description,00044";
         {
             var engine = new DelimitedFileMultiEngine(
                 new[] { layout },
-                l => typeof(Record),
+                (l, n) => typeof(Record),
                 A.Fake<IDelimitedLineBuilderFactory>(),
                 lineParserFactory,
                 new DefaultDelimitedMasterDetailStrategy(),

@@ -9,7 +9,7 @@
         /// Handles a record and determines whether it is a master or detail record.
         /// </summary>
         /// <param name="record">The record to handle.</param>
-        /// <param name="isDetailRecord">Whether the record is a master or detail record.</param>
-        void HandleMasterDetail(object record, out bool isDetailRecord);
+        /// <returns>True if the record is a detail and false if it is a master record.</returns>
+        bool Handle(object record);
     }
 }
