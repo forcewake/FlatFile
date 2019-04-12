@@ -37,18 +37,18 @@
         /// <param name="recordTypes">The record types.</param>
         /// <param name="typeSelectorFunc">The type selector function.</param>
         /// <param name="handleEntryReadError">The error handler.</param>
-        /// <param name="masterDetailTracker">Determines how master-detail record relationships are handled.</param>
+        /// <param name="masterDetailStrategy">Determines how master-detail record relationships are handled.</param>
         /// <returns>IFlatFileMultiEngine.</returns>
         public static IFlatFileMultiEngine GetEngine(
             this DelimitedFileEngineFactory engineFactory,
             IEnumerable<Type> recordTypes,
             Func<string, int, Type> typeSelectorFunc,
             FileReadErrorHandler handleEntryReadError = null,
-            IMasterDetailStrategy masterDetailTracker = null)
+            IMasterDetailStrategy masterDetailStrategy = null)
         {
             var descriptorProvider = new DelimitedLayoutDescriptorProvider();
             var descriptors = recordTypes.Select(type => descriptorProvider.GetDescriptor(type)).ToList();
-            return engineFactory.GetEngine(descriptors, typeSelectorFunc, handleEntryReadError, masterDetailTracker);
+            return engineFactory.GetEngine(descriptors, typeSelectorFunc, handleEntryReadError, masterDetailStrategy);
         }
     }
 }

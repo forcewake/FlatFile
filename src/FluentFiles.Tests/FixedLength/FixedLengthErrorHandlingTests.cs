@@ -1,5 +1,4 @@
 using FakeItEasy;
-using FluentFiles.Core;
 using FluentFiles.Core.Base;
 using FluentFiles.FixedLength;
 using FluentFiles.FixedLength.Implementation;
@@ -7,16 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace FluentFiles.Tests.FixedLength
 {
     public class FixedLengthErrorHandlingTests
     {
-        private IFixedLengthLayoutDescriptor layout;
-        readonly IFixedLengthLineParserFactory lineParserFactory;
-        readonly IList<FlatFileErrorContext> errorContexts = new List<FlatFileErrorContext>();
+        private readonly IFixedLengthLayoutDescriptor layout;
+        private readonly IFixedLengthLineParserFactory lineParserFactory;
+        private readonly IList<FlatFileErrorContext> errorContexts = new List<FlatFileErrorContext>();
 
         const string TestData = 
 @"STest Description    00042
@@ -29,10 +28,9 @@ STest Description    00044";
             A.CallTo(() => layout.TargetType).Returns(typeof(Record));
             A.CallTo(() => layout.InstanceFactory).Returns(() => new Record());
 
-            lineParserFactory = new FixedLengthLineParserFactory(new Dictionary<Type, Type>
-            {
-                { typeof(Record), typeof(FakeLineParser) }
-            });
+            lineParserFactory = A.Fake<IFixedLengthLineParserFactory>();
+            A.CallTo(() => lineParserFactory.GetParser(A<IFixedLengthLayoutDescriptor>.Ignored))
+                .Returns(new FakeLineParser());
         }
 
         [Fact]
@@ -44,8 +42,8 @@ STest Description    00044";
                 lineParserFactory,
                 HandleError);
 
-            using (var stream = new MemoryStream(Encoding.Default.GetBytes(TestData)))
-                engine.Read<Record>(stream).ToList();
+            using (var reader = new StringReader(TestData))
+                engine.Read<Record>(reader).ToList();
 
             Assert.Equal(3, errorContexts.Count);
             Assert.Equal(new[] { 1, 2, 3 }, errorContexts.Select(ctx => ctx.LineNumber));
@@ -54,7 +52,7 @@ STest Description    00044";
         }
 
         [Fact]
-        public void MultiEngineErrorContextShouldProvideAccurateInformation()
+        public async Task MultiEngineErrorContextShouldProvideAccurateInformation()
         {
             var engine = new FixedLengthFileMultiEngine(
                 new[] { layout },
@@ -64,8 +62,8 @@ STest Description    00044";
                 new DefaultFixedLengthMasterDetailStrategy(),
                 HandleError);
 
-            using (var stream = new MemoryStream(Encoding.Default.GetBytes(TestData)))
-                engine.Read(stream);
+            using (var reader = new StringReader(TestData))
+                await engine.ReadAsync(reader);
 
             Assert.Equal(3, errorContexts.Count);
             Assert.Equal(new[] { 1, 2, 3 }, errorContexts.Select(ctx => ctx.LineNumber));
@@ -81,15 +79,8 @@ STest Description    00044";
 
         private class FakeLineParser : IFixedLengthLineParser
         {
-            public FakeLineParser(ILayoutDescriptor<IFixedFieldSettingsContainer> descriptor)
-            {
-
-            }
-
-            public TEntity ParseLine<TEntity>(ReadOnlySpan<char> line, TEntity entity) where TEntity : new()
-            {
+            public TEntity ParseLine<TEntity>(ReadOnlySpan<char> line, TEntity entity) where TEntity : new() =>
                 throw new Exception("Parsing failed!");
-            }
         }
 
         private class Record { }

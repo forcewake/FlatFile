@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
     using System.IO;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// A file engine capable of handling files with multiple types of records.
@@ -12,16 +14,18 @@
         /// Reads the specified stream.
         /// </summary>
         /// <param name="stream">The stream.</param>
-        void Read(Stream stream);
+        /// <param name="cancellationToken">Cancels reading a file.</param>
+        Task ReadAsync(Stream stream, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Reads the specified text reader.
         /// </summary>
         /// <param name="reader">The text reader.</param>
-        void Read(TextReader reader);
+        /// <param name="cancellationToken">Cancels reading a file.</param>
+        Task ReadAsync(TextReader reader, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Gets any records of type <typeparamref name="T"/> read by <see cref="Read(Stream)"/> or <see cref="Read(TextReader)"/>.
+        /// Gets any records of type <typeparamref name="T"/> read by <see cref="ReadAsync(Stream, CancellationToken)"/> or <see cref="ReadAsync(TextReader, CancellationToken)"/>.
         /// </summary>
         /// <typeparam name="T">The type of record to retrieve.</typeparam>
         /// <returns>Any records of type <typeparamref name="T"/> that were parsed.</returns>

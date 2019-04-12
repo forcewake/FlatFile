@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
     using FluentFiles.Core;
     using FluentFiles.Core.Exceptions;
 
@@ -41,7 +43,7 @@
         public bool HasHeader { get; set; }
 
         /// <summary>
-        /// Gets any records of type <typeparamref name="T" /> read by <see cref="Read(Stream)"/> or <see cref="Read(TextReader)"/>.
+        /// Gets any records of type <typeparamref name="T" /> read by <see cref="ReadAsync(Stream, CancellationToken)"/> or <see cref="ReadAsync(TextReader, CancellationToken)"/>.
         /// </summary>
         /// <typeparam name="T">The type of record to retrieve.</typeparam>
         /// <returns>Any records of type <typeparamref name="T"/> that were parsed.</returns>
@@ -54,20 +56,22 @@
         /// Reads the specified stream.
         /// </summary>
         /// <param name="stream">The stream.</param>
+        /// <param name="cancellationToken">Cancels reading a file.</param>
         /// <exception cref="ParseLineException">Impossible to parse line</exception>
-        public void Read(Stream stream)
+        public Task ReadAsync(Stream stream, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Read(new StreamReader(stream));
+            return ReadAsync(new StreamReader(stream), cancellationToken);
         }
 
         /// <summary>
         /// Reads from the specified text reader.
         /// </summary>
         /// <param name="reader">The text reader configured as the user wants.</param>
+        /// /// <param name="cancellationToken">Cancels reading a file.</param>
         /// <exception cref="ParseLineException">Impossible to parse line</exception>
-        public void Read(TextReader reader)
+        public Task ReadAsync(TextReader reader, CancellationToken cancellationToken = default(CancellationToken))
         {
-            ReadInternal(reader);
+            return ReadInternalAsync(reader, cancellationToken);
         }
 
         /// <summary>
@@ -90,8 +94,9 @@
         /// This way the client code have a way to specify encoding.
         /// </summary>
         /// <param name="reader">The text reader to read.</param>
+        /// /// <param name="cancellationToken">Cancels reading a file.</param>
         /// <exception cref="ParseLineException">Impossible to parse line</exception>
-        protected virtual void ReadInternal(TextReader reader)
+        protected virtual async Task ReadInternalAsync(TextReader reader, CancellationToken cancellationToken)
         {
             string line;
             var lineNumber = 0;
@@ -102,8 +107,10 @@
                 ProcessHeader(reader);
             }
 
-            while ((line = reader.ReadLine()) != null)
+            while ((line = await reader.ReadLineAsync().ConfigureAwait(false)) != null)
             {
+                cancellationToken.ThrowIfCancellationRequested();
+
                 var ignoreEntry = false;
 
                 // Use selector func to find type for this line, and by effect, its layout

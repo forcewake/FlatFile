@@ -6,16 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace FluentFiles.Tests.Delimited
 {
     public class DelimitedErrorHandlingTests
     {
-        private IDelimitedLayoutDescriptor layout;
-        readonly IDelimitedLineParserFactory lineParserFactory;
-        readonly IList<FlatFileErrorContext> errorContexts = new List<FlatFileErrorContext>();
+        private readonly IDelimitedLayoutDescriptor layout;
+        private readonly IDelimitedLineParserFactory lineParserFactory;
+        private readonly IList<FlatFileErrorContext> errorContexts = new List<FlatFileErrorContext>();
 
         const string TestData = 
 @"S,Test Description,00042
@@ -31,11 +31,6 @@ S,Test Description,00044";
             lineParserFactory = A.Fake<IDelimitedLineParserFactory>();
             A.CallTo(() => lineParserFactory.GetParser(A<IDelimitedLayoutDescriptor>.Ignored))
                 .Returns(new FakeLineParser());
-                
-            new DelimitedLineParserFactory(new Dictionary<Type, Type>
-            {
-                { typeof(Record), typeof(FakeLineParser) }
-            });
         }
 
         [Fact]
@@ -47,8 +42,8 @@ S,Test Description,00044";
                 lineParserFactory,
                 HandleError);
 
-            using (var stream = new MemoryStream(Encoding.Default.GetBytes(TestData)))
-                engine.Read<Record>(stream).ToList();
+            using (var reader = new StringReader(TestData))
+                engine.Read<Record>(reader).ToList();
 
             Assert.Equal(3, errorContexts.Count);
             Assert.Equal(new[] { 1, 2, 3 }, errorContexts.Select(ctx => ctx.LineNumber));
@@ -57,7 +52,7 @@ S,Test Description,00044";
         }
 
         [Fact]
-        public void MultiEngineErrorContextShouldProvideAccurateInformation()
+        public async Task MultiEngineErrorContextShouldProvideAccurateInformation()
         {
             var engine = new DelimitedFileMultiEngine(
                 new[] { layout },
@@ -67,8 +62,8 @@ S,Test Description,00044";
                 new DefaultDelimitedMasterDetailStrategy(),
                 HandleError);
 
-            using (var stream = new MemoryStream(Encoding.Default.GetBytes(TestData)))
-                engine.Read(stream);
+            using (var reader = new StringReader(TestData))
+                await engine.ReadAsync(reader);
 
             Assert.Equal(3, errorContexts.Count);
             Assert.Equal(new[] { 1, 2, 3 }, errorContexts.Select(ctx => ctx.LineNumber));
@@ -84,10 +79,8 @@ S,Test Description,00044";
 
         private class FakeLineParser : IDelimitedLineParser
         {
-            public TEntity ParseLine<TEntity>(ReadOnlySpan<char> line, TEntity entity) where TEntity : new()
-            {
+            public TEntity ParseLine<TEntity>(ReadOnlySpan<char> line, TEntity entity) where TEntity : new() => 
                 throw new Exception("Parsing failed!");
-            }
         }
 
         private class Record { }
