@@ -1,6 +1,5 @@
 # ChangeLog / ReleaseNotes 
 
-## Version 0.2.23
+## Version 1.0.0
 
-* Fixed csv tag in the nuget packages.
-* Refactored psake with adding release notes to nuget.
+* Signed assemblies with a strong name key
