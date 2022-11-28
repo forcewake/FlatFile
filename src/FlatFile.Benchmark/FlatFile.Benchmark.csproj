@@ -31,6 +31,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\..\assets\FlatFile.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="BenchmarkIt">
       <HintPath>..\packages\Benchmark.It.1.2.0\lib\BenchmarkIt.dll</HintPath>
@@ -101,6 +107,9 @@
     <Compile Include="FlatFileVsFileHelpersBenchmark.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\assets\FlatFile.snk">
+      <Link>FlatFile.snk</Link>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

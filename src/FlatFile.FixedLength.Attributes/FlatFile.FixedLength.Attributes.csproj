@@ -84,6 +84,12 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\$(Configuration)\$(Framework)\$(AssemblyName).XML</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\..\assets\FlatFile.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -112,6 +118,11 @@
       <Project>{2D38BA1D-8D0C-4DC2-A7B1-7BA330D1DDCD}</Project>
       <Name>FlatFile.FixedLength</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\assets\FlatFile.snk">
+      <Link>FlatFile.snk</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

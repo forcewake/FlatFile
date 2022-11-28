@@ -31,6 +31,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\..\assets\FlatFile.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FakeItEasy, Version=2.2.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
       <HintPath>..\packages\FakeItEasy.2.2.0\lib\net40\FakeItEasy.dll</HintPath>
@@ -101,6 +107,9 @@
     <Compile Include="Specifications\Transforms\TransformsBinding.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\assets\FlatFile.snk">
+      <Link>FlatFile.snk</Link>
+    </None>
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Specifications\FixedLengthFileMappingFeature.feature">
