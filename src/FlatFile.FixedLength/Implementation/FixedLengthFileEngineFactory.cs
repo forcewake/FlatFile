@@ -48,7 +48,24 @@ namespace FlatFile.FixedLength.Implementation
             return new FixedLengthFileEngine(
                 descriptor, 
                 new FixedLengthLineBuilderFactory(),
-                lineParserFactory, 
+                lineParserFactory,
+                ctx => handleEntryReadError(ctx.Line, ctx.Exception));
+        }
+
+        /// <summary>
+        /// Gets the <see cref="IFlatFileEngine" />.
+        /// </summary>
+        /// <param name="descriptor">The descriptor.</param>
+        /// <param name="handleEntryReadError">The handle entry read error func.</param>
+        /// <returns>IFlatFileEngine.</returns>
+        public IFlatFileEngine GetEngine(
+            ILayoutDescriptor<IFixedFieldSettingsContainer> descriptor,
+            Func<FlatFileErrorContext, bool> handleEntryReadError)
+        {
+            return new FixedLengthFileEngine(
+                descriptor,
+                new FixedLengthLineBuilderFactory(),
+                lineParserFactory,
                 handleEntryReadError);
         }
 
@@ -63,6 +80,26 @@ namespace FlatFile.FixedLength.Implementation
             IEnumerable<ILayoutDescriptor<IFixedFieldSettingsContainer>> layoutDescriptors,
             Func<string, int, Type> typeSelectorFunc,
             Func<string, Exception, bool> handleEntryReadError = null)
+        {
+            return new FixedLengthFileMultiEngine(
+                layoutDescriptors,
+                typeSelectorFunc,
+                new FixedLengthLineBuilderFactory(),
+                lineParserFactory,
+                ctx => handleEntryReadError(ctx.Line, ctx.Exception));
+        }
+
+        /// <summary>
+        /// Gets the <see cref="IFlatFileMultiEngine"/>.
+        /// </summary>
+        /// <param name="layoutDescriptors">The layout descriptors.</param>
+        /// <param name="typeSelectorFunc">The type selector function.</param>
+        /// <param name="handleEntryReadError">The handle entry read error func.</param>
+        /// <returns>IFlatFileMultiEngine.</returns>
+        public IFlatFileMultiEngine GetEngine(
+            IEnumerable<ILayoutDescriptor<IFixedFieldSettingsContainer>> layoutDescriptors,
+            Func<string, int, Type> typeSelectorFunc,
+            Func<FlatFileErrorContext, bool> handleEntryReadError)
         {
             return new FixedLengthFileMultiEngine(
                 layoutDescriptors,

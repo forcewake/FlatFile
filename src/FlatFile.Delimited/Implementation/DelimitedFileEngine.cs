@@ -38,7 +38,7 @@ namespace FlatFile.Delimited.Implementation
             IDelimitedLayoutDescriptor layoutDescriptor,
             IDelimitedLineBuilderFactory builderFactory,
             IDelimitedLineParserFactory parserFactory, 
-            Func<string, Exception, bool> handleEntryReadError = null)
+            Func<FlatFileErrorContext, bool> handleEntryReadError = null)
             : base(handleEntryReadError)
         {
             _builderFactory = builderFactory;

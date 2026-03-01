@@ -33,7 +33,7 @@ namespace FlatFile.FixedLength.Implementation
             ILayoutDescriptor<IFixedFieldSettingsContainer> layoutDescriptor,
             IFixedLengthLineBuilderFactory lineBuilderFactory,
             IFixedLengthLineParserFactory lineParserFactory,
-            Func<string, Exception, bool> handleEntryReadError = null) : base(handleEntryReadError)
+            Func<FlatFileErrorContext, bool> handleEntryReadError = null) : base(handleEntryReadError)
         {
             this.lineBuilderFactory = lineBuilderFactory;
             this.lineParserFactory = lineParserFactory;
