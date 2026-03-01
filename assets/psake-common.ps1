@@ -20,8 +20,15 @@ Properties {
     ### Project information
     $solution_path = "$src_dir\$solution"
 	$sharedAssemblyInfo = "$src_dir\SharedAssemblyInfo.cs"
-    $config = "Release"    
-	$frameworks = @("NET35", "NET40", "NET45")
+    $config = "Release"
+    $modern_projects = @(
+        "$src_dir\FlatFile.Core.Modern\FlatFile.Core.Modern.csproj",
+        "$src_dir\FlatFile.Core.Attributes.Modern\FlatFile.Core.Attributes.Modern.csproj",
+        "$src_dir\FlatFile.Delimited.Modern\FlatFile.Delimited.Modern.csproj",
+        "$src_dir\FlatFile.FixedLength.Modern\FlatFile.FixedLength.Modern.csproj",
+        "$src_dir\FlatFile.Delimited.Attributes.Modern\FlatFile.Delimited.Attributes.Modern.csproj",
+        "$src_dir\FlatFile.FixedLength.Attributes.Modern\FlatFile.FixedLength.Attributes.Modern.csproj"
+    )
     
     ### Files
     $releaseNotes = "$base_dir\ChangeLog.md"
@@ -29,34 +36,27 @@ Properties {
 
 ## Tasks
 
-Task Restore -Description "Restore NuGet packages for solution." {
-    "Restoring NuGet packages for '$solution_path'..."
-    Exec { .$nuget restore $solution_path }
+Task Restore -Description "Restore .NET packages for modern projects." {
+    foreach ($project in $modern_projects) {
+        "Restoring '$project'..."
+        Exec { dotnet restore $project }
+    }
 }
 
 Task Clean -Description "Clean up build and project folders." {
     Clean-Directory $build_dir
 
-    if ($solution) {
-        "Cleaning up '$solution'..."
-        
-		foreach ($framework in $frameworks) {
-			Exec { msbuild $solution_path /target:Clean /nologo /verbosity:minimal /p:Framework=$framework}
-		}
+    foreach ($project in $modern_projects) {
+        "Cleaning '$project'..."
+        Exec { dotnet clean $project -c $config }
     }
 }
 
-Task Compile -Depends Clean, Restore -Description "Compile all the projects in a solution." {
-    "Compiling '$solution'..."
-
-    $extra = $null
-    if ($appVeyor) {
-        $extra = "/logger:C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+Task Compile -Depends Clean, Restore -Description "Compile all modern SDK-style projects." {
+    foreach ($project in $modern_projects) {
+        "Compiling '$project'..."
+        Exec { dotnet build $project -c $config --no-restore }
     }
-
-	foreach ($framework in $frameworks) {
-		Exec { msbuild $solution_path /p:"Configuration=$config;Framework=$framework" /nologo /verbosity:minimal $extra }
-	}
 }
 
 ### Pack functions

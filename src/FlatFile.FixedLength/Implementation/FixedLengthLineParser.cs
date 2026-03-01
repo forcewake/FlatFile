@@ -52,8 +52,8 @@ namespace FlatFile.FixedLength.Implementation
         protected override string TransformStringValue(IFixedFieldSettingsContainer fieldSettingsBuilder, string memberValue)
         {
             memberValue = fieldSettingsBuilder.PadLeft
-                ? memberValue.TrimStart(new[] {fieldSettingsBuilder.PaddingChar})
-                : memberValue.TrimEnd(new[] {fieldSettingsBuilder.PaddingChar});
+                ? memberValue.TrimStart(fieldSettingsBuilder.PaddingChar)
+                : memberValue.TrimEnd(fieldSettingsBuilder.PaddingChar);
 
             return memberValue;
         }

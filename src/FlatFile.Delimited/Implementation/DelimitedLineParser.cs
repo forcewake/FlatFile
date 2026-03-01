@@ -25,8 +25,9 @@ namespace FlatFile.Delimited.Implementation
                 int nextDelimiterIndex = -1;
                 if (line.Length > linePosition + delimiterSize)
                 {
-                    if (!String.IsNullOrEmpty(Layout.Quotes)) {
-                        if (Layout.Quotes.Equals(line.Substring(linePosition, Layout.Quotes.Length)))
+                    if (!String.IsNullOrEmpty(Layout.Quotes))
+                    {
+                        if (line.AsSpan(linePosition).StartsWith(Layout.Quotes.AsSpan(), StringComparison.InvariantCultureIgnoreCase))
                         {
                             nextDelimiterIndex = line.IndexOf(Layout.Quotes, linePosition + 1, StringComparison.InvariantCultureIgnoreCase);
                             if (line.Length > nextDelimiterIndex)

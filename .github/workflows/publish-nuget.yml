@@ -1,0 +1,48 @@
+name: Publish NuGet (v2)
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      PACKAGE_VERSION: 2.0.${{ github.run_number }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Validate NuGet API key is configured
+        run: |
+          if [ -z "$NUGET_API_KEY" ]; then
+            echo "NUGET_API_KEY secret is not configured." >&2
+            exit 1
+          fi
+
+      - name: Pack v2 packages
+        run: |
+          mkdir -p artifacts/packages
+          dotnet pack src/FlatFile.Core.Modern/FlatFile.Core.Modern.csproj -c Release -o artifacts/packages /p:Version=$PACKAGE_VERSION
+          dotnet pack src/FlatFile.Core.Attributes.Modern/FlatFile.Core.Attributes.Modern.csproj -c Release -o artifacts/packages /p:Version=$PACKAGE_VERSION
+          dotnet pack src/FlatFile.Delimited.Modern/FlatFile.Delimited.Modern.csproj -c Release -o artifacts/packages /p:Version=$PACKAGE_VERSION
+          dotnet pack src/FlatFile.FixedLength.Modern/FlatFile.FixedLength.Modern.csproj -c Release -o artifacts/packages /p:Version=$PACKAGE_VERSION
+          dotnet pack src/FlatFile.Delimited.Attributes.Modern/FlatFile.Delimited.Attributes.Modern.csproj -c Release -o artifacts/packages /p:Version=$PACKAGE_VERSION
+          dotnet pack src/FlatFile.FixedLength.Attributes.Modern/FlatFile.FixedLength.Attributes.Modern.csproj -c Release -o artifacts/packages /p:Version=$PACKAGE_VERSION
+
+      - name: Publish packages to NuGet
+        run: |
+          dotnet nuget push "artifacts/packages/*.nupkg" \
+            --api-key "$NUGET_API_KEY" \
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate
