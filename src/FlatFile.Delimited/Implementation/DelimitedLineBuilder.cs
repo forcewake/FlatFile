@@ -2,6 +2,7 @@ namespace FlatFile.Delimited.Implementation
 {
     using System.Text;
     using FlatFile.Core.Base;
+    using FlatFile.Core.Extensions;
 
     public class DelimitedLineBuilder :
         LineBulderBase<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>,
@@ -25,7 +26,7 @@ namespace FlatFile.Delimited.Implementation
                     lineBuilder.Append(delimiter);
                 }
 
-                lineBuilder.Append(GetStringValueFromField(field, field.PropertyInfo.GetValue(entry, null)));
+                lineBuilder.Append(GetStringValueFromField(field, PropertyAccessorCache.GetValue(field.PropertyInfo, entry)));
                 isFirst = false;
             }
 

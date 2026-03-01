@@ -3,6 +3,7 @@ namespace FlatFile.FixedLength.Implementation
     using System.Text;
     using FlatFile.Core;
     using FlatFile.Core.Base;
+    using FlatFile.Core.Extensions;
 
     public class FixedLengthLineBuilder :
         LineBulderBase<ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer>,
@@ -19,7 +20,7 @@ namespace FlatFile.FixedLength.Implementation
 
             foreach (var field in Descriptor.Fields)
             {
-                lineBuilder.Append(GetStringValueFromField(field, field.PropertyInfo.GetValue(entry, null)));
+                lineBuilder.Append(GetStringValueFromField(field, PropertyAccessorCache.GetValue(field.PropertyInfo, entry)));
             }
 
             return lineBuilder.ToString();

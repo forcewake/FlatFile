@@ -4,6 +4,7 @@ namespace FlatFile.FixedLength.Implementation
 {
     using FlatFile.Core;
     using FlatFile.Core.Base;
+    using FlatFile.Core.Extensions;
 
     public class FixedLengthLineParser :
         LineParserBase<ILayoutDescriptor<IFixedFieldSettingsContainer>, IFixedFieldSettingsContainer>,
@@ -21,7 +22,7 @@ namespace FlatFile.FixedLength.Implementation
             {
                 string fieldValueFromLine = GetValueFromLine(line, linePosition, field);
                 object convertedFieldValue = GetFieldValueFromString(field, fieldValueFromLine);
-                field.PropertyInfo.SetValue(entity, convertedFieldValue, null);
+                PropertyAccessorCache.SetValue(field.PropertyInfo, entity, convertedFieldValue);
                 linePosition += field.Length;
             }
             return entity;
