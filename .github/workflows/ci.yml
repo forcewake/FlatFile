@@ -19,6 +19,10 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v2
 
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
       - name: Restore NuGet packages
         run: nuget restore src/FlatFile.sln
 
