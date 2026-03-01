@@ -18,3 +18,10 @@ A major-version reset enables simpler tooling, faster builds, and a clear suppor
 - Publish v2 packages from modern projects (`dotnet pack`).
 - Add analyzers and nullable annotations incrementally.
 - Add dedicated test projects targeting `net8.0`.
+
+
+## CI/CD publishing
+
+- `.github/workflows/publish-nuget.yml` publishes NuGet packages on pushes to `master`.
+- Configure repository secret `NUGET_API_KEY` before enabling release merges.
+- Package versions are generated as `2.0.<run_number>` in CI.

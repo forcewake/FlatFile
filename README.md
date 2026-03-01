@@ -24,6 +24,16 @@ Active projects:
 
 All of them target `net8.0` and carry package/assembly version `2.0.0`.
 
+### NuGet publishing from GitHub
+
+When changes are merged to `master`, GitHub Actions can publish v2 packages automatically using `.github/workflows/publish-nuget.yml`.
+
+Required repository secret:
+
+- `NUGET_API_KEY`: NuGet.org API key with push permission for FlatFile packages.
+
+The publish workflow packs all `*.Modern` projects and pushes resulting `.nupkg` files to NuGet (`--skip-duplicate`).
+
 ### Installing FlatFile
 
 #### Installing all packages
