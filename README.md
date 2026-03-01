@@ -7,15 +7,13 @@ FlatFile is a library to work with flat files (work up-to 100 times faster then 
 
 ## Modernization status
 
-- ✅ Added .NET Framework **4.8** build target (`Framework=NET35/40/45/451/452/46/461/462/47/471/472/48`) across projects.
-- ✅ Added GitHub Actions CI matrix for all supported .NET Framework build aliases in this repository.
-- ✅ Added SDK-style modern projects targeting `netstandard2.0` and `net8.0` for .NET Core / modern .NET support.
-- 📘 See [docs/modernization-plan.md](docs/modernization-plan.md) for the full upgrade roadmap (including SDK-style migration, PackageReference, and netstandard/net8 targeting).
-
+- 🚨 **v2 breaking change**: dropped legacy .NET Framework targets (`net35`-`net48`) and old build pipeline.
+- ✅ Modernized runtime support to **.NET 8** only via SDK-style projects.
+- ✅ CI now builds modern projects with `dotnet build` on GitHub Actions.
 
 ### Modern .NET support
 
-This repository now includes SDK-style projects for modern runtimes:
+Active projects:
 
 - `src/FlatFile.Core.Modern`
 - `src/FlatFile.Core.Attributes.Modern`
@@ -24,7 +22,7 @@ This repository now includes SDK-style projects for modern runtimes:
 - `src/FlatFile.Delimited.Attributes.Modern`
 - `src/FlatFile.FixedLength.Attributes.Modern`
 
-Each targets `netstandard2.0` and `net8.0`, enabling usage from .NET Core and latest .NET apps while preserving the legacy .NET Framework projects.
+All of them target `net8.0` and carry package/assembly version `2.0.0`.
 
 ### Installing FlatFile
 
