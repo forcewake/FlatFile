@@ -115,7 +115,8 @@ D20150323Another Description ";
                                                         }
                                                     },
                                                     new FixedLengthLineBuilderFactory(),
-                                                    new FixedLengthLineParserFactory()) {HasHeader = true};
+                                                    new FixedLengthLineParserFactory(),
+                                                    new FixedLengthMasterDetailTracker()) {HasHeader = true};
         }
 
         [Fact]

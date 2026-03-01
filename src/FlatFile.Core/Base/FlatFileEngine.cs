@@ -18,13 +18,13 @@ namespace FlatFile.Core.Base
         /// <summary>
         /// The handle entry read error func
         /// </summary>
-        private readonly Func<string, Exception, bool> _handleEntryReadError;
+        private readonly Func<FlatFileErrorContext, bool> _handleEntryReadError;
 
         /// <summary>
         /// Gets the line builder.
         /// </summary>
         /// <value>The line builder.</value>
-        protected abstract ILineBulder LineBuilder { get; }
+        protected abstract ILineBuilder LineBuilder { get; }
 
         /// <summary>
         /// Gets the line parser.
@@ -42,7 +42,7 @@ namespace FlatFile.Core.Base
         /// Initializes a new instance of the <see cref="FlatFileEngine{TFieldSettings, TLayoutDescriptor}"/> class.
         /// </summary>
         /// <param name="handleEntryReadError">The handle entry read error.</param>
-        protected FlatFileEngine(Func<string, Exception, bool> handleEntryReadError = null)
+        protected FlatFileEngine(Func<FlatFileErrorContext, bool> handleEntryReadError = null)
         {
             _handleEntryReadError = handleEntryReadError;
         }
@@ -57,6 +57,18 @@ namespace FlatFile.Core.Base
         public virtual IEnumerable<TEntity> Read<TEntity>(Stream stream) where TEntity : class, new()
         {
             var reader = new StreamReader(stream);
+            return Read<TEntity>(reader);
+        }
+
+        /// <summary>
+        /// Reads the specified text reader.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the t entity.</typeparam>
+        /// <param name="reader">The reader.</param>
+        /// <returns>IEnumerable&lt;TEntity&gt;.</returns>
+        /// <exception cref="ParseLineException">Impossible to parse line</exception>
+        public virtual IEnumerable<TEntity> Read<TEntity>(TextReader reader) where TEntity : class, new()
+        {
             string line;
             int lineNumber = 0;
 
@@ -68,7 +80,7 @@ namespace FlatFile.Core.Base
             while ((line = reader.ReadLine()) != null)
             {
                 if (string.IsNullOrEmpty(line) || string.IsNullOrEmpty(line.Trim())) continue;
-                
+
                 bool ignoreEntry = false;
                 var entry = new TEntity();
                 try
@@ -85,7 +97,7 @@ namespace FlatFile.Core.Base
                         throw;
                     }
 
-                    if (!_handleEntryReadError(line, ex))
+                    if (!_handleEntryReadError(new FlatFileErrorContext(line, lineNumber, ex)))
                     {
                         throw;
                     }
@@ -104,7 +116,7 @@ namespace FlatFile.Core.Base
         /// Processes the header.
         /// </summary>
         /// <param name="reader">The reader.</param>
-        protected virtual void ProcessHeader(StreamReader reader)
+        protected virtual void ProcessHeader(TextReader reader)
         {
             reader.ReadLine();
         }
@@ -147,7 +159,17 @@ namespace FlatFile.Core.Base
         public virtual void Write<TEntity>(Stream stream, IEnumerable<TEntity> entries) where TEntity : class, new()
         {
             TextWriter writer = new StreamWriter(stream);
+            Write(writer, entries);
+        }
 
+        /// <summary>
+        /// Writes to the specified text writer.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the t entity.</typeparam>
+        /// <param name="stream">The text writer.</param>
+        /// <param name="entries">The entries.</param>
+        public void Write<TEntity>(TextWriter writer, IEnumerable<TEntity> entries) where TEntity : class, new()
+        {
             this.WriteHeader(writer);
 
             int lineNumber = 0;

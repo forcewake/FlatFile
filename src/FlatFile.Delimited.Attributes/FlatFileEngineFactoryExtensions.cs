@@ -37,16 +37,18 @@ namespace FlatFile.Delimited.Attributes
         /// <param name="recordTypes">The record types.</param>
         /// <param name="typeSelectorFunc">The type selector function.</param>
         /// <param name="handleEntryReadError">The handle entry read error.</param>
+        /// <param name="masterDetailTracker">Determines how master-detail record relationships are handled.</param>
         /// <returns>IFlatFileMultiEngine.</returns>
         public static IFlatFileMultiEngine GetEngine(
             this DelimitedFileEngineFactory engineFactory,
             IEnumerable<Type> recordTypes,
             Func<string, Type> typeSelectorFunc,
-            Func<string, Exception, bool> handleEntryReadError = null)
+            Func<string, Exception, bool> handleEntryReadError = null,
+            IMasterDetailTracker masterDetailTracker = null)
         {
             var descriptorProvider = new DelimitedLayoutDescriptorProvider();
             var descriptors = recordTypes.Select(type => descriptorProvider.GetDescriptor(type)).ToList();
-            return engineFactory.GetEngine(descriptors, typeSelectorFunc, handleEntryReadError);
+            return engineFactory.GetEngine(descriptors, typeSelectorFunc, handleEntryReadError, masterDetailTracker);
         }
     }
 }
