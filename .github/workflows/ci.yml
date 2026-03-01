@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, main, dev ]
+  pull_request:
+
+jobs:
+  build-netfx:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        framework: [NET35, NET40, NET45, NET451, NET452, NET46, NET461, NET462, NET47, NET471, NET472, NET48]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Restore NuGet packages
+        run: nuget restore src/FlatFile.sln
+
+      - name: Build (.NET Framework ${{ matrix.framework }})
+        run: msbuild src/FlatFile.sln /p:Configuration=Release /p:Framework=${{ matrix.framework }} /m /v:minimal
+
+  build-modern-dotnet:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+
+      - name: Build modern SDK-style projects
+        run: |
+          dotnet build src/FlatFile.Core.Modern/FlatFile.Core.Modern.csproj -c Release
+          dotnet build src/FlatFile.Core.Attributes.Modern/FlatFile.Core.Attributes.Modern.csproj -c Release
+          dotnet build src/FlatFile.Delimited.Modern/FlatFile.Delimited.Modern.csproj -c Release
+          dotnet build src/FlatFile.FixedLength.Modern/FlatFile.FixedLength.Modern.csproj -c Release
+          dotnet build src/FlatFile.Delimited.Attributes.Modern/FlatFile.Delimited.Attributes.Modern.csproj -c Release
+          dotnet build src/FlatFile.FixedLength.Attributes.Modern/FlatFile.FixedLength.Attributes.Modern.csproj -c Release

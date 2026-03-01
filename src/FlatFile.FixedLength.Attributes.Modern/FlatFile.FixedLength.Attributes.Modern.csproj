@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+    <RootNamespace>FlatFile.FixedLength.Attributes</RootNamespace>
+    <AssemblyName>FlatFile.FixedLength.Attributes</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="../FlatFile.FixedLength.Attributes/**/*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../FlatFile.Core.Modern/FlatFile.Core.Modern.csproj" />
+    <ProjectReference Include="../FlatFile.Core.Attributes.Modern/FlatFile.Core.Attributes.Modern.csproj" />
+    <ProjectReference Include="../FlatFile.FixedLength.Modern/FlatFile.FixedLength.Modern.csproj" />
+  </ItemGroup>
+</Project>

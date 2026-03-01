@@ -21,7 +21,7 @@ Properties {
     $solution_path = "$src_dir\$solution"
 	$sharedAssemblyInfo = "$src_dir\SharedAssemblyInfo.cs"
     $config = "Release"    
-	$frameworks = @("NET35", "NET40", "NET45")
+	$frameworks = @("NET35", "NET40", "NET45", "NET451", "NET452", "NET46", "NET461", "NET462", "NET47", "NET471", "NET472", "NET48")
     
     ### Files
     $releaseNotes = "$base_dir\ChangeLog.md"

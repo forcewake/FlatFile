@@ -29,11 +29,13 @@
         public int LineNumber { get; private set; }
         public string Line { get; private set; }
 
+#pragma warning disable SYSLIB0051
         protected ParseLineException(SerializationInfo info, StreamingContext context, string line, int lineNumber)
             : base(info, context)
         {
             Line = line;
             LineNumber = lineNumber;
         }
+#pragma warning restore SYSLIB0051
     }
 }

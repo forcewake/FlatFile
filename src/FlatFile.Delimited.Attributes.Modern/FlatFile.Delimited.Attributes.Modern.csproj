@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+    <RootNamespace>FlatFile.Delimited.Attributes</RootNamespace>
+    <AssemblyName>FlatFile.Delimited.Attributes</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="../FlatFile.Delimited.Attributes/**/*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../FlatFile.Core.Modern/FlatFile.Core.Modern.csproj" />
+    <ProjectReference Include="../FlatFile.Core.Attributes.Modern/FlatFile.Core.Attributes.Modern.csproj" />
+    <ProjectReference Include="../FlatFile.Delimited.Modern/FlatFile.Delimited.Modern.csproj" />
+  </ItemGroup>
+</Project>
