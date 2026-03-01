@@ -27,19 +27,19 @@ namespace FlatFile.Delimited.Implementation
                 {
                     if (!String.IsNullOrEmpty(Layout.Quotes))
                     {
-                        if (line.AsSpan(linePosition).StartsWith(Layout.Quotes.AsSpan(), StringComparison.InvariantCultureIgnoreCase))
+                        if (line.AsSpan(linePosition).StartsWith(Layout.Quotes.AsSpan(), StringComparison.Ordinal))
                         {
-                            nextDelimiterIndex = line.IndexOf(Layout.Quotes, linePosition + 1, StringComparison.InvariantCultureIgnoreCase);
-                            if (line.Length > nextDelimiterIndex)
+                            nextDelimiterIndex = line.IndexOf(Layout.Quotes, linePosition + 1, StringComparison.Ordinal);
+                            if (nextDelimiterIndex > -1 && line.Length > nextDelimiterIndex)
                             {
-                                nextDelimiterIndex = line.IndexOf(Layout.Delimiter, nextDelimiterIndex, StringComparison.InvariantCultureIgnoreCase);
+                                nextDelimiterIndex = line.IndexOf(Layout.Delimiter, nextDelimiterIndex, StringComparison.Ordinal);
                             }
                         }
                     }
 
                     if (nextDelimiterIndex == -1)
                     {
-                        nextDelimiterIndex = line.IndexOf(Layout.Delimiter, linePosition, StringComparison.InvariantCultureIgnoreCase);
+                        nextDelimiterIndex = line.IndexOf(Layout.Delimiter, linePosition, StringComparison.Ordinal);
                     }
                 }
                 int fieldLength;

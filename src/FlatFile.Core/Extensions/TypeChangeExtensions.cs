@@ -29,6 +29,56 @@ namespace FlatFile.Core.Extensions
                 return Enum.Parse(underlyingType, input, true);
             }
 
+            if (underlyingType == typeof(string))
+            {
+                return input;
+            }
+
+            if (underlyingType == typeof(int))
+            {
+                return int.Parse(input, NumberStyles.Integer, CultureInfo.InvariantCulture);
+            }
+
+            if (underlyingType == typeof(long))
+            {
+                return long.Parse(input, NumberStyles.Integer, CultureInfo.InvariantCulture);
+            }
+
+            if (underlyingType == typeof(short))
+            {
+                return short.Parse(input, NumberStyles.Integer, CultureInfo.InvariantCulture);
+            }
+
+            if (underlyingType == typeof(decimal))
+            {
+                return decimal.Parse(input, NumberStyles.Number, CultureInfo.InvariantCulture);
+            }
+
+            if (underlyingType == typeof(double))
+            {
+                return double.Parse(input, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture);
+            }
+
+            if (underlyingType == typeof(float))
+            {
+                return float.Parse(input, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture);
+            }
+
+            if (underlyingType == typeof(bool))
+            {
+                return bool.Parse(input);
+            }
+
+            if (underlyingType == typeof(Guid))
+            {
+                return Guid.Parse(input);
+            }
+
+            if (underlyingType == typeof(DateTime))
+            {
+                return DateTime.Parse(input, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+            }
+
             var converter = ConverterCache.GetOrAdd(underlyingType, TypeDescriptor.GetConverter);
             if (converter != null)
             {

@@ -32,3 +32,9 @@ A major-version reset enables simpler tooling, faster builds, and a clear suppor
 - Replaced reflection activation lock+`DynamicInvoke` path with concurrent cached compiled factories.
 - Updated conversion pipeline to use converter caching and invariant-culture conversion semantics.
 - Applied small parser allocation improvements (`TrimStart/TrimEnd(char)`, span-based quote prefix checks).
+
+
+## Modern tests
+
+- Added `tests/FlatFile.Modern.Tests` (xUnit, net8.0).
+- CI now runs `dotnet test` for the modern test suite.

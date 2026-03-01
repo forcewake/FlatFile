@@ -39,7 +39,7 @@ namespace FlatFile.Core.Extensions
         public static object CreateInstance(Type targetType, bool cached = false, params object[] parameters)
         {
             if (targetType == null) return null;
-            if (parameters == null || !parameters.Any()) return CreateInstance(targetType, cached);
+            if (parameters == null || parameters.Length == 0) return CreateInstance(targetType, cached);
 
             var ctorInfo = targetType.GetConstructor(parameters.Select(a => a.GetType()).ToArray());
             return CreateInstance(ctorInfo, cached, parameters);
@@ -49,7 +49,7 @@ namespace FlatFile.Core.Extensions
         {
             if (ctorInfo == null) return null;
 
-            var hasArguments = parameters != null && parameters.Any();
+            var hasArguments = parameters != null && parameters.Length > 0;
             if (!cached)
             {
                 return ctorInfo.Invoke(parameters);

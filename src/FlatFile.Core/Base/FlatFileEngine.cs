@@ -56,7 +56,8 @@ namespace FlatFile.Core.Base
         /// <exception cref="ParseLineException">Impossible to parse line</exception>
         public virtual IEnumerable<TEntity> Read<TEntity>(Stream stream) where TEntity : class, new()
         {
-            var reader = new StreamReader(stream);
+            using (var reader = new StreamReader(stream))
+            {
             string line;
             int lineNumber = 0;
 
@@ -65,37 +66,38 @@ namespace FlatFile.Core.Base
                 ProcessHeader(reader);
             }
 
-            while ((line = reader.ReadLine()) != null)
-            {
-                if (string.IsNullOrEmpty(line) || string.IsNullOrEmpty(line.Trim())) continue;
-                
-                bool ignoreEntry = false;
-                var entry = new TEntity();
-                try
+                while ((line = reader.ReadLine()) != null)
                 {
-                    if (!TryParseLine(line, lineNumber++, ref entry))
+                    if (string.IsNullOrWhiteSpace(line)) continue;
+
+                    bool ignoreEntry = false;
+                    var entry = new TEntity();
+                    try
                     {
-                        throw new ParseLineException("Impossible to parse line", line, lineNumber);
+                        if (!TryParseLine(line, lineNumber++, ref entry))
+                        {
+                            throw new ParseLineException("Impossible to parse line", line, lineNumber);
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    if (_handleEntryReadError == null)
+                    catch (Exception ex)
                     {
-                        throw;
+                        if (_handleEntryReadError == null)
+                        {
+                            throw;
+                        }
+
+                        if (!_handleEntryReadError(line, ex))
+                        {
+                            throw;
+                        }
+
+                        ignoreEntry = true;
                     }
 
-                    if (!_handleEntryReadError(line, ex))
+                    if (!ignoreEntry)
                     {
-                        throw;
+                        yield return entry;
                     }
-
-                    ignoreEntry = true;
-                }
-
-                if (!ignoreEntry)
-                {
-                    yield return entry;
                 }
             }
         }
@@ -146,22 +148,23 @@ namespace FlatFile.Core.Base
         /// <param name="entries">The entries.</param>
         public virtual void Write<TEntity>(Stream stream, IEnumerable<TEntity> entries) where TEntity : class, new()
         {
-            TextWriter writer = new StreamWriter(stream);
-
-            this.WriteHeader(writer);
-
-            int lineNumber = 0;
-
-            foreach (var entry in entries)
+            using (TextWriter writer = new StreamWriter(stream))
             {
-                this.WriteEntry(writer, lineNumber, entry);
+                this.WriteHeader(writer);
 
-                lineNumber += 1;
+                int lineNumber = 0;
+
+                foreach (var entry in entries)
+                {
+                    this.WriteEntry(writer, lineNumber, entry);
+
+                    lineNumber += 1;
+                }
+
+                this.WriteFooter(writer);
+
+                writer.Flush();
             }
-
-            this.WriteFooter(writer);
-
-            writer.Flush();
         }
 
         /// <summary>
