@@ -4,6 +4,36 @@ FlatFile
 
 FlatFile is a library to work with flat files (work up-to 100 times faster then [FileHelpers](https://www.nuget.org/packages/FileHelpers/2.0.0))
 
+
+## Modernization status
+
+- 🚨 **v2 breaking change**: dropped legacy .NET Framework targets (`net35`-`net48`) and old build pipeline.
+- ✅ Modernized runtime support to **.NET 8** only via SDK-style projects.
+- ✅ CI now builds modern projects with `dotnet build` on GitHub Actions.
+
+### Modern .NET support
+
+Active projects:
+
+- `src/FlatFile.Core.Modern`
+- `src/FlatFile.Core.Attributes.Modern`
+- `src/FlatFile.Delimited.Modern`
+- `src/FlatFile.FixedLength.Modern`
+- `src/FlatFile.Delimited.Attributes.Modern`
+- `src/FlatFile.FixedLength.Attributes.Modern`
+
+All of them target `net8.0` and carry package/assembly version `2.0.0`.
+
+### NuGet publishing from GitHub
+
+When changes are merged to `master`, GitHub Actions can publish v2 packages automatically using `.github/workflows/publish-nuget.yml`.
+
+Required repository secret:
+
+- `NUGET_API_KEY`: NuGet.org API key with push permission for FlatFile packages.
+
+The publish workflow packs all `*.Modern` projects and pushes resulting `.nupkg` files to NuGet (`--skip-duplicate`).
+
 ### Installing FlatFile
 
 #### Installing all packages
