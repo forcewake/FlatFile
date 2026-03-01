@@ -1,6 +1,7 @@
 namespace FlatFile.Core.Base
 {
     using System;
+    using System.Reflection;
     using FlatFile.Core.Extensions;
 
     public abstract class LineParserBase<TLayoutDescriptor, TFieldSettings> : ILineParser
@@ -39,7 +40,7 @@ namespace FlatFile.Core.Base
 
             object obj;
             
-            if (!fieldSettings.TypeConverter.ConvertFromStringTo(memberValue, type, out obj))
+            if (!fieldSettings.TypeConverter.ConvertFromStringTo(memberValue, type, fieldSettings.PropertyInfo, out obj))
             {
                 obj = memberValue.Convert(type);
             }
@@ -56,11 +57,11 @@ namespace FlatFile.Core.Base
     public static class TypeConverterExtensions
     {
 
-        public static bool ConvertFromStringTo(this ITypeConverter converter, string source, Type targetType, out object obj)
+        public static bool ConvertFromStringTo(this ITypeConverter converter, string source, Type targetType, PropertyInfo targetProperty, out object obj)
         {
             if (converter != null && converter.CanConvertFrom(typeof(string)) && converter.CanConvertTo(targetType))
             {
-                obj = converter.ConvertFromString(source);
+                obj = converter.ConvertFromString(source, targetProperty);
                 return true;
             }
 

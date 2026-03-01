@@ -1,5 +1,6 @@
 ﻿namespace FlatFile.Delimited.Implementation
 {
+    using System;
     using System.Reflection;
     using FlatFile.Core;
     using FlatFile.Core.Extensions;
@@ -22,6 +23,32 @@
         public IDelimitedFieldSettingsConstructor WithTypeConverter<TConverter>() where TConverter : ITypeConverter
         {
             this.TypeConverter = ReflectionHelper.CreateInstance<TConverter>(true);
+            return this;
+        }
+
+        public IDelimitedFieldSettingsConstructor WithConversionFromString<TProperty>(Func<string, TProperty> conversion)
+        {
+            if (TypeConverter == null)
+                TypeConverter = new DelegatingTypeConverter<TProperty>();
+
+            if (TypeConverter is DelegatingTypeConverter<TProperty>)
+                ((DelegatingTypeConverter<TProperty>)TypeConverter).ConversionFromString = conversion;
+            else
+                throw new InvalidOperationException("A type converter has already been explicitly set.");
+
+            return this;
+        }
+
+        public IDelimitedFieldSettingsConstructor WithConversionToString<TProperty>(Func<TProperty, string> conversion)
+        {
+            if (TypeConverter == null)
+                TypeConverter = new DelegatingTypeConverter<TProperty>();
+
+            if (TypeConverter is DelegatingTypeConverter<TProperty>)
+                ((DelegatingTypeConverter<TProperty>)TypeConverter).ConversionToString = conversion;
+            else
+                throw new InvalidOperationException("A type converter has already been explicitly set.");
+
             return this;
         }
 

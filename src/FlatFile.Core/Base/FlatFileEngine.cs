@@ -24,7 +24,7 @@ namespace FlatFile.Core.Base
         /// Gets the line builder.
         /// </summary>
         /// <value>The line builder.</value>
-        protected abstract ILineBulder LineBuilder { get; }
+        protected abstract ILineBuilder LineBuilder { get; }
 
         /// <summary>
         /// Gets the line parser.

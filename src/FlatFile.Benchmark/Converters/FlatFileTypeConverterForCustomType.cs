@@ -1,6 +1,7 @@
 ﻿namespace FlatFile.Benchmark.Converters
 {
     using System;
+    using System.Reflection;
     using FlatFile.Benchmark.Entities;
     using FlatFile.Core;
 
@@ -16,13 +17,13 @@
             return type == typeof (CustomType);
         }
 
-        public string ConvertToString(object source)
+        public string ConvertToString(object source, PropertyInfo sourceProperty)
         {
             var obj = (CustomType)source;
             return string.Format("{0}|{1}|{2}", obj.First, obj.Second, obj.Third);
         }
 
-        public object ConvertFromString(string source)
+        public object ConvertFromString(string source, PropertyInfo targetProperty)
         {
             var values = source.Split('|');
 
