@@ -1,10 +1,10 @@
-﻿namespace FlatFile.Delimited.Implementation
+namespace FlatFile.Delimited.Implementation
 {
-    using System.Linq;
+    using System.Text;
     using FlatFile.Core.Base;
 
     public class DelimitedLineBuilder :
-        LineBulderBase<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>, 
+        LineBulderBase<IDelimitedLayoutDescriptor, IDelimitedFieldSettingsContainer>,
         IDelimitedLineBuilder
     {
         public DelimitedLineBuilder(IDelimitedLayoutDescriptor descriptor)
@@ -14,11 +14,22 @@
 
         public override string BuildLine<T>(T entry)
         {
-            string line = Descriptor.Fields.Aggregate(string.Empty,
-                (current, field) =>
-                    current + (current.Length > 0 ? Descriptor.Delimiter : "") +
-                    GetStringValueFromField(field, field.PropertyInfo.GetValue(entry, null)));
-            return line;
+            var delimiter = Descriptor.Delimiter;
+            var lineBuilder = new StringBuilder();
+            bool isFirst = true;
+
+            foreach (var field in Descriptor.Fields)
+            {
+                if (!isFirst)
+                {
+                    lineBuilder.Append(delimiter);
+                }
+
+                lineBuilder.Append(GetStringValueFromField(field, field.PropertyInfo.GetValue(entry, null)));
+                isFirst = false;
+            }
+
+            return lineBuilder.ToString();
         }
 
         protected override string TransformFieldValue(IDelimitedFieldSettingsContainer field, string lineValue)
@@ -26,8 +37,9 @@
             var quotes = Descriptor.Quotes;
             if (!string.IsNullOrEmpty(quotes))
             {
-                lineValue = string.Format("{0}{1}{0}", quotes, lineValue);
+                return quotes + lineValue + quotes;
             }
+
             return lineValue;
         }
     }

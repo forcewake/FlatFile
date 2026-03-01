@@ -1,6 +1,6 @@
 namespace FlatFile.FixedLength.Implementation
 {
-    using System.Linq;
+    using System.Text;
     using FlatFile.Core;
     using FlatFile.Core.Base;
 
@@ -15,9 +15,14 @@ namespace FlatFile.FixedLength.Implementation
 
         public override string BuildLine<T>(T entry)
         {
-            string line = Descriptor.Fields.Aggregate(string.Empty,
-                (current, field) => current + GetStringValueFromField(field, field.PropertyInfo.GetValue(entry, null)));
-            return line;
+            var lineBuilder = new StringBuilder();
+
+            foreach (var field in Descriptor.Fields)
+            {
+                lineBuilder.Append(GetStringValueFromField(field, field.PropertyInfo.GetValue(entry, null)));
+            }
+
+            return lineBuilder.ToString();
         }
 
         protected override string TransformFieldValue(IFixedFieldSettingsContainer field, string lineValue)

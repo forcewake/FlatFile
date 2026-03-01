@@ -38,3 +38,11 @@ A major-version reset enables simpler tooling, faster builds, and a clear suppor
 
 - Added `tests/FlatFile.Modern.Tests` (xUnit, net8.0).
 - CI now runs `dotnet test` for the modern test suite.
+
+
+## Span/Memory guidelines used
+
+- Use `ReadOnlySpan<char>` for scanning/tokenization (delimiter/quote detection) where data remains in-memory and does not need ownership transfer.
+- Use `Memory<T>` only when data must survive async boundaries; prefer `Span<T>`/`ReadOnlySpan<T>` in synchronous hot paths.
+- Avoid premature `Substring`/`string.Format` allocations in line build/parse loops.
+- Keep API compatibility: introduce span optimizations internally first, then expose span APIs in a dedicated v2+ surface when needed.

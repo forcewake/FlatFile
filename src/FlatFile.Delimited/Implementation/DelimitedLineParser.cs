@@ -66,8 +66,12 @@ namespace FlatFile.Delimited.Implementation
                 return memberValue;
             }
 
-            var value = memberValue.Replace(Layout.Quotes, String.Empty);
-            return value;
+            if (memberValue.IndexOf(Layout.Quotes, StringComparison.Ordinal) < 0)
+            {
+                return memberValue;
+            }
+
+            return memberValue.Replace(Layout.Quotes, string.Empty);
         }
     }
 }

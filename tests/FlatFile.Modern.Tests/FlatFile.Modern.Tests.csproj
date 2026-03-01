@@ -22,5 +22,6 @@
   <ItemGroup>
     <ProjectReference Include="../../src/FlatFile.Core.Modern/FlatFile.Core.Modern.csproj" />
     <ProjectReference Include="../../src/FlatFile.Delimited.Modern/FlatFile.Delimited.Modern.csproj" />
+    <ProjectReference Include="../../src/FlatFile.FixedLength.Modern/FlatFile.FixedLength.Modern.csproj" />
   </ItemGroup>
 </Project>
