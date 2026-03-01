@@ -79,7 +79,7 @@ namespace FlatFile.FixedLength.Implementation
         /// <value>The line builder.</value>
         /// <remarks>The <see cref="FixedLengthFileMultiEngine"/> does not contain just a single line builder.</remarks>
         /// <exception cref="System.NotImplementedException"></exception>
-        protected override ILineBulder LineBuilder { get { throw new NotImplementedException(); } }
+        protected override ILineBuilder LineBuilder { get { throw new NotImplementedException(); } }
 
         /// <summary>
         /// Gets the line parser.
